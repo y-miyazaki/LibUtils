@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
@@ -25,7 +23,7 @@ import com.miya38.utils.ViewHelper;
  * @author y-miyazaki
  *
  */
-public abstract class AbstractDialogFragment extends DialogFragment implements OnClickListener {
+public abstract class AbstractDialogFragment extends DialogFragment {
     // ---------------------------------------------------------------
     // define
     // ---------------------------------------------------------------
@@ -125,8 +123,10 @@ public abstract class AbstractDialogFragment extends DialogFragment implements O
          *            {@link #DIALOG_CLOSE}<br>
          *            {@link #DIALOG_NEGATIVE}<br>
          *            {@link #DIALOG_NEUTRAL}<br>
+         * @param bundle
+         *            Bundleに乗せて返却する。
          */
-        void onEvent(int listenerId, int event);
+        void onDialogEvent(int listenerId, int event, Bundle bundle);
     }
 
     @Override
@@ -182,37 +182,10 @@ public abstract class AbstractDialogFragment extends DialogFragment implements O
 
         if (mDialog.getWindow() != null) {
             // Viewのクリア
-            ViewHelper.cleanView(this, mDialog.getWindow().getDecorView());
+            ViewHelper.cleanView(getActivity(), this, mDialog.getWindow().getDecorView());
         }
         // オブジェクトのnull初期化
         ClassUtils.setAsyncObjectNull(this, getClass(), AbstractDialogFragment.class);
-    }
-
-    /** @deprecated Use {@link #show(FragmentManager)}!! */
-    @Override
-    @Deprecated
-    public final void show(FragmentManager manager, String tag) {
-        super.show(manager, tag);
-    }
-
-    /**
-     * Display the dialog, adding the fragment to the given FragmentManager. This is a convenience for explicitly
-     * creating a transaction, adding the fragment to it with the given tag, and committing it. This does <em>not</em>
-     * add the transaction to the back stack. When the fragment is dismissed, a new transaction will be executed to
-     * remove it from the activity.
-     *
-     * @param manager
-     *            The FragmentManager this fragment will be added to.
-     */
-    public synchronized final void show(FragmentManager manager) {
-        // 該当タグのダイアログが起動している場合は、2重起動しないよう制御する。
-        if (!isDialogShow(manager)) {
-            // super.show(manager, TAG);
-            // FragmentTransaction transaction = manager.beginTransaction();
-            // transaction.add(this, TAG);
-            // transaction.commitAllowingStateLoss();
-            super.show(manager, TAG);
-        }
     }
 
     @Override
@@ -225,40 +198,76 @@ public abstract class AbstractDialogFragment extends DialogFragment implements O
         }
     }
 
+    @Override
+    public final void show(final FragmentManager manager, final String tag) {
+        if (!isDialogShow(manager, tag)) {
+            showDialog(manager, tag);
+        }
+    }
+
+    /**
+     * Display the dialog, adding the fragment to the given FragmentManager.
+     * This is a convenience for explicitly
+     * creating a transaction, adding the fragment to it with the given tag, and
+     * committing it. This does <em>not</em> add the transaction to the back
+     * stack. When the fragment is dismissed, a new
+     * transaction will be executed to
+     * remove it from the activity.
+     *
+     * @param manager
+     *            The FragmentManager this fragment will be added to.
+     */
+    public synchronized final void show(final FragmentManager manager) {
+        // 該当タグのダイアログが起動している場合は、2重起動しないよう制御する。
+        if (!isDialogShow(manager, TAG)) {
+            showDialog(manager, TAG);
+        }
+    }
+
+    /**
+     * @param manager
+     *            The FragmentManager this fragment will be added to.
+     * @param tag
+     *            TAG
+     */
+    private void showDialog(final FragmentManager manager, final String tag) {
+        super.show(manager, tag);
+    }
+
     /**
      * ポジティブ選択
      */
-    public void onPositive() {
-        onEvent(OnDialogFragmentListener.DIALOG_POSITIVE);
+    public void onPositive(final Bundle bundle) {
+        onEvent(OnDialogFragmentListener.DIALOG_POSITIVE, bundle);
         dismiss();
     }
 
     /**
      * ネガティブ選択
      */
-    public void onNegative() {
-        onEvent(OnDialogFragmentListener.DIALOG_NEGATIVE);
+    public void onNegative(final Bundle bundle) {
+        onEvent(OnDialogFragmentListener.DIALOG_NEGATIVE, bundle);
         dismiss();
     }
 
     /**
      * ニュートラル選択
      */
-    public void onNeutral() {
-        onEvent(OnDialogFragmentListener.DIALOG_NEUTRAL);
+    public void onNeutral(final Bundle bundle) {
+        onEvent(OnDialogFragmentListener.DIALOG_NEUTRAL, bundle);
         dismiss();
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(final DialogInterface dialog) {
         super.onCancel(dialog);
-        onEvent(OnDialogFragmentListener.DIALOG_CANCEL);
+        onEvent(OnDialogFragmentListener.DIALOG_CANCEL, null);
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(final DialogInterface dialog) {
         super.onDismiss(dialog);
-        onEvent(OnDialogFragmentListener.DIALOG_DISMISS);
+        onEvent(OnDialogFragmentListener.DIALOG_DISMISS, null);
         mListenerId = -1;
     }
 
@@ -272,35 +281,25 @@ public abstract class AbstractDialogFragment extends DialogFragment implements O
      *            {@link #DIALOG_POSITIVE}<br>
      *            {@link #DIALOG_NEGATIVE}<br>
      *            {@link #DIALOG_NEUTRAL}<br>
+     * @param bundle
+     *            Bundleに乗せて返却する。
      */
-    private void onEvent(int event) {
+    private void onEvent(final int event, final Bundle bundle) {
         if (getTargetFragment() instanceof OnDialogFragmentListener) {
-            ((OnDialogFragmentListener) getTargetFragment()).onEvent(mListenerId, event);
+            ((OnDialogFragmentListener) getTargetFragment()).onDialogEvent(mListenerId, event, bundle);
         } else if (getActivity() instanceof OnDialogFragmentListener) {
-            ((OnDialogFragmentListener) getActivity()).onEvent(mListenerId, event);
+            ((OnDialogFragmentListener) getActivity()).onDialogEvent(mListenerId, event, bundle);
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        // index
-        final int index = ((Integer) v.getTag()).intValue();
-        // イベントコールバック判断用ID
-
-        if (getTargetFragment() instanceof OnDialogFragmentListener) {
-            ((OnDialogFragmentListener) getTargetFragment()).onEvent(mListenerId, index);
-        } else if (getActivity() instanceof OnDialogFragmentListener) {
-            ((OnDialogFragmentListener) getActivity()).onEvent(mListenerId, index);
-        }
-        dismiss();
     }
 
     /**
      * @param fragmentManager
      *            {@link FragmentManager}
+     * @param tag
+     *            TAG
      */
-    private boolean isDialogShow(final FragmentManager manager) {
-        final AbstractDialogFragment previous = (AbstractDialogFragment) manager.findFragmentByTag(TAG);
+    private boolean isDialogShow(final FragmentManager manager, final String tag) {
+        final AbstractDialogFragment previous = (AbstractDialogFragment) manager.findFragmentByTag(tag);
         if (previous == null) {
             return false;
         }

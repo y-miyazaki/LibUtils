@@ -202,7 +202,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
         LogUtils.d(TAG, "onDestroy");
 
         // Viewのクリア
-        ViewHelper.cleanView(this, getWindow().getDecorView());
+        ViewHelper.cleanView(this, this, getWindow().getDecorView());
 
         // ブロードキャストレシーバーのクリア
         unregisterReceiver(mLogoutBroadcastReceiver);

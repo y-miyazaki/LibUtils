@@ -143,7 +143,7 @@ public abstract class AbstractSettingListView<T, U> {
      * @param items
      *            アイテムリスト
      */
-    public abstract void addAfter(List<U> items);
+    public abstract void addAll(List<U> items);
 
     /**
      * ListView設定(addView)(after)
@@ -151,7 +151,7 @@ public abstract class AbstractSettingListView<T, U> {
      * @param item
      *            アイテム
      */
-    public abstract void addAfter(U item);
+    public abstract void add(U item);
 
     /**
      * adapterにセットされている数を返却する

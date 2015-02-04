@@ -60,6 +60,10 @@ public class CustomTextView extends TextView implements TextWatcher {
     // ----------------------------------------------------------
     // カスタムプロパティ
     // ----------------------------------------------------------
+    /** 文字サイズの初期値 */
+    private float mDefaultTextSize = 0.0f;
+    /** 調整後の文字サイズ */
+    private float mResizeTextSize = 0.0f;
     /** 文字列のリサイズをするか？ */
     private boolean mIsResize;
     /** 明滅設定 */
@@ -101,6 +105,8 @@ public class CustomTextView extends TextView implements TextWatcher {
      */
     public CustomTextView(Context context) {
         super(context);
+        // テキストサイズ
+        mDefaultTextSize = getTextSize();
     }
 
     /**
@@ -109,7 +115,8 @@ public class CustomTextView extends TextView implements TextWatcher {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -123,7 +130,8 @@ public class CustomTextView extends TextView implements TextWatcher {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
@@ -138,9 +146,13 @@ public class CustomTextView extends TextView implements TextWatcher {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
     private void init(Context context, AttributeSet attrs) {
+        // テキストサイズ
+        mDefaultTextSize = getTextSize();
+
         final TypedArray ta1 = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView);
         final String htmlText = ta1.getString(R.styleable.CustomTextView_html_text);
         final String editText = ta1.getString(R.styleable.CustomTextView_edit_text);
@@ -192,17 +204,6 @@ public class CustomTextView extends TextView implements TextWatcher {
         addTextChangedListener(this);
     }
 
-    private TextPaint getTextPaint() {
-        try {
-            final Field mTextPaint = TextView.class.getDeclaredField("mTextPaint");
-            mTextPaint.setAccessible(true);
-            return (TextPaint) mTextPaint.get(this);
-        } catch (Exception e) {
-            LogUtils.e(TAG, "error", e);
-        }
-        return null;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -252,6 +253,17 @@ public class CustomTextView extends TextView implements TextWatcher {
         super.onDetachedFromWindow();
     }
 
+    private TextPaint getTextPaint() {
+        try {
+            final Field mTextPaint = TextView.class.getDeclaredField("mTextPaint");
+            mTextPaint.setAccessible(true);
+            return (TextPaint) mTextPaint.get(this);
+        } catch (Exception e) {
+            LogUtils.e(TAG, "error", e);
+        }
+        return null;
+    }
+
     /**
      * Androidのellipsizeが使えないので独自に作成
      */
@@ -283,9 +295,11 @@ public class CustomTextView extends TextView implements TextWatcher {
         if (!mIsResize) {
             return;
         }
-        int textSize = (int) getTextSize();
+        // 設定された文字サイズで初期化する
+        mResizeTextSize = mDefaultTextSize;
+
         final Paint textPaint = new Paint();
-        textPaint.setTextSize(textSize);
+        textPaint.setTextSize(mResizeTextSize);
 
         // 適切なサイズになるまで小さくしていきます。(paddingも考慮します。)
         final int targetWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
@@ -303,18 +317,17 @@ public class CustomTextView extends TextView implements TextWatcher {
 
         // 幅に合うように文字列を縮小する
         int count = 0;
-        while (targetWidth < stringWidth) {
+        while (targetWidth < textPaint.measureText(string)) {
             count++;
-            textPaint.setTextSize(--textSize);
-            stringWidth = textPaint.measureText(string);
+            textPaint.setTextSize(--mResizeTextSize);
 
             // 永久ループ対策
             if (100 < count) {
                 break;
             }
         }
-        setTextSize(textSize);
-        getTextPaint().setTextSize(textSize);
+        super.setTextSize(mResizeTextSize);
+        getTextPaint().setTextSize(mResizeTextSize);
     }
 
     /**
@@ -434,7 +447,8 @@ public class CustomTextView extends TextView implements TextWatcher {
     /**
      * テキストリンククリックリスナー
      * <p>
-     * テキスト中の文字列の一部をAタグのようにリンクし、{@link OnClickLinkListener}でクリックしたことを受け取ることができる。<br>
+     * テキスト中の文字列の一部をAタグのようにリンクし、{@link OnClickLinkListener}でクリックしたことを受け取ることができる。
+     * <br>
      * リンクの文字列は引数linkで設定する。
      * </p>
      *

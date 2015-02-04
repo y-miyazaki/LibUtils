@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
+
+import com.miya38.utils.CollectionUtils;
 
 /**
  * カスタムアダプタークラス
@@ -68,9 +71,12 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      * </p>
      *
      * @param position
+     *            ポジション
      * @param convertView
+     *            View
      * @param parent
-     * @return
+     *            ViewGroup
+     * @return View
      */
     protected abstract View getViewCustom(int position, View convertView, ViewGroup parent);
 
@@ -84,8 +90,8 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      * @param items
      *            リストアイテム
      */
-    public CustomArrayAdapter(Context context, int itemResourceId, List<T> items) {
-        super(context, itemResourceId, items);
+    public CustomArrayAdapter(final Context context, final int itemResourceId, final List<T> items) {
+        super(context, itemResourceId, items == null ? new ArrayList<T>() : items);
         this.mItemResourceId = itemResourceId;
     }
 
@@ -96,6 +102,24 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      */
     public int getItemResourceId() {
         return this.mItemResourceId;
+    }
+
+    /**
+     * レイアウトインフレータ取得
+     *
+     * @return レイアウトインフレータ
+     */
+    public LayoutInflater getLayoutInflater() {
+        return LayoutInflater.from(getContext());
+    }
+
+    /**
+     * レイアウトViewを取得
+     *
+     * @return レイアウトView
+     */
+    public View getLayoutView() {
+        return LayoutInflater.from(getContext()).inflate(mItemResourceId, null);
     }
 
     /**
@@ -125,23 +149,56 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      * アイテム設定
      *
      * @param position
+     *            ポジション
      * @param item
+     *            アイテム
      */
-    public void setItem(int position, T item) {
+    public void setItem(final int position, final T item) {
         final T object = getItem(position);
+        setNotifyOnChange(false);
         insert(item, position);
         remove(object);
+        setNotifyOnChange(true);
+        notifyDataSetChanged();
     }
 
     /**
      * アイテムリスト設定
      *
      * @param items
+     *            アイテムリスト
      */
-    public void setItems(List<T> items) {
+    public void setItems(final List<T> items) {
+        setNotifyOnChange(false);
+        final List<T> tmpItemList = new ArrayList<T>();
+        if (!CollectionUtils.isNullOrEmpty(items)) {
+            tmpItemList.addAll(items);
+        }
         clear();
-        for (final T item : items) {
-            add(item);
+        if (!CollectionUtils.isNullOrEmpty(tmpItemList)) {
+            for (final T item : tmpItemList) {
+                add(item);
+            }
+        }
+        setNotifyOnChange(true);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        try {
+            return super.getCount();
+        } catch (final NullPointerException e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public void clear() {
+        try {
+            super.clear();
+        } catch (final NullPointerException e) {
+            // 握りつぶす
         }
     }
 
@@ -152,7 +209,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         // ラストポジションより現在のポジションの方が大きい場合はラストポジションに登録する。
         if (mSeeLastPosition < position) {
             mSeeLastPosition = position;
@@ -213,11 +270,15 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      * スクロール位置を取得
      *
      * @param view
+     *            View
      * @param firstVisibleItem
+     *            開始アイテム
      * @param visibleItemCount
+     *            見えるアイテム数
      * @param totalItemCount
+     *            全アイテム数
      */
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
         this.mView = view;
         this.mFirstVisibleItem = firstVisibleItem;
         this.mVisibleItemCount = visibleItemCount;
@@ -235,7 +296,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      *            {@link OnScrollListener#SCROLL_STATE_IDLE}<br>
      *            {@link OnScrollListener#SCROLL_STATE_TOUCH_SCROLL}<br>
      */
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
+    public void onScrollStateChanged(final AbsListView view, final int scrollState) {
         this.mView = view;
         this.mScrollState = scrollState;
         // if (scrollState <= OnScrollListener.SCROLL_STATE_IDLE) {
@@ -252,7 +313,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      *            {@link OnScrollListener#SCROLL_STATE_IDLE}<br>
      *            {@link OnScrollListener#SCROLL_STATE_TOUCH_SCROLL}<br>
      */
-    public void onScrollStateChanged(int scrollState) {
+    public void onScrollStateChanged(final int scrollState) {
         this.mScrollState = scrollState;
         // if (scrollState <= OnScrollListener.SCROLL_STATE_IDLE) {
         // displayCache(mView);

@@ -1,10 +1,15 @@
 package com.miya38.utils;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import android.database.Cursor;
 
 import com.google.common.io.Closeables;
 
@@ -115,5 +120,112 @@ public final class IOUtils {
             }
         }
         return dir;
+    }
+
+    /** IO_BUFFER_SIZE */
+    protected static final int IO_BUFFER_SIZE = 4 * 1024;
+
+    // ////////////////////////////////////////////////
+    // public
+    // ////////////////////////////////////////////////
+
+    /**
+     * <code>{@link Cursor}</code>をクローズします。 クローズ時に例外が発生しても無視します。
+     *
+     * @param c
+     *            {@link Cursor}
+     */
+    public static void closeQuietly(final Cursor c) {
+        try {
+            if (c != null) {
+                c.close();
+            }
+        } catch (final Exception e) {
+            // エラーは握りつぶす
+        }
+    }
+
+    /**
+     * <code>{@link Closeable}</code>をクローズします。 クローズ時に例外が発生しても無視します。
+     *
+     * @param closeable
+     *            {@link Closeable}
+     */
+    public static void closeQuietly(final Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (final IOException ioe) {
+            // エラーは握りつぶす
+        }
+    }
+
+    /**
+     * ストリームの内容をコピーします。
+     *
+     * @param in
+     *            {@link InputStream}
+     * @param out
+     *            {@link OutputStream}
+     * @throws EzaException
+     *             {@link EzaException}
+     */
+    public static void copy(final InputStream in, final OutputStream out) {
+        BufferedOutputStream bos = null;
+        if (out instanceof BufferedOutputStream) {
+            bos = (BufferedOutputStream) out;
+        } else {
+            bos = new BufferedOutputStream(out, IO_BUFFER_SIZE);
+        }
+        final byte[] b = new byte[IO_BUFFER_SIZE];
+        int read;
+        try {
+            while ((read = in.read(b)) != -1) {
+                bos.write(b, 0, read);
+            }
+            bos.flush();
+        } catch (final IOException e) {
+            // 握りつぶす
+        }
+    }
+
+    /**
+     * ストリームの内容をバイト列として取得します。
+     *
+     * @param in
+     *            {@link InputStream}
+     * @return byte[]
+     */
+    public static byte[] getBytes(final InputStream in) {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream(IO_BUFFER_SIZE);
+        try {
+            copy(in, out);
+            out.flush();
+            return out.toByteArray();
+        } catch (final IOException e) {
+            // 握りつぶす
+        } finally {
+            closeQuietly(out);
+        }
+        return null;
+    }
+
+    /**
+     * ストリームの内容を文字列として取得します。
+     *
+     * @param in
+     *            {@link InputStream}
+     * @param charset
+     *            エンコード
+     * @return エンコード後の文字列
+     */
+    public static String getString(final InputStream in, final String charset) {
+        try {
+            return new String(getBytes(in), charset);
+        } catch (final IOException e) {
+            // 握りつぶす
+        }
+        return null;
     }
 }

@@ -180,7 +180,7 @@ public abstract class AbstractFragment extends Fragment {
         super.onDestroyView();
         LogUtils.d(TAG, "Fragment-onDestroyView");
         // Viewのクリア
-        ViewHelper.cleanView(this, getView());
+        ViewHelper.cleanView(getActivity(), this, getView());
     }
 
     /*
@@ -279,7 +279,8 @@ public abstract class AbstractFragment extends Fragment {
     /**
      * メンバ変数の自動保存処理を行う。
      *
-     * 本メソッドは、端末がメモリ不足などの理由でアプリをメモリ上に常駐できなくなった場合に実行される。 本来の Activity の仕様では各アクティビティごとにメンバ変数を保存する必要があるが、
+     * 本メソッドは、端末がメモリ不足などの理由でアプリをメモリ上に常駐できなくなった場合に実行される。 本来の Activity
+     * の仕様では各アクティビティごとにメンバ変数を保存する必要があるが、
      * これは非常な手間が掛かり、かつ修正時における不具合の原因となりうる。
      *
      * そこで本クラスはアクティビティに定義されているメンバ変数を自動的に保存する。<br>

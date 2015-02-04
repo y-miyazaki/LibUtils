@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -53,8 +54,8 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
      * @param footerViewResId
      *            フッターのリソースID
      */
-    public SettingListViewNoPull(T adapter, Activity activity, int footerViewResId) {
-        super(adapter, activity);
+    public SettingListViewNoPull(final T adapter, final Activity activity, final LayoutInflater layoutInflater, final int footerViewResId) {
+        super(adapter, activity, layoutInflater);
         mFooterView = mLayoutInflater.inflate(footerViewResId, null);
     }
 
@@ -70,7 +71,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
      * @param footerViewResId
      *            フッターのリソースID
      */
-    public SettingListViewNoPull(T adapter, Dialog dialog, LayoutInflater layoutInflater, int footerViewResId) {
+    public SettingListViewNoPull(final T adapter, final Dialog dialog, final LayoutInflater layoutInflater, final int footerViewResId) {
         super(adapter, dialog, layoutInflater);
         mFooterView = mLayoutInflater.inflate(footerViewResId, null);
     }
@@ -87,9 +88,79 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
      * @param footerViewResId
      *            フッターのリソースID
      */
-    public SettingListViewNoPull(T adapter, View view, LayoutInflater layoutInflater, int footerViewResId) {
+    public SettingListViewNoPull(final T adapter, final View view, final LayoutInflater layoutInflater, final int footerViewResId) {
         super(adapter, view, layoutInflater);
         mFooterView = mLayoutInflater.inflate(footerViewResId, null);
+    }
+
+    /**
+     * ListView設定(初期設定)
+     *
+     * @param listViewId
+     *            ListView自身(ex:R.id.ListView)
+     * @param onItemClickListener
+     *            リスト選択時のリスナー
+     * @param onRefreshListener
+     *            プル時のリスナー
+     * @param mode
+     *            Mode
+     */
+    @Override
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener<ListView> onRefreshListener, final Mode mode) {
+        mListView = getView(listViewId);
+        if (mHeaderView != null) {
+            addHeaderView(mHeaderView);
+        }
+        mListView.setAdapter(mAdapter);
+        setOnItemClickListener(onItemClickListener);
+        setOnRefreshListener(onRefreshListener);
+        setMode(mode);
+        setEmptyView();
+    }
+
+    /**
+     * ListView設定(初期設定)
+     *
+     * @param listViewId
+     *            ListView自身(ex:R.id.ListView)
+     * @param onItemClickListener
+     *            リスト選択時のリスナー
+     * @param onRefreshListener
+     *            スクロールリスナー
+     * @param mode
+     *            Mode
+     * @param listViewEmptyId
+     *            Empty時に表示するViewのId
+     */
+    @Override
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener<ListView> onRefreshListener, final Mode mode, final int listViewEmptyId) {
+        this.mListViewEmptyId = listViewEmptyId;
+        setView(listViewId, onItemClickListener, onRefreshListener, mode);
+    }
+
+    /**
+     * ListView設定(初期設定)
+     *
+     * @param listViewId
+     *            ListView自身(ex:R.id.ListView)
+     * @param onItemClickListener
+     *            リスト選択時のリスナー
+     * @param onRefreshListener
+     *            プル時のリスナー
+     * @param mode
+     *            Mode
+     */
+    @Override
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener2<ListView> onRefreshListener2, final Mode mode) {
+        mListView = getView(listViewId);
+        if (mHeaderView != null) {
+            addHeaderView(mHeaderView);
+        }
+        mListView.setAdapter(mAdapter);
+        setOnItemClickListener(onItemClickListener);
+        setOnRefreshListener(onRefreshListener2);
+        setMode(mode);
+        setEmptyView();
     }
 
     @Override
@@ -98,7 +169,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
     }
 
     @Override
-    public void setMode(Mode mode) {
+    public void setMode(final Mode mode) {
         mMode = mode;
         Mode tmpMode = mode;
 
@@ -125,40 +196,40 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener<ListView> l) {
+    public void setOnRefreshListener(final OnRefreshListener<ListView> l) {
         super.setOnRefreshListener(l);
         mOnRefreshListener = l;
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener<ListView> l, Mode mode) {
+    public void setOnRefreshListener(final OnRefreshListener<ListView> l, final Mode mode) {
         super.setOnRefreshListener(l, mode);
         mOnRefreshListener = l;
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener2<ListView> l) {
+    public void setOnRefreshListener(final OnRefreshListener2<ListView> l) {
         super.setOnRefreshListener(l);
         mOnRefreshListener2 = l;
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener2<ListView> l, Mode mode) {
+    public void setOnRefreshListener(final OnRefreshListener2<ListView> l, final Mode mode) {
         super.setOnRefreshListener(l, mode);
         mOnRefreshListener2 = l;
     }
 
-    public void setOnScrollListener(OnScrollListener l) {
+    public void setOnScrollListener(final OnScrollListener l) {
         mListView.setOnScrollListener(l);
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
+    public void onScrollStateChanged(final AbsListView view, final int scrollState) {
         // 何もしない。
     }
 
     @Override
-    public synchronized void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    public synchronized void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
         // スクロールしていて且つラストポジションの場合のみ
         // または、見えている数とトータルが同じだと永久ループなので除外する。
         if (visibleItemCount != totalItemCount && firstVisibleItem + visibleItemCount == totalItemCount) {
@@ -180,9 +251,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
     public void onRefreshComplete() {
         super.onRefreshComplete();
         // リフレッシュ状態をリセットする。
-        if (mRefreshStatus) {
-            mRefreshStatus = false;
-        }
+        mRefreshStatus = false;
     }
 
     @Override

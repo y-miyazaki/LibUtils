@@ -1,6 +1,5 @@
 package com.miya38.list;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -11,11 +10,9 @@ import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.google.common.base.Preconditions;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.miya38.R;
 import com.miya38.exception.ApplicationException;
 import com.miya38.list.adapter.CustomArrayAdapter;
 import com.miya38.utils.CollectionUtils;
@@ -65,7 +62,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
@@ -77,11 +74,26 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param activity
      *            Activityのthis
      */
-    public SettingListView(T adapter, Activity activity) {
-        Preconditions.checkNotNull(adapter, "adapter should not be null.");
-        Preconditions.checkNotNull(activity, "activity should not be null.");
+    public SettingListView(final T adapter, final Activity activity) {
         this.mAdapter = adapter;
         this.mActivity = activity;
+    }
+
+    /**
+     * コンストラクタ
+     *
+     * @param adapter
+     *            リストビューに設定するAdapter
+     * @param activity
+     *            Activityのthis
+     * @param layoutInflater
+     *            layoutInflater
+     */
+    public SettingListView(final T adapter, final Activity activity, final LayoutInflater layoutInflater) {
+        this.mAdapter = adapter;
+        this.mActivity = activity;
+        this.mLayoutInflater = layoutInflater;
+
     }
 
     /**
@@ -94,10 +106,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param layoutInflater
      *            layoutInflater
      */
-    public SettingListView(T adapter, Dialog customDialog, LayoutInflater layoutInflater) {
-        Preconditions.checkNotNull(adapter, "adapter should not be null.");
-        Preconditions.checkNotNull(customDialog, "activity should not be null.");
-        Preconditions.checkNotNull(layoutInflater, "layoutInflater should not be null.");
+    public SettingListView(final T adapter, final Dialog customDialog, final LayoutInflater layoutInflater) {
         this.mAdapter = adapter;
         this.mDialog = customDialog;
         this.mLayoutInflater = layoutInflater;
@@ -113,10 +122,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param layoutInflater
      *            layoutInflater
      */
-    public SettingListView(T adapter, View view, LayoutInflater layoutInflater) {
-        Preconditions.checkNotNull(adapter, "adapter should not be null.");
-        Preconditions.checkNotNull(view, "view should not be null.");
-        Preconditions.checkNotNull(layoutInflater, "layoutInflater should not be null.");
+    public SettingListView(final T adapter, final View view, final LayoutInflater layoutInflater) {
         this.mAdapter = adapter;
         this.mView = view;
         this.mLayoutInflater = layoutInflater;
@@ -128,7 +134,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      */
-    public void setView(int listViewId) {
+    public void setView(final int listViewId) {
         mListView = getView(listViewId);
         mListView.setAdapter(mAdapter);
         setEmptyView();
@@ -142,7 +148,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param listViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public void setView(int listViewId, int listViewEmptyId) {
+    public void setView(final int listViewId, final int listViewEmptyId) {
         this.mListViewEmptyId = listViewEmptyId;
         setView(listViewId);
     }
@@ -159,9 +165,8 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param mode
      *            Mode
      */
-    public void setView(int listViewId, OnItemClickListener onItemClickListener, OnRefreshListener<ListView> onRefreshListener, Mode mode) {
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener<ListView> onRefreshListener, final Mode mode) {
         mListView = getView(listViewId);
-        mListView.getLoadingLayoutProxy(true, true).setLoadingDrawable(sContext.getResources().getDrawable(R.drawable.common_icon_arrow_down));
         if (mHeaderView != null) {
             addHeaderView(mHeaderView);
         }
@@ -185,7 +190,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param listViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public void setView(int listViewId, OnItemClickListener onItemClickListener, OnRefreshListener<ListView> onRefreshListener, Mode mode, int listViewEmptyId) {
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener<ListView> onRefreshListener, final Mode mode, final int listViewEmptyId) {
         this.mListViewEmptyId = listViewEmptyId;
         setView(listViewId, onItemClickListener, onRefreshListener, mode);
     }
@@ -202,7 +207,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param mode
      *            Mode
      */
-    public void setView(int listViewId, OnItemClickListener onItemClickListener, OnRefreshListener2<ListView> onRefreshListener2, Mode mode) {
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener2<ListView> onRefreshListener2, final Mode mode) {
         mListView = getView(listViewId);
         if (mHeaderView != null) {
             addHeaderView(mHeaderView);
@@ -227,7 +232,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param listViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public void setView(int listViewId, OnItemClickListener onItemClickListener, OnRefreshListener2<ListView> onRefreshListener2, Mode mode, int listViewEmptyId) {
+    public void setView(final int listViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener2<ListView> onRefreshListener2, final Mode mode, final int listViewEmptyId) {
         this.mListViewEmptyId = listViewEmptyId;
         setView(listViewId, onItemClickListener, onRefreshListener2, mode);
     }
@@ -238,7 +243,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param id
      * @return View
      */
-    protected <V extends View> V getView(int id) {
+    protected <V extends View> V getView(final int id) {
         if (mActivity != null) {
             return ViewHelper.findView(mActivity, id);
         } else if (mView != null) {
@@ -256,11 +261,11 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setMode(Mode mode) {
+    public void setMode(final Mode mode) {
         mListView.setMode(mode);
     }
 
-    public void addMode(Mode mode) {
+    public void addMode(final Mode mode) {
         switch (mListView.getMode()) {
         case PULL_FROM_START:
             if (mode == Mode.PULL_FROM_END) {
@@ -281,7 +286,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void removeHeaderView(View headerView) {
+    public void removeHeaderView(final View headerView) {
         final ListView listView = getListView();
         if (listView != null) {
             listView.removeHeaderView(headerView);
@@ -289,14 +294,14 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void addHeaderView(int headerViewLayout) {
+    public void addHeaderView(final int headerViewLayout) {
         final ListView listView = getListView();
         final View headerView = mLayoutInflater.inflate(headerViewLayout, null);
         listView.addHeaderView(headerView, null, false);
     }
 
     @Override
-    public void addHeaderView(View headerView) {
+    public void addHeaderView(final View headerView) {
         final ListView listView = getListView();
         if (listView == null) {
             mHeaderView = headerView;
@@ -316,12 +321,11 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     @Override
     public void clear() {
-        mAdapter.setItems(new ArrayList<U>());
-        mAdapter.notifyDataSetChanged();
+        mAdapter.clear();
     }
 
     @Override
-    public U getItem(int position) {
+    public U getItem(final int position) {
         return mAdapter.getItem(position);
     }
 
@@ -331,68 +335,59 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setItem(U item, int position) {
+    public void setItem(final U item, final int position) {
         if (item != null) {
             mAdapter.setItem(position, item);
-            mAdapter.notifyDataSetChanged();
         }
         onRefreshComplete();
     }
 
     @Override
-    public void setItems(List<U> items) {
+    public void setItems(final List<U> items) {
         if (items != null) {
             mAdapter.setItems(items);
-            mAdapter.notifyDataSetChanged();
         }
         onRefreshComplete();
     }
 
     @Override
-    public void insertItem(U item, int position) {
+    public void insertItem(final U item, final int position) {
         if (item != null) {
             mAdapter.insert(item, position);
-            mAdapter.notifyDataSetChanged();
         }
         onRefreshComplete();
     }
 
     @Override
-    public void addBefore(U item) {
+    public void addBefore(final U item) {
         if (item != null) {
             mAdapter.insert(item, 0);
-            mAdapter.notifyDataSetChanged();
         }
         onRefreshComplete();
     }
 
     @Override
-    public void addBefore(List<U> items) {
+    public void addBefore(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.insert(item, 0);
             }
-            mAdapter.notifyDataSetChanged();
         }
         onRefreshComplete();
     }
 
     @Override
-    public void addAfter(List<U> items) {
+    public void addAll(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
-            for (final U item : items) {
-                mAdapter.add(item);
-            }
-            mAdapter.notifyDataSetChanged();
+            mAdapter.addAll(items);
         }
         onRefreshComplete();
     }
 
     @Override
-    public void addAfter(U item) {
+    public void add(final U item) {
         if (item != null) {
             mAdapter.add(item);
-            mAdapter.notifyDataSetChanged();
         }
         onRefreshComplete();
     }
@@ -401,9 +396,8 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     public int getCount() {
         if (mAdapter == null) {
             return 0;
-        } else {
-            return mAdapter.getCount();
         }
+        return mAdapter.getCount();
     }
 
     @Override
@@ -412,7 +406,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setAdapter(T adapter) {
+    public void setAdapter(final T adapter) {
         this.mAdapter = adapter;
     }
 
@@ -427,7 +421,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setOnItemClickListener(OnItemClickListener l) {
+    public void setOnItemClickListener(final OnItemClickListener l) {
         if (l == null) {
             mListView.getRefreshableView().setSelector(android.R.color.transparent);
         }
@@ -435,7 +429,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener<ListView> l) {
+    public void setOnRefreshListener(final OnRefreshListener<ListView> l) {
         if (l == null) {
             setMode(Mode.DISABLED);
         } else {
@@ -445,7 +439,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener<ListView> l, Mode mode) {
+    public void setOnRefreshListener(final OnRefreshListener<ListView> l, final Mode mode) {
         if (l == null) {
             setMode(Mode.DISABLED);
         } else {
@@ -455,7 +449,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener2<ListView> l) {
+    public void setOnRefreshListener(final OnRefreshListener2<ListView> l) {
         if (l == null) {
             setMode(Mode.DISABLED);
         } else {
@@ -465,7 +459,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setOnRefreshListener(OnRefreshListener2<ListView> l, Mode mode) {
+    public void setOnRefreshListener(final OnRefreshListener2<ListView> l, final Mode mode) {
         if (l == null) {
             setMode(Mode.DISABLED);
         } else {
@@ -475,7 +469,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setPullLabel(String includeStart, String includeEnd) {
+    public void setPullLabel(final String includeStart, final String includeEnd) {
         if (includeStart != null) {
             mListView.getLoadingLayoutProxy(true, false).setPullLabel(includeStart);
         }
@@ -485,7 +479,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setRefreshingLabel(String includeStart, String includeEnd) {
+    public void setRefreshingLabel(final String includeStart, final String includeEnd) {
         if (includeStart != null) {
             mListView.getLoadingLayoutProxy(true, false).setRefreshingLabel(includeStart);
         }
@@ -495,7 +489,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void setReleaseLabel(String includeStart, String includeEnd) {
+    public void setReleaseLabel(final String includeStart, final String includeEnd) {
         if (includeStart != null) {
             mListView.getLoadingLayoutProxy(true, false).setReleaseLabel(includeStart);
         }

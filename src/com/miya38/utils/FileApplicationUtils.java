@@ -5,18 +5,19 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StatFs;
-
-import com.google.common.io.Closeables;
 
 /**
  * ファイル処理クラス<br>
  * このクラスは、アプリケーション領域の読み書きを対応する。
  */
 public final class FileApplicationUtils {
+    /** JPEG/PNG品質 */
+    private static final int IMAGE_QUALITY = 100;
     /** Context */
     private static Context sContext;
 
@@ -33,7 +34,7 @@ public final class FileApplicationUtils {
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
@@ -45,7 +46,7 @@ public final class FileApplicationUtils {
      *            読み込みパス(相対パス+ファイル名)
      * @return ファイルデータ
      */
-    public static String read(String filePath) {
+    public static String read(final String filePath) {
         final File file = new File(getPath(filePath));
         if (file.exists()) {
             FileInputStream fileInputStream = null;
@@ -54,10 +55,10 @@ public final class FileApplicationUtils {
                 final byte[] readBytes = new byte[fileInputStream.available()];
                 fileInputStream.read(readBytes);
                 return new String(readBytes);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // 握りつぶす
             } finally {
-                Closeables.closeQuietly(fileInputStream);
+                IOUtils.closeQuietly(fileInputStream);
             }
         }
         return null;
@@ -71,7 +72,7 @@ public final class FileApplicationUtils {
      *            読み込みパス(相対パス+ファイル名)
      * @return ファイルデータ
      */
-    public static byte[] readByte(String filePath) {
+    public static byte[] readByte(final String filePath) {
         final File file = new File(getPath(filePath));
         if (file.exists()) {
             FileInputStream fileInputStream = null;
@@ -80,10 +81,10 @@ public final class FileApplicationUtils {
                 final byte[] readBytes = new byte[fileInputStream.available()];
                 fileInputStream.read(readBytes);
                 return readBytes;
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // 握りつぶす
             } finally {
-                Closeables.closeQuietly(fileInputStream);
+                IOUtils.closeQuietly(fileInputStream);
             }
         }
         return new byte[0];
@@ -97,17 +98,17 @@ public final class FileApplicationUtils {
      *            ファイル名のみを指定(アプリケーションエリアに書き込むため、パスは指定しない(test.txt)
      * @return ビットマップオブジェクト (存在しなければnull)
      */
-    public static Bitmap readBitmap(String filePath) {
+    public static Bitmap readBitmap(final String filePath) {
         final File file = new File(getPath(filePath));
         if (file.exists()) {
             FileInputStream fileInputStream = null;
             try {
                 fileInputStream = sContext.openFileInput(filePath);
                 return BitmapFactory.decodeStream(fileInputStream);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // 握りつぶす
             } finally {
-                Closeables.closeQuietly(fileInputStream);
+                IOUtils.closeQuietly(fileInputStream);
             }
         }
         return null;
@@ -124,7 +125,7 @@ public final class FileApplicationUtils {
      * @return true:書き込み成功<br>
      *         false:書き込み失敗
      */
-    public static boolean write(String filePath, String data) {
+    public static boolean write(final String filePath, final String data) {
         FileOutputStream fileOutputStream = null;
         try {
             final File file = new File(getPath(filePath));
@@ -135,13 +136,12 @@ public final class FileApplicationUtils {
                 fileOutputStream.write(data.getBytes());
                 fileOutputStream.flush();
                 return true;
-            } else {
-                return false;
             }
-        } catch (IOException e) {
+            return false;
+        } catch (final IOException e) {
             return false;
         } finally {
-            Closeables.closeQuietly(fileOutputStream);
+            IOUtils.closeQuietly(fileOutputStream);
         }
     }
 
@@ -155,7 +155,7 @@ public final class FileApplicationUtils {
      * @return true:書き込み成功<br>
      *         false:書き込み失敗
      */
-    public static boolean write(String filePath, Bitmap bitmap) {
+    public static boolean write(final String filePath, final Bitmap bitmap) {
         FileOutputStream fileOutputStream = null;
         try {
             final File file = new File(filePath);
@@ -164,21 +164,20 @@ public final class FileApplicationUtils {
             if (file.createNewFile()) {
                 fileOutputStream = sContext.openFileOutput(filePath, Context.MODE_PRIVATE);
                 if (file.getPath().endsWith(".png")) {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, IMAGE_QUALITY, fileOutputStream);
                 } else if (file.getPath().endsWith(".jpg") || file.getPath().endsWith(".jpeg")) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, IMAGE_QUALITY, fileOutputStream);
                 } else {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, IMAGE_QUALITY, fileOutputStream);
                 }
                 fileOutputStream.flush();
                 return true;
-            } else {
-                return false;
             }
-        } catch (IOException e) {
+            return false;
+        } catch (final IOException e) {
             return false;
         } finally {
-            Closeables.closeQuietly(fileOutputStream);
+            IOUtils.closeQuietly(fileOutputStream);
         }
     }
 
@@ -187,10 +186,11 @@ public final class FileApplicationUtils {
      * filePathは、アプリケーションディレクトリからの相対パスを指定してください。
      *
      * @param filePath
+     *            削除するためのファイルパス
      * @return true:ファイル削除成功<br>
      *         false:ファイル削除失敗<br>
      */
-    public static boolean delete(String filePath) {
+    public static boolean delete(final String filePath) {
         final File file = new File(filePath);
         return sContext.deleteFile(file.getName());
     }
@@ -202,11 +202,12 @@ public final class FileApplicationUtils {
      * @param srcFilePath
      *            コピーファイル元[ファイル名のみを指定(アプリケーションエリアに書き込むため、パスは指定しない(test1.txt)]
      * @param dstFilePath
-     *            ) * コピーファイル先[ファイル名のみを指定(アプリケーションエリアに書き込むため、パスは指定しない(test2.txt)]
+     *            ) *
+     *            コピーファイル先[ファイル名のみを指定(アプリケーションエリアに書き込むため、パスは指定しない(test2.txt)]
      * @return true:コピー成功<br>
      *         false:コピー失敗<br>
      */
-    public static boolean copy(String srcFilePath, String dstFilePath) {
+    public static boolean copy(final String srcFilePath, final String dstFilePath) {
         // ファイルコピーのフェーズ
         FileInputStream fileInputStream = null; // FileInputStreamインスタンス
         FileOutputStream fileOutputStream = null; // FileOutputStreamインスタンス
@@ -227,11 +228,11 @@ public final class FileApplicationUtils {
             }
             fileOutputStream.flush();
             return true;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             return false;
         } finally {
-            Closeables.closeQuietly(fileInputStream);
-            Closeables.closeQuietly(fileOutputStream);
+            IOUtils.closeQuietly(fileInputStream);
+            IOUtils.closeQuietly(fileOutputStream);
         }
     }
 
@@ -251,7 +252,7 @@ public final class FileApplicationUtils {
      *            ファイル名
      * @return アプリケーションディレクトリ+ファイル名返却
      */
-    public static String getPath(String filename) {
+    public static String getPath(final String filename) {
         return StringUtils.appendBuilder(sContext.getFilesDir().getAbsolutePath(), "/", filename);
     }
 
@@ -263,7 +264,7 @@ public final class FileApplicationUtils {
      * @return true:ファイルが存在する。<br>
      *         false:ファイルが存在しない。
      */
-    public static boolean isExists(String filePath) {
+    public static boolean isExists(final String filePath) {
         final File file = new File(filePath);
         if (file.exists()) {
             return true;
@@ -281,7 +282,7 @@ public final class FileApplicationUtils {
      * @return true:指定容量以上の空きサイズあり<br>
      *         false:指定容量以下の空きサイズしかない<br>
      */
-    public static boolean isUsableSpace(File path, long size) {
+    public static boolean isUsableSpace(final File path, final long size) {
         return getUsableSpace(path) >= size;
     }
 
@@ -292,15 +293,16 @@ public final class FileApplicationUtils {
      *            ファイルパス
      * @return The space available in bytes
      */
+    @SuppressLint("NewApi")
     @SuppressWarnings("all")
-    public static long getUsableSpace(File filePath) {
+    public static long getUsableSpace(final File filePath) {
         try {
             return filePath.getFreeSpace();
-        } catch (NoSuchMethodError e1) {
+        } catch (final NoSuchMethodError e1) {
             final StatFs stats = new StatFs(filePath.getPath());
             try {
                 return stats.getAvailableBytes();
-            } catch (NoSuchMethodError e2) {
+            } catch (final NoSuchMethodError e2) {
                 return (long) stats.getBlockSize() * (long) stats.getAvailableBlocks();
             }
         }
@@ -313,15 +315,16 @@ public final class FileApplicationUtils {
      *            ファイルパス
      * @return The space available in bytes
      */
+    @SuppressLint("NewApi")
     @SuppressWarnings("all")
-    public static long getTotalSpace(File filePath) {
+    public static long getTotalSpace(final File filePath) {
         try {
             return filePath.getTotalSpace();
-        } catch (NoSuchMethodError e1) {
+        } catch (final NoSuchMethodError e1) {
             final StatFs stats = new StatFs(filePath.getPath());
             try {
                 return stats.getTotalBytes();
-            } catch (NoSuchMethodError e2) {
+            } catch (final NoSuchMethodError e2) {
                 return (long) stats.getBlockSize() * (long) stats.getBlockCount();
             }
         }

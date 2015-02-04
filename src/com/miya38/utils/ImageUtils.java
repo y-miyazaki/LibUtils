@@ -21,8 +21,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.DisplayMetrics;
 
-import com.google.common.io.Closeables;
-
 /**
  * 画像ユーティリティクラス
  */
@@ -30,18 +28,21 @@ public final class ImageUtils {
     // ----------------------------------------------------------
     // define
     // ----------------------------------------------------------
-    /** TAG */
-    private static final String TAG = ImageUtils.class.getSimpleName();
     /** モザイクのドット */
     private static final int MOZAIC_DOT = 16;
+    /** JPEG/PNG品質 */
+    private static final int IMAGE_QUALITY = 100;
 
     /**
      * 画像の種類
      */
     public enum IMAGE {
-        PNG, // png形式
-        JPEG, // jpeg形式
-        WEBP // webp形式
+        /** png形式 */
+        PNG,
+        /** jpeg形式 */
+        JPEG,
+        /** webp形式 */
+        WEBP
     }
 
     // ----------------------------------------------------------
@@ -63,7 +64,7 @@ public final class ImageUtils {
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
@@ -73,18 +74,23 @@ public final class ImageUtils {
 
     /* implementend by libplasma.so */
 
-    // private static native void Mozaic(int[] pixels, int width, int height, int originalWidth, int originalHeight, int
+    // private static native void Mozaic(int[] pixels, int width, int height,
+    // int originalWidth, int originalHeight, int
     // dot, int square);
     //
-    // private static native void Grayscale(int[] pixels, int width, int height);
+    // private static native void Grayscale(int[] pixels, int width, int
+    // height);
     //
     // private static native void Negative(int[] pixels, int width, int height);
     //
-    // private static native void Brightness(int[] pixels, int width, int height, int setting);
+    // private static native void Brightness(int[] pixels, int width, int
+    // height, int setting);
     //
-    // private static native void Contrast(int[] pixels, int width, int height, int setting);
+    // private static native void Contrast(int[] pixels, int width, int height,
+    // int setting);
     //
-    // private static native void Saturation(int[] pixels, int width, int height, int setting);
+    // private static native void Saturation(int[] pixels, int width, int
+    // height, int setting);
     //
     // private static native void Sepia(int[] pixels, int width, int height);
 
@@ -100,7 +106,7 @@ public final class ImageUtils {
      *            縦幅
      * @return ビットマップ
      */
-    public static Bitmap imageResize(Bitmap bitmap, int w, int h) {
+    public static Bitmap imageResize(final Bitmap bitmap, final int w, final int h) {
         // ----------------------------------------------------
         // チェック
         // ----------------------------------------------------
@@ -112,8 +118,8 @@ public final class ImageUtils {
         final int height = bitmap.getHeight(); // ビットマップの縦幅取得
 
         // calculate the scale - in this case = 0.4f
-        final float scaleWidth = ((float) w) / width; // 横幅縮尺比
-        final float scaleHeight = ((float) h) / height; // 縦幅縮尺比
+        final float scaleWidth = (float) w / width; // 横幅縮尺比
+        final float scaleHeight = (float) h / height; // 縦幅縮尺比
 
         // createa matrix for the manipulation
         final Matrix matrix = new Matrix();
@@ -135,16 +141,16 @@ public final class ImageUtils {
      *            ビットマップ
      * @param w
      *            変更後の横幅
-     * @param imageHeight
+     * @param h
      *            変更後の縦幅
      * @return ビットマップ
      */
-    public static Bitmap imageResize(String filename, int w, int h) {
+    public static Bitmap imageResize(final String filename, final int w, final int h) {
         // ----------------------------------------------------
         // チェック
         // ----------------------------------------------------
         final File ffilename = new File(filename);
-        if (ffilename == null || (ffilename != null && !ffilename.exists())) { // ファイルが存在しているかチェック
+        if (!ffilename.exists()) { // ファイルが存在しているかチェック
             return null;
         }
 
@@ -172,7 +178,7 @@ public final class ImageUtils {
         options.inPurgeable = true;
 
         Bitmap tmpBitmap = BitmapFactory.decodeFile(filename, options);
-        Bitmap resizeBitmap = imageResize(tmpBitmap, w, h);
+        final Bitmap resizeBitmap = imageResize(tmpBitmap, w, h);
         if (tmpBitmap != null && !tmpBitmap.equals(resizeBitmap)) {
             tmpBitmap.recycle();
             tmpBitmap = null;
@@ -192,7 +198,7 @@ public final class ImageUtils {
      *            縦幅
      * @return ビットマップ
      */
-    public static Bitmap imageResize(byte[] byteData, int w, int h) {
+    public static Bitmap imageResize(final byte[] byteData, final int w, final int h) {
         // ----------------------------------------------------
         // チェック
         // ----------------------------------------------------
@@ -222,8 +228,10 @@ public final class ImageUtils {
         options.inSampleSize = Math.max(scaleWidth, scaleHeight);
         options.inPurgeable = true;
 
-        Bitmap tmpBitmap = BitmapFactory.decodeByteArray(byteData, 0, byteData.length, options); // 画像を縮小 or 拡大して読み込み
-        Bitmap resizeBitmap = imageResize(tmpBitmap, w, h);
+        Bitmap tmpBitmap = BitmapFactory.decodeByteArray(byteData, 0, byteData.length, options); // 画像を縮小
+                                                                                                 // or
+                                                                                                 // 拡大して読み込み
+        final Bitmap resizeBitmap = imageResize(tmpBitmap, w, h);
         if (tmpBitmap != null && !tmpBitmap.equals(resizeBitmap)) {
             tmpBitmap.recycle();
             tmpBitmap = null;
@@ -241,7 +249,7 @@ public final class ImageUtils {
      *            サイズ圧縮(1,2,4,8,16,32...etc...)
      * @return ビットマップ
      */
-    public static Bitmap imageResize(Bitmap bitmap, int size) {
+    public static Bitmap imageResize(final Bitmap bitmap, final int size) {
         // ----------------------------------------------------
         // チェック
         // ----------------------------------------------------
@@ -252,8 +260,8 @@ public final class ImageUtils {
         final int height = bitmap.getHeight(); // ビットマップの縦幅取得
 
         // calculate the scale - in this case = 0.4f
-        final float scaleWidth = ((float) 1 / size); // 横幅縮尺比
-        final float scaleHeight = ((float) 1 / size); // 縦幅縮尺比
+        final float scaleWidth = (float) 1 / size; // 横幅縮尺比
+        final float scaleHeight = (float) 1 / size; // 縦幅縮尺比
 
         // createa matrix for the manipulation
         final Matrix matrix = new Matrix();
@@ -273,7 +281,7 @@ public final class ImageUtils {
      *            サイズ圧縮(1,2,4,8,16,32...etc...)
      * @return ビットマップ
      */
-    public static Bitmap imageResize(int resource, int size) {
+    public static Bitmap imageResize(final int resource, final int size) {
         // 現在の表示メトリクスの取得
         final DisplayMetrics dm = sContext.getResources().getDisplayMetrics();
 
@@ -284,9 +292,11 @@ public final class ImageUtils {
         options.inSampleSize = size;
         // ビットマップのサイズを現在の表示メトリクスに合わせる（メモリ対策）
         options.inDensity = dm.densityDpi;
-        // Tell to gc that whether it needs free memory, the Bitmap can be cleared
+        // Tell to gc that whether it needs free memory, the Bitmap can be
+        // cleared
         options.inPurgeable = true;
-        // Which kind of reference will be used to recover the Bitmap data after being clear, when it will be used in
+        // Which kind of reference will be used to recover the Bitmap data after
+        // being clear, when it will be used in
         // the future
         options.inInputShareable = true;
 
@@ -302,7 +312,7 @@ public final class ImageUtils {
      *            サイズ圧縮(1,2,4,8,16,32...etc...)
      * @return ビットマップ
      */
-    public static Bitmap imageResize(File file, int size) {
+    public static Bitmap imageResize(final File file, final int size) {
         // 現在の表示メトリクスの取得
         final DisplayMetrics dm = sContext.getResources().getDisplayMetrics();
 
@@ -311,9 +321,11 @@ public final class ImageUtils {
         options.inSampleSize = size;
         // ビットマップのサイズを現在の表示メトリクスに合わせる（メモリ対策）
         options.inDensity = dm.densityDpi;
-        // Tell to gc that whether it needs free memory, the Bitmap can be cleared
+        // Tell to gc that whether it needs free memory, the Bitmap can be
+        // cleared
         options.inPurgeable = true;
-        // Which kind of reference will be used to recover the Bitmap data after being clear, when it will be used in
+        // Which kind of reference will be used to recover the Bitmap data after
+        // being clear, when it will be used in
         // the future
         options.inInputShareable = true;
 
@@ -327,7 +339,7 @@ public final class ImageUtils {
      *            ビットマップ
      * @return 変換後のビットマップ
      */
-    public static Bitmap setMosaic(Bitmap bitmap) {
+    public static Bitmap setMosaic(final Bitmap bitmap) {
         // BitmapFactory.Options options = new BitmapFactory.Options();
         // options.inSampleSize = 8;
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // モザイク用画像
@@ -338,7 +350,7 @@ public final class ImageUtils {
         width = originalWidth / MOZAIC_DOT; // 画像横幅×モザイク幅
         height = originalHeight / MOZAIC_DOT; // 画像縦幅×モザイク幅
 
-        int[] pixels = new int[originalWidth * originalHeight]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[originalWidth * originalHeight]; // 設定するピクセルを領域取得
         rBitmap.getPixels(pixels, 0, originalWidth, 0, 0, originalWidth, originalHeight);
 
         // ----------------------------------------------------
@@ -363,11 +375,14 @@ public final class ImageUtils {
                     final int moveX = i * MOZAIC_DOT;
                     final int moveY = j * MOZAIC_DOT;
                     /*
-                     * // ドットの中の平均値を使う int rr = 0; int gg = 0; int bb = 0; for (int k=0;k<dot;k++) { for (int
-                     * l=0;l<dot;l++){ int dotColor = pixels[moveX+k + (moveY+l) * originalWidth]; rr +=
-                     * Color.red(dotColor); gg += Color.green(dotColor); bb += Color.blue(dotColor); } } rr = rr /
-                     * square; gg = gg / square; bb = bb / square; for (int k=0;k<dot;k++) { for (int l=0;l<dot;l++){
-                     * pixels[moveX+k + (moveY+l) * originalWidth] = Color.rgb(rr, gg, bb); } }
+                     * // ドットの中の平均値を使う int rr = 0; int gg = 0; int bb = 0; for
+                     * (int k=0;k<dot;k++) { for (int l=0;l<dot;l++){ int
+                     * dotColor = pixels[moveX+k + (moveY+l) * originalWidth];
+                     * rr += Color.red(dotColor); gg += Color.green(dotColor);
+                     * bb += Color.blue(dotColor); } } rr = rr / square; gg = gg
+                     * / square; bb = bb / square; for (int k=0;k<dot;k++) { for
+                     * (int l=0;l<dot;l++){ pixels[moveX+k + (moveY+l) *
+                     * originalWidth] = Color.rgb(rr, gg, bb); } }
                      */
                     for (int k = 1; k < MOZAIC_DOT; k++) {
                         for (int l = 1; l < MOZAIC_DOT; l++) {
@@ -398,7 +413,7 @@ public final class ImageUtils {
      *            モザイクをかける終了Y座標
      * @return 変換後のビットマップ
      */
-    public static Bitmap setMosaic(Bitmap bitmap, float left, float top, float right, float bottom) {
+    public static Bitmap setMosaic(final Bitmap bitmap, float left, float top, final float right, final float bottom) {
         // BitmapFactory.Options options = new BitmapFactory.Options();
         // options.inSampleSize = 8;
         Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // モザイク用画像
@@ -420,34 +435,34 @@ public final class ImageUtils {
         // ----------------------------------------------------
         // 横の開始位置がマイナスの場合は0に設定する
         // ----------------------------------------------------
-        final int mozaicX = (left > 0) ? (int) left : 0;
-        left = (left > 0) ? (int) left : 0;
+        final int mozaicX = left > 0 ? (int) left : 0;
+        left = left > 0 ? (int) left : 0;
 
         // ----------------------------------------------------
         // 縦の開始位置がマイナスの場合は0に設定する
         // ----------------------------------------------------
-        final int mozaicY = (top > 0) ? (int) top : 0;
-        top = (top > 0) ? (int) top : 0;
+        final int mozaicY = top > 0 ? (int) top : 0;
+        top = top > 0 ? (int) top : 0;
 
         // ----------------------------------------------------
         // 横幅を超えている場合は、最大位置までとするよう変換する
         // ----------------------------------------------------
         int mozaicWidth = (int) (right - left);
-        if ((originalWidth - left) < (right - left)) {
+        if (originalWidth - left < right - left) {
             mozaicWidth = (int) (originalWidth - left);
         }
-        mozaicWidth = (mozaicWidth > 0) ? mozaicWidth : 0;
+        mozaicWidth = mozaicWidth > 0 ? mozaicWidth : 0;
 
         // ----------------------------------------------------
         // 縦幅を超えている場合は、最大位置までとするよう変換する
         // ----------------------------------------------------
         int mozaicHeight = (int) (bottom - top);
-        if ((originalHeight - top) < (bottom - top)) {
+        if (originalHeight - top < bottom - top) {
             mozaicHeight = (int) (originalHeight - top);
         }
-        mozaicHeight = (mozaicHeight > 0) ? mozaicHeight : 0;
+        mozaicHeight = mozaicHeight > 0 ? mozaicHeight : 0;
 
-        int[] pixels = new int[originalWidth * originalHeight]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[originalWidth * originalHeight]; // 設定するピクセルを領域取得
         rBitmap.getPixels(pixels, 0, originalWidth, mozaicX, mozaicY, mozaicWidth, mozaicHeight);
         // ----------------------------------------------------
         // ARMアーキテクチャの場合
@@ -471,11 +486,14 @@ public final class ImageUtils {
                     final int moveX = i * MOZAIC_DOT;
                     final int moveY = j * MOZAIC_DOT;
                     /*
-                     * // ドットの中の平均値を使う int rr = 0; int gg = 0; int bb = 0; for (int k=0;k<dot;k++) { for (int
-                     * l=0;l<dot;l++){ int dotColor = pixels[moveX+k + (moveY+l) * originalWidth]; rr +=
-                     * Color.red(dotColor); gg += Color.green(dotColor); bb += Color.blue(dotColor); } } rr = rr /
-                     * square; gg = gg / square; bb = bb / square; for (int k=0;k<dot;k++) { for (int l=0;l<dot;l++){
-                     * pixels[moveX+k + (moveY+l) * originalWidth] = Color.rgb(rr, gg, bb); } }
+                     * // ドットの中の平均値を使う int rr = 0; int gg = 0; int bb = 0; for
+                     * (int k=0;k<dot;k++) { for (int l=0;l<dot;l++){ int
+                     * dotColor = pixels[moveX+k + (moveY+l) * originalWidth];
+                     * rr += Color.red(dotColor); gg += Color.green(dotColor);
+                     * bb += Color.blue(dotColor); } } rr = rr / square; gg = gg
+                     * / square; bb = bb / square; for (int k=0;k<dot;k++) { for
+                     * (int l=0;l<dot;l++){ pixels[moveX+k + (moveY+l) *
+                     * originalWidth] = Color.rgb(rr, gg, bb); } }
                      */
                     for (int k = 1; k < MOZAIC_DOT; k++) {
                         for (int l = 1; l < MOZAIC_DOT; l++) {
@@ -506,7 +524,7 @@ public final class ImageUtils {
      *            モザイクをかける終了Y座標
      * @return 変換後のビットマップ
      */
-    public static Bitmap setMosaic(String filename, float left, float top, float right, float bottom) {
+    public static Bitmap setMosaic(final String filename, float left, float top, final float right, final float bottom) {
         // long start = System.currentTimeMillis();
         int width, height, originalWidth, originalHeight;
         Bitmap rBitmap = null;
@@ -525,7 +543,7 @@ public final class ImageUtils {
             // ----------------------------------------------------
             // 横幅or縦幅を超えて位置を指定されている場合は、モザイクをかけない
             // ----------------------------------------------------
-            if ((originalWidth < left) || (originalHeight < top)) {
+            if (originalWidth < left || originalHeight < top) {
                 rBitmap.recycle();
                 rBitmap = null;
                 return rBitmap;
@@ -533,34 +551,34 @@ public final class ImageUtils {
             // ----------------------------------------------------
             // 横の開始位置がマイナスの場合は0に設定する
             // ----------------------------------------------------
-            final int mozaicX = (left > 0) ? (int) left : 0;
-            left = (left > 0) ? (int) left : 0;
+            final int mozaicX = left > 0 ? (int) left : 0;
+            left = left > 0 ? (int) left : 0;
 
             // ----------------------------------------------------
             // 縦の開始位置がマイナスの場合は0に設定する
             // ----------------------------------------------------
-            final int mozaicY = (top > 0) ? (int) top : 0;
-            top = (top > 0) ? (int) top : 0;
+            final int mozaicY = top > 0 ? (int) top : 0;
+            top = top > 0 ? (int) top : 0;
 
             // ----------------------------------------------------
             // 横幅を超えている場合は、最大位置までとするよう変換する
             // ----------------------------------------------------
             int mozaicWidth = (int) (right - left);
-            if ((originalWidth - left) < (right - left)) {
+            if (originalWidth - left < right - left) {
                 mozaicWidth = (int) (originalWidth - left);
             }
-            mozaicWidth = (mozaicWidth > 0) ? mozaicWidth : 0;
+            mozaicWidth = mozaicWidth > 0 ? mozaicWidth : 0;
 
             // ----------------------------------------------------
             // 縦幅を超えている場合は、最大位置までとするよう変換する
             // ----------------------------------------------------
             int mozaicHeight = (int) (bottom - top);
-            if ((originalHeight - top) < (bottom - top)) {
+            if (originalHeight - top < bottom - top) {
                 mozaicHeight = (int) (originalHeight - top);
             }
-            mozaicHeight = (mozaicHeight > 0) ? mozaicHeight : 0;
+            mozaicHeight = mozaicHeight > 0 ? mozaicHeight : 0;
 
-            int[] pixels = new int[originalWidth * originalHeight]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[originalWidth * originalHeight]; // 設定するピクセルを領域取得
             rBitmap.getPixels(pixels, 0, originalWidth, mozaicX, mozaicY, mozaicWidth, mozaicHeight);
             // ----------------------------------------------------
             // ARMアーキテクチャの場合
@@ -584,11 +602,15 @@ public final class ImageUtils {
                         final int moveX = i * MOZAIC_DOT;
                         final int moveY = j * MOZAIC_DOT;
                         /*
-                         * // ドットの中の平均値を使う int rr = 0; int gg = 0; int bb = 0; for (int k=0;k<dot;k++) { for (int
-                         * l=0;l<dot;l++){ int dotColor = pixels[moveX+k + (moveY+l) * originalWidth]; rr +=
-                         * Color.red(dotColor); gg += Color.green(dotColor); bb += Color.blue(dotColor); } } rr = rr /
-                         * square; gg = gg / square; bb = bb / square; for (int k=0;k<dot;k++) { for (int
-                         * l=0;l<dot;l++){ pixels[moveX+k + (moveY+l) * originalWidth] = Color.rgb(rr, gg, bb); } }
+                         * // ドットの中の平均値を使う int rr = 0; int gg = 0; int bb = 0;
+                         * for (int k=0;k<dot;k++) { for (int l=0;l<dot;l++){
+                         * int dotColor = pixels[moveX+k + (moveY+l) *
+                         * originalWidth]; rr += Color.red(dotColor); gg +=
+                         * Color.green(dotColor); bb += Color.blue(dotColor); }
+                         * } rr = rr / square; gg = gg / square; bb = bb /
+                         * square; for (int k=0;k<dot;k++) { for (int
+                         * l=0;l<dot;l++){ pixels[moveX+k + (moveY+l) *
+                         * originalWidth] = Color.rgb(rr, gg, bb); } }
                          */
                         for (int k = 1; k < MOZAIC_DOT; k++) {
                             for (int l = 1; l < MOZAIC_DOT; l++) {
@@ -601,7 +623,7 @@ public final class ImageUtils {
             }
             // 設定するピクセルを一気に指定
             rBitmap.setPixels(pixels, 0, originalWidth, mozaicX, mozaicY, mozaicWidth, mozaicHeight);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -615,12 +637,12 @@ public final class ImageUtils {
      *            ビットマップ
      * @return 変換後のビットマップ
      */
-    public static Bitmap setGrayscale(Bitmap bitmap) {
+    public static Bitmap setGrayscale(final Bitmap bitmap) {
         final int width = bitmap.getWidth(); // 画像横幅
         final int height = bitmap.getHeight(); // 画像縦幅
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
 
-        int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
         rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
         // ----------------------------------------------------
         // ARMアーキテクチャの場合
@@ -642,7 +664,7 @@ public final class ImageUtils {
                     // 計算式:R * 0.299 + G * 587 + B * 114
                     // ----------------------------------------------------
                     final int color = pixels[i + j * width];
-                    final int data = (int) ((299 * Color.red(color) + 587 * Color.green(color) + 114 * Color.blue(color)) / 1000);
+                    final int data = (299 * Color.red(color) + 587 * Color.green(color) + 114 * Color.blue(color)) / 1000;
                     pixels[i + j * width] = Color.rgb(data, data, data);
                 }
             }
@@ -658,7 +680,7 @@ public final class ImageUtils {
      *            ファイル名
      * @return 変換後のファイル名
      */
-    public static Bitmap setGrayscale(String filename) {
+    public static Bitmap setGrayscale(final String filename) {
         // long start = System.currentTimeMillis();
 
         Bitmap rBitmap = null;
@@ -668,7 +690,7 @@ public final class ImageUtils {
             rBitmap = rBitmap.copy(Bitmap.Config.ARGB_8888, true); // Mutableへの変更(ようするに編集可能にする)
             final int width = rBitmap.getWidth(); // ビットマップの横幅取得
             final int height = rBitmap.getHeight(); // ビットマップの縦幅取得
-            int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
 
             rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
             // ----------------------------------------------------
@@ -692,13 +714,13 @@ public final class ImageUtils {
                         // 計算式:R * 0.299 + G * 587 + B * 114
                         // ----------------------------------------------------
                         final int color = pixels[i + j * width];
-                        final int data = (int) ((299 * Color.red(color) + 587 * Color.green(color) + 114 * Color.blue(color)) / 1000);
+                        final int data = (299 * Color.red(color) + 587 * Color.green(color) + 114 * Color.blue(color)) / 1000;
                         pixels[i + j * width] = Color.rgb(data, data, data);
                     }
                 }
             }
             rBitmap.setPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを一気に指定
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -712,10 +734,10 @@ public final class ImageUtils {
      *            ビットマップ
      * @return 変換後のビットマップ
      */
-    public static Bitmap setNegative(Bitmap bitmap) {
+    public static Bitmap setNegative(final Bitmap bitmap) {
         final int width = bitmap.getWidth(); // 画像横幅
         final int height = bitmap.getHeight(); // 画像縦幅
-        int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
         rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
         // ----------------------------------------------------
@@ -755,7 +777,7 @@ public final class ImageUtils {
      *            ファイル名
      * @return 変換後のビットマップ
      */
-    public static Bitmap setNegative(String filename) {
+    public static Bitmap setNegative(final String filename) {
         // long start = System.currentTimeMillis();
         Bitmap rBitmap = null;
 
@@ -764,7 +786,7 @@ public final class ImageUtils {
             rBitmap = rBitmap.copy(Bitmap.Config.ARGB_8888, true); // Mutableへの変更(ようするに編集可能にする)
             final int width = rBitmap.getWidth(); // ビットマップの横幅取得
             final int height = rBitmap.getHeight(); // ビットマップの縦幅取得
-            int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
 
             rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
             // ----------------------------------------------------
@@ -794,7 +816,7 @@ public final class ImageUtils {
                 }
             }
             rBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -810,10 +832,10 @@ public final class ImageUtils {
      *            0%～50%～100%までコントラストを変更することができる。
      * @return 変換後のビットマップ
      */
-    public static Bitmap setBrightness(Bitmap bitmap, int setting) {
+    public static Bitmap setBrightness(final Bitmap bitmap, final int setting) {
         final int width = bitmap.getWidth(); // 画像横幅
         final int height = bitmap.getHeight(); // 画像縦幅
-        int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
         rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
         // ----------------------------------------------------
@@ -867,7 +889,7 @@ public final class ImageUtils {
      *            0%～50%～100%まで明るさを変更することができる。
      * @return 変換後のビットマップ
      */
-    public static Bitmap setBrightness(String filename, int setting) {
+    public static Bitmap setBrightness(final String filename, final int setting) {
         // long start = System.currentTimeMillis();
         Bitmap rBitmap = null;
 
@@ -876,7 +898,7 @@ public final class ImageUtils {
             rBitmap = rBitmap.copy(Bitmap.Config.ARGB_8888, true); // Mutableへの変更(ようするに編集可能にする)
             final int width = rBitmap.getWidth(); // ビットマップの横幅取得
             final int height = rBitmap.getHeight(); // ビットマップの縦幅取得
-            int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
             rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
             // ----------------------------------------------------
             // ARMアーキテクチャの場合
@@ -917,7 +939,7 @@ public final class ImageUtils {
                 }
             }
             rBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -933,10 +955,10 @@ public final class ImageUtils {
      *            0～50%～100%までコントラストを変更することができる。
      * @return 変換後のビットマップ
      */
-    public static Bitmap setContrast(Bitmap bitmap, int setting) {
+    public static Bitmap setContrast(final Bitmap bitmap, final int setting) {
         final int width = bitmap.getWidth(); // 画像横幅
         final int height = bitmap.getHeight(); // 画像縦幅
-        int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
         rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
         // ----------------------------------------------------
@@ -959,9 +981,9 @@ public final class ImageUtils {
                     // コントラスト変換処理
                     // 計算式 ((現在のカラー - 128) * ？%) + 128
                     // ----------------------------------------------------
-                    int rr = (int) ((Color.red(color) - 128) * setting / 50) + 128;
-                    int gg = (int) ((Color.green(color) - 128) * setting / 50) + 128;
-                    int bb = (int) ((Color.blue(color) - 128) * setting / 50) + 128;
+                    int rr = (Color.red(color) - 128) * setting / 50 + 128;
+                    int gg = (Color.green(color) - 128) * setting / 50 + 128;
+                    int bb = (Color.blue(color) - 128) * setting / 50 + 128;
                     if (rr > 255) {
                         rr = 255;
                     } else if (rr < 0) {
@@ -994,7 +1016,7 @@ public final class ImageUtils {
      *            0～50%～100%までコントラストを変更することができる。
      * @return 変換後のビットマップ
      */
-    public static Bitmap setContrast(String filename, int setting) {
+    public static Bitmap setContrast(final String filename, final int setting) {
         // long start = System.currentTimeMillis();
         Bitmap rBitmap = null;
 
@@ -1003,7 +1025,7 @@ public final class ImageUtils {
             rBitmap = rBitmap.copy(Bitmap.Config.ARGB_8888, true); // Mutableへの変更(ようするに編集可能にする)
             final int width = rBitmap.getWidth(); // ビットマップの横幅取得
             final int height = rBitmap.getHeight(); // ビットマップの縦幅取得
-            int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
             rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
             // ----------------------------------------------------
             // ARMアーキテクチャの場合
@@ -1025,9 +1047,9 @@ public final class ImageUtils {
                         // コントラスト変換処理
                         // 計算式 ((現在のカラー - 128) * ？%) + 128
                         // ----------------------------------------------------
-                        int rr = (int) ((Color.red(color) - 128) * setting / 50) + 128;
-                        int gg = (int) ((Color.green(color) - 128) * setting / 50) + 128;
-                        int bb = (int) ((Color.blue(color) - 128) * setting / 50) + 128;
+                        int rr = (Color.red(color) - 128) * setting / 50 + 128;
+                        int gg = (Color.green(color) - 128) * setting / 50 + 128;
+                        int bb = (Color.blue(color) - 128) * setting / 50 + 128;
                         if (rr > 255) {
                             rr = 255;
                         } else if (rr < 0) {
@@ -1048,7 +1070,7 @@ public final class ImageUtils {
                 }
             }
             rBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -1064,10 +1086,10 @@ public final class ImageUtils {
      *            0%～50%～100%まで彩度を変更することができる。
      * @return 変換後のビットマップ
      */
-    public static Bitmap setSaturation(Bitmap bitmap, int setting) {
+    public static Bitmap setSaturation(final Bitmap bitmap, final int setting) {
         final int width = bitmap.getWidth(); // 画像横幅
         final int height = bitmap.getHeight(); // 画像縦幅
-        int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
         rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
         // ----------------------------------------------------
@@ -1126,7 +1148,7 @@ public final class ImageUtils {
      *            0%～50%～100%まで彩度を変更することができる。
      * @return 変換後のビットマップ
      */
-    public static Bitmap setSaturation(String filename, int setting) {
+    public static Bitmap setSaturation(final String filename, final int setting) {
         // long start = System.currentTimeMillis();
         Bitmap rBitmap = null;
 
@@ -1135,7 +1157,7 @@ public final class ImageUtils {
             rBitmap = rBitmap.copy(Bitmap.Config.ARGB_8888, true); // Mutableへの変更(ようするに編集可能にする)
             final int width = rBitmap.getWidth(); // ビットマップの横幅取得
             final int height = rBitmap.getHeight(); // ビットマップの縦幅取得
-            int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
             rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
             // ----------------------------------------------------
             // ARMアーキテクチャの場合
@@ -1181,7 +1203,7 @@ public final class ImageUtils {
                 }
             }
             rBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -1195,10 +1217,10 @@ public final class ImageUtils {
      *            ビットマップ
      * @return 変換後のビットマップ
      */
-    public static Bitmap setSepia(Bitmap bitmap) {
+    public static Bitmap setSepia(final Bitmap bitmap) {
         final int width = bitmap.getWidth(); // 画像横幅
         final int height = bitmap.getHeight(); // 画像縦幅
-        int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+        final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
         final Bitmap rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
         rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
         // ----------------------------------------------------
@@ -1222,9 +1244,11 @@ public final class ImageUtils {
                     final int yy = (299 * rr + 587 * gg + 114 * bb) / 1000; // 行列の計算１
 
                     /*
-                     * uu = (-169 * rr - 331 * gg + 500 * bb) / 1000; //行列の計算２ vv = (500 * rr - 419 * gg - 81 * bb) /
-                     * 1000; //行列の計算３ uu = -23.296; vv = 14.336; rr = 1.0 * yy + 1.402 * vv; //逆行列の計算１ gg = 1.0 * yy -
-                     * 0.334 * uu - 0.714 * vv; //逆行列の計算２ bb = 1.0 * yy + 1.772 * uu; //逆行列の計算３
+                     * uu = (-169 * rr - 331 * gg + 500 * bb) / 1000; //行列の計算２
+                     * vv = (500 * rr - 419 * gg - 81 * bb) / 1000; //行列の計算３ uu
+                     * = -23.296; vv = 14.336; rr = 1.0 * yy + 1.402 * vv;
+                     * //逆行列の計算１ gg = 1.0 * yy - 0.334 * uu - 0.714 * vv;
+                     * //逆行列の計算２ bb = 1.0 * yy + 1.772 * uu; //逆行列の計算３
                      */
                     rr = yy + 20; // 逆行列の計算１
                     gg = yy - 2; // 逆行列の計算２
@@ -1260,7 +1284,7 @@ public final class ImageUtils {
      *            ファイル名
      * @return 変換後のビットマップ
      */
-    public static Bitmap setSepia(String filename) {
+    public static Bitmap setSepia(final String filename) {
         // long start = System.currentTimeMillis();
         Bitmap rBitmap = null;
 
@@ -1269,7 +1293,7 @@ public final class ImageUtils {
             rBitmap = rBitmap.copy(Bitmap.Config.ARGB_8888, true); // Mutableへの変更(ようするに編集可能にする)
             final int width = rBitmap.getWidth(); // ビットマップの横幅取得
             final int height = rBitmap.getHeight(); // ビットマップの縦幅取得
-            int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
+            final int[] pixels = new int[width * height]; // 設定するピクセルを領域取得
             rBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 設定するピクセルを領域取得
             // ----------------------------------------------------
             // ARMアーキテクチャの場合
@@ -1292,9 +1316,12 @@ public final class ImageUtils {
                         final int yy = (299 * rr + 587 * gg + 114 * bb) / 1000; // 行列の計算１
 
                         /*
-                         * uu = (-169 * rr - 331 * gg + 500 * bb) / 1000; //行列の計算２ vv = (500 * rr - 419 * gg - 81 * bb)
-                         * / 1000; //行列の計算３ uu = -23.296; vv = 14.336; rr = 1.0 * yy + 1.402 * vv; //逆行列の計算１ gg = 1.0 *
-                         * yy - 0.334 * uu - 0.714 * vv; //逆行列の計算２ bb = 1.0 * yy + 1.772 * uu; //逆行列の計算３
+                         * uu = (-169 * rr - 331 * gg + 500 * bb) / 1000;
+                         * //行列の計算２ vv = (500 * rr - 419 * gg - 81 * bb) / 1000;
+                         * //行列の計算３ uu = -23.296; vv = 14.336; rr = 1.0 * yy +
+                         * 1.402 * vv; //逆行列の計算１ gg = 1.0 * yy - 0.334 * uu -
+                         * 0.714 * vv; //逆行列の計算２ bb = 1.0 * yy + 1.772 * uu;
+                         * //逆行列の計算３
                          */
                         rr = yy + 20; // 逆行列の計算１
                         gg = yy - 2; // 逆行列の計算２
@@ -1320,7 +1347,7 @@ public final class ImageUtils {
                 }
             }
             rBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         // long end = System.currentTimeMillis();
@@ -1336,7 +1363,7 @@ public final class ImageUtils {
      *            0～360度まで指定可能
      * @return 変換後のビットマップ
      */
-    public static Bitmap setRotate(Bitmap bitmap, int rotate) {
+    public static Bitmap setRotate(final Bitmap bitmap, final int rotate) {
         Bitmap rBitmap = null;
         try {
             rBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true); // 画像をコピー(しないと元画像自体が変更される)
@@ -1347,7 +1374,7 @@ public final class ImageUtils {
             matrix.postRotate(rotate);
             // recreate the new Bitmap
             rBitmap = Bitmap.createBitmap(rBitmap, 0, 0, width, height, matrix, true);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 何もしない。
         }
         return rBitmap;
@@ -1362,7 +1389,7 @@ public final class ImageUtils {
      *            0～360度まで指定可能
      * @return 変換後のビットマップ
      */
-    public static Bitmap setRotate(String filename, int rotate) {
+    public static Bitmap setRotate(final String filename, final int rotate) {
         // long start = System.currentTimeMillis();
         Bitmap rBitmap = null;
         // ----------------------------------------------------
@@ -1370,7 +1397,7 @@ public final class ImageUtils {
         // ----------------------------------------------------
         final File ffilename = new File(filename);
         // ファイルが存在しているかチェック
-        if (ffilename != null && ffilename.exists()) {
+        if (ffilename.exists()) {
             try {
                 rBitmap = FileApplicationUtils.readBitmap(filename); // ファイルからBitmap取得
                 final int width = rBitmap.getWidth(); // 画像横幅
@@ -1382,7 +1409,7 @@ public final class ImageUtils {
 
                 // recreate the new Bitmap
                 rBitmap = Bitmap.createBitmap(rBitmap, 0, 0, width, height, matrix, true);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // 何もしない。
             }
         }
@@ -1399,7 +1426,7 @@ public final class ImageUtils {
      *            コーナーのピクセルサイズ
      * @return bitmap
      */
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+    public static Bitmap getRoundedCornerBitmap(final Bitmap bitmap, final int pixels) {
         if (bitmap == null) {
             return null;
         }
@@ -1432,9 +1459,9 @@ public final class ImageUtils {
      *            青
      * @return 3色の最大数値
      */
-    private static int getRGBMax(int red, int green, int blue) {
-        final int max = (red < green) ? green : red;
-        return (max < blue) ? blue : max;
+    public static int getRGBMax(final int red, final int green, final int blue) {
+        final int max = red < green ? green : red;
+        return max < blue ? blue : max;
     }
 
     /**
@@ -1448,9 +1475,9 @@ public final class ImageUtils {
      *            青
      * @return 3色の最小数値
      */
-    private static int getRGBMin(int red, int green, int blue) {
-        final int min = (red > green) ? green : red;
-        return (min < blue) ? blue : min;
+    public static int getRGBMin(final int red, final int green, final int blue) {
+        final int min = red > green ? green : red;
+        return min < blue ? blue : min;
     }
 
     /**
@@ -1459,7 +1486,7 @@ public final class ImageUtils {
      * @param filepath
      * @return MIMEタイプを取得する
      */
-    public static String getImageMimeType(String filepath) {
+    public static String getImageMimeType(final String filepath) {
         Pattern pattern;
         Matcher matcher;
         // PNG
@@ -1492,7 +1519,7 @@ public final class ImageUtils {
      * @return true:Data URI scheme形式<br>
      * @return false:Data URI scheme形式以外<br>
      */
-    public static boolean isDataUriScheme(String data) {
+    public static boolean isDataUriScheme(final String data) {
         if (!StringUtils.isEmpty(data)) {
             // Pattern p = Pattern.compile("data:image/.+;base64,");
             // Matcher m = p.matcher(data);
@@ -1518,15 +1545,15 @@ public final class ImageUtils {
      *            最大縦幅
      * @return Bitmap
      */
-    public static Bitmap getBitmap(String data, int w, int h) {
+    public static Bitmap getBitmap(final String data, final int w, final int h) {
         if (w <= 0 || h <= 0) {
             return getBitmap(data);
         }
         if (!isDataUriScheme(data)) {
             return null;
         }
-        String binary = data.replaceFirst("data:image/.+;base64,", "");
-        byte[] bytes = Base64Utils.base64DecodeByte(binary);
+        final String binary = data.replaceFirst("data:image/.+;base64,", "");
+        final byte[] bytes = Base64Utils.base64DecodeByte(binary);
         return imageResize(bytes, w, h);
     }
 
@@ -1538,12 +1565,12 @@ public final class ImageUtils {
      *            ex:data:image/jpeg;base64,～
      * @return Bitmap
      */
-    public static Bitmap getBitmap(String data) {
+    public static Bitmap getBitmap(final String data) {
         if (!isDataUriScheme(data)) {
             return null;
         }
-        String binary = data.replaceFirst("data:image/.+;base64,", "");
-        byte[] bytes = Base64Utils.base64DecodeByte(binary);
+        final String binary = data.replaceFirst("data:image/.+;base64,", "");
+        final byte[] bytes = Base64Utils.base64DecodeByte(binary);
         final Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = false;
         options.inPurgeable = true;
@@ -1561,21 +1588,21 @@ public final class ImageUtils {
      *            Bitmap
      * @return バイト型配列
      */
-    public static byte[] getByte(Bitmap bitmap, IMAGE image) {
+    public static byte[] getByte(final Bitmap bitmap, final IMAGE image) {
         ByteArrayOutputStream out = null;
 
         try {
             out = new ByteArrayOutputStream();
             if (image == IMAGE.PNG) {
-                bitmap.compress(CompressFormat.JPEG, 100, out);
+                bitmap.compress(CompressFormat.JPEG, IMAGE_QUALITY, out);
             } else if (image == IMAGE.WEBP) {
-                bitmap.compress(CompressFormat.WEBP, 100, out);
+                bitmap.compress(CompressFormat.WEBP, IMAGE_QUALITY, out);
             } else if (image == IMAGE.PNG) {
-                bitmap.compress(CompressFormat.PNG, 100, out);
+                bitmap.compress(CompressFormat.PNG, IMAGE_QUALITY, out);
             }
             return out.toByteArray();
         } finally {
-            Closeables.closeQuietly(out);
+            IOUtils.closeQuietly(out);
         }
     }
 
@@ -1592,7 +1619,7 @@ public final class ImageUtils {
      *            false:引数のBitmapをrecycleしない。
      * @return コピーされたBitmap
      */
-    public static Bitmap getBitmapCopy(Bitmap bitmap, boolean isMutable, boolean isRecycle) {
+    public static Bitmap getBitmapCopy(Bitmap bitmap, final boolean isMutable, final boolean isRecycle) {
         if (bitmap == null) {
             return null;
         }
@@ -1600,7 +1627,7 @@ public final class ImageUtils {
         if (config == null) {
             config = Bitmap.Config.ARGB_8888;
         }
-        Bitmap copyBitmap = bitmap.copy(config, isMutable);
+        final Bitmap copyBitmap = bitmap.copy(config, isMutable);
         if (isRecycle) {
             if (!bitmap.equals(copyBitmap)) {
                 // 元画像ファイルの破棄
