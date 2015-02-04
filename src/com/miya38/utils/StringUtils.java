@@ -1,5 +1,6 @@
 package com.miya38.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
@@ -133,8 +134,10 @@ public final class StringUtils {
     }
 
     /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     * The returned array will be double the length of the passed array, as it takes two characters to represent any
+     * Converts an array of bytes into an array of characters representing the
+     * hexadecimal values of each byte in order.
+     * The returned array will be double the length of the passed array, as it
+     * takes two characters to represent any
      * given byte.
      *
      * @param data
@@ -146,8 +149,10 @@ public final class StringUtils {
     }
 
     /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     * The returned array will be double the length of the passed array, as it takes two characters to represent any
+     * Converts an array of bytes into an array of characters representing the
+     * hexadecimal values of each byte in order.
+     * The returned array will be double the length of the passed array, as it
+     * takes two characters to represent any
      * given byte.
      *
      * @param data
@@ -162,8 +167,10 @@ public final class StringUtils {
     }
 
     /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     * The returned array will be double the length of the passed array, as it takes two characters to represent any
+     * Converts an array of bytes into an array of characters representing the
+     * hexadecimal values of each byte in order.
+     * The returned array will be double the length of the passed array, as it
+     * takes two characters to represent any
      * given byte.
      *
      * @param data
@@ -185,8 +192,10 @@ public final class StringUtils {
     }
 
     /**
-     * Converts an array of bytes into a String representing the hexadecimal values of each byte in order. The returned
-     * String will be double the length of the passed array, as it takes two characters to represent any given byte.
+     * Converts an array of bytes into a String representing the hexadecimal
+     * values of each byte in order. The returned
+     * String will be double the length of the passed array, as it takes two
+     * characters to represent any given byte.
      *
      * @param data
      *            a byte[] to convert to Hex characters
@@ -198,13 +207,17 @@ public final class StringUtils {
     }
 
     /**
-     * Converts an array of characters representing hexidecimal values into an array of bytes of those same values. The
-     * returned array will be half the length of the passed array, as it takes two characters to represent any given
-     * byte. An exception is thrown if the passed char array has an odd number of elements.
+     * Converts an array of characters representing hexidecimal values into an
+     * array of bytes of those same values. The
+     * returned array will be half the length of the passed array, as it takes
+     * two characters to represent any given
+     * byte. An exception is thrown if the passed char array has an odd number
+     * of elements.
      *
      * @param data
      *            An array of characters containing hexidecimal digits
-     * @return A byte array containing binary data decoded from the supplied char array.
+     * @return A byte array containing binary data decoded from the supplied
+     *         char array.
      */
     public static byte[] decodeHex(char[] data) {
 
@@ -382,4 +395,82 @@ public final class StringUtils {
             src.append(String.format(format, args));
         }
     }
+
+    /**
+     * 文字列の指定区切りをArrayListに変換する
+     *
+     * @param text
+     *            文字列
+     * @param split
+     *            区切り文字
+     * @return ArrayList
+     */
+    public static ArrayList<String> toArray(final String text, final String split) {
+        final ArrayList<String> results = new ArrayList<String>();
+        if (!StringUtils.isEmpty(text)) {
+            if (StringUtils.contains(text, split)) {
+                final String[] splitString = text.split(split);
+                // 配列をListに変換
+                for (final String data : splitString) {
+                    results.add(data);
+                }
+            } else {
+                results.add(text);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * startWithメソッド呼ぶ
+     *
+     * @param text
+     *            文字列
+     * @param prefix
+     *            the string to look for.
+     * @return {@code true} if the specified string is a prefix of this string,
+     *         {@code false} otherwise
+     */
+    public static boolean startsWith(final String text, final String prefix) {
+        if (text == null) {
+            return false;
+        }
+        return text.startsWith(prefix);
+    }
+
+    /**
+     * 文字列が含まれているかチェックします。
+     *
+     * @param str
+     *            対象文字列
+     * @param containStr
+     *            含まれているかチェックする文字列
+     * @return true:含まれている/false:含まれていない
+     */
+    public static boolean contains(final String str, final String containStr) {
+        if (StringUtils.isEmpty(str)) {
+            return false;
+        }
+        return str.contains(containStr);
+    }
+
+    /**
+     * ブランクかどうか返します。
+     *
+     * @param str
+     *            文字列
+     * @return ブランクかどうか
+     */
+    public static boolean isBlank(final CharSequence str) {
+        if (str == null || str.length() == 0) {
+            return true;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isWhitespace(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
