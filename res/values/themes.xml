@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    ***************************************************************
+    * Dialog Animation Style
+    ***************************************************************
+    -->
+    <style name="Animation" parent="android:Animation" />
+
+    <style name="Animation.CustomDialogUp" parent="android:Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="Animation.CustomDialogDown" parent="android:Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_exit</item>
+        <item name="android:windowExitAnimation">@anim/dialog_enter</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * Dialog
+    ***************************************************************
+    -->
+    <style name="Theme.CustomDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/Animation.CustomDialogUp</item>
+    </style>
+
+    <style name="DialogThemeUp" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.8</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorPrimaryInverse">@android:color/darker_gray</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textColorSecondaryInverse">@android:color/black</item>
+        <item name="android:textColorTertiary">@android:color/holo_red_dark</item>
+        <item name="android:textColorTertiaryInverse">@android:color/black</item>
+        <item name="android:textColorLink">@color/text_link</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:panelBackground">@null</item>
+        <item name="android:panelFullBackground">@null</item>
+        <item name="android:windowAnimationStyle">@style/Animation.CustomDialogUp</item>
+        <item name="android:configChanges">orientation|keyboardHidden</item>
+        <item name="android:screenOrientation">portrait</item>
+    </style>
+
+    <style name="DialogThemeDown" parent="DialogThemeUp">
+        <item name="android:windowAnimationStyle">@style/Animation.CustomDialogDown</item>
+    </style>
+
+    <style name="Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="DialogDefault" parent="@style/Dialog">
+        <item name="android:background">@xml/common_dialog_background_01_shape</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">20dp</item>
+    </style>
+
+    <style name="DialogBlack" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@xml/common_dialog_background_02_black_shape</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="DialogBlackOhter" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@xml/common_dialog_background_02_black_shape</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="DialogTransparent" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
+</resources>

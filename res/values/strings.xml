@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    ***************************************************************
+    * 共通ダイアログ文言
+    * ここの定義は各画面では使用しない事！
+    ****************************************************************
+    -->
+    <!-- Basic認証文言 -->
+    <string name="common_dialog_basic_message">%1$s サーバーでは、ユーザー名とパスワードが必要です。\nサーバからのメッセージ: %2$s</string>
+    <string name="common_dialog_basic_username">ユーザー名</string>
+    <string name="common_dialog_basic_password">パスワード</string>
+    <string name="common_dialog_basic_button_cancel">キャンセル</string>
+    <string name="common_dialog_basic_button_login">ログイン</string>
+    <!--
+    ***************************************************************
+    * 共通エラーダイアログ文言
+    * ここの定義は各画面では使用しない事！
+    ****************************************************************
+    -->
+    <!-- 403系エラー -->
+    <string name="error_dialog_403_title">認証に失敗しました。(%1$s)</string>
+    <string name="error_dialog_403_message">再度ログインをお願いいたします。</string>
+    <!-- 404系エラー -->
+    <string name="error_dialog_404_title">アプリケーションエラー(%1$s)</string>
+    <string name="error_dialog_404_message">リクエストするAPIが存在しません。</string>
+    <!-- 405系エラー -->
+    <string name="error_dialog_405_title">アプリケーションエラー(%1$s)</string>
+    <string name="error_dialog_405_message">リクエストしたAPIに対して存在しないメソッドを呼び出しています。</string>
+    <!-- 500系エラー -->
+    <string name="error_dialog_5xx_title">データアクセスエラー(%1$s)</string>
+    <string name="error_dialog_5xx_message">データへのアクセスが正常に行われませんでした。</string>
+    <!-- 503系エラー -->
+    <string name="error_dialog_503_button01">詳細はこちら</string>
+    <!-- コネクションエラー -->
+    <string name="error_dialog_connection_title">接続に失敗しました。(%1$s)</string>
+    <string name="error_dialog_connection_message">接続に失敗しました。再度データを送信しますか？</string>
+    <!-- ネットワークエラー -->
+    <string name="error_dialog_network_title">ネットワークエラー(%1$s)</string>
+    <string name="error_dialog_network_message">ネットワークが見つかりません。電波の良いところでやりなおしてください。</string>
+    <!-- ネットワーク接続中断エラー -->
+    <string name="error_dialog_network_abort_title">ネットワーク接続中断(%1$s)</string>
+    <string name="error_dialog_network_abort_message">通信が中断されました。再度データを送信しますか？</string>
+    <!-- Jsonパースエラー -->
+    <string name="error_dialog_json_parse_title">データ受信失敗</string>
+    <string name="error_dialog_json_parse_message">データが正常に受信できませんでした。</string>
+
+    <!-- Exceptionエラー -->
+    <string name="error_dialog_exception_title">アプリケーションエラー(%1$s)</string>
+    <string name="error_dialog_exception_message">アプリケーションにエラーが発生しました。アプリケーションを再起動してください。</string>
+    <string name="error_dialog_button_ok">OK</string>
+    <string name="error_dialog_button_request">再送信</string>
+    <string name="error_dialog_button_cancel">キャンセル</string>
+
+    <!--
+    ***************************************************************
+    * 共通フォーム系エラー文言
+    * ここの定義は各画面では使用しない事！
+    ****************************************************************
+    -->
+    <string name="error_form_edittext_required">%1$sは必須項目です。</string>
+    <string name="error_form_edittext_min_size">%1$sは%2$d文字以上で入力してください。</string>
+    <string name="error_form_edittext_max_size">%1$sは%2$d文字以下で入力してください。</string>
+    <string name="error_form_edittext_confirm">%1$sが%2$sと一致しません。</string>
+    <string name="error_form_edittext_alpha_and_numeric">%1$sは英字と数字の組み合わせで入力してください。</string>
+    <string name="error_form_edittext_phone">%1$sが不正です。</string>
+    <string name="error_form_edittext_mailaddress">%1$sが不正です。</string>
+    <string name="error_form_edittext_url">%1$sが不正です。</string>
+    <string name="error_form_checkbox">%1$sを選択してください。</string>
+    <string name="error_form_datepicker_future">%1$sに未来日を指定しています。</string>
+    <string name="error_form_datepicker_check18">18歳以上の方のみ使用することができます。</string>
+    <string name="error_form_radiogroup_required">%1$sを選択してください。</string>
+
+    <!--
+    ***************************************************************
+    * トリミング
+    ****************************************************************
+    -->
+    <string name="activity_triming_button01">トリミング</string>
+    <string name="activity_triming_button02">左へ回転</string>
+    <string name="activity_triming_button03">右へ回転</string>
+
+</resources>

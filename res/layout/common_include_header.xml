@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/RelativeLayoutHeader"
+    style="@style/BackgroundHeader"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp" >
+
+    <com.miya38.widget.CustomTextView
+        android:id="@+id/CustomTextViewHeader"
+        style="@style/HeaderText"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        app:resize="true" />
+
+</RelativeLayout>

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+    ***************************************************************
+    * 基本のテキスト・フォントサイズ
+    ***************************************************************    -->
+    <style name="CustomTextViewXXLarge">
+        <item name="android:textSize">@dimen/xxlarge_text_size</item>
+    </style>
+    <style name="CustomTextViewXLarge">
+        <item name="android:textSize">@dimen/xlarge_text_size</item>
+    </style>
+    <style name="CustomTextViewLarge">
+        <item name="android:textSize">@dimen/large_text_size</item>
+    </style>
+    <style name="CustomTextViewNormal">
+        <item name="android:textSize">@dimen/default_text_size</item>
+    </style>
+    <style name="CustomTextViewSmall">
+        <item name="android:textSize">@dimen/small_text_size</item>
+    </style>
+    <style name="CustomTextViewXsmall">
+        <item name="android:textSize">@dimen/xsmall_text_size</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * 基本のテキストカラー(Primary)
+    ***************************************************************    -->
+    <style name="CustomTextViewPrimaryXXLarge" parent="CustomTextViewXXLarge">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="CustomTextViewPrimaryXLarge" parent="CustomTextViewXLarge">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="CustomTextViewPrimaryLarge" parent="CustomTextViewLarge">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="CustomTextViewPrimaryNormal" parent="CustomTextViewNormal">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="CustomTextViewPrimarySmall" parent="CustomTextViewSmall">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="CustomTextViewPrimaryXsmall" parent="CustomTextViewXsmall">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CustomTextViewPrimaryXXLargeBold" parent="CustomTextViewPrimaryXXLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewPrimaryXLargeBold" parent="CustomTextViewPrimaryXLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewPrimaryLargeBold" parent="CustomTextViewPrimaryLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewPrimaryNormalBold" parent="CustomTextViewPrimaryNormal">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewPrimarySmallBold" parent="CustomTextViewPrimarySmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewPrimaryXsmallBold" parent="CustomTextViewPrimaryXsmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--
+    ***************************************************************
+    * 基本のテキストカラー(Secondary)・フォントサイズ
+    ***************************************************************    -->
+    <style name="CustomTextViewSecondaryXXLarge" parent="CustomTextViewXXLarge">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="CustomTextViewSecondaryXLarge" parent="CustomTextViewXLarge">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="CustomTextViewSecondaryLarge" parent="CustomTextViewLarge">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="CustomTextViewSecondaryNormal" parent="CustomTextViewNormal">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="CustomTextViewSecondarySmall" parent="CustomTextViewSmall">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="CustomTextViewSecondaryXsmall" parent="CustomTextViewXsmall">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="CustomTextViewSecondaryXXLargeBold" parent="CustomTextViewSecondaryXXLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewSecondaryXLargeBold" parent="CustomTextViewSecondaryXLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewSecondaryLargeBold" parent="CustomTextViewSecondaryLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewSecondaryNormalBold" parent="CustomTextViewSecondaryNormal">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewSecondarySmallBold" parent="CustomTextViewSecondarySmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewSecondaryXsmallBold" parent="CustomTextViewSecondaryXsmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * 基本のテキストカラー(Tertiary)・フォントサイズ
+    ***************************************************************    -->
+    <style name="CustomTextViewTertiaryXXlarge" parent="CustomTextViewXXLarge">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+    <style name="CustomTextViewTertiaryXlarge" parent="CustomTextViewXLarge">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+    <style name="CustomTextViewTertiaryLarge" parent="CustomTextViewLarge">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+    <style name="CustomTextViewTertiaryNormal" parent="CustomTextViewNormal">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+    <style name="CustomTextViewTertiarySmall" parent="CustomTextViewSmall">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+    <style name="CustomTextViewTertiaryXsmall" parent="CustomTextViewXsmall">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+
+    <style name="CustomTextViewTertiaryXXlargeBold" parent="CustomTextViewTertiaryXXlarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewTertiaryXlargeBold" parent="CustomTextViewTertiaryXlarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewTertiaryLargeBold" parent="CustomTextViewTertiaryLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewTertiaryNormalBold" parent="CustomTextViewTertiaryNormal">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewTertiarySmallBold" parent="CustomTextViewTertiarySmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomTextViewTertiaryXsmallBold" parent="CustomTextViewTertiaryXsmall">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * 基本のテキストカラー・フォントサイズとシャドー付
+    ***************************************************************    -->
+    <style name="CustomTextViewPrimaryXXLargeShadow" parent="CustomTextViewPrimaryXXLarge">
+        <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewPrimaryXLargeShadow" parent="CustomTextViewPrimaryXLarge">
+        <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewPrimaryLargeShadow" parent="CustomTextViewPrimaryLarge">
+        <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewPrimaryNormalShadow" parent="CustomTextViewPrimaryNormal">
+        <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewPrimarySmallShadow" parent="CustomTextViewPrimarySmall">
+        <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewPrimaryXsmallShadow" parent="CustomTextViewPrimaryXsmall">
+        <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * セカンドダリーのテキストカラー・フォントサイズ・シャドー付
+    ***************************************************************    -->
+    <style name="CustomTextViewSecondaryXXLargeShadow" parent="CustomTextViewPrimaryXXLarge">
+        <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewSecondaryXLargeShadow" parent="CustomTextViewPrimaryXLarge">
+        <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewSecondaryLargeShadow" parent="CustomTextViewPrimaryLarge">
+        <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewSecondaryNormalShadow" parent="CustomTextViewSecondaryNormal">
+        <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewSecondarySmallShadow" parent="CustomTextViewSecondarySmall">
+        <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTextViewSecondaryXsmallShadow" parent="CustomTextViewSecondaryXsmall">
+        <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * 背景・テキスト
+    ***************************************************************    -->
+    <style name="BackgroundBasic">
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="BackgroundHeader">
+        <item name="android:background">@android:color/black</item>
+        <item name="android:color">@color/text_header</item>
+    </style>
+
+    <style name="HeaderText">
+        <item name="android:textColor">@color/text_header</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BackgroundFooter">
+        <item name="android:background">@android:color/black</item>
+        <item name="android:color">@color/text_header</item>
+    </style>
+
+    <style name="FooterText">
+        <item name="android:textColor">@color/text_header</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * Button
+    ***************************************************************    -->
+    <style name="CustomButtonBasic">
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <!-- White -->
+    <style name="CustomButtonWhite" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_white</item>
+        <item name="android:textColor">@xml/common_button_white</item>
+    </style>
+
+    <style name="CustomButtonWhiteCorner" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_white_corner</item>
+        <item name="android:textColor">@xml/common_button_white_corner</item>
+    </style>
+
+    <style name="CustomButtonWhiteFlat" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_white_flat</item>
+        <item name="android:textColor">@xml/common_button_white_flat</item>
+    </style>
+
+    <!-- Black -->
+    <style name="CustomButtonBlack" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_black</item>
+        <item name="android:textColor">@xml/common_button_black</item>
+    </style>
+
+    <style name="CustomButtonBlackCorner" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_black_corner</item>
+        <item name="android:textColor">@xml/common_button_black_corner</item>
+    </style>
+
+    <style name="CustomButtonBlackFlat" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_black_flat</item>
+        <item name="android:textColor">@xml/common_button_black_flat</item>
+    </style>
+
+    <!-- Blue -->
+    <style name="CustomButtonBlue" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_blue</item>
+        <item name="android:textColor">@xml/common_button_blue</item>
+    </style>
+
+    <style name="CustomButtonBlueCorner" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_blue_corner</item>
+        <item name="android:textColor">@xml/common_button_blue_corner</item>
+    </style>
+
+    <style name="CustomButtonBlueFlat" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_blue_flat</item>
+        <item name="android:textColor">@xml/common_button_blue_flat</item>
+    </style>
+
+    <!-- Silver -->
+    <style name="CustomButtonSilver" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_silver</item>
+        <item name="android:textColor">@xml/common_button_silver</item>
+    </style>
+
+    <style name="CustomButtonSilverCorner" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_silver_corner</item>
+        <item name="android:textColor">@xml/common_button_silver_corner</item>
+    </style>
+
+    <style name="CustomButtonSilverFlat" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_silver_flat</item>
+        <item name="android:textColor">@xml/common_button_silver_flat</item>
+    </style>
+
+    <!-- Red -->
+    <style name="CustomButtonRed" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_red</item>
+        <item name="android:textColor">@xml/common_button_red</item>
+    </style>
+
+    <style name="CustomButtonRedCorner" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_red_corner</item>
+        <item name="android:textColor">@xml/common_button_red_corner</item>
+    </style>
+
+    <style name="CustomButtonRedFlat" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_red_flat</item>
+        <item name="android:textColor">@xml/common_button_red_flat</item>
+    </style>
+
+    <!-- Green -->
+    <style name="CustomButtonGreen" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_green</item>
+        <item name="android:textColor">@xml/common_button_green</item>
+    </style>
+
+    <style name="CustomButtonGreenCorner" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_green_corner</item>
+        <item name="android:textColor">@xml/common_button_green_corner</item>
+    </style>
+
+    <style name="CustomButtonGreenFlat" parent="CustomButtonBasic">
+        <item name="android:background">@xml/common_button_green_flat</item>
+        <item name="android:textColor">@xml/common_button_green_flat</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * EditText
+    ***************************************************************    -->
+
+    <!-- 背景白の基本のEditText(ただし、これ自体は使用せず継承している別のStyleを使用すること) -->
+    <style name="CustomEditTextWhite">
+        <item name="android:background">@xml/common_edittext_white</item>
+        <item name="android:textColor">@color/common_edittext_white_text</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <!-- 背景白の基本のEditText(ただし、これ自体は使用せず継承している別のStyleを使用すること) -->
+    <style name="CustomEditTextWhiteCorner">
+        <item name="android:background">@xml/common_edittext_white_corner</item>
+        <item name="android:textColor">@color/common_edittext_white_text</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <!-- 背景ピンクの基本のEditText(ただし、これ自体は使用せず継承している別のStyleを使用すること) -->
+    <style name="CustomEditTextPink">
+        <item name="android:background">@xml/common_edittext_pink</item>
+        <item name="android:textColor">@color/common_edittext_pink_text</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <!-- 背景ピンクの基本のEditText(ただし、これ自体は使用せず継承している別のStyleを使用すること) -->
+    <style name="CustomEditTextPinkCorner">
+        <item name="android:background">@xml/common_edittext_pink_corner</item>
+        <item name="android:textColor">@color/common_edittext_pink_text</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <!-- Basic認証ID -->
+    <style name="CustomEditTextBasicUserName" parent="CustomEditTextWhite">
+        <item name="android:inputType">text</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="alphanumeric">true</item>
+    </style>
+
+    <!-- Basic認証パスワード -->
+    <style name="CustomEditTextBasicPassword" parent="CustomEditTextWhite">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="alphanumeric">true</item>
+    </style>
+
+    <!--
+    ***************************************************************
+    * CustomGallery
+    ***************************************************************
+    -->
+    <style name="CustomGalleryBasic">
+        <item name="android:background">@null</item>
+        <item name="android:horizontalSpacing">0dp</item>
+        <item name="android:verticalSpacing">0dp</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:animationCache">false</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:spacing">0dp</item>
+    </style>
+    <!--
+    ***************************************************************
+    * CustomGridView
+    ***************************************************************
+    -->
+    <style name="CustomGridViewBasic">
+        <item name="android:background">@null</item>
+        <item name="android:numColumns">4</item>
+        <item name="android:columnWidth">80dp</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:spacing">0dp</item>
+        <item name="android:horizontalSpacing">5dp</item>
+        <item name="android:verticalSpacing">5dp</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:animationCache">false</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+    <!--
+    ***************************************************************
+    * CustomImageView
+    ***************************************************************
+    -->
+    <!-- イメージスタイル(CustomImageView版) -->
+    <style name="CustomImageViewBasic">
+        <item name="android:padding">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@null</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <!-- イメージボタンスタイル(CustomImageView版) -->
+    <style name="CustomImageViewBasicButton" parent="CustomImageViewBasic">
+        <item name="tint">@color/button_inverse</item>
+    </style>
+
+</resources>

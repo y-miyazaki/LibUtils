@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <com.miya38.widget.CustomImageView
+            android:id="@+id/CustomImageView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:scaleType="fitCenter" />
+
+        <com.miya38.widget.CustomTextView
+            android:id="@+id/CustomTextView01"
+            style="@style/CustomTextViewSecondarySmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal" />
+
+        <com.miya38.widget.CustomTextView
+            android:id="@+id/CustomTextView02"
+            style="@style/CustomTextViewSecondarySmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout03"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.miya38.widget.CustomButton
+            android:id="@+id/CustomButton01"
+            style="@style/CustomButtonBlueCorner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <com.miya38.widget.CustomButton
+            android:id="@+id/CustomButton02"
+            style="@style/CustomButtonBlueCorner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <com.miya38.widget.CustomButton
+            android:id="@+id/CustomButton03"
+            style="@style/CustomButtonBlueCorner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    android:background="#FF003b89"
+    android:padding="10dp"
+    android:orientation="vertical" >
+
+    <com.miya38.widget.CustomTextView
+        android:id="@+id/CustomTextViewErrorTitle"
+        style="@style/CustomTextViewPrimaryNormalBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:edit_text="データアクセスエラー" />
+
+    <com.miya38.widget.CustomTextView
+        android:id="@+id/CustomTextViewErrorMessage"
+        style="@style/CustomTextViewPrimaryNormalBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:edit_text="インターネット接続がありません" />
+
+</LinearLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomImageView">
+        <attr name="corner" format="boolean" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="porterduff_mode" format="string" />
+        <attr name="tint" format="color" />
+        <!-- 画像表示前 -->
+        <attr name="default_image" format="string" />
+        <!-- 画像エラー表示 -->
+        <attr name="error_image" format="string" />
+        <!-- 編集時画像 -->
+        <attr name="edit_src" format="reference" />
+    </declare-styleable>
+
+    <!-- CustomLinearLayout -->
+    <declare-styleable name="CustomLinearLayout">
+        <attr name="repeat" format="boolean" />
+        <attr name="dispatch_set_pressed" format="boolean" />
+    </declare-styleable>
+
+    <!-- CustomEditText -->
+    <declare-styleable name="CustomEditText">
+        <attr name="required" format="boolean" />
+        <attr name="name" format="string" />
+        <attr name="min_length" format="integer" />
+        <attr name="max_length" format="integer" />
+        <attr name="alphanumeric" format="boolean" />
+        <attr name="alpha_and_numeric_required" format="boolean" />
+        <attr name="mailaddress" format="boolean" />
+        <attr name="phone" format="boolean" />
+        <attr name="url" format="boolean" />
+    </declare-styleable>
+
+    <!-- CustomDatePicker -->
+    <declare-styleable name="CustomDatePicker">
+        <attr name="datepicker_future" format="boolean" />
+        <attr name="datepicker_name" format="string" />
+        <attr name="datepicker_check18" format="boolean" />
+    </declare-styleable>
+
+    <!-- CustomRadio -->
+    <declare-styleable name="CustomRadioGroup">
+        <attr name="radiogroup_name" format="string" />
+    </declare-styleable>
+
+    <!-- CustomTextView -->
+    <declare-styleable name="CustomTextView">
+        <!-- フォント -->
+        <attr name="type_face">
+        <!-- モトヤLシーダ3等幅 -->
+        <enum name="MTLc3m" value="1" />
+        </attr>
+        <!-- 省略設定(固定で...) -->
+        <attr name="ellipsize_maxlines" format="integer" />
+        <!-- 省略設定(固定で...) -->
+        <attr name="ellipsize" format="boolean" />
+        <!-- 文字の自動リサイズ -->
+        <attr name="resize" format="boolean" />
+        <!-- 文字のブリンク -->
+        <attr name="blink" format="boolean" />
+        <!-- 文字のブリンク回数 -->
+        <attr name="blink_count" format="integer" />
+        <!-- 文字のブリンク間隔 -->
+        <attr name="blink_duration" format="integer" />
+        <!-- html text -->
+        <attr name="html_text" format="string" />
+        <!-- EditModeのみのテキスト表示 -->
+        <attr name="edit_text" format="string" />
+    </declare-styleable>
+
+</resources>

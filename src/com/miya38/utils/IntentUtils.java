@@ -1,0 +1,217 @@
+package com.miya38.utils;
+
+import java.io.Serializable;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
+
+/**
+ * インテントユーティリティ
+ *
+ * @author y-miyazaki
+ *
+ */
+public final class IntentUtils {
+    /**
+     * コンストラクタを隠蔽し、インスタンス化を禁止します。
+     */
+    private IntentUtils() {
+    }
+
+    /**
+     * bundleの取得が可能か？
+     *
+     * @param intent
+     *            Intent
+     * @return true:bundleがnullではない<br>
+     *         false:bundleがnullもしくは引数のintentがnull
+     */
+    public static boolean isGetExtras(Intent intent) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras == null) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 前画面からデータ(int)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @return 取得値(intentをセットしていないもしくは値がnull)
+     */
+    public static Integer getInt(Intent intent, String key) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return extras.getInt(key);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 前画面からデータ(int)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @param defaultValue
+     *            未設定の場合に返却される値
+     * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
+     */
+    public static Integer getInt(Intent intent, String key, int defalutValue) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return extras.getInt(key, defalutValue);
+            }
+        }
+        return defalutValue;
+    }
+
+    /**
+     * 前画面からデータ(String)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @return 取得値(intentをセットしていないもしくは値がnull)
+     */
+    public static String getString(Intent intent, String key) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return extras.getString(key);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 前画面からデータ(String)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @param defaultValue
+     *            未設定の場合に返却される値
+     * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
+     */
+    public static String getString(Intent intent, String key, String defalutValue) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return extras.getString(key, defalutValue);
+            }
+        }
+        return defalutValue;
+    }
+
+    /**
+     * 前画面からデータ(Boolean)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @return 取得値(intentをセットしていないもしくは値がnull)
+     */
+    public static Boolean getBoolean(Intent intent, String key) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return extras.getBoolean(key);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 前画面からデータ(Boolean)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @param defaultValue
+     *            未設定の場合に返却される値
+     * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
+     */
+    public static Boolean getBoolean(Intent intent, String key, boolean defalutValue) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return extras.getBoolean(key, defalutValue);
+            }
+        }
+        return defalutValue;
+    }
+
+    /**
+     * 前画面からデータ(Serializable)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @return 取得値(intentをセットしていないもしくは値がnull)
+     */
+    @SuppressWarnings("unchecked")
+    public static <V extends Serializable> V getSerializable(Intent intent, String key) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return (V) extras.getSerializable(key);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 前画面からデータ(Serializable)を取得する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     * @return 取得値(intentをセットしていないもしくは値がnull)
+     */
+    @SuppressWarnings("unchecked")
+    public static <V extends Parcelable> V getParcelable(final Intent intent, final String key) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null && extras.containsKey(key)) {
+                return (V) extras.getParcelable(key);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 前画面から取得したキーを削除する
+     *
+     * @param intent
+     *            Intent
+     * @param key
+     *            取得対象のキー
+     */
+    public static void remove(Intent intent, String key) {
+        if (intent != null) {
+            final Bundle extras = intent.getExtras();
+            if (extras != null) {
+                extras.remove(key);
+            }
+        }
+    }
+}

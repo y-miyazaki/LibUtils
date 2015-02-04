@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    ***************************************************************
+    * Text
+    ***************************************************************
+    -->
+    <!-- リンクカラー -->
+    <color name="text_link">#000099</color>
+    <!-- ヘッダーテキストカラー -->
+    <color name="text_header">#FFFFFF</color>
+    <color name="text_footer">#FFFFFF</color>
+
+    <!--
+	***************************************************************
+    * Button
+    ***************************************************************
+    -->
+    <!-- デフォルトの反転色 -->
+    <color name="button_inverse">#80FFFFFF</color>
+
+    <color name="common_button_default_background_gradient_inverse1_start">#FF000000</color>
+    <color name="common_button_default_background_gradient_inverse1_end">#FF292929</color>
+    <color name="common_button_default_background_gradient_inverse2_start">#FFC0C0C0</color>
+    <color name="common_button_default_background_gradient_inverse2_end">#FF808080</color>
+
+    <!-- ホワイトボタン -->
+    <color name="common_button_white_text">#FF000000</color>
+    <color name="common_button_white_text_inverse">#FF000000</color>
+    <color name="common_button_white_background">@color/common_button_white_background_gradient_end</color>
+    <color name="common_button_white_background_gradient_start">#FFBBBBBB</color>
+    <color name="common_button_white_background_gradient_middle">#FFDDDDDD</color>
+    <color name="common_button_white_background_gradient_end">#FFFFFFFF</color>
+
+    <!-- ブラックボタン -->
+    <color name="common_button_black_text">#FFFFFFFF</color>
+    <color name="common_button_black_text_inverse">#FFFFFFFF</color>
+    <color name="common_button_black_background">@color/common_button_black_background_gradient_end</color>
+    <color name="common_button_black_background_gradient_start">#FF444444</color>
+    <color name="common_button_black_background_gradient_middle">#FF222222</color>
+    <color name="common_button_black_background_gradient_end">#FF000000</color>
+
+    <!-- ブルーボタン -->
+    <color name="common_button_blue_text">#FFFFFFFF</color>
+    <color name="common_button_blue_text_inverse">#FFFFFFFF</color>
+    <color name="common_button_blue_background">@color/common_button_blue_background_gradient_end</color>
+    <color name="common_button_blue_background_gradient_start">#FF000000</color>
+    <color name="common_button_blue_background_gradient_middle">#FF2C81E6</color>
+    <color name="common_button_blue_background_gradient_end">#FF0021A9</color>
+
+    <!-- シルバーボタン -->
+    <color name="common_button_silver_text">#FFFFFFFF</color>
+    <color name="common_button_silver_text_inverse">#60FFFFFF</color>
+    <color name="common_button_silver_background">@color/common_button_silver_background_gradient_end</color>
+    <color name="common_button_silver_background_gradient_start">#FFC0C0C0</color>
+    <color name="common_button_silver_background_gradient_middle">#FFC0C0C0</color>
+    <color name="common_button_silver_background_gradient_end">#FF808080</color>
+
+    <!-- レッドボタン -->
+    <color name="common_button_red_text">#FFFFFFFF</color>
+    <color name="common_button_red_text_inverse">#FFFFFFFF</color>
+    <color name="common_button_red_background">@color/common_button_red_background_gradient_end</color>
+    <color name="common_button_red_background_gradient_start">#FFF94444</color>
+    <color name="common_button_red_background_gradient_middle">#FF600000</color>
+    <color name="common_button_red_background_gradient_end">#FFD90000</color>
+
+    <!-- グリーンボタン -->
+    <color name="common_button_green_text">#FFFFFFFF</color>
+    <color name="common_button_green_text_inverse">#60FFFFFF</color>
+    <color name="common_button_green_background">@color/common_button_green_background_gradient_end</color>
+    <color name="common_button_green_background_gradient_start">#FF399639</color>
+    <color name="common_button_green_background_gradient_middle">#FF49A649</color>
+    <color name="common_button_green_background_gradient_end">#FF58FB58</color>
+
+    <!--
+	***************************************************************
+    * EditText
+    ***************************************************************
+    -->
+    <!-- ホワイトEditTextー -->
+    <color name="common_edittext_white_text">#FF000000</color>
+    <color name="common_edittext_white_background">#FFFFFFFF</color>
+    <color name="common_edittext_white_corner">#FF000000</color>
+
+    <!--ピンクEditText -->
+    <color name="common_edittext_pink_text">#FF898989</color>
+    <color name="common_edittext_pink_background">#FFe9e9e9</color>
+    <color name="common_edittext_pink_corner">#FFFFFFFF</color>
+</resources>
