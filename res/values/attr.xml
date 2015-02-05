@@ -24,8 +24,6 @@
     <declare-styleable name="CustomEditText">
         <attr name="required" format="boolean" />
         <attr name="name" format="string" />
-        <attr name="min_length" format="integer" />
-        <attr name="max_length" format="integer" />
         <attr name="alphanumeric" format="boolean" />
         <attr name="alpha_and_numeric_required" format="boolean" />
         <attr name="mailaddress" format="boolean" />
@@ -36,8 +34,7 @@
     <!-- CustomDatePicker -->
     <declare-styleable name="CustomDatePicker">
         <attr name="datepicker_future" format="boolean" />
-        <attr name="datepicker_name" format="string" />
-        <attr name="datepicker_check18" format="boolean" />
+        <attr name="datepicker_age" format="boolean" />
     </declare-styleable>
 
     <!-- CustomRadio -->
@@ -47,10 +44,12 @@
 
     <!-- CustomTextView -->
     <declare-styleable name="CustomTextView">
+
         <!-- フォント -->
         <attr name="type_face">
-        <!-- モトヤLシーダ3等幅 -->
-        <enum name="MTLc3m" value="1" />
+
+            <!-- モトヤLシーダ3等幅 -->
+            <enum name="MTLc3m" value="1" />
         </attr>
         <!-- 省略設定(固定で...) -->
         <attr name="ellipsize_maxlines" format="integer" />
@@ -58,12 +57,6 @@
         <attr name="ellipsize" format="boolean" />
         <!-- 文字の自動リサイズ -->
         <attr name="resize" format="boolean" />
-        <!-- 文字のブリンク -->
-        <attr name="blink" format="boolean" />
-        <!-- 文字のブリンク回数 -->
-        <attr name="blink_count" format="integer" />
-        <!-- 文字のブリンク間隔 -->
-        <attr name="blink_duration" format="integer" />
         <!-- html text -->
         <attr name="html_text" format="string" />
         <!-- EditModeのみのテキスト表示 -->

@@ -4,9 +4,9 @@ import android.graphics.Color;
 
 /**
  * カラーユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class ColorUtils {
     /**
@@ -17,12 +17,12 @@ public final class ColorUtils {
 
     /**
      * カラー設定 RGBA値できたものをARGB値のint型で返却する
-     *
+     * 
      * @param color
      *            RGBA値
      * @return ARGB値を返却する
      */
-    public static int setRGBAToARGB(String color) {
+    public static int setRGBAToARGB(final String color) {
         final int red = Integer.parseInt(color.substring(0, 2), 16);
         final int green = Integer.parseInt(color.substring(2, 4), 16);
         final int blue = Integer.parseInt(color.substring(4, 6), 16);

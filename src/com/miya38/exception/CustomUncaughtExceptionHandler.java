@@ -7,17 +7,17 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import com.miya38.utils.SharedPreferencesUtils;
 
 /**
- *
+ * 
  * 非キャッチ例外取得用ExceptionHandler
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class CustomUncaughtExceptionHandler implements UncaughtExceptionHandler {
-    /** stackTrace key*/
+    /** stackTrace key */
 
     /** UncaughtExceptionHandler */
-    private UncaughtExceptionHandler mDefaultUncaughtExceptionHandler;
+    private final UncaughtExceptionHandler mDefaultUncaughtExceptionHandler;
 
     /**
      * コンストラクタ
@@ -28,7 +28,7 @@ public class CustomUncaughtExceptionHandler implements UncaughtExceptionHandler 
     }
 
     @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
+    public void uncaughtException(final Thread thread, final Throwable ex) {
         // スタックトレースを文字列にします。
         final StringWriter stringWriter = new StringWriter();
         ex.printStackTrace(new PrintWriter(stringWriter));

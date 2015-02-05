@@ -11,20 +11,20 @@ import com.miya38.validator.AbstractValidator;
 
 public class ConfirmValidate extends AbstractValidate {
 
-    private TextView mField1;
-    private TextView mField2;
-    private Context mContext;
-    private TextView source;
+    private final TextView mField1;
+    private final TextView mField2;
+    private final Context mContext;
+    private final TextView source;
     private String mErrorMessage;
 
-    public ConfirmValidate(TextView field1, TextView field2) {
+    public ConfirmValidate(final TextView field1, final TextView field2) {
         this.mField1 = field1;
         this.mField2 = field2;
         source = mField2;
         mContext = field1.getContext();
     }
 
-    public ConfirmValidate(TextView field1, TextView field2, int errorMessage) {
+    public ConfirmValidate(final TextView field1, final TextView field2, final int errorMessage) {
         this.mField1 = field1;
         this.mField2 = field2;
         source = mField2;
@@ -32,7 +32,7 @@ public class ConfirmValidate extends AbstractValidate {
         mErrorMessage = mContext.getString(errorMessage);
     }
 
-    public ConfirmValidate(TextView field1, TextView field2, String errorMessage) {
+    public ConfirmValidate(final TextView field1, final TextView field2, final String errorMessage) {
         this.mField1 = field1;
         this.mField2 = field2;
         source = mField2;
@@ -41,7 +41,7 @@ public class ConfirmValidate extends AbstractValidate {
     }
 
     @Override
-    public boolean isValid(String value) {
+    public boolean isValid(final String value) {
         if (mField1.getText().toString().length() > 0 && mField1.getText().toString().equals(mField2.getText().toString())) {
             return true;
         } else {
@@ -56,13 +56,13 @@ public class ConfirmValidate extends AbstractValidate {
 
     @Override
     public List<String> getMessages() {
-        List<String> result = new ArrayList<String>();
+        final List<String> result = new ArrayList<String>();
         result.add(mErrorMessage);
         return result;
     }
 
     @Override
-    public void addValidator(AbstractValidator validator) {
+    public void addValidator(final AbstractValidator validator) {
     }
 
     @Override

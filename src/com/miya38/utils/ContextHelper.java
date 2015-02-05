@@ -13,7 +13,7 @@ import com.miya38.exception.AccountNotFoundException;
 
 /**
  * コンテキストから情報を取得するヘルパーを提供します。
- *
+ * 
  * @author y-miyazaki
  * @version 1.0
  */
@@ -29,26 +29,26 @@ public final class ContextHelper {
 
     /**
      * ヘルパーを初期化します。
-     *
+     * 
      * @param context
      *            コンテキスト。
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = new TelephonyContext(context);
     }
 
     /**
      * 各コンテキストを明示的に初期化します。
-     *
+     * 
      * @param telephonyContext
      */
-    public static void configure(TelephonyContext telephonyContext) {
+    public static void configure(final TelephonyContext telephonyContext) {
         sContext = telephonyContext;
     }
 
     /**
      * Android ID を取得します。
-     *
+     * 
      * @return Android ID。
      */
     public static String getAndroidId() {
@@ -57,7 +57,7 @@ public final class ContextHelper {
 
     /**
      * ICCID を取得します。
-     *
+     * 
      * @return ICCID。
      */
     public static String getICCID() {
@@ -66,7 +66,7 @@ public final class ContextHelper {
 
     /**
      * デバイスモデル名を取得します。
-     *
+     * 
      * @return デバイスモデル名
      */
     public static String getModelName() {
@@ -75,7 +75,7 @@ public final class ContextHelper {
 
     /**
      * IMEI を取得します。
-     *
+     * 
      * @return IMEI
      */
     public static String getIMEI() {
@@ -84,7 +84,7 @@ public final class ContextHelper {
 
     /**
      * IMSI を取得します。
-     *
+     * 
      * @return IMSI
      */
     public static String getIMSI() {
@@ -93,7 +93,7 @@ public final class ContextHelper {
 
     /**
      * メインのGoogleAccountを取得します。
-     *
+     * 
      * @return GoogleAccount。
      * @throws AccountNotFoundException
      *             アカウントが登録されていない場合にスローします。
@@ -108,12 +108,12 @@ public final class ContextHelper {
 
     /**
      * Google Account から認証トークンを取得します。
-     *
+     * 
      * @param service
      * @return トークン
      * @throws AccountNotFoundException
      */
-    public static String getGoogleAuthToken(String service) throws AccountNotFoundException {
+    public static String getGoogleAuthToken(final String service) throws AccountNotFoundException {
         return sContext.getGoogleAuthToken(service);
     }
 
@@ -128,18 +128,18 @@ public final class ContextHelper {
 
         /**
          * コンストラクタ
-         *
+         * 
          * @param context
          *            Context
          */
-        public TelephonyContext(Context context) {
+        public TelephonyContext(final Context context) {
             this.mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             this.mContext = context;
         }
 
         /**
          * Googleアカウント取得
-         *
+         * 
          * @return Account
          */
         public Account getGoogleAccount() {
@@ -153,13 +153,13 @@ public final class ContextHelper {
 
         /**
          * Google認証トークン取得
-         *
+         * 
          * @param service
          *            サービス
          * @return 認証トークン
          */
         @SuppressWarnings("deprecation")
-        public String getGoogleAuthToken(String service) {
+        public String getGoogleAuthToken(final String service) {
             final AccountManager am = AccountManager.get(mContext);
             final Account[] accounts = am.getAccountsByType("com.google");
             if (null == accounts || 0 == accounts.length) {
@@ -168,14 +168,14 @@ public final class ContextHelper {
             final AccountManagerFuture<Bundle> result = am.getAuthToken(accounts[0], service, false, null, null);
             try {
                 return result.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new AccountNotFoundException("get auth token failed.", e);
             }
         }
 
         /**
          * AndroidID取得
-         *
+         * 
          * @return AndroidID
          */
         public String getAndroidId() {
@@ -184,7 +184,7 @@ public final class ContextHelper {
 
         /**
          * ICCID取得
-         *
+         * 
          * @return ICCID
          */
         public String getICCID() {
@@ -193,7 +193,7 @@ public final class ContextHelper {
 
         /**
          * IMEI取得
-         *
+         * 
          * @return IMEI
          */
         public String getIMEI() {
@@ -202,7 +202,7 @@ public final class ContextHelper {
 
         /**
          * IMSI取得
-         *
+         * 
          * @return IMSI
          */
         public String getIMSI() {
@@ -211,7 +211,7 @@ public final class ContextHelper {
 
         /**
          * モデルネーム取得
-         *
+         * 
          * @return モデルネーム
          */
         public String getModelName() {

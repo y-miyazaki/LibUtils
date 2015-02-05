@@ -8,9 +8,9 @@ import android.support.v4.view.PagerAdapter;
 
 /**
  * カスタムアダプタークラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  * @param <T>
  */
 public abstract class CustomPagerAdapter<T> extends PagerAdapter {
@@ -36,7 +36,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context
      * @param itemResourceId
@@ -44,7 +44,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
      * @param items
      *            リストアイテム
      */
-    public CustomPagerAdapter(Context context, int itemResourceId, List<T> items) {
+    public CustomPagerAdapter(final Context context, final int itemResourceId, final List<T> items) {
         this.mItemResourceId = itemResourceId;
         this.mContext = context;
         this.mItems = items == null ? new ArrayList<T>() : new ArrayList<T>(items);
@@ -52,7 +52,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * Context取得
-     *
+     * 
      * @return Context
      */
     protected Context getContext() {
@@ -61,7 +61,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムリソースID取得
-     *
+     * 
      * @return アイテムリソースID
      */
     public int getItemResourceId() {
@@ -75,7 +75,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * 最後のポジションを返却する
-     *
+     * 
      * @return last position
      */
     public int getLastPosition() {
@@ -84,10 +84,10 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムに追加
-     *
+     * 
      * @param object
      */
-    public void add(T object) {
+    public void add(final T object) {
         if (mItems != null) {
             synchronized (mLock) {
                 mItems.add(object);
@@ -100,11 +100,11 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムの指定位置に追加設定
-     *
+     * 
      * @param object
      * @param index
      */
-    public void insert(T object, int index) {
+    public void insert(final T object, final int index) {
         if (mItems != null) {
             synchronized (mLock) {
                 mItems.add(index, object);
@@ -117,11 +117,11 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテム削除
-     *
+     * 
      * @param item
      *            削除対応アイテム
      */
-    public void remove(T item) {
+    public void remove(final T item) {
         if (mItems != null) {
             synchronized (mLock) {
                 mItems.remove(item);
@@ -148,48 +148,48 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテム取得
-     *
+     * 
      * @param position
      * @return item
      */
-    public T getItem(int position) {
+    public T getItem(final int position) {
         return mItems.get(position);
     }
 
     /**
      * Returns the position of the specified item in the array.
-     *
+     * 
      * @param item
      *            The item to retrieve the position of.
      * @return The position of the specified item.
      */
-    public int getPosition(T item) {
+    public int getPosition(final T item) {
         return mItems.indexOf(item);
     }
 
     /**
      * position取得
-     *
+     * 
      * @param position
      * @return position
      */
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return position;
     }
 
     /**
      * アイテムの指定位置に設定
-     *
+     * 
      * @param position
      * @param item
      */
-    public void setItem(int position, T item) {
+    public void setItem(final int position, final T item) {
         mItems.set(position, item);
     }
 
     /**
      * アイテムリスト取得
-     *
+     * 
      * @return items
      */
     public List<T> getItems() {
@@ -198,10 +198,10 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムリスト設定
-     *
+     * 
      * @param items
      */
-    public void setItems(List<T> items) {
+    public void setItems(final List<T> items) {
         this.mItems = new ArrayList<T>(items);
     }
 }

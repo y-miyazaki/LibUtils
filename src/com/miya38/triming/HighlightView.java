@@ -33,7 +33,7 @@ import com.miya38.utils.LogUtils;
 /**
  * HighlightView
  */
-@SuppressWarnings ("javadoc")
+@SuppressWarnings("javadoc")
 public class HighlightView {
     /**
      * ログタグ
@@ -52,14 +52,14 @@ public class HighlightView {
     /**
      * HighlightViewクラス内ログフラグ
      */
-    private boolean isLog = false;
+    private final boolean isLog = false;
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param ctx
      */
-    public HighlightView(View ctx) {
+    public HighlightView(final View ctx) {
         mContext = ctx;
     }
 
@@ -67,7 +67,7 @@ public class HighlightView {
      * 初期処理 切り取り枠の矢印アイコン
      */
     private void init() {
-        android.content.res.Resources resources = mContext.getResources();
+        final android.content.res.Resources resources = mContext.getResources();
         mResizeDrawableWidth = resources.getDrawable(R.drawable.triming_icon_crop_width);
         mResizeDrawableHeight = resources.getDrawable(R.drawable.triming_icon_crop_height);
         mResizeDrawableDiagonal = resources.getDrawable(R.drawable.triming_icon_indicator_autocrop);
@@ -80,43 +80,44 @@ public class HighlightView {
         return mIsFocused;
     }
 
-    public void setFocus(boolean f) {
+    public void setFocus(final boolean f) {
         mIsFocused = f;
     }
 
-    public void setHidden(boolean hidden) {
+    public void setHidden(final boolean hidden) {
         mHidden = hidden;
     }
 
     /**
      * 切り取り枠描画メソッド
-     *
+     * 
      * @param canvas
      */
-    public void draw(Canvas canvas) {
+    public void draw(final Canvas canvas) {
         if (mHidden) {
             return;
         }
 
         canvas.save();
-        Path path = new Path();
+        final Path path = new Path();
         if (!hasFocus()) {
             mOutlinePaint.setColor(0xFF000000);
             canvas.drawRect(mDrawRect, mOutlinePaint);
         } else {
-            Rect viewDrawingRect = new Rect();
+            final Rect viewDrawingRect = new Rect();
             mContext.getDrawingRect(viewDrawingRect);
             if (mCircle) {
                 // ○切り抜きの場合(未使用)
-                float width = mDrawRect.width();
-                float height = mDrawRect.height();
+                final float width = mDrawRect.width();
+                final float height = mDrawRect.height();
                 path.addCircle(mDrawRect.left + (width / 2), mDrawRect.top + (height / 2), width / 2, Path.Direction.CW);
                 mOutlinePaint.setColor(0xFFEF04D6);
             } else {
 
                 // 切り取り枠設定
-                if (isLog)
+                if (isLog) {
                     LogUtils.d(TAG, "draw CropRect[%d/%d]", mDrawRect.width(), mDrawRect.height());
+                }
                 path.addRect(new RectF(mDrawRect), Path.Direction.CW);
                 mOutlinePaint.setColor(0xFFFF8A00);
             }
@@ -131,32 +132,33 @@ public class HighlightView {
 
                 // ○切り取り
                 if (mCircle) {
-                    int width = mResizeDrawableDiagonal.getIntrinsicWidth();
-                    int height = mResizeDrawableDiagonal.getIntrinsicHeight();
+                    final int width = mResizeDrawableDiagonal.getIntrinsicWidth();
+                    final int height = mResizeDrawableDiagonal.getIntrinsicHeight();
 
-                    int d = (int) Math.round(Math.cos(/* 45deg */Math.PI / 4D) * (mDrawRect.width() / 2D));
-                    int x = mDrawRect.left + (mDrawRect.width() / 2) + d - width / 2;
-                    int y = mDrawRect.top + (mDrawRect.height() / 2) - d - height / 2;
+                    final int d = (int) Math.round(Math.cos(/* 45deg */Math.PI / 4D) * (mDrawRect.width() / 2D));
+                    final int x = mDrawRect.left + (mDrawRect.width() / 2) + d - width / 2;
+                    final int y = mDrawRect.top + (mDrawRect.height() / 2) - d - height / 2;
                     mResizeDrawableDiagonal.setBounds(x, y, x + mResizeDrawableDiagonal.getIntrinsicWidth(), y + mResizeDrawableDiagonal.getIntrinsicHeight());
                     mResizeDrawableDiagonal.draw(canvas);
 
                     // ■切り取り
                 } else {
                     // 前後左右の矢印アイコン 表示
-                    if (isLog)
+                    if (isLog) {
                         LogUtils.d(TAG, "ModifyMode.Grow");
-                    int left = mDrawRect.left + 1;
-                    int right = mDrawRect.right + 1;
-                    int top = mDrawRect.top + 4;
-                    int bottom = mDrawRect.bottom + 3;
+                    }
+                    final int left = mDrawRect.left + 1;
+                    final int right = mDrawRect.right + 1;
+                    final int top = mDrawRect.top + 4;
+                    final int bottom = mDrawRect.bottom + 3;
 
-                    int widthWidth = mResizeDrawableWidth.getIntrinsicWidth() / 2;
-                    int widthHeight = mResizeDrawableWidth.getIntrinsicHeight() / 2;
-                    int heightHeight = mResizeDrawableHeight.getIntrinsicHeight() / 2;
-                    int heightWidth = mResizeDrawableHeight.getIntrinsicWidth() / 2;
+                    final int widthWidth = mResizeDrawableWidth.getIntrinsicWidth() / 2;
+                    final int widthHeight = mResizeDrawableWidth.getIntrinsicHeight() / 2;
+                    final int heightHeight = mResizeDrawableHeight.getIntrinsicHeight() / 2;
+                    final int heightWidth = mResizeDrawableHeight.getIntrinsicWidth() / 2;
 
-                    int xMiddle = mDrawRect.left + ((mDrawRect.right - mDrawRect.left) / 2);
-                    int yMiddle = mDrawRect.top + ((mDrawRect.bottom - mDrawRect.top) / 2);
+                    final int xMiddle = mDrawRect.left + ((mDrawRect.right - mDrawRect.left) / 2);
+                    final int yMiddle = mDrawRect.top + ((mDrawRect.bottom - mDrawRect.top) / 2);
 
                     // 前後左右の矢印アイコン
                     mResizeDrawableWidth.setBounds(left - widthWidth, yMiddle - widthHeight, left + widthWidth, yMiddle + widthHeight);
@@ -179,7 +181,7 @@ public class HighlightView {
         return mMode;
     }
 
-    public void setMode(ModifyMode mode) {
+    public void setMode(final ModifyMode mode) {
         if (mode != mMode) {
             mMode = mode;
             mContext.invalidate();
@@ -188,25 +190,25 @@ public class HighlightView {
 
     /**
      * getHit
-     *
+     * 
      * @param x
      * @param y
      * @return
      *         Determines which edges are hit by touching at (x, y).
-     *
+     * 
      */
-    public int getHit(float x, float y) {
-        Rect r = computeLayout();
+    public int getHit(final float x, final float y) {
+        final Rect r = computeLayout();
         final float hysteresis = 20F;
         int retval = GROW_NONE;
 
         // ○切り取り枠の場合
         if (mCircle) {
-            float distX = x - r.centerX();
-            float distY = y - r.centerY();
-            int distanceFromCenter = (int) Math.sqrt(distX * distX + distY * distY);
-            int radius = mDrawRect.width() / 2;
-            int delta = distanceFromCenter - radius;
+            final float distX = x - r.centerX();
+            final float distY = y - r.centerY();
+            final int distanceFromCenter = (int) Math.sqrt(distX * distX + distY * distY);
+            final int radius = mDrawRect.width() / 2;
+            final int delta = distanceFromCenter - radius;
             if (Math.abs(delta) <= hysteresis) {
                 if (Math.abs(distY) > Math.abs(distX)) {
                     if (distY < 0) {
@@ -232,8 +234,8 @@ public class HighlightView {
 
             // verticalCheck makes sure the position is between the top and
             // the bottom edge (with some tolerance). Similar for horizCheck.
-            boolean verticalCheck = (y >= r.top - hysteresis) && (y < r.bottom + hysteresis);
-            boolean horizCheck = (x >= r.left - hysteresis) && (x < r.right + hysteresis);
+            final boolean verticalCheck = (y >= r.top - hysteresis) && (y < r.bottom + hysteresis);
+            final boolean horizCheck = (x >= r.left - hysteresis) && (x < r.right + hysteresis);
 
             // Check whether the position is near some edge(s).
             if ((Math.abs(r.left - x) < hysteresis) && verticalCheck) {
@@ -259,27 +261,30 @@ public class HighlightView {
 
     /**
      * handleMotion
-     *
+     * 
      * @param edge
      * @param dx
      * @param dy
-     *
+     * 
      *            Handles motion (dx, dy) in screen space.
-     *            The "edge" parameter specifies which edges the user is dragging.
-     *
+     *            The "edge" parameter specifies which edges the user is
+     *            dragging.
+     * 
      */
-    public void handleMotion(int edge, float dx, float dy) {
-        Rect r = computeLayout();
+    public void handleMotion(final int edge, float dx, float dy) {
+        final Rect r = computeLayout();
         if (edge == GROW_NONE) {
-            if (isLog)
+            if (isLog) {
                 LogUtils.d(TAG, "handleMotion edge is GROW_NONE");
+            }
             return;
         } else if (edge == MOVE) {
 
             // 切り取り欄移動中
 
-            if (isLog)
+            if (isLog) {
                 LogUtils.d(TAG, "handleMotion edge is MOVE");
+            }
             // Convert to image space before sending to moveBy().
             moveBy(dx * (mCropRect.width() / r.width()), dy * (mCropRect.height() / r.height()));
         } else {
@@ -287,33 +292,35 @@ public class HighlightView {
             // 切り取り欄サイズ変更中
 
             if (((GROW_LEFT_EDGE | GROW_RIGHT_EDGE) & edge) == 0) {
-                if (isLog)
+                if (isLog) {
                     LogUtils.d(TAG, "handleMotion dx = 0");
+                }
                 dx = 0;
             }
 
             if (((GROW_TOP_EDGE | GROW_BOTTOM_EDGE) & edge) == 0) {
-                if (isLog)
+                if (isLog) {
                     LogUtils.d(TAG, "handleMotion dy = 0");
+                }
                 dy = 0;
             }
 
             // Convert to image space before sending to growBy().
-            float xDelta = dx * (mCropRect.width() / r.width());
-            float yDelta = dy * (mCropRect.height() / r.height());
+            final float xDelta = dx * (mCropRect.width() / r.width());
+            final float yDelta = dy * (mCropRect.height() / r.height());
             growBy((((edge & GROW_LEFT_EDGE) != 0) ? -1 : 1) * xDelta, (((edge & GROW_TOP_EDGE) != 0) ? -1 : 1) * yDelta);
         }
     }
 
     /**
      * moveBy
-     *
+     * 
      * @param dx
      * @param dy
      *            Grows the cropping rectange by (dx, dy) in image space.
      */
-    void moveBy(float dx, float dy) {
-        Rect invalRect = new Rect(mDrawRect);
+    void moveBy(final float dx, final float dy) {
+        final Rect invalRect = new Rect(mDrawRect);
 
         mCropRect.offset(dx, dy);
 
@@ -330,15 +337,16 @@ public class HighlightView {
 
     /**
      * 切り取り枠サイズ調整
-     *
+     * 
      * @param dx
      * @param dy
      *            Grows the cropping rectange by (dx, dy) in image space.
      */
     void growBy(float dx, float dy) {
 
-        if (isLog)
+        if (isLog) {
             LogUtils.d(TAG, "growBy Start dx[%f]dy[%f]", dx, dy);
+        }
 
         if (mMaintainAspectRatio) {
             if (dx != 0) {
@@ -351,17 +359,17 @@ public class HighlightView {
         // Don't let the cropping rectangle grow too fast.
         // Grow at most half of the difference between the image rectangle and
         // the cropping rectangle.
-        RectF r = new RectF(mCropRect);
+        final RectF r = new RectF(mCropRect);
 
         if (dx > 0F && r.width() + 2 * dx > mImageRect.width()) {
-            float adjustment = (mImageRect.width() - r.width()) / 2F;
+            final float adjustment = (mImageRect.width() - r.width()) / 2F;
             dx = adjustment;
             if (mMaintainAspectRatio) {
                 dy = dx / mInitialAspectRatio;
             }
         }
         if (dy > 0F && r.height() + 2 * dy > mImageRect.height()) {
-            float adjustment = (mImageRect.height() - r.height()) / 2F;
+            final float adjustment = (mImageRect.height() - r.height()) / 2F;
             dy = adjustment;
             if (mMaintainAspectRatio) {
                 dx = dy * mInitialAspectRatio;
@@ -374,7 +382,7 @@ public class HighlightView {
         if (r.width() < widthCap) {
             r.inset(-(widthCap - r.width()) / 2F, 0F);
         }
-        float heightCap = mMaintainAspectRatio ? (widthCap / mInitialAspectRatio) : widthCap;
+        final float heightCap = mMaintainAspectRatio ? (widthCap / mInitialAspectRatio) : widthCap;
         if (r.height() < heightCap) {
             r.inset(0F, -(heightCap - r.height()) / 2F);
         }
@@ -397,7 +405,7 @@ public class HighlightView {
 
     /**
      * getCropRect
-     *
+     * 
      * @return
      *         Returns the cropping rectangle in image space.
      */
@@ -407,13 +415,13 @@ public class HighlightView {
 
     /**
      * computeLayout
-     *
+     * 
      * @return
      *         Maps the cropping rectangle from image space to screen space.
      */
     private Rect computeLayout() {
         LogUtils.d(TAG, "computeLayout Start");
-        RectF r = new RectF(mCropRect.left, mCropRect.top, mCropRect.right, mCropRect.bottom);
+        final RectF r = new RectF(mCropRect.left, mCropRect.top, mCropRect.right, mCropRect.bottom);
         mMatrix.mapRect(r);
         return new Rect(Math.round(r.left), Math.round(r.top), Math.round(r.right), Math.round(r.bottom));
     }
@@ -427,14 +435,14 @@ public class HighlightView {
 
     /**
      * 初期設定
-     *
+     * 
      * @param m
      * @param imageRect
      * @param cropRect
      * @param circle
      * @param maintainAspectRatio
      */
-    public void setup(Matrix m, Rect imageRect, RectF cropRect, boolean circle, boolean maintainAspectRatio) {
+    public void setup(final Matrix m, final Rect imageRect, final RectF cropRect, final boolean circle, boolean maintainAspectRatio) {
         if (circle) {
             maintainAspectRatio = true;
         }

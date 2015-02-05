@@ -35,18 +35,18 @@ public final class LogUtils {
     /**
      * ログユーティリティを初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param isDebugable
      *            debug有無<br>
      *            true:デバッグモード false:非デバッグモード
      */
-    public static void configure(boolean isDebugable) {
+    public static void configure(final boolean isDebugable) {
         sIsDebuggable = isDebugable;
     }
 
     /**
      * ログ出力(debug)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -54,13 +54,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void d(String tag, String message, Object... params) {
+    public static void d(final String tag, final String message, final Object... params) {
         init(LOG_LEVEL_DEBUG, tag, message, null, params);
     }
 
     /**
      * ログ出力(debug)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -70,13 +70,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void d(String tag, String message, Throwable e, Object... params) {
+    public static void d(final String tag, final String message, final Throwable e, final Object... params) {
         init(LOG_LEVEL_DEBUG, tag, message, e, params);
     }
 
     /**
      * ログ出力(info)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -84,13 +84,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void i(String tag, String message, Object... params) {
+    public static void i(final String tag, final String message, final Object... params) {
         init(LOG_LEVEL_INFO, tag, message, null, params);
     }
 
     /**
      * ログ出力(info)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -100,13 +100,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void i(String tag, String message, Throwable e, Object... params) {
+    public static void i(final String tag, final String message, final Throwable e, final Object... params) {
         init(LOG_LEVEL_INFO, tag, message, e, params);
     }
 
     /**
      * ログ出力(error)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -114,13 +114,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void e(String tag, String message, Object... params) {
+    public static void e(final String tag, final String message, final Object... params) {
         init(LOG_LEVEL_ERROR, tag, message, null, params);
     }
 
     /**
      * ログ出力(error)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -130,13 +130,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void e(String tag, String message, Throwable e, Object... params) {
+    public static void e(final String tag, final String message, final Throwable e, final Object... params) {
         init(LOG_LEVEL_ERROR, tag, message, e, params);
     }
 
     /**
      * ログ出力(verbose)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -144,13 +144,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void v(String tag, String message, Object... params) {
+    public static void v(final String tag, final String message, final Object... params) {
         init(LOG_LEVEL_VERBOSE, tag, message, null, params);
     }
 
     /**
      * ログ出力(verbose)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -160,13 +160,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void v(String tag, String message, Throwable e, Object... params) {
+    public static void v(final String tag, final String message, final Throwable e, final Object... params) {
         init(LOG_LEVEL_VERBOSE, tag, message, e, params);
     }
 
     /**
      * ログ出力(warning)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -174,13 +174,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void w(String tag, String message, Object... params) {
+    public static void w(final String tag, final String message, final Object... params) {
         init(LOG_LEVEL_WARNING, tag, message, null, params);
     }
 
     /**
      * ログ出力(warning)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -190,13 +190,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void w(String tag, String message, Throwable e, Object... params) {
+    public static void w(final String tag, final String message, final Throwable e, final Object... params) {
         init(LOG_LEVEL_WARNING, tag, message, e, params);
     }
 
     /**
      * ログ出力(what a terrible error)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -204,13 +204,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void wtf(String tag, String message, Object... params) {
+    public static void wtf(final String tag, final String message, final Object... params) {
         init(LOG_LEVEL_WTF, tag, message, null, params);
     }
 
     /**
      * ログ出力(warning)
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -220,13 +220,13 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    public static void wtf(String tag, String message, Throwable e, Object... params) {
+    public static void wtf(final String tag, final String message, final Throwable e, final Object... params) {
         init(LOG_LEVEL_WTF, tag, message, e, params);
     }
 
     /**
      * 初期処理
-     *
+     * 
      * @param tag
      *            タグ
      * @param message
@@ -236,7 +236,7 @@ public final class LogUtils {
      * @param params
      *            ログ出力用の変数(String.formatと同じように複数の変数が設定可能)
      */
-    private static void init(int logLevel, String tag, String message, Throwable e, Object... params) {
+    private static void init(final int logLevel, final String tag, final String message, final Throwable e, final Object... params) {
         if (sIsDebuggable) {
             // カウンタ
             int count = 1;
@@ -349,14 +349,14 @@ public final class LogUtils {
 
     /**
      * カット処理
-     *
+     * 
      * @param target
      *            ターゲットの文字列
      * @param cutBytes
      *            文字列分割単位バイト数
      * @return 分割された文字列のリスト
      */
-    private static List<String> cut(String target, int cutBytes) {
+    private static List<String> cut(final String target, final int cutBytes) {
         final List<String> returnString = new ArrayList<String>();
         if (target == null || cutBytes <= 0 || target.length() <= cutBytes) {
             returnString.add(target);

@@ -70,7 +70,7 @@ public abstract class AbstractConnectionCommon {
     // connection
     // ----------------------------------------------------------
     /** 画面にプログレスバーを表示するフラグ(ListView等で独自にフッダープログレスを表示する場合はfalseにする。) */
-    private Map<Integer, View> mDisplayProgress;
+    private final Map<Integer, View> mDisplayProgress;
 
     /**
      * Jsonエラー表示用メソッド
@@ -79,7 +79,7 @@ public abstract class AbstractConnectionCommon {
      *            {@link NetworkRequest}
      * @param networkResponse
      *            {@link NetworkResponse}
-     * @param object
+     * @param data
      *            受信データ
      */
     public abstract void setJsonError(NetworkRequest networkRequest, NetworkResponse networkResponse, String data);
@@ -127,7 +127,7 @@ public abstract class AbstractConnectionCommon {
      * @param activity
      *            {@link FragmentActivity}
      */
-    public AbstractConnectionCommon(FragmentActivity activity) {
+    public AbstractConnectionCommon(final FragmentActivity activity) {
         mActivity = activity;
         if (activity instanceof OnGetLoaderFinishListerner) {
             mOnGetLoaderFinishListerner = (OnGetLoaderFinishListerner) activity;
@@ -150,7 +150,7 @@ public abstract class AbstractConnectionCommon {
      * @param fragment
      *            {@link Fragment}
      */
-    public AbstractConnectionCommon(Fragment fragment) {
+    public AbstractConnectionCommon(final Fragment fragment) {
         mFragment = fragment;
         if (fragment instanceof OnGetLoaderFinishListerner) {
             mOnGetLoaderFinishListerner = (OnGetLoaderFinishListerner) fragment;
@@ -173,7 +173,7 @@ public abstract class AbstractConnectionCommon {
      * @param dialogFragment
      *            {@link DialogFragment}
      */
-    public AbstractConnectionCommon(DialogFragment dialogFragment) {
+    public AbstractConnectionCommon(final DialogFragment dialogFragment) {
         mDialogFragment = dialogFragment;
         if (dialogFragment instanceof OnGetLoaderFinishListerner) {
             mOnGetLoaderFinishListerner = (OnGetLoaderFinishListerner) dialogFragment;
@@ -233,7 +233,7 @@ public abstract class AbstractConnectionCommon {
      * @param data
      *            受信データ
      */
-    public void onMethodLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) {
+    public void onMethodLoaderFinished(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final String data) {
         // ---------------------------------------------------------------
         // 通信中にアクティビティが終了するような状況になった場合は、通信イベントの通知を行わない。
         // ---------------------------------------------------------------
@@ -280,11 +280,11 @@ public abstract class AbstractConnectionCommon {
             default:
                 break;
             }
-        } catch (JsonParseException e) {
+        } catch (final JsonParseException e) {
             isJsonException = true;
-        } catch (JsonMappingException e) {
+        } catch (final JsonMappingException e) {
             isJsonException = true;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             isJsonException = true;
         }
         // ---------------------------------------------------------------
@@ -305,12 +305,13 @@ public abstract class AbstractConnectionCommon {
         Preconditions.checkNotNull(networkRequest, "networkRequest should not be null.");
         // 文字列データリクエスト
         final ApiRequest apiRequest = new ApiRequest(networkRequest, new ApiListener() {
-            public void onResponse(NetworkResponse networkResponse, int id, String response) {
+            @Override
+            public void onResponse(final NetworkResponse networkResponse, final int id, final String response) {
                 onLoadFinished(networkRequest, networkResponse, response);
             }
         }, new ApiErrorListener() {
             @Override
-            public void onErrorResponse(NetworkResponse networkResponse, int id) {
+            public void onErrorResponse(final NetworkResponse networkResponse, final int id) {
                 onLoadFinished(networkRequest, networkResponse, null);
             }
         });
@@ -328,12 +329,12 @@ public abstract class AbstractConnectionCommon {
      * @param isSpecialDisplay
      *            true:表示する/false:表示しない pullリクエスト等の特別にプログレスバーを表示したくない場合に使用する
      */
-    private synchronized void loadingDisplayProgress(boolean display, int id, boolean isSpecialDisplay) {
+    private synchronized void loadingDisplayProgress(final boolean display, final int id, final boolean isSpecialDisplay) {
         if (isSpecialDisplay) {
             if (display) {
                 View view;
                 if (mActivity != null) {
-                    ViewStub viewStub = ViewHelper.findView(mActivity, R.id.ViewStubProgressBarActivity);
+                    final ViewStub viewStub = ViewHelper.findView(mActivity, R.id.ViewStubProgressBarActivity);
                     if (viewStub != null) {
                         viewStub.setInflatedId(R.id.InfratedIdProgressBar);
                         viewStub.setLayoutResource(R.layout.common_layout_progressbar_viewstub);
@@ -341,7 +342,7 @@ public abstract class AbstractConnectionCommon {
                     }
                     view = ViewHelper.findView(mActivity, R.id.InfratedIdProgressBar);
                 } else if (mFragment != null && mFragment.getView() != null) {
-                    ViewStub viewStub = ViewHelper.findView(mFragment.getView(), R.id.ViewStubProgressBarFragment);
+                    final ViewStub viewStub = ViewHelper.findView(mFragment.getView(), R.id.ViewStubProgressBarFragment);
                     if (viewStub != null) {
                         viewStub.setInflatedId(R.id.InfratedIdProgressBar);
                         viewStub.setLayoutResource(R.layout.common_layout_progressbar_viewstub);
@@ -349,7 +350,7 @@ public abstract class AbstractConnectionCommon {
                     }
                     view = ViewHelper.findView(mFragment.getView(), R.id.InfratedIdProgressBar);
                 } else if (mDialogFragment != null && mDialogFragment.getDialog() != null) {
-                    ViewStub viewStub = ViewHelper.findView(mDialogFragment.getDialog(), R.id.ViewStubProgressBarFragment);
+                    final ViewStub viewStub = ViewHelper.findView(mDialogFragment.getDialog(), R.id.ViewStubProgressBarFragment);
                     if (viewStub != null) {
                         viewStub.setInflatedId(R.id.InfratedIdProgressBar);
                         viewStub.setLayoutResource(R.layout.common_layout_progressbar_viewstub);
@@ -364,7 +365,7 @@ public abstract class AbstractConnectionCommon {
                     view.setVisibility(View.VISIBLE);
                     view.setOnTouchListener(new View.OnTouchListener() {
                         @Override
-                        public boolean onTouch(View v, MotionEvent event) {
+                        public boolean onTouch(final View v, final MotionEvent event) {
                             return true;
                         }
                     });
@@ -385,8 +386,9 @@ public abstract class AbstractConnectionCommon {
      *
      * @param resId
      *            リソースID
+     * @return リソースから取得した文字列
      */
-    public String getString(int resId) {
+    public String getString(final int resId) {
         if (mActivity != null) {
             return mActivity.getString(resId);
         }
@@ -406,8 +408,9 @@ public abstract class AbstractConnectionCommon {
      *            リソースID
      * @param args
      *            引数
+     * @return リソースから取得した文字列
      */
-    public String getString(int resId, Object... args) {
+    public String getString(final int resId, final Object... args) {
         if (mActivity != null) {
             return mActivity.getString(resId, args);
         }

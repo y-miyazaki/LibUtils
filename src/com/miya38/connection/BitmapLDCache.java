@@ -13,9 +13,9 @@ import com.miya38.utils.DiskLruCache;
  * このクラスは、返却する際にはメモリから優先的に返却し、存在しない場合はディスクから返却する。
  * メモリから優先的に取ることにより速度を重視しつつ、メモリがクリアされた場合でもディスクから取り出すことで安易なキャッシュクリアをしない設計としている。
  * </p>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class BitmapLDCache implements ImageCache {
     /** メモリキャッシュサイズ(5M) */
@@ -29,14 +29,14 @@ public class BitmapLDCache implements ImageCache {
 
     /**
      * コンストラクタ Bitmapのキャッシュサイズ指定、LruCacheの設定を行う。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
-    private BitmapLDCache(Context context) {
+    private BitmapLDCache(final Context context) {
         mCache = new LruCache<String, Bitmap>(MAX_BITMAP_DISKCACHE_BYTESIZE) {
             @Override
-            protected int sizeOf(String key, Bitmap value) {
+            protected int sizeOf(final String key, final Bitmap value) {
                 return value.getRowBytes() * value.getHeight();
             }
         };
@@ -45,12 +45,12 @@ public class BitmapLDCache implements ImageCache {
 
     /**
      * インスタンス取得
-     *
+     * 
      * @param context
      *            {@link Context}
      * @return {@link BitmapLDCache}
      */
-    public static BitmapLDCache getInstance(Context context) {
+    public static BitmapLDCache getInstance(final Context context) {
         if (BitmapLruCacheAndDiskCache == null) {
             BitmapLruCacheAndDiskCache = new BitmapLDCache(context);
         }
@@ -58,7 +58,7 @@ public class BitmapLDCache implements ImageCache {
     }
 
     @Override
-    public Bitmap getBitmap(String url) {
+    public Bitmap getBitmap(final String url) {
         Bitmap bitmap = mCache.get(url);
         if (bitmap != null) {
             return bitmap;
@@ -73,7 +73,7 @@ public class BitmapLDCache implements ImageCache {
     }
 
     @Override
-    public void putBitmap(String url, Bitmap bitmap) {
+    public void putBitmap(final String url, final Bitmap bitmap) {
         mCache.put(url, bitmap);
         if (mDiskLruCache != null) {
             mDiskLruCache.put(url, bitmap);

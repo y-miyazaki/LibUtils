@@ -248,9 +248,9 @@ public final class ClassUtils {
         if (!field.getType().isPrimitive()) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -279,9 +279,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("boolean") || clazz1.getSimpleName().equals("Boolean")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -310,9 +310,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("byte") || clazz1.getSimpleName().equals("Byte")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -341,9 +341,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("short") || clazz1.getSimpleName().equals("Short")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -372,9 +372,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("int") || clazz1.getSimpleName().equals("Integer")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -403,9 +403,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("long") || clazz1.getSimpleName().equals("Long")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -434,9 +434,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("float") || clazz1.getSimpleName().equals("Float")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -465,9 +465,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("double") || clazz1.getSimpleName().equals("Double")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -496,9 +496,9 @@ public final class ClassUtils {
         if (clazz1.getSimpleName().equals("char")) {
             try {
                 field.set(instance, value);
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }
         }
@@ -605,17 +605,19 @@ public final class ClassUtils {
      * フィールドをアクセシブルにして返却する
      *
      * @param target
+     *            クラス
      * @param name
+     *            フィールド名
      * @return フィールド(インスタンス変数)
      */
-    public static Field getField(Class<?> target, String name) {
+    public static Field getField(final Class<?> target, final String name) {
         for (Class<?> clazz = target; clazz != Object.class; clazz = clazz.getSuperclass()) {
             try {
                 final Field f = clazz.getDeclaredField(name);
                 f.setAccessible(true);
                 return f;
-            } catch (NoSuchFieldException ex) {
-            } catch (SecurityException ex) {
+            } catch (final NoSuchFieldException ex) {
+            } catch (final SecurityException ex) {
             }
         }
         return null; // みつからなかった
@@ -672,10 +674,13 @@ public final class ClassUtils {
 
     /**
      * @param object
+     *            Object
      * @param startClass
+     *            開始クラス
      * @param endClass
+     *            終了クラス
      */
-    public static void setObjectNull(Object object, Class<?> startClass, Class<?> endClass) {
+    public static void setObjectNull(final Object object, final Class<?> startClass, final Class<?> endClass) {
         try {
             // 自クラスを含んだ全スーパークラス情報を取得する
             final List<Class<?>> classes = ClassUtils.getSuperClasses(startClass, endClass, true, true);
@@ -708,7 +713,7 @@ public final class ClassUtils {
             public void run() {
                 try {
                     Thread.sleep(3000);
-                } catch (InterruptedException e1) {
+                } catch (final InterruptedException e1) {
                 }
 
                 try {
@@ -745,7 +750,7 @@ public final class ClassUtils {
      *            引数
      * @return Method型
      */
-    public static Method getMethod(Class<?> clazz, String methodName, Object... args) {
+    public static Method getMethod(final Class<?> clazz, final String methodName, final Object... args) {
         // メソッドリストを取得し、newInstanceメソッドを探す
         for (final Method method : clazz.getDeclaredMethods()) {
             if (method.getName().equals(methodName)) {

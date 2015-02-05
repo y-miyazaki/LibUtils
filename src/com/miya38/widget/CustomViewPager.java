@@ -25,7 +25,7 @@ public class CustomViewPager extends ViewPager {
      * @param context
      *            Context for this View
      */
-    public CustomViewPager(Context context) {
+    public CustomViewPager(final Context context) {
         super(context);
         postInitViewPager();
     }
@@ -36,15 +36,16 @@ public class CustomViewPager extends ViewPager {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomViewPager(Context context, AttributeSet attrs) {
+    public CustomViewPager(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         postInitViewPager();
     }
 
     @Override
-    protected boolean canScroll(View v, boolean checkV, int dx, int x, int y) {
+    protected boolean canScroll(final View v, final boolean checkV, final int dx, final int x, final int y) {
         return super.canScroll(v, checkV, dx, x, y) || checkV && customCanScroll(v);
     }
 
@@ -52,9 +53,13 @@ public class CustomViewPager extends ViewPager {
      * ViewPagerの中にあるHorizontalScrollViewを優先する設定
      *
      * @param v
+     *            View
      * @return
+     *         true:HorizontalScrollViewが画面より広い場合は、
+     *         HorizontalScrollViewを優先してスクロールする。
+     *         false:HorizontalScrollViewが画面より狭い場合は、ViewPagerを優先してスクロールする。
      */
-    protected boolean customCanScroll(View v) {
+    protected boolean customCanScroll(final View v) {
         if (v instanceof HorizontalScrollView) {
             final View hsvChild = ((HorizontalScrollView) v).getChildAt(0);
             if (hsvChild.getWidth() > v.getWidth()) {
@@ -64,6 +69,9 @@ public class CustomViewPager extends ViewPager {
         return false;
     }
 
+    /**
+     * スクロールイベントを取得する。
+     */
     private void postInitViewPager() {
         try {
             final Field scroller = ViewPager.class.getDeclaredField("mScroller");
@@ -73,7 +81,7 @@ public class CustomViewPager extends ViewPager {
 
             mScroller = new ScrollerCustomDuration(getContext(), (Interpolator) interpolator.get(null));
             scroller.set(this, mScroller);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         }
     }
@@ -84,7 +92,7 @@ public class CustomViewPager extends ViewPager {
      * @param scrollFactor
      *            1:Default、2:1/2のスピード(※数値が大きければスクロールが遅くなる)
      */
-    public void setScrollDurationFactor(double scrollFactor) {
+    public void setScrollDurationFactor(final double scrollFactor) {
         if (mScroller != null) {
             mScroller.setScrollDurationFactor(scrollFactor);
         }
@@ -104,8 +112,9 @@ public class CustomViewPager extends ViewPager {
          * コンストラクタ
          *
          * @param context
+         *            Context
          */
-        public ScrollerCustomDuration(Context context) {
+        public ScrollerCustomDuration(final Context context) {
             super(context);
         }
 
@@ -113,9 +122,11 @@ public class CustomViewPager extends ViewPager {
          * コンストラクタ
          *
          * @param context
+         *            Context
          * @param interpolator
+         *            {@link Interpolator}
          */
-        public ScrollerCustomDuration(Context context, Interpolator interpolator) {
+        public ScrollerCustomDuration(final Context context, final Interpolator interpolator) {
             super(context, interpolator);
         }
 
@@ -123,10 +134,13 @@ public class CustomViewPager extends ViewPager {
          * コンストラクタ
          *
          * @param context
+         *            Context
          * @param interpolator
+         *            {@link Interpolator}
          * @param flywheel
+         *            flywheel
          */
-        public ScrollerCustomDuration(Context context, Interpolator interpolator, boolean flywheel) {
+        public ScrollerCustomDuration(final Context context, final Interpolator interpolator, final boolean flywheel) {
             super(context, interpolator, flywheel);
         }
 
@@ -134,13 +148,14 @@ public class CustomViewPager extends ViewPager {
          * Set the factor by which the duration will change
          *
          * @param scrollFactor
+         *            スクロールファクター
          */
-        public void setScrollDurationFactor(double scrollFactor) {
+        public void setScrollDurationFactor(final double scrollFactor) {
             mScrollFactor = scrollFactor;
         }
 
         @Override
-        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+        public void startScroll(final int startX, final int startY, final int dx, final int dy, final int duration) {
             super.startScroll(startX, startY, dx, dy, (int) (duration * mScrollFactor));
         }
     }

@@ -24,12 +24,15 @@ import javax.crypto.spec.SecretKeySpec;
 import android.util.Base64;
 
 /**
- * ユーティリティークラス
+ * 暗号化・復号ユーティリティークラス
  *
  * @author y-miyazaki
  *
  */
 public final class CipherUtils {
+    // ----------------------------------------------------------
+    // define
+    // ----------------------------------------------------------
     /**
      * アルゴリズム定義
      */
@@ -102,7 +105,7 @@ public final class CipherUtils {
             final SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             generator.init(128, random);
             return generator.generateKey();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
         }
     }
@@ -118,7 +121,7 @@ public final class CipherUtils {
             final SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             generator.init(128, random);
             return generator.generateKey().getEncoded();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
         }
     }
@@ -134,7 +137,7 @@ public final class CipherUtils {
             final SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             generator.init(128, random);
             return Base64.encodeToString(generator.generateKey().getEncoded(), Base64.DEFAULT);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
         }
     }
@@ -146,7 +149,7 @@ public final class CipherUtils {
      *            ハッシュ対象の文字列
      * @return ハッシュ
      */
-    public static byte[] getHash(String target) {
+    public static byte[] getHash(final String target) {
         if (target == null) {
             return null;
         }
@@ -155,9 +158,9 @@ public final class CipherUtils {
             final MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM_SHA256);
             messageDigest.update(originalBytes);
             return messageDigest.digest();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -172,7 +175,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return ハッシュ
      */
-    public static byte[] getHash(String target, Key secretKey) {
+    public static byte[] getHash(final String target, final Key secretKey) {
         if (target == null) {
             return null;
         }
@@ -181,11 +184,11 @@ public final class CipherUtils {
             final Mac mac = Mac.getInstance(ALGORITHM_HMACSHA256);
             mac.init(secretKey);
             return mac.doFinal(originalBytes);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -199,7 +202,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return ハッシュ
      */
-    public static byte[] getHash(String target, String secretKey) {
+    public static byte[] getHash(final String target, final String secretKey) {
         if (target == null) {
             return null;
         }
@@ -210,11 +213,11 @@ public final class CipherUtils {
             final Mac mac = Mac.getInstance(ALGORITHM_HMACSHA256);
             mac.init(sksSpec);
             return mac.doFinal(originalBytes);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -228,7 +231,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return ハッシュ
      */
-    public static byte[] getHash(String target, byte[] secretKey) {
+    public static byte[] getHash(final String target, final byte[] secretKey) {
         if (target == null) {
             return null;
         }
@@ -238,11 +241,11 @@ public final class CipherUtils {
             final Mac mac = Mac.getInstance(ALGORITHM_HMACSHA256);
             mac.init(sksSpec);
             return mac.doFinal(originalBytes);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -257,7 +260,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return String 暗号化文字列
      */
-    public static String enCryptBase64(String target, Key secretKey) {
+    public static String enCryptBase64(final String target, final Key secretKey) {
         if (target == null) {
             return null;
         }
@@ -267,17 +270,17 @@ public final class CipherUtils {
             final Cipher cipher = Cipher.getInstance(ALGORITHM_AES_PADDING_ECB_PKCS5PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return new String(Base64.encode(cipher.doFinal(originalBytes), Base64.DEFAULT));
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -292,7 +295,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return String 復号文字列
      */
-    public static String deCryptBase64(String targetEnCrypt, Key secretKey) {
+    public static String deCryptBase64(final String targetEnCrypt, final Key secretKey) {
         if (targetEnCrypt == null) {
             return null;
         }
@@ -302,15 +305,15 @@ public final class CipherUtils {
             final Cipher cipher = Cipher.getInstance(ALGORITHM_AES_PADDING_ECB_PKCS5PADDING);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(encryptBytes));
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
         }
     }
@@ -325,7 +328,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return String 暗号化文字列
      */
-    public static String enCryptBase64(String target, String secretKey) {
+    public static String enCryptBase64(final String target, final String secretKey) {
         if (target == null) {
             return null;
         }
@@ -338,17 +341,17 @@ public final class CipherUtils {
             final Cipher cipher = Cipher.getInstance(ALGORITHM_AES_PADDING_ECB_PKCS5PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, sksSpec);
             return new String(Base64.encode(cipher.doFinal(originalBytes), Base64.DEFAULT));
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -363,7 +366,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return String 復号文字列
      */
-    public static String deCryptBase64(String targetEnCrypt, String secretKey) {
+    public static String deCryptBase64(final String targetEnCrypt, final String secretKey) {
         if (targetEnCrypt == null) {
             return null;
         }
@@ -376,17 +379,17 @@ public final class CipherUtils {
             final Cipher cipher = Cipher.getInstance(ALGORITHM_AES_PADDING_ECB_PKCS5PADDING);
             cipher.init(Cipher.DECRYPT_MODE, sksSpec);
             return new String(cipher.doFinal(encryptBytes), "UTF-8");
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -401,7 +404,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return String 暗号化文字列
      */
-    public static byte[] enCrypt(byte[] target, byte[] secretKey) {
+    public static byte[] enCrypt(final byte[] target, final byte[] secretKey) {
         if (target == null) {
             return null;
         }
@@ -411,15 +414,15 @@ public final class CipherUtils {
             final Cipher cipher = Cipher.getInstance(ALGORITHM_AES_PADDING_ECB_PKCS5PADDING);
             cipher.init(Cipher.ENCRYPT_MODE, sksSpec);
             return cipher.doFinal(target);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
         }
     }
@@ -434,7 +437,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return String 復号文字列
      */
-    public static String deCrypt(byte[] targetEnCrypt, byte[] secretKey) {
+    public static String deCrypt(final byte[] targetEnCrypt, final byte[] secretKey) {
         if (targetEnCrypt == null) {
             return null;
         }
@@ -443,17 +446,17 @@ public final class CipherUtils {
             final Cipher cipher = Cipher.getInstance(ALGORITHM_AES_PADDING_ECB_PKCS5PADDING);
             cipher.init(Cipher.DECRYPT_MODE, sksSpec);
             return new String(cipher.doFinal(targetEnCrypt), "UTF-8");
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -467,7 +470,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return byte[] 暗号化されたバイト配列
      */
-    public static byte[] enCryptByPrivateKey(byte[] data, String privateKey) {
+    public static byte[] enCryptByPrivateKey(final byte[] data, final String privateKey) {
         try {
             final PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKey.getBytes("UTF-8"));
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -476,19 +479,19 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.ENCRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -502,7 +505,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return byte[] 復号されたバイト配列
      */
-    public static byte[] deCryptByPrivateKey(byte[] data, String privateKey) {
+    public static byte[] deCryptByPrivateKey(final byte[] data, final String privateKey) {
         try {
             final PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKey.getBytes("UTF-8"));
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -511,19 +514,19 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.DECRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -537,7 +540,7 @@ public final class CipherUtils {
      *            公開鍵
      * @return byte[] 暗号化されたバイト配列
      */
-    public static byte[] enCryptByPublicKey(byte[] data, String publicKey) {
+    public static byte[] enCryptByPublicKey(final byte[] data, final String publicKey) {
         try {
             final X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKey.getBytes("UTF-8"));
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -546,19 +549,19 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.ENCRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -572,7 +575,7 @@ public final class CipherUtils {
      *            公開鍵
      * @return byte[] 復号されたバイト配列
      */
-    public static byte[] deCryptByPublicKey(byte[] data, String publicKey) {
+    public static byte[] deCryptByPublicKey(final byte[] data, final String publicKey) {
         try {
             final X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKey.getBytes("UTF-8"));
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -581,19 +584,19 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.DECRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException("UnsupportedEncodingException", e);
         }
     }
@@ -607,7 +610,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return byte[] 暗号化されたバイト配列
      */
-    public static byte[] enCryptByPrivateKey(byte[] data, byte[] privateKey) {
+    public static byte[] enCryptByPrivateKey(final byte[] data, final byte[] privateKey) {
         try {
             final PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKey);
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -616,17 +619,17 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.ENCRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
         }
     }
@@ -640,7 +643,7 @@ public final class CipherUtils {
      *            秘密鍵
      * @return byte[] 復号されたバイト配列
      */
-    public static byte[] deCryptByPrivateKey(byte[] data, byte[] privateKey) {
+    public static byte[] deCryptByPrivateKey(final byte[] data, final byte[] privateKey) {
         try {
             final PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKey);
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -649,17 +652,17 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.DECRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
         }
     }
@@ -673,7 +676,7 @@ public final class CipherUtils {
      *            公開鍵
      * @return byte[] 暗号化されたバイト配列
      */
-    public static byte[] enCryptByPublicKey(byte[] data, byte[] publicKeyData) {
+    public static byte[] enCryptByPublicKey(final byte[] data, final byte[] publicKeyData) {
         try {
             final X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyData);
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -682,17 +685,17 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.ENCRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
         }
     }
@@ -706,7 +709,7 @@ public final class CipherUtils {
      *            公開鍵
      * @return byte[] 復号されたバイト配列
      */
-    public static byte[] deCryptByPublicKey(byte[] data, byte[] publicKey) {
+    public static byte[] deCryptByPublicKey(final byte[] data, final byte[] publicKey) {
         try {
             final X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKey);
             final KeyFactory kf = KeyFactory.getInstance(ALGORITHM_RSA);
@@ -715,17 +718,17 @@ public final class CipherUtils {
             final Cipher rsa = Cipher.getInstance(ALGORITHM_RSA_PADDING_ECB_PKCS1PADDING);
             rsa.init(Cipher.DECRYPT_MODE, key);
             return rsa.doFinal(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new RuntimeException("NoSuchAlgorithmException", e);
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             throw new RuntimeException("InvalidKeySpecException", e);
-        } catch (NoSuchPaddingException e) {
+        } catch (final NoSuchPaddingException e) {
             throw new RuntimeException("NoSuchPaddingException", e);
-        } catch (InvalidKeyException e) {
+        } catch (final InvalidKeyException e) {
             throw new RuntimeException("InvalidKeyException", e);
-        } catch (IllegalBlockSizeException e) {
+        } catch (final IllegalBlockSizeException e) {
             throw new RuntimeException("IllegalBlockSizeException", e);
-        } catch (BadPaddingException e) {
+        } catch (final BadPaddingException e) {
             throw new RuntimeException("BadPaddingException", e);
         }
     }

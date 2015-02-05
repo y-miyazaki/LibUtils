@@ -24,13 +24,13 @@ import com.miya38.widget.CustomGallery;
  * CustomListViewに関する設定は全てこのクラスを使うことで操作を行うことで設定漏れ等を極力なくすのが目的である。<br>
  * 主にCustomGallery、Adapterに関する操作をこのクラスでは実装している。<br>
  * </p>
- *
- *
+ * 
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- *
+ * 
  * @author y-miyazaki
  */
 public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends AbstractSettingGallery<T, U> {
@@ -49,13 +49,13 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
      *            Activityのthis
      */
-    public SettingGallery(T adapter, Activity activity) { // NOPMD by y-miyazaki on 14/07/08 10:03
+    public SettingGallery(final T adapter, final Activity activity) { // NOPMD by y-miyazaki on 14/07/08 10:03
         Preconditions.checkNotNull(adapter, "adapter should not be null.");
         Preconditions.checkNotNull(activity, "activity should not be null.");
         this.mAdapter = adapter;
@@ -64,13 +64,13 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
      *            ダイアログ
      */
-    public SettingGallery(T adapter, Dialog customDialog) {
+    public SettingGallery(final T adapter, final Dialog customDialog) {
         Preconditions.checkNotNull(adapter, "adapter should not be null.");
         Preconditions.checkNotNull(customDialog, "activity should not be null.");
         this.mAdapter = adapter;
@@ -79,13 +79,13 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
      *            Galleryが設定されているview
      */
-    public SettingGallery(T adapter, View view) {
+    public SettingGallery(final T adapter, final View view) {
         Preconditions.checkNotNull(adapter, "adapter should not be null.");
         Preconditions.checkNotNull(view, "activity should not be null.");
         this.mAdapter = adapter;
@@ -94,11 +94,11 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      */
-    public final void setView(int gridViewId) {
+    public final void setView(final int gridViewId) {
         mGallery = getView(gridViewId);
         mGallery.setAdapter(mAdapter);
         setEmptyView();
@@ -106,20 +106,20 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param gridViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public final void setView(int gridViewId, int gridViewEmptyId) {
+    public final void setView(final int gridViewId, final int gridViewEmptyId) {
         this.mGalleryEmptyId = gridViewEmptyId;
         setView(gridViewId);
     }
 
     /**
      * Gallery設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -127,13 +127,13 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
      * @param onRefreshListener
      *            プル時のリスナー
      */
-    public final void setView(int gridViewId, OnItemClickListener onItemClickListener) {
+    public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener) {
         setView(gridViewId, onItemClickListener, null, 0);
     }
 
     /**
      * Gallery設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -141,14 +141,14 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
      * @param gridViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public final void setView(int gridViewId, OnItemClickListener onItemClickListener, int gridViewEmptyId) {
+    public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener, final int gridViewEmptyId) {
         this.mGalleryEmptyId = gridViewEmptyId;
         setView(gridViewId, onItemClickListener, null, gridViewEmptyId);
     }
 
     /**
      * Gallery設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -156,13 +156,13 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
      * @param onItemSelectedListener
      *            リスト切り替え時のリスナー
      */
-    public final void setView(int gridViewId, OnItemClickListener onItemClickListener, OnItemSelectedListener onItemSelectedListener) {
+    public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener, final OnItemSelectedListener onItemSelectedListener) {
         setView(gridViewId, onItemClickListener, onItemSelectedListener, 0);
     }
 
     /**
      * Gallery設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -172,7 +172,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
      * @param gridViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public final void setView(int gridViewId, OnItemClickListener onItemClickListener, OnItemSelectedListener onItemSelectedListener, int gridViewEmptyId) {
+    public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener, final OnItemSelectedListener onItemSelectedListener, final int gridViewEmptyId) {
         mGallery = getView(gridViewId);
         mGallery.setAdapter(mAdapter);
         setOnItemClickListener(onItemClickListener);
@@ -182,11 +182,11 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * View取得
-     *
+     * 
      * @param id
      * @return
      */
-    private <V extends View> V getView(int id) {
+    private <V extends View> V getView(final int id) {
         if (mActivity != null) {
             return ViewHelper.findView(mActivity, id);
         } else if (mView != null) {
@@ -214,7 +214,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final U getItem(int position) {
+    public final U getItem(final int position) {
         return mAdapter.getItem(position);
     }
 
@@ -224,7 +224,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void setItem(U item, int position) {
+    public final void setItem(final U item, final int position) {
         if (item != null) {
             mAdapter.setItem(position, item);
             mAdapter.notifyDataSetChanged();
@@ -232,7 +232,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void setItems(List<U> items) {
+    public final void setItems(final List<U> items) {
         if (items != null) {
             mAdapter.setItems(items);
             mAdapter.notifyDataSetChanged();
@@ -240,7 +240,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void insertItem(U item, int position) {
+    public final void insertItem(final U item, final int position) {
         if (item != null) {
             mAdapter.insert(item, position);
             mAdapter.notifyDataSetChanged();
@@ -248,7 +248,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void addBefore(U item) {
+    public final void addBefore(final U item) {
         if (item != null) {
             mAdapter.insert(item, 0);
             mAdapter.notifyDataSetChanged();
@@ -256,7 +256,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void addBefore(List<U> items) {
+    public final void addBefore(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.insert(item, 0);
@@ -266,7 +266,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void addAfter(List<U> items) {
+    public final void addAfter(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.add(item);
@@ -276,7 +276,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void addAfter(U item) {
+    public final void addAfter(final U item) {
         if (item != null) {
             mAdapter.add(item);
             mAdapter.notifyDataSetChanged();
@@ -294,7 +294,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void setAdapter(T adapter) {
+    public final void setAdapter(final T adapter) {
         this.mAdapter = adapter;
     }
 
@@ -309,7 +309,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void setOnItemClickListener(OnItemClickListener l) {
+    public final void setOnItemClickListener(final OnItemClickListener l) {
         // if (l == null) {
         // mGallery.setSelector(android.R.color.transparent);
         // }
@@ -317,7 +317,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public final void setOnItemSelectedListener(OnItemSelectedListener l) {
+    public final void setOnItemSelectedListener(final OnItemSelectedListener l) {
         // if (l == null) {
         // mGallery.setSelector(android.R.color.transparent);
         // }

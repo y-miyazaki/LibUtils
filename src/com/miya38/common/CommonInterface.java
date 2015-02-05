@@ -8,8 +8,6 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.android.volley.NetworkResponse;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.miya38.connection.NetworkRequest;
 
 /**
@@ -29,7 +27,8 @@ public class CommonInterface {
          * <b>GET用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、getリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment
+         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
          *
@@ -39,11 +38,9 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws JsonMappingException
-         * @throws JsonParseException
          * @throws IOException
          */
-        void onGetLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws JsonMappingException, JsonParseException, IOException;
+        void onGetLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
         /**
          * 各種通信処理完了後にコールされるメソッド
@@ -73,7 +70,8 @@ public class CommonInterface {
          * <b>POST用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、postリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment
+         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
          *
@@ -83,11 +81,9 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws JsonMappingException
-         * @throws JsonParseException
          * @throws IOException
          */
-        void onPostLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws JsonMappingException, JsonParseException, IOException;
+        void onPostLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
         /**
          * 各種通信処理完了後にコールされるメソッド
@@ -116,7 +112,8 @@ public class CommonInterface {
          * <b>PUT用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、putリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment
+         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
          *
@@ -126,11 +123,9 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws JsonMappingException
-         * @throws JsonParseException
          * @throws IOException
          */
-        void onPutLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws JsonMappingException, JsonParseException, IOException;
+        void onPutLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
         /**
          * 各種通信処理完了後にコールされるメソッド
@@ -159,7 +154,8 @@ public class CommonInterface {
          * <b>DELETE用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、deleteリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment
+         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
          *
@@ -169,11 +165,9 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws JsonMappingException
-         * @throws JsonParseException
          * @throws IOException
          */
-        void onDeleteLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws JsonMappingException, JsonParseException, IOException;
+        void onDeleteLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
         /**
          * 各種通信処理完了後にコールされるメソッド
@@ -199,6 +193,8 @@ public class CommonInterface {
         /**
          * クリック時の処理
          *
+         * @param view
+         *            View
          * @param position
          *            Adapterのposition
          */
@@ -212,6 +208,8 @@ public class CommonInterface {
         /**
          * クリック時の処理
          *
+         * @param view
+         *            View
          * @param position
          *            Galleryのposition
          */
@@ -299,16 +297,23 @@ public class CommonInterface {
     public interface OnAnimationFinishedListener {
         /**
          * アニメーション終了リスナー
+         *
+         * @param v
+         *            View
          */
         void onAnimationFinished(View v);
     }
 
     /**
      * View確定リスナー
-     *
-     * @author y-miyazaki
      */
     public interface OnWindowFocusChangedListener {
+        /**
+         * フォーカスチェンジ
+         *
+         * @param hasFocus
+         *            フォーカス
+         */
         void onWindowFocusChanged(boolean hasFocus);
     }
 }

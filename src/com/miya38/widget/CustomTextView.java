@@ -1,6 +1,5 @@
 package com.miya38.widget;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,9 +11,8 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextPaint;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
@@ -22,13 +20,10 @@ import android.text.method.MovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.miya38.R;
 import com.miya38.utils.CollectionUtils;
-import com.miya38.utils.LogUtils;
 
 /**
  * カスタムテキストビュークラス
@@ -44,6 +39,8 @@ public class CustomTextView extends TextView implements TextWatcher {
     // ----------------------------------------------------------
     /** TAG */
     private static final String TAG = CustomTextView.class.getSimpleName();
+    /** 最小の文字サイズ */
+    private static final float MIN_TEXT_SIZE = 1.0f;
 
     // ----------------------------------------------------------
     // キャッシュ
@@ -66,21 +63,18 @@ public class CustomTextView extends TextView implements TextWatcher {
     private float mResizeTextSize = 0.0f;
     /** 文字列のリサイズをするか？ */
     private boolean mIsResize;
-    /** 明滅設定 */
-    private boolean mIsBlink;
     /** 最後を省略するか？ */
     private boolean mIsEllipsize;
     /** 最後を省略に必要な最大行数 */
     private int mEllipsizeMaxlines = 1;
-    /** 明滅間隔 */
-    private int mBlinkDuration = 500;
-    /** 明滅回数 */
-    private int mBlinkCount = -1;
 
     // ----------------------------------------------------------
     // リスナー
     // ----------------------------------------------------------
+    /** {@link OnClickLinkListener} */
     private OnClickLinkListener mOnClickLinkListener;
+    /** テキスト幅計測用のペイント */
+    private final Paint mPaintForMeasure = new Paint();
 
     /**
      * クリックリンクリスナークラス
@@ -93,8 +87,9 @@ public class CustomTextView extends TextView implements TextWatcher {
          * リンクがクリックされた際のコールバックメソッド
          *
          * @param view
+         *            View
          */
-        public void onClick(View view);
+        void onClick(View view);
     }
 
     /**
@@ -103,7 +98,7 @@ public class CustomTextView extends TextView implements TextWatcher {
      * @param context
      *            Context for this View
      */
-    public CustomTextView(Context context) {
+    public CustomTextView(final Context context) {
         super(context);
         // テキストサイズ
         mDefaultTextSize = getTextSize();
@@ -118,7 +113,7 @@ public class CustomTextView extends TextView implements TextWatcher {
      *            AttributeSet for this View. The attribute 'preset_size' is
      *            processed here
      */
-    public CustomTextView(Context context, AttributeSet attrs) {
+    public CustomTextView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
         addTextChangedListener(this);
@@ -135,7 +130,7 @@ public class CustomTextView extends TextView implements TextWatcher {
      * @param defStyle
      *            Default style for this View
      */
-    public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomTextView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -149,7 +144,7 @@ public class CustomTextView extends TextView implements TextWatcher {
      *            AttributeSet for this View. The attribute 'preset_size' is
      *            processed here
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs) {
         // テキストサイズ
         mDefaultTextSize = getTextSize();
 
@@ -160,9 +155,6 @@ public class CustomTextView extends TextView implements TextWatcher {
         this.mIsResize = ta1.getBoolean(R.styleable.CustomTextView_resize, false);
         this.mIsEllipsize = ta1.getBoolean(R.styleable.CustomTextView_ellipsize, false);
         this.mEllipsizeMaxlines = ta1.getInteger(R.styleable.CustomTextView_ellipsize_maxlines, 1);
-        this.mIsBlink = ta1.getBoolean(R.styleable.CustomTextView_blink, false);
-        this.mBlinkCount = ta1.getInt(R.styleable.CustomTextView_blink_count, -1);
-        this.mBlinkDuration = ta1.getInt(R.styleable.CustomTextView_blink_duration, 500);
         ta1.recycle();
 
         try {
@@ -174,7 +166,7 @@ public class CustomTextView extends TextView implements TextWatcher {
             }
             if (sTextStyleId == -1) {
                 synchronized (this) {
-                    sTextStyleId = (Integer) Class.forName("com.android.internal.R$styleable").getField("TextView_textStyle").getInt(null);
+                    sTextStyleId = Class.forName("com.android.internal.R$styleable").getField("TextView_textStyle").getInt(null);
                 }
             }
             final TypedArray ta2 = context.obtainStyledAttributes(attrs, sStyleable);
@@ -184,7 +176,7 @@ public class CustomTextView extends TextView implements TextWatcher {
                 setTypeface(sTypefaceList.get(typeFace), ta2.getInt(sTextStyleId, 0));
             }
             ta2.recycle();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         }
 
@@ -205,7 +197,7 @@ public class CustomTextView extends TextView implements TextWatcher {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mIsResize) {
             fitTextSize();
@@ -213,19 +205,16 @@ public class CustomTextView extends TextView implements TextWatcher {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         // 1行を超える場合は、...を付与する
         setEllipSize();
         // 画面にフィットしたサイズにする
         fitTextSize();
-        if (this.mIsBlink) {
-            setBlink();
-        }
     }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int start, int lengthBefore, int lengthAfter) {
+    public void onTextChanged(final CharSequence charSequence, final int start, final int lengthBefore, final int lengthAfter) {
         super.onTextChanged(charSequence, start, lengthBefore, lengthAfter);
         // 1行を超える場合は、...を付与する
         setEllipSize();
@@ -234,12 +223,12 @@ public class CustomTextView extends TextView implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {
+    public void beforeTextChanged(final CharSequence paramCharSequence, final int paramInt1, final int paramInt2, final int paramInt3) {
         // 何もしない。
     }
 
     @Override
-    public void afterTextChanged(Editable paramEditable) {
+    public void afterTextChanged(final Editable paramEditable) {
         // 何もしない。
     }
 
@@ -253,15 +242,127 @@ public class CustomTextView extends TextView implements TextWatcher {
         super.onDetachedFromWindow();
     }
 
-    private TextPaint getTextPaint() {
+    /**
+     * HTMLフォーマットのTextに変換する。
+     *
+     * @param text
+     *            HTML文字列
+     */
+    public void setHtml(final CharSequence text) {
+        if (text == null) {
+            setText(null);
+        } else {
+            final ImageGetterImpl imageGetter = new ImageGetterImpl(getContext().getApplicationContext());
+            setText(Html.fromHtml(text.toString(), imageGetter, null));
+        }
+    }
+
+    /**
+     * タイプフェースで追加したものをindex指定する。
+     *
+     * @return タイプフェースカウント数
+     */
+    public static int getCustomTypefaceCount() {
+        return sTypefaceList == null ? 0 : sTypefaceList.size();
+    }
+
+    /**
+     * タイプフェースで追加したものをindex指定する。
+     *
+     * @param index
+     *            タイプフェース取得のためのインデックス(0から指定)
+     */
+    public static void setDefaultCustomTypeface(final int index) {
+        sDefaultTypefaceIndex = index;
+    }
+
+    /**
+     * タイプフェース追加
+     *
+     * @param typeface
+     *            {@link Typeface}
+     */
+    public static synchronized void addCustomTypeface(final Typeface typeface) {
+        if (sTypefaceList == null) {
+            sTypefaceList = new ArrayList<Typeface>();
+        }
+        sTypefaceList.add(typeface);
+    }
+
+    /**
+     * 追加したタイプフェースを指定する
+     *
+     * @param index
+     *            タイプフェース設定のためのインデックス(0から指定)
+     */
+    public void setCustomTypeface(final int index) {
         try {
-            final Field mTextPaint = TextView.class.getDeclaredField("mTextPaint");
-            mTextPaint.setAccessible(true);
-            return (TextPaint) mTextPaint.get(this);
-        } catch (Exception e) {
-            LogUtils.e(TAG, "error", e);
+            if (!CollectionUtils.isNullOrEmpty(sTypefaceList)) {
+                setTypeface(sTypefaceList.get(index));
+            }
+        } catch (final ArrayIndexOutOfBoundsException e) {
+            // 握りつぶす
+        }
+    }
+
+    /**
+     * 追加したタイプフェースを取得する。
+     *
+     * @param index
+     *            タイプフェース設定のためのインデックス(0から指定)
+     * @return Typeface
+     */
+    public static Typeface getCustomTypeface(final int index) {
+        try {
+            if (sTypefaceList != null) {
+                return sTypefaceList.get(index);
+            }
+        } catch (final ArrayIndexOutOfBoundsException e) {
+            // 握りつぶす
         }
         return null;
+    }
+
+    /**
+     * テキストリンククリックリスナー
+     * <p>
+     * テキスト中の文字列の一部をAタグのようにリンクし、{@link OnClickLinkListener}でクリックしたことを受け取ることができる。
+     * <br>
+     * リンクの文字列は引数linkで設定する。
+     * </p>
+     *
+     * @param link
+     *            リンク部分文字列
+     * @param l
+     *            {@link OnClickLinkListener}
+     */
+    public void setOnClickLinkListener(final String link, final OnClickLinkListener l) {
+        mOnClickLinkListener = l;
+        final SpannableString spannable = SpannableString.valueOf(getText());
+        final Pattern pattern = Pattern.compile(link);
+        final Matcher matcher = pattern.matcher(spannable);
+
+        // Create FragmentSpans for each match
+        while (matcher.find()) {
+            spannable.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(final View view) {
+                    if (mOnClickLinkListener != null) {
+                        mOnClickLinkListener.onClick(view);
+                    }
+                }
+            }, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        // Set new spans in CustomTextView
+        setText(spannable);
+
+        // Listen for spannable clicks, if not already
+        final MovementMethod m = getMovementMethod();
+        if ((m == null) || !(m instanceof LinkMovementMethod)) {
+            if (getLinksClickable()) {
+                setMovementMethod(LinkMovementMethod.getInstance());
+            }
+        }
     }
 
     /**
@@ -283,7 +384,7 @@ public class CustomTextView extends TextView implements TextWatcher {
                     }
                 }
             }
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (final StringIndexOutOfBoundsException e) {
             // 握りつぶす
         }
     }
@@ -297,9 +398,7 @@ public class CustomTextView extends TextView implements TextWatcher {
         }
         // 設定された文字サイズで初期化する
         mResizeTextSize = mDefaultTextSize;
-
-        final Paint textPaint = new Paint();
-        textPaint.setTextSize(mResizeTextSize);
+        mPaintForMeasure.setTextSize(mResizeTextSize);
 
         // 適切なサイズになるまで小さくしていきます。(paddingも考慮します。)
         final int targetWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
@@ -311,178 +410,37 @@ public class CustomTextView extends TextView implements TextWatcher {
 
         // 最大幅と対象文字列を保存
         for (final String str : stringList) {
-            stringWidth = stringWidth > textPaint.measureText(str) ? stringWidth : textPaint.measureText(str);
-            string = textPaint.measureText(string) > textPaint.measureText(str) ? string : str;
+            stringWidth = stringWidth > mPaintForMeasure.measureText(str) ? stringWidth : mPaintForMeasure.measureText(str);
+            string = mPaintForMeasure.measureText(string) > mPaintForMeasure.measureText(str) ? string : str;
         }
 
         // 幅に合うように文字列を縮小する
-        int count = 0;
-        while (targetWidth < textPaint.measureText(string)) {
-            count++;
-            textPaint.setTextSize(--mResizeTextSize);
+        while (targetWidth < mPaintForMeasure.measureText(string)) {
+            mPaintForMeasure.setTextSize(--mResizeTextSize);
 
-            // 永久ループ対策
-            if (100 < count) {
+            // 最小文字サイズより小さくなった場合は、文字サイズをセットして終了する
+            if (mResizeTextSize <= MIN_TEXT_SIZE) {
+                mResizeTextSize = MIN_TEXT_SIZE;
                 break;
             }
         }
         super.setTextSize(mResizeTextSize);
-        getTextPaint().setTextSize(mResizeTextSize);
     }
 
     /**
-     * HTMLフォーマットのTextに変換する。
+     * テキスト幅を取得
      *
+     * @param textSize
+     *            文字サイズ
      * @param text
-     *            HTML文字列
+     *            文字列
+     * @param typeFace
+     *            文字種
+     * @return テキスト幅
      */
-    public void setHtml(CharSequence text) {
-        if (text == null) {
-            setText(null);
-        } else {
-            ImageGetterImpl imageGetter = new ImageGetterImpl(getContext().getApplicationContext());
-            setText(Html.fromHtml(text.toString(), imageGetter, null));
-        }
-    }
-
-    /**
-     * 文字を明滅させる
-     *
-     * @param blinkCount
-     *            明滅回数
-     * @param blinkDuration
-     *            明滅間隔(msec)
-     *
-     */
-    public void setBlink(int blinkCount, int blinkDuration) {
-        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
-        alpha.setDuration(blinkDuration);
-        alpha.setRepeatMode(Animation.REVERSE);
-        alpha.setRepeatCount(blinkCount);
-        alpha.setFillEnabled(true);
-        alpha.setFillAfter(true);
-        alpha.setFillBefore(false);
-        startAnimation(alpha);
-    }
-
-    /**
-     * 文字を明滅させる
-     *
-     */
-    public void setBlink() {
-        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
-        alpha.setDuration(mBlinkDuration);
-        alpha.setRepeatMode(Animation.REVERSE);
-        alpha.setRepeatCount(mBlinkCount);
-        alpha.setFillEnabled(true);
-        alpha.setFillAfter(true);
-        alpha.setFillBefore(false);
-        startAnimation(alpha);
-    }
-
-    /**
-     * タイプフェースで追加したものをindex指定する。
-     */
-    public static int getCustomTypefaceCount() {
-        return sTypefaceList == null ? 0 : sTypefaceList.size();
-    }
-
-    /**
-     * タイプフェースで追加したものをindex指定する。
-     *
-     * @param index
-     *            タイプフェース取得のためのインデックス(0から指定)
-     */
-    public static void setDefaultCustomTypeface(int index) {
-        sDefaultTypefaceIndex = index;
-    }
-
-    /**
-     * タイプフェース追加
-     *
-     * @param typeface
-     *            {@link Typeface}
-     */
-    public synchronized static void addCustomTypeface(Typeface typeface) {
-        if (sTypefaceList == null) {
-            sTypefaceList = new ArrayList<Typeface>();
-        }
-        sTypefaceList.add(typeface);
-    }
-
-    /**
-     * 追加したタイプフェースを指定する
-     *
-     * @param index
-     *            タイプフェース設定のためのインデックス(0から指定)
-     */
-    public void setCustomTypeface(int index) {
-        try {
-            if (!CollectionUtils.isNullOrEmpty(sTypefaceList)) {
-                setTypeface(sTypefaceList.get(index));
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // 握りつぶす
-        }
-    }
-
-    /**
-     * 追加したタイプフェースを取得する。
-     *
-     * @param index
-     *            タイプフェース設定のためのインデックス(0から指定)
-     * @return
-     */
-    public static Typeface getCustomTypeface(int index) {
-        try {
-            if (sTypefaceList != null) {
-                return sTypefaceList.get(index);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // 握りつぶす
-        }
-        return null;
-    }
-
-    /**
-     * テキストリンククリックリスナー
-     * <p>
-     * テキスト中の文字列の一部をAタグのようにリンクし、{@link OnClickLinkListener}でクリックしたことを受け取ることができる。
-     * <br>
-     * リンクの文字列は引数linkで設定する。
-     * </p>
-     *
-     * @param link
-     *            リンク部分文字列
-     * @param l
-     *            {@link OnClickLinkListener}
-     */
-    public void setOnClickLinkListener(String link, OnClickLinkListener l) {
-        mOnClickLinkListener = l;
-        SpannableString spannable = SpannableString.valueOf(getText());
-        Pattern pattern = Pattern.compile(link);
-        Matcher matcher = pattern.matcher(spannable);
-
-        // Create FragmentSpans for each match
-        while (matcher.find()) {
-            spannable.setSpan(new ClickableSpan() {
-                @Override
-                public void onClick(View view) {
-                    if (mOnClickLinkListener != null) {
-                        mOnClickLinkListener.onClick(view);
-                    }
-                }
-            }, matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        // Set new spans in CustomTextView
-        setText(spannable);
-
-        // Listen for spannable clicks, if not already
-        MovementMethod m = getMovementMethod();
-        if ((m == null) || !(m instanceof LinkMovementMethod)) {
-            if (getLinksClickable()) {
-                setMovementMethod(LinkMovementMethod.getInstance());
-            }
-        }
+    private float getTextWidth(final float textSize, final String text, final Typeface typeFace) {
+        mPaintForMeasure.setTextSize(textSize);
+        mPaintForMeasure.setTypeface(typeFace);
+        return mPaintForMeasure.measureText(text);
     }
 }

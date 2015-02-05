@@ -17,15 +17,16 @@ import com.miya38.list.adapter.CustomArrayAdapter;
 /**
  * CustomListView設定クラス
  * <p>
- * ここではSettingListViewの内容に対して、PULLDOWN時に単純にFooterを表示するのみでPULLのように引っ張らなくてもイベントを投げるように修正したクラス
+ * ここではSettingListViewの内容に対して、
+ * PULLDOWN時に単純にFooterを表示するのみでPULLのように引っ張らなくてもイベントを投げるように修正したクラス
  * </p>
- *
- *
+ * 
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- *
+ * 
  * @author y-miyazaki
  * @param <T>
  * @param <U>
@@ -35,7 +36,10 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
     private OnRefreshListener<ListView> mOnRefreshListener;
     /** ScrollListnerからコールするために内部で保持する。 */
     private OnRefreshListener2<ListView> mOnRefreshListener2;
-    /** Modeは、ScrollListnerからコールするために内部で保持する。実際にListViewに渡すmodeにBOTH/PULL_ENDは渡さない。変換して渡す。 */
+    /**
+     * Modeは、ScrollListnerからコールするために内部で保持する。実際にListViewに渡すmodeにBOTH/
+     * PULL_ENDは渡さない。変換して渡す。
+     */
     private Mode mMode;
     /** Footer View(Staticに保持しなければ消せないので) */
     private final View mFooterView;
@@ -44,7 +48,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビュー
      * @param adapter
@@ -61,7 +65,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param dialog
@@ -78,7 +82,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
@@ -95,7 +99,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -120,7 +124,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -140,7 +144,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener

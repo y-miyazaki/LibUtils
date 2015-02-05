@@ -7,7 +7,8 @@ import android.content.Context;
 import com.miya38.validator.AbstractValidator;
 
 /**
- * Validator to check if a field contains only numbers and letters. Avoids having special characters like accents.
+ * Validator to check if a field contains only numbers and letters. Avoids
+ * having special characters like accents.
  */
 public class AlnumValidator extends AbstractValidator {
 
@@ -16,32 +17,32 @@ public class AlnumValidator extends AbstractValidator {
      */
     private static final Pattern PATTERN = Pattern.compile("^[A-Za-z0-9]+$");
 
-    private String mErrorMessage;
+    private final String mErrorMessage;
 
     /**
      * contructor
-     *
+     * 
      * @param c
      * @param errorMessage
      */
-    public AlnumValidator(Context c, int errorMessage) {
+    public AlnumValidator(final Context c, final int errorMessage) {
         super(c);
         mErrorMessage = mContext.getString(errorMessage);
     }
 
     /**
      * contructor
-     *
+     * 
      * @param c
      * @param errorMessage
      */
-    public AlnumValidator(Context c, String errorMessage) {
+    public AlnumValidator(final Context c, final String errorMessage) {
         super(c);
         mErrorMessage = errorMessage;
     }
 
     @Override
-    public boolean isValid(String value) {
+    public boolean isValid(final String value) {
         return PATTERN.matcher(value).matches();
     }
 

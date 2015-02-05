@@ -11,9 +11,9 @@ import com.miya38.utils.DiskLruCache;
  * <p>
  * 最悪ディスクベースキャッシュが使えなくても、メモリベースキャッシュに移行する。
  * </p>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class BitmapDiskLruCache implements ImageCache {
     /** メモリキャッシュサイズ(5M) */
@@ -23,15 +23,15 @@ public class BitmapDiskLruCache implements ImageCache {
     /** シングルトンBitmapCache */
     private BitmapLruCache mBitmapLruCashe;
     /** DiskLruCacheクラス */
-    private DiskLruCache mDiskLruCache;
+    private final DiskLruCache mDiskLruCache;
 
     /**
      * コンストラクタ Bitmapのキャッシュサイズ指定、DiskLruCacheの設定を行う。
-     *
+     * 
      * @param context
      *            Context
      */
-    private BitmapDiskLruCache(Context context) {
+    private BitmapDiskLruCache(final Context context) {
         mDiskLruCache = DiskLruCache.openCache(context, MAX_BITMAP_DISKCACHE_BYTESIZE);
         if (mDiskLruCache == null) {
             mBitmapLruCashe = BitmapLruCache.getInstance();
@@ -40,10 +40,10 @@ public class BitmapDiskLruCache implements ImageCache {
 
     /**
      * インスタンス取得
-     *
+     * 
      * @return {@link BitmapDiskLruCache}
      */
-    public static BitmapDiskLruCache getInstance(Context context) {
+    public static BitmapDiskLruCache getInstance(final Context context) {
         if (sBitmapDiskLruCashe == null) {
             sBitmapDiskLruCashe = new BitmapDiskLruCache(context);
         }
@@ -51,7 +51,7 @@ public class BitmapDiskLruCache implements ImageCache {
     }
 
     @Override
-    public Bitmap getBitmap(String url) {
+    public Bitmap getBitmap(final String url) {
         if (mDiskLruCache == null) {
             return mBitmapLruCashe.getBitmap(url);
         } else {
@@ -60,7 +60,7 @@ public class BitmapDiskLruCache implements ImageCache {
     }
 
     @Override
-    public void putBitmap(String url, Bitmap bitmap) {
+    public void putBitmap(final String url, final Bitmap bitmap) {
         if (mDiskLruCache == null) {
             mBitmapLruCashe.putBitmap(url, bitmap);
         } else {

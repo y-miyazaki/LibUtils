@@ -9,7 +9,7 @@ import com.google.common.io.Closeables;
 
 /**
  * コピーユーティリティークラス
- *
+ * 
  * @author t-yuba
  */
 public final class CopyUtils implements Cloneable {
@@ -21,14 +21,14 @@ public final class CopyUtils implements Cloneable {
 
     /**
      * このオブジェクトのCloneメソッドです.
-     *
+     * 
      * @param o
      *            オブジェクト
      * @return このオブジェクトのColne(DeepCopy)
      * @throws CloneNotSupportedException
      *             Cloneを作成出来なかった
      */
-    public static Object deepCopy(Object o) throws CloneNotSupportedException {
+    public static Object deepCopy(final Object o) throws CloneNotSupportedException {
         // オブジェクトを符号化し、バイト配列に書き込み
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
@@ -47,7 +47,7 @@ public final class CopyUtils implements Cloneable {
             bais = new ByteArrayInputStream(buff);
             os = new ObjectInputStream(bais);
             return os.readObject();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             // Should not happen
             throw new CloneNotSupportedException();
         } finally {

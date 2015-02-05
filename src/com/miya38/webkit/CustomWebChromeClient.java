@@ -7,9 +7,9 @@ import com.miya38.utils.LogUtils;
 
 /**
  * カスタムWebViewClient
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class CustomWebChromeClient extends WebChromeClient {
     /** TAG */
@@ -23,7 +23,7 @@ public class CustomWebChromeClient extends WebChromeClient {
     }
 
     @Override
-    public void onReceivedTitle(WebView view, String title) {
+    public void onReceivedTitle(final WebView view, final String title) {
         LogUtils.d(TAG, "onReceivedTitle: title = %s", title);
     }
 }

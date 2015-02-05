@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.webkit.WebView;
 
 import com.miya38.utils.StringUtils;
+import com.miya38.widget.callback.OnFlickListener;
 
 /**
  * カスタムWebViewクラス
@@ -38,7 +39,7 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
      * @param context
      *            Context for this View
      */
-    public CustomWebView(Context context) {
+    public CustomWebView(final Context context) {
         super(context);
         setGestureDetector(new GestureDetector(context, this));
     }
@@ -49,9 +50,10 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomWebView(Context context, AttributeSet attrs) {
+    public CustomWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         setGestureDetector(new GestureDetector(context, this));
     }
@@ -62,11 +64,12 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
-    public CustomWebView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomWebView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         setGestureDetector(new GestureDetector(context, this));
     }
@@ -85,8 +88,9 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
      * コールバックリスナー設定
      *
      * @param l
+     *            {@link OnFlickListener}
      */
-    public final void setOnFlickListener(OnFlickListener l) {
+    public final void setOnFlickListener(final OnFlickListener l) {
         mOnFlickListener = l;
     }
 
@@ -94,43 +98,44 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
      * GestureDetector設定
      *
      * @param gestureDetector
+     *            {@link GestureDetector}
      */
-    public void setGestureDetector(GestureDetector gestureDetector) {
+    public void setGestureDetector(final GestureDetector gestureDetector) {
         this.mGestureDetector = gestureDetector;
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(final MotionEvent ev) {
         return mGestureDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
+    public boolean onDown(final MotionEvent e) {
         return false;
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
+    public void onShowPress(final MotionEvent e) {
         // 何もしない。
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
+    public boolean onSingleTapUp(final MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onLongPress(final MotionEvent e) {
         // 何もしない。
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(final MotionEvent e1, final MotionEvent e2, final float velocityX, final float velocityY) {
         if (mOnFlickListener != null) {
             // X軸移動の方が長い場合はtrue Y軸移動の方が長い場合はfalse
             final boolean flingX = Math.abs(e2.getX() - e1.getX()) > Math.abs(e2.getY() - e1.getY()) * 4;

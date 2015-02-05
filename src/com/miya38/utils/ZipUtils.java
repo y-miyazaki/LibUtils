@@ -11,8 +11,6 @@ import java.util.zip.ZipInputStream;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.google.common.io.Closeables;
-
 /**
  * Zipユーティリティ
  *
@@ -20,6 +18,14 @@ import com.google.common.io.Closeables;
  *
  */
 public final class ZipUtils {
+    // ----------------------------------------------------------
+    // define
+    // ----------------------------------------------------------
+    /** バッファサイズ */
+    private static final int BUFFER_SIZE = 1024;
+    // ----------------------------------------------------------
+    // other
+    // ----------------------------------------------------------
     /** Context */
     private static Context sContext;
 
@@ -36,7 +42,7 @@ public final class ZipUtils {
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
@@ -50,7 +56,7 @@ public final class ZipUtils {
      *            zipのパス
      * @return zip解凍後のファイルリスト
      */
-    public static List<String> getFileList(String zipPath) {
+    public static List<String> getFileList(final String zipPath) {
         final List<String> fileLists = new ArrayList<String>();
         InputStream is = null;
         ZipInputStream zis = null;
@@ -62,11 +68,11 @@ public final class ZipUtils {
             while ((ze = zis.getNextEntry()) != null) {
                 fileLists.add(sContext.getFilesDir().toString() + "/" + ze.getName());
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         } finally {
-            Closeables.closeQuietly(is);
-            Closeables.closeQuietly(zis);
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(zis);
         }
         return fileLists;
     }
@@ -81,7 +87,7 @@ public final class ZipUtils {
      *            zipのパス
      * @return zip解凍後のファイルリスト
      */
-    public static List<String> getFileListSdCard(String zipPath) {
+    public static List<String> getFileListSdCard(final String zipPath) {
         final List<String> fileLists = new ArrayList<String>();
         InputStream is = null;
         ZipInputStream zis = null;
@@ -93,11 +99,11 @@ public final class ZipUtils {
             while ((ze = zis.getNextEntry()) != null) {
                 fileLists.add(FileSdCardUtils.getCachePath(ze.getName()));
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         } finally {
-            Closeables.closeQuietly(is);
-            Closeables.closeQuietly(zis);
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(zis);
         }
         return fileLists;
     }
@@ -109,7 +115,7 @@ public final class ZipUtils {
      *            zipのパス
      * @return ファイルパス
      */
-    public static List<String> zipToFileCopy(String zipPath) {
+    public static List<String> zipToFileCopy(final String zipPath) {
         final List<String> fileLists = new ArrayList<String>();
         InputStream is = null;
         FileOutputStream fos = null;
@@ -128,7 +134,7 @@ public final class ZipUtils {
                 if (file.exists()) {
                     file.delete();
                 }
-                final byte[] buf = new byte[1024];
+                final byte[] buf = new byte[BUFFER_SIZE];
                 int size = 0;
 
                 fos = new FileOutputStream(path, false);
@@ -138,12 +144,12 @@ public final class ZipUtils {
                 zis.closeEntry();
                 fileLists.add(path);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return new ArrayList<String>();
         } finally {
-            Closeables.closeQuietly(is);
-            Closeables.closeQuietly(fos);
-            Closeables.closeQuietly(zis);
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(fos);
+            IOUtils.closeQuietly(zis);
         }
         return fileLists;
     }
@@ -155,7 +161,7 @@ public final class ZipUtils {
      *            zipのパス
      * @return SDカードのパス
      */
-    public static List<String> zipToFileSdCardCopy(String zipPath) {
+    public static List<String> zipToFileSdCardCopy(final String zipPath) {
         final List<String> fileLists = new ArrayList<String>();
         InputStream is = null;
         FileOutputStream fos = null;
@@ -174,7 +180,7 @@ public final class ZipUtils {
                 }
 
                 // バッファ確保
-                final byte[] buf = new byte[1024];
+                final byte[] buf = new byte[BUFFER_SIZE];
                 int size = 0;
 
                 fos = new FileOutputStream(path, false);
@@ -184,12 +190,12 @@ public final class ZipUtils {
                 zis.closeEntry();
                 fileLists.add(path);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return new ArrayList<String>();
         } finally {
-            Closeables.closeQuietly(is);
-            Closeables.closeQuietly(fos);
-            Closeables.closeQuietly(zis);
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(fos);
+            IOUtils.closeQuietly(zis);
         }
         return fileLists;
     }

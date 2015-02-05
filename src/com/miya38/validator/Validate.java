@@ -16,23 +16,25 @@ public class Validate extends AbstractValidate {
 
     /**
      * Constructor
-     *
+     * 
      * @param source
      */
-    public Validate(TextView source) {
+    public Validate(final TextView source) {
         this.mSource = source;
     }
 
     /**
      * Adds a validator to the end of the chain
-     *
+     * 
      * @param validator
      */
-    public void addValidator(AbstractValidator validator) {
+    @Override
+    public void addValidator(final AbstractValidator validator) {
         this.mValidators.add(validator);
     }
 
-    public boolean isValid(String value) {
+    @Override
+    public boolean isValid(final String value) {
         final Iterator<AbstractValidator> it = this.mValidators.iterator();
         mMessages = new ArrayList<String>();
         while (it.hasNext()) {
@@ -41,7 +43,7 @@ public class Validate extends AbstractValidate {
                 if (!validator.isValid(value)) {
                     mMessages.add(validator.getMessage());
                 }
-            } catch (ValidatorException e) {
+            } catch (final ValidatorException e) {
                 mMessages.add(e.getMessage());
             }
         }
@@ -54,10 +56,12 @@ public class Validate extends AbstractValidate {
         return mMessages.get(0);
     }
 
+    @Override
     public List<String> getMessages() {
         return this.mMessages;
     }
 
+    @Override
     public TextView getSource() {
         return this.mSource;
     }

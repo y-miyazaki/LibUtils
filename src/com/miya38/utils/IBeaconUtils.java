@@ -7,7 +7,7 @@ import java.util.Arrays;
  * <p>
  * アップル社で発売されているiBeacon用の受信用のユーティリティクラスである。
  * </p>
- *
+ * 
  * @author y-miyazaki
  */
 public final class IBeaconUtils {
@@ -35,7 +35,7 @@ public final class IBeaconUtils {
 
     /**
      * IBeacon距離を4段階で取得するためのENUM
-     *
+     * 
      * @author y-miyazaki
      */
     public enum IBeaconDistance {
@@ -56,23 +56,25 @@ public final class IBeaconUtils {
     }
 
     /**
-     *
+     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote device.
+     *            The content of the advertisement record offered by the remote
+     *            device.
      * @return
      */
-    public static String getAdvertisment(byte[] scanRecord) {
+    public static String getAdvertisment(final byte[] scanRecord) {
         return intToHex2(scanRecord[5] & 0xff) + intToHex2(scanRecord[6] & 0xff);
     }
 
     /**
      * iBeacon用UUIDを取得する
-     *
+     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote device.
+     *            The content of the advertisement record offered by the remote
+     *            device.
      * @return UUID
      */
-    public static String getUUID(byte[] scanRecord) {
+    public static String getUUID(final byte[] scanRecord) {
         final StringBuffer sb = new StringBuffer();
         final byte[] uUID = Arrays.copyOfRange(scanRecord, 9, 25);
         final int length = uUID.length;
@@ -96,37 +98,40 @@ public final class IBeaconUtils {
 
     /**
      * iBeacon用Majorを取得する
-     *
+     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote device.
+     *            The content of the advertisement record offered by the remote
+     *            device.
      * @return Major
      */
-    public static String getMajor(byte[] scanRecord) {
+    public static String getMajor(final byte[] scanRecord) {
         return intToHex2(scanRecord[25] & 0xff) + intToHex2(scanRecord[26] & 0xff);
     }
 
     /**
      * iBeacon用Minorを取得する
-     *
+     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote device.
+     *            The content of the advertisement record offered by the remote
+     *            device.
      * @return Minor
      */
-    public static String getMinor(byte[] scanRecord) {
+    public static String getMinor(final byte[] scanRecord) {
         return intToHex2(scanRecord[27] & 0xff) + intToHex2(scanRecord[28] & 0xff);
     }
 
     /**
      * iBeacon用データであるかチェックをする
-     *
+     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote device.
+     *            The content of the advertisement record offered by the remote
+     *            device.
      * @param UUID
      *            UUID
      * @return true: UUIDが一致する。<br>
      *         false: UUIDが一致しない、もしくはiBeacon用データではない。<br>
      */
-    public static boolean equalUUID(byte[] scanRecord, String uUID) {
+    public static boolean equalUUID(final byte[] scanRecord, final String uUID) {
         if (isIBeacon(scanRecord) && !StringUtils.isEmpty(uUID)) {
             return StringUtils.equals(getUUID(scanRecord), uUID.toUpperCase());
         }
@@ -135,16 +140,17 @@ public final class IBeaconUtils {
 
     /**
      * iBeacon用データであるかチェックをする
-     *
+     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote device.
+     *            The content of the advertisement record offered by the remote
+     *            device.
      * @return true: iBeaconデータである<br>
      *         false:iBeaconデータではない
      */
-    public static boolean isIBeacon(byte[] scanRecord) {
+    public static boolean isIBeacon(final byte[] scanRecord) {
         if (scanRecord.length > IBEACON_DATA_LENGTH) {
             if ((scanRecord[5] == IBEACON_COMPANY_CODE_APPLE_00) && (scanRecord[6] == IBEACON_COMPANY_CODE_APPLE_01) &&
-                    (scanRecord[7] == (byte) IBEACON_TYPE_IBEACON) && (scanRecord[8] == (byte) 0x15)) {
+                    (scanRecord[7] == IBEACON_TYPE_IBEACON) && (scanRecord[8] == (byte) 0x15)) {
                 return true;
             }
         }
@@ -153,20 +159,21 @@ public final class IBeaconUtils {
 
     /**
      * Calculates the accuracy of an RSSI reading.
-     *
-     * The code was taken from {@link http://stackoverflow.com/questions/20416218/understanding-ibeacon-distancing}
-     *
+     * 
+     * The code was taken from {@link http
+     * ://stackoverflow.com/questions/20416218/understanding-ibeacon-distancing}
+     * 
      * @param txPower
      *            the calibrated TX power of an iBeacon
      * @param rssi
      *            the RSSI value of the iBeacon
      * @return
      */
-    public static double getAccuracy(int txPower, double rssi) {
+    public static double getAccuracy(final int txPower, final double rssi) {
         if (rssi == 0) {
             return -1.0; // if we cannot determine accuracy, return -1.
         }
-        double ratio = rssi * 1.0 / txPower;
+        final double ratio = rssi * 1.0 / txPower;
         if (ratio < 1.0) {
             return Math.pow(ratio, 10);
         }
@@ -178,25 +185,25 @@ public final class IBeaconUtils {
 
     /**
      * 距離を4段階で取得する。
-     *
+     * 
      * @param txPower
      *            the calibrated TX power of an iBeacon
      * @param rssi
      *            the RSSI value of the iBeacon
      * @return {@link IBeaconDistance}
      */
-    public static IBeaconDistance getDistance(int txPower, double rssi) {
+    public static IBeaconDistance getDistance(final int txPower, final double rssi) {
         return getDistance(getAccuracy(txPower, rssi));
     }
 
     /**
      * 距離を4段階で取得する。
-     *
+     * 
      * @param accuracy
      *            距離(m)
      * @return {@link IBeaconDistance}
      */
-    public static IBeaconDistance getDistance(double accuracy) {
+    public static IBeaconDistance getDistance(final double accuracy) {
         if (accuracy < DISTANCE_THRESHOLD_WTF) {
             return IBeaconDistance.UNKNOWN;
         } else if (accuracy < DISTANCE_THRESHOLD_IMMEDIATE) {
@@ -209,12 +216,12 @@ public final class IBeaconUtils {
 
     /**
      * intデータを 2桁16進数に変換するメソッド
-     *
+     * 
      * @param i
      *            intデータ
      * @return 16進数
      */
-    private static String intToHex2(int i) {
+    private static String intToHex2(final int i) {
         final char hex_2[] = { Character.forDigit((i >> 4) & 0x0f, 16), Character.forDigit(i & 0x0f, 16) };
         return new String(hex_2).toUpperCase();
     }

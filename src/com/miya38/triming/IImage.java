@@ -21,7 +21,7 @@ import android.net.Uri;
 /**
  * The interface of all images used in gallery.
  */
-@SuppressWarnings ("javadoc")
+@SuppressWarnings("javadoc")
 public interface IImage {
     static final int THUMBNAIL_TARGET_SIZE = 320;
     static final int MINI_THUMB_TARGET_SIZE = 96;

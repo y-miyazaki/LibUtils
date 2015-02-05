@@ -60,7 +60,7 @@ public final class ImageUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -97,7 +97,7 @@ public final class ImageUtils {
     /**
      * イメージリサイズ処理(Bitmap→Bitmap)<br>
      * ※縮尺比を考慮し、幅に合わせ画像をリサイズする処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param w
@@ -136,7 +136,7 @@ public final class ImageUtils {
     /**
      * イメージリサイズ処理<br>
      * ※縮尺比を考慮し、幅に合わせ画像をリサイズする処理
-     *
+     * 
      * @param filename
      *            ビットマップ
      * @param w
@@ -189,7 +189,7 @@ public final class ImageUtils {
     /**
      * イメージリサイズ処理(byte→Bitmap)<br>
      * ※縮尺比を考慮し、幅に合わせ画像をリサイズする処理
-     *
+     * 
      * @param byteData
      *            画像バイトデータ
      * @param w
@@ -242,7 +242,7 @@ public final class ImageUtils {
 
     /**
      * 画像をリサイズする処理(Bitmap→Bitmap)
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param size
@@ -274,7 +274,7 @@ public final class ImageUtils {
 
     /**
      * 縮尺比を変えずに画像を縮小する処理(リソース版)
-     *
+     * 
      * @param resource
      *            リソース
      * @param size
@@ -305,7 +305,7 @@ public final class ImageUtils {
 
     /**
      * 縮尺比を変えずに画像を縮小する処理(ファイル版)
-     *
+     * 
      * @param file
      *            画像ファイル
      * @param size
@@ -334,7 +334,7 @@ public final class ImageUtils {
 
     /**
      * モザイク変換処理 画面全体に対してモザイクをかける
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @return 変換後のビットマップ
@@ -400,7 +400,7 @@ public final class ImageUtils {
 
     /**
      * モザイク変換処理 指定した領域に対してモザイクをかける
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param left
@@ -511,7 +511,7 @@ public final class ImageUtils {
 
     /**
      * モザイク変換処理 指定した領域に対してモザイクをかける
-     *
+     * 
      * @param filename
      *            ファイル名
      * @param left
@@ -632,7 +632,7 @@ public final class ImageUtils {
 
     /**
      * グレースケール変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @return 変換後のビットマップ
@@ -675,7 +675,7 @@ public final class ImageUtils {
 
     /**
      * グレースケール変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @return 変換後のファイル名
@@ -729,7 +729,7 @@ public final class ImageUtils {
 
     /**
      * ネガティブ変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @return 変換後のビットマップ
@@ -772,7 +772,7 @@ public final class ImageUtils {
 
     /**
      * ネガティブ変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @return 変換後のビットマップ
@@ -825,7 +825,7 @@ public final class ImageUtils {
 
     /**
      * 明るさ変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param setting
@@ -882,7 +882,7 @@ public final class ImageUtils {
 
     /**
      * 明るさ変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @param setting
@@ -948,7 +948,7 @@ public final class ImageUtils {
 
     /**
      * コントラスト変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param setting
@@ -1009,7 +1009,7 @@ public final class ImageUtils {
 
     /**
      * コントラスト変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @param setting
@@ -1079,7 +1079,7 @@ public final class ImageUtils {
 
     /**
      * 彩度変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param setting
@@ -1141,7 +1141,7 @@ public final class ImageUtils {
 
     /**
      * 彩度変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @param setting
@@ -1212,7 +1212,7 @@ public final class ImageUtils {
 
     /**
      * セピア変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @return 変換後のビットマップ
@@ -1279,7 +1279,7 @@ public final class ImageUtils {
 
     /**
      * セピア変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @return 変換後のビットマップ
@@ -1356,7 +1356,7 @@ public final class ImageUtils {
 
     /**
      * 回転変換処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param rotate
@@ -1382,7 +1382,7 @@ public final class ImageUtils {
 
     /**
      * 回転変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     *
+     * 
      * @param filename
      *            ファイル名
      * @param rotate
@@ -1419,7 +1419,7 @@ public final class ImageUtils {
 
     /**
      * コーナー処理
-     *
+     * 
      * @param bitmap
      *            ビットマップ
      * @param pixels
@@ -1450,7 +1450,7 @@ public final class ImageUtils {
 
     /**
      * 3色の最大値を取得する
-     *
+     * 
      * @param red
      *            赤
      * @param green
@@ -1466,7 +1466,7 @@ public final class ImageUtils {
 
     /**
      * 3色の最小値を取得する
-     *
+     * 
      * @param red
      *            赤
      * @param green
@@ -1482,7 +1482,7 @@ public final class ImageUtils {
 
     /**
      * MIMEタイプを取得する(画像)
-     *
+     * 
      * @param filepath
      * @return MIMEタイプを取得する
      */
@@ -1512,7 +1512,7 @@ public final class ImageUtils {
 
     /**
      * Data URI scheme形式チェック
-     *
+     * 
      * @param data
      *            data:image/*;base64,～形式のデータ<br>
      *            ex:data:image/jpeg;base64,～
@@ -1535,7 +1535,7 @@ public final class ImageUtils {
 
     /**
      * Data URI schemeをBitmapに変換する。
-     *
+     * 
      * @param data
      *            data:image/*;base64,～形式のデータ<br>
      *            ex:data:image/jpeg;base64,～
@@ -1559,7 +1559,7 @@ public final class ImageUtils {
 
     /**
      * Data URI schemeをBitmapに変換する。
-     *
+     * 
      * @param data
      *            data:image/*;base64,～形式のデータ<br>
      *            ex:data:image/jpeg;base64,～
@@ -1583,7 +1583,7 @@ public final class ImageUtils {
 
     /**
      * ビットマップから指定の画像形式のバイトデータに変換して返却する。
-     *
+     * 
      * @param bitmap
      *            Bitmap
      * @return バイト型配列
@@ -1608,7 +1608,7 @@ public final class ImageUtils {
 
     /**
      * Mutableを変更したコピーされたBitmapを返却する。<br>
-     *
+     * 
      * @param bitmap
      *            Bitmap
      * @param isMutable

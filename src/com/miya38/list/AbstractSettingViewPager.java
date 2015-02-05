@@ -6,9 +6,9 @@ import com.miya38.widget.CustomViewPager;
 
 /**
  * ViewPager抽象化クラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
@@ -28,7 +28,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(getItem)
-     *
+     * 
      * @param position
      *            アイテム設定位置
      * @return アイテム
@@ -37,14 +37,14 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(getItems)
-     *
+     * 
      * @return アイテム
      */
     public abstract List<U> getItems();
 
     /**
      * ViewPager設定(setItem)
-     *
+     * 
      * @param item
      *            アイテム
      * @param position
@@ -54,7 +54,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(setItems)
-     *
+     * 
      * @param items
      *            アイテム
      */
@@ -62,7 +62,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(insertItem)
-     *
+     * 
      * @param item
      *            アイテム
      * @param position
@@ -72,7 +72,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(addView)(before)
-     *
+     * 
      * @param item
      *            アイテム
      */
@@ -80,7 +80,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(addView)(before)
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -88,7 +88,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(addView)(after)
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -96,7 +96,7 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * ViewPager設定(addView)(after)
-     *
+     * 
      * @param item
      *            アイテム
      */
@@ -104,21 +104,21 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * adapterにセットされている数を返却する
-     *
+     * 
      * @return カウント数
      */
     public abstract int getCount();
 
     /**
      * Adapter取得
-     *
+     * 
      * @return adapter アダプター
      */
     public abstract T getAdapter();
 
     /**
      * Adapter設定
-     *
+     * 
      * @param adapter
      *            アダプター
      */
@@ -126,10 +126,11 @@ public abstract class AbstractSettingViewPager<T, U> {
 
     /**
      * CustomViewPager取得
-     *
+     * 
      * @return CustomViewPager
      */
     public abstract CustomViewPager getCustomViewPager();
+
     /**
      * 本クラス内データを全てクリアする。
      */

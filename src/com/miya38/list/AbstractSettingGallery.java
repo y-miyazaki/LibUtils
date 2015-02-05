@@ -10,9 +10,9 @@ import com.miya38.widget.CustomGallery;
 
 /**
  * Gallery抽象化クラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
@@ -38,7 +38,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(getItem)
-     *
+     * 
      * @param position
      *            アイテム設定位置
      * @return アイテム
@@ -47,14 +47,14 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(getItems)
-     *
+     * 
      * @return アイテム
      */
     public abstract List<U> getItems();
 
     /**
      * Gallery設定(setItem)
-     *
+     * 
      * @param item
      *            アイテム
      * @param position
@@ -64,7 +64,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(setItems)
-     *
+     * 
      * @param items
      *            アイテム
      */
@@ -72,7 +72,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(insertItem)
-     *
+     * 
      * @param item
      *            アイテム
      * @param position
@@ -82,7 +82,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(addView)(before)
-     *
+     * 
      * @param item
      *            アイテム
      */
@@ -90,7 +90,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(addView)(before)
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -98,7 +98,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(addView)(after)
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -106,7 +106,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * Gallery設定(addView)(after)
-     *
+     * 
      * @param item
      *            アイテム
      */
@@ -114,21 +114,21 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * adapterにセットされている数を返却する
-     *
+     * 
      * @return カウント数
      */
     public abstract int getCount();
 
     /**
      * Adapter取得
-     *
+     * 
      * @return adapter アダプター
      */
     public abstract T getAdapter();
 
     /**
      * Adapter設定
-     *
+     * 
      * @param adapter
      *            アダプター
      */
@@ -136,21 +136,21 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * CustomGallery取得
-     *
+     * 
      * @return CustomGallery
      */
     public abstract CustomGallery getCustomGallery();
 
     /**
      * Gallery取得
-     *
+     * 
      * @return Gallery
      */
     public abstract Gallery getGallery();
 
     /**
      * onItemClickListenner設定
-     *
+     * 
      * @param l
      *            OnItemClickListener
      */
@@ -158,7 +158,7 @@ public abstract class AbstractSettingGallery<T, U> {
 
     /**
      * onItemSelectedListener設定
-     *
+     * 
      * @param l
      *            OnItemSelectedListener
      */

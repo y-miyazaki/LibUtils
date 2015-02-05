@@ -1,5 +1,6 @@
 package com.miya38.widget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,6 +14,9 @@ import com.miya38.R;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
+import com.miya38.widget.callback.OnGlobalLayoutListener2;
+import com.miya38.widget.callback.OnLayoutListener;
+import com.miya38.widget.callback.OnSoftKeyShownListener;
 
 /**
  * カスタムLinearLayout
@@ -28,7 +32,7 @@ public class CustomLinearLayout extends LinearLayout {
     // define
     // ----------------------------------------------------------
     /** TAG */
-    private final static String TAG = CustomLinearLayout.class.getSimpleName();
+    private static final String TAG = CustomLinearLayout.class.getSimpleName();
     // ----------------------------------------------------------
     // other
     // ----------------------------------------------------------
@@ -37,7 +41,7 @@ public class CustomLinearLayout extends LinearLayout {
     /** パフォーマンスのためRectをインスタンス化 */
     private final Rect mRect = new Rect();
     /** 背景のリピート設定 */
-    private boolean mIsRepeat;
+    private final boolean mIsRepeat;
     /** プレスイベントを子Viewに投げるか？ */
     private boolean mIsDispatchSetPressed = true;
     /** ソフトキーボードリスナー */
@@ -45,7 +49,10 @@ public class CustomLinearLayout extends LinearLayout {
 
     /** OnGlobalLayoutListener2 */
     private OnGlobalLayoutListener2 mOnGlobalLayoutListener2;
-    private OnGlobalLayoutListener mOnGlobalLayoutListener = new OnGlobalLayoutListener() {
+    /**
+     * グローバルリスナー
+     */
+    private final OnGlobalLayoutListener mOnGlobalLayoutListener = new OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
             if (mOnGlobalLayoutListener2 != null) {
@@ -60,9 +67,10 @@ public class CustomLinearLayout extends LinearLayout {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomLinearLayout(Context context, AttributeSet attrs) {
+    public CustomLinearLayout(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomLinearLayout);
@@ -77,7 +85,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     @Override
     @SuppressWarnings("deprecation")
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         if (mOnSoftKeyShownListener != null) {
             if (getContext() instanceof Activity) {
                 // (a)Viewの高さ
@@ -100,7 +108,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void setBackgroundDrawable(android.graphics.drawable.Drawable background) {
+    public void setBackgroundDrawable(final android.graphics.drawable.Drawable background) {
         super.setBackgroundDrawable(background);
         if (mIsRepeat) {
             ViewHelper.fixBackgroundRepeat(this);
@@ -108,7 +116,7 @@ public class CustomLinearLayout extends LinearLayout {
     }
 
     @Override
-    public void setBackgroundResource(int resid) {
+    public void setBackgroundResource(final int resid) {
         super.setBackgroundResource(resid);
         if (mIsRepeat) {
             ViewHelper.fixBackgroundRepeat(this);
@@ -131,7 +139,7 @@ public class CustomLinearLayout extends LinearLayout {
     }
 
     @Override
-    protected void dispatchSetPressed(boolean pressed) {
+    protected void dispatchSetPressed(final boolean pressed) {
         if (mIsDispatchSetPressed) {
             super.dispatchSetPressed(pressed);
         }
@@ -143,12 +151,13 @@ public class CustomLinearLayout extends LinearLayout {
      * @param onSoftKeyShownListener
      *            リスナー
      */
-    public void setOnSoftKeyShownListener(OnSoftKeyShownListener onSoftKeyShownListener) {
+    public void setOnSoftKeyShownListener(final OnSoftKeyShownListener onSoftKeyShownListener) {
         this.mOnSoftKeyShownListener = onSoftKeyShownListener;
     }
 
+    @SuppressLint("WrongCall")
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    protected void onLayout(final boolean changed, final int l, final int t, final int r, final int b) {
         super.onLayout(changed, l, t, r, b);
         if (mOnLayoutListener != null) {
             mOnLayoutListener.onLayout();
@@ -161,7 +170,7 @@ public class CustomLinearLayout extends LinearLayout {
      * @param l
      *            {@link OnLayoutListener}
      */
-    public final void setOnLayoutListener(OnLayoutListener l) {
+    public final void setOnLayoutListener(final OnLayoutListener l) {
         mOnLayoutListener = l;
     }
 
@@ -171,9 +180,9 @@ public class CustomLinearLayout extends LinearLayout {
      * @param l
      *            {@link OnGlobalLayoutListener2}
      */
-    public final void setOnGlobalLayoutListener2(OnGlobalLayoutListener2 l) {
+    public final void setOnGlobalLayoutListener2(final OnGlobalLayoutListener2 l) {
         // リスナー複数登録回避
-        ViewTreeObserver observer = getViewTreeObserver();
+        final ViewTreeObserver observer = getViewTreeObserver();
         removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
 
         mOnGlobalLayoutListener2 = l;
@@ -187,8 +196,8 @@ public class CustomLinearLayout extends LinearLayout {
      *            {@link OnGlobalLayoutListener}
      */
     @SuppressWarnings("deprecation")
-    private void removeOnGlobalLayoutListener(OnGlobalLayoutListener l) {
-        ViewTreeObserver observer = getViewTreeObserver();
+    private void removeOnGlobalLayoutListener(final OnGlobalLayoutListener l) {
+        final ViewTreeObserver observer = getViewTreeObserver();
         if (AplUtils.hasJellyBean()) {
             observer.removeOnGlobalLayoutListener(l);
         } else {

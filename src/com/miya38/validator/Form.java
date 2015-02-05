@@ -6,13 +6,13 @@ import java.util.List;
 
 /**
  * Form Validation Class
- *
+ * 
  * Immediately, only works with EditText
- *
+ * 
  * @author throrin19
- *
+ * 
  * @version 1.0
- *
+ * 
  */
 public class Form {
     /** Validation */
@@ -20,17 +20,18 @@ public class Form {
 
     /**
      * Function adding Validates to our form
-     *
+     * 
      * @param validate
      *            {@link AbstractValidate} Validate to add
      */
-    public void addValidates(AbstractValidate validate) {
+    public void addValidates(final AbstractValidate validate) {
         this.mValidates.add(validate);
     }
 
     /**
-     * Called to validate our form. If an error is found, it will be displayed in the corresponding field.
-     *
+     * Called to validate our form. If an error is found, it will be displayed
+     * in the corresponding field.
+     * 
      * @return boolean : true if the form is valid false if the form is invalid
      */
     public boolean validate() {

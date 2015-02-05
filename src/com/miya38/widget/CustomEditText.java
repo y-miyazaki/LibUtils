@@ -13,8 +13,6 @@ import com.miya38.R;
 import com.miya38.validator.Validate;
 import com.miya38.validator.validator.AlnumValidator;
 import com.miya38.validator.validator.EmailValidator;
-import com.miya38.validator.validator.MaxLengthValidator;
-import com.miya38.validator.validator.MinLengthValidator;
 import com.miya38.validator.validator.NotEmptyValidator;
 import com.miya38.validator.validator.PhoneValidator;
 
@@ -31,27 +29,17 @@ public class CustomEditText extends EditText {
     private boolean mIsAlphanumeric;
     /** エラー時に表示される名称 */
     private String mName;
-    /** 入力最小文字数 */
-    private int mMinLength = -1;
-    /** 入力最大文字数 */
-    private int mMaxLength = -1;
     /** メールアドレスチェックをするか？ */
-    private boolean mMailAddress;
+    private boolean mIsMailAddress;
     /** 電話番号チェックをするか？ */
-    private boolean mPhone;
+    private boolean mIsPhone;
     /** URLチェックをするか？ */
-    private boolean mUrl;
-    /** 確認する対象のEditText */
-    private CustomEditText mCustomEditText;
+    private boolean mIsUrl;
 
     /** Filter */
     private class Filter implements InputFilter {
-        /*
-         * (非 Javadoc)
-         * @see android.text.InputFilter#filter(java.lang.CharSequence, int, int, android.text.Spanned, int, int)
-         */
         @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+        public CharSequence filter(final CharSequence source, final int start, final int end, final Spanned dest, final int dstart, final int dend) {
             return source.toString().matches("^[a-zA-Z0-9]+$") ? source : "";
         }
     }
@@ -62,9 +50,10 @@ public class CustomEditText extends EditText {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomEditText(Context context, AttributeSet attrs) {
+    public CustomEditText(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
@@ -75,11 +64,12 @@ public class CustomEditText extends EditText {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
-    public CustomEditText(Context context, AttributeSet attrs, int defStyle) {
+    public CustomEditText(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -90,20 +80,19 @@ public class CustomEditText extends EditText {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs) {
         setFilter();
 
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomEditText);
         this.mIsRequired = ta.getBoolean(R.styleable.CustomEditText_required, false);
         this.mIsAlphanumeric = ta.getBoolean(R.styleable.CustomEditText_alphanumeric, false);
         this.mName = ta.getString(R.styleable.CustomEditText_name);
-        this.mMinLength = ta.getInt(R.styleable.CustomEditText_min_length, -1);
-        this.mMaxLength = ta.getInt(R.styleable.CustomEditText_max_length, -1);
-        this.mMailAddress = ta.getBoolean(R.styleable.CustomEditText_mailaddress, false);
-        this.mPhone = ta.getBoolean(R.styleable.CustomEditText_phone, false);
-        this.mUrl = ta.getBoolean(R.styleable.CustomEditText_url, false);
+        this.mIsMailAddress = ta.getBoolean(R.styleable.CustomEditText_mailaddress, false);
+        this.mIsPhone = ta.getBoolean(R.styleable.CustomEditText_phone, false);
+        this.mIsUrl = ta.getBoolean(R.styleable.CustomEditText_url, false);
 
         ta.recycle();
 
@@ -121,22 +110,16 @@ public class CustomEditText extends EditText {
         if (mIsRequired) {
             validate.addValidator(new NotEmptyValidator(context, context.getString(R.string.error_form_edittext_required, mName)));
         }
-        if (mMinLength != -1) {
-            validate.addValidator(new MinLengthValidator(context, context.getString(R.string.error_form_edittext_min_size, mName, mMinLength), mMinLength));
-        }
-        if (mMaxLength != -1) {
-            validate.addValidator(new MaxLengthValidator(context, context.getString(R.string.error_form_edittext_max_size, mName, mMaxLength), mMaxLength));
-        }
         if (mIsAlphanumeric) {
             validate.addValidator(new AlnumValidator(context, context.getString(R.string.error_form_edittext_alpha_and_numeric, mName)));
         }
-        if (mMailAddress) {
+        if (mIsMailAddress) {
             validate.addValidator(new EmailValidator(context, context.getString(R.string.error_form_edittext_mailaddress, mName)));
         }
-        if (mPhone) {
+        if (mIsPhone) {
             validate.addValidator(new PhoneValidator(context, context.getString(R.string.error_form_edittext_phone, mName)));
         }
-        if (mUrl) {
+        if (mIsUrl) {
             validate.addValidator(new PhoneValidator(context, context.getString(R.string.error_form_edittext_url, mName)));
         }
         return validate;
@@ -165,6 +148,9 @@ public class CustomEditText extends EditText {
         return validate.getMessages();
     }
 
+    /**
+     * フィルタ設定
+     */
     private void setFilter() {
         if (mIsAlphanumeric) {
             int count = 0;
@@ -184,7 +170,6 @@ public class CustomEditText extends EditText {
     protected void onDetachedFromWindow() {
         setBackgroundDrawable(null);
         setOnClickListener(null);
-        mCustomEditText = null;
 
         super.onDetachedFromWindow();
     }
@@ -197,130 +182,85 @@ public class CustomEditText extends EditText {
     }
 
     /**
-     * @param mIsRequired
+     * @param isRequired
      *            mIsRequiredを設定する。
      */
-    public void setIsRequired(boolean mIsRequired) {
-        this.mIsRequired = mIsRequired;
+    public void setIsRequired(final boolean isRequired) {
+        this.mIsRequired = isRequired;
     }
 
     /**
-     * @return mIsAlphanumeric
+     * @return 英数字チェックの有無を取得する。
      */
     public boolean isIsAlphanumeric() {
         return mIsAlphanumeric;
     }
 
     /**
-     * @param mIsAlphanumeric
-     *            mIsAlphanumericを設定する。
+     * @param isAlphanumeric
+     *            英数字チェックの有無を設定する。
      */
-    public void setIsAlphanumeric(boolean mIsAlphanumeric) {
-        this.mIsAlphanumeric = mIsAlphanumeric;
+    public void setIsAlphanumeric(final boolean isAlphanumeric) {
+        this.mIsAlphanumeric = isAlphanumeric;
     }
 
     /**
-     * @return mName
+     * @return エラー時等で使用する名前を取得する。
      */
     public String getName() {
         return mName;
     }
 
     /**
-     * @param mName
-     *            mNameを設定する。
+     * @param name
+     *            エラー時等で使用する名前を設定する。
      */
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setName(final String name) {
+        this.mName = name;
     }
 
     /**
-     * @return mMinLength
-     */
-    public int getMinLength() {
-        return mMinLength;
-    }
-
-    /**
-     * @param mMinLength
-     *            mMinLengthを設定する。
-     */
-    public void setMinLength(int mMinLength) {
-        this.mMinLength = mMinLength;
-    }
-
-    /**
-     * @return mMaxLength
-     */
-    public int getMaxLength() {
-        return mMaxLength;
-    }
-
-    /**
-     * @param mMaxLength
-     *            mMaxLengthを設定する。
-     */
-    public void setMaxLength(int mMaxLength) {
-        this.mMaxLength = mMaxLength;
-    }
-
-    /**
-     * @return mMailAddress
+     * @return メールアドレスチェックの有無を返却する。
      */
     public boolean isMailAddress() {
-        return mMailAddress;
+        return mIsMailAddress;
     }
 
     /**
-     * @param mMailAddress
-     *            mMailAddressを設定する。
+     * @param isMailAddress
+     *            メールアドレスチェックの有無を設定する。
      */
-    public void setMailAddress(boolean mMailAddress) {
-        this.mMailAddress = mMailAddress;
+    public void setMailAddress(final boolean isMailAddress) {
+        this.mIsMailAddress = isMailAddress;
     }
 
     /**
-     * @return mPhone
+     * @return 電話番号チェックの有無を返却する。
      */
     public boolean isPhone() {
-        return mPhone;
+        return mIsPhone;
     }
 
     /**
-     * @param mPhone
-     *            mPhoneを設定する。
+     * @param isPhone
+     *            電話番号チェックの有無を設定する。
      */
-    public void setPhone(boolean mPhone) {
-        this.mPhone = mPhone;
+    public void setPhone(final boolean isPhone) {
+        this.mIsPhone = isPhone;
     }
 
     /**
-     * @return mUrl
+     * @return URLチェックの有無を返却する。
      */
     public boolean isUrl() {
-        return mUrl;
+        return mIsUrl;
     }
 
     /**
-     * @param mUrl
-     *            mUrlを設定する。
+     * @param isUrl
+     *            Urlチェックの有無を設定する。
      */
-    public void setUrl(boolean mUrl) {
-        this.mUrl = mUrl;
-    }
-
-    /**
-     * @return mCustomEditText
-     */
-    public CustomEditText getCustomEditText() {
-        return mCustomEditText;
-    }
-
-    /**
-     * @param mCustomEditText
-     *            mCustomEditTextを設定する。
-     */
-    public void setCustomEditText(CustomEditText mCustomEditText) {
-        this.mCustomEditText = mCustomEditText;
+    public void setUrl(final boolean isUrl) {
+        this.mIsUrl = isUrl;
     }
 }

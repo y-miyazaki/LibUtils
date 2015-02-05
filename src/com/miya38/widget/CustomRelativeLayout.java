@@ -1,5 +1,6 @@
 package com.miya38.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,9 @@ import com.miya38.R;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
+import com.miya38.widget.callback.OnFlickListener;
+import com.miya38.widget.callback.OnGlobalLayoutListener2;
+import com.miya38.widget.callback.OnLayoutListener;
 
 /**
  * カスタムRelativeLayout
@@ -53,7 +57,10 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
     private boolean mIsDispatchSetPressed = true;
     /** OnGlobalLayoutListener2 */
     private OnGlobalLayoutListener2 mOnGlobalLayoutListener2;
-    private OnGlobalLayoutListener mOnGlobalLayoutListener = new OnGlobalLayoutListener() {
+    /**
+     * グローバルリスナー
+     */
+    private final OnGlobalLayoutListener mOnGlobalLayoutListener = new OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
             if (mOnGlobalLayoutListener2 != null) {
@@ -68,7 +75,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * @param context
      *            Context for this View
      */
-    public CustomRelativeLayout(Context context) {
+    public CustomRelativeLayout(final Context context) {
         super(context);
         setGestureDetector(new GestureDetector(context, this));
 
@@ -80,9 +87,10 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomRelativeLayout(Context context, AttributeSet attrs) {
+    public CustomRelativeLayout(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         setGestureDetector(new GestureDetector(context, this));
 
@@ -98,7 +106,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     @Override
     @SuppressWarnings("deprecation")
-    public void setBackgroundDrawable(Drawable background) {
+    public void setBackgroundDrawable(final Drawable background) {
         super.setBackgroundDrawable(background);
         if (mIsRepeat) {
             ViewHelper.fixBackgroundRepeat(this);
@@ -106,7 +114,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
     }
 
     @Override
-    public void setBackgroundResource(int resid) {
+    public void setBackgroundResource(final int resid) {
         super.setBackgroundResource(resid);
         if (mIsRepeat) {
             ViewHelper.fixBackgroundRepeat(this);
@@ -129,14 +137,15 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
     }
 
     @Override
-    protected void dispatchSetPressed(boolean pressed) {
+    protected void dispatchSetPressed(final boolean pressed) {
         if (mIsDispatchSetPressed) {
             super.dispatchSetPressed(pressed);
         }
     }
 
+    @SuppressLint("WrongCall")
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    protected void onLayout(final boolean changed, final int l, final int t, final int r, final int b) {
         super.onLayout(changed, l, t, r, b);
         if (mOnLayoutListener != null) {
             mOnLayoutListener.onLayout();
@@ -152,12 +161,17 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * </p>
      *
      * @param left
+     *            マージンLeft
      * @param top
+     *            マージンtop
      * @param right
+     *            マージンright
      * @param bottom
-     * @return
+     *            マージンbottom
+     * @return true:レイアウトのオートフィットが出来た場合
+     *         false:レイアウトのオートフィットが出来なかった場合
      */
-    public boolean setAutoFitView(int left, int top, int right, int bottom) {
+    public boolean setAutoFitView(final int left, final int top, final int right, final int bottom) {
         if (getChildCount() == 0) {
             return false;
         }
@@ -175,7 +189,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
         final int count = getChildCount();
         for (int i = 1; i < count; i++) {
-            int width = getChildAt(i).getWidth();
+            final int width = getChildAt(i).getWidth();
             if (width == 0) {
                 return false;
             }
@@ -209,7 +223,8 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * <li>onWindowFocusChangedの後に呼ぶこと。(Viewが確定しないと幅等が取得できない。</li>
      * </p>
      *
-     * @return
+     * @return true:レイアウトのオートフィットが出来た場合
+     *         false:レイアウトのオートフィットが出来なかった場合
      */
     public boolean setAutoFitView() {
         return setAutoFitView(0, 0, 0, 0);
@@ -221,7 +236,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * @param l
      *            {@link OnLayoutListener}
      */
-    public final void setOnLayoutListener(OnLayoutListener l) {
+    public final void setOnLayoutListener(final OnLayoutListener l) {
         mOnLayoutListener = l;
     }
 
@@ -231,9 +246,9 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * @param l
      *            {@link OnGlobalLayoutListener2}
      */
-    public final void setOnGlobalLayoutListener2(OnGlobalLayoutListener2 l) {
+    public final void setOnGlobalLayoutListener2(final OnGlobalLayoutListener2 l) {
         // リスナー複数登録回避
-        ViewTreeObserver observer = getViewTreeObserver();
+        final ViewTreeObserver observer = getViewTreeObserver();
         removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
 
         mOnGlobalLayoutListener2 = l;
@@ -247,8 +262,8 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      *            {@link OnGlobalLayoutListener}
      */
     @SuppressWarnings("deprecation")
-    private void removeOnGlobalLayoutListener(OnGlobalLayoutListener l) {
-        ViewTreeObserver observer = getViewTreeObserver();
+    private void removeOnGlobalLayoutListener(final OnGlobalLayoutListener l) {
+        final ViewTreeObserver observer = getViewTreeObserver();
         if (AplUtils.hasJellyBean()) {
             observer.removeOnGlobalLayoutListener(l);
         } else {
@@ -261,8 +276,9 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * コールバックリスナー設定
      *
      * @param l
+     *            {@link OnFlickListener}
      */
-    public final void setOnFlickListener(OnFlickListener l) {
+    public final void setOnFlickListener(final OnFlickListener l) {
         mOnFlickListener = l;
     }
 
@@ -270,43 +286,44 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * GestureDetector設定
      *
      * @param gestureDetector
+     *            {@link GestureDetector}
      */
-    public void setGestureDetector(GestureDetector gestureDetector) {
+    public void setGestureDetector(final GestureDetector gestureDetector) {
         this.mGestureDetector = gestureDetector;
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(final MotionEvent ev) {
         return mGestureDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
+    public boolean onDown(final MotionEvent e) {
         return false;
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
+    public void onShowPress(final MotionEvent e) {
         // 何もしない。
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
+    public boolean onSingleTapUp(final MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(final MotionEvent e1, final MotionEvent e2, final float distanceX, final float distanceY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onLongPress(final MotionEvent e) {
         // 何もしない。
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(final MotionEvent e1, final MotionEvent e2, final float velocityX, final float velocityY) {
         if (mOnFlickListener != null) {
             // X軸移動の方が長い場合はtrue Y軸移動の方が長い場合はfalse
             final boolean flingX = Math.abs(e2.getX() - e1.getX()) > Math.abs(e2.getY() - e1.getY()) * 4;

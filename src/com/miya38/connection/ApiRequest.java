@@ -92,7 +92,7 @@ public class ApiRequest extends StringRequest {
         public abstract void onResponse(NetworkResponse networkResponse, int id, String response);
 
         @Override
-        public void onResponse(String response) {
+        public void onResponse(final String response) {
             // 何もしない。
         }
     }
@@ -115,7 +115,7 @@ public class ApiRequest extends StringRequest {
         public abstract void onErrorResponse(NetworkResponse networkResponse, int id);
 
         @Override
-        public void onErrorResponse(VolleyError error) {
+        public void onErrorResponse(final VolleyError error) {
             // 何もしない。
         }
     }
@@ -129,7 +129,7 @@ public class ApiRequest extends StringRequest {
      * @param apiListener
      * @param apiErrorListener
      */
-    public ApiRequest(int method, String url, int id, ApiListener apiListener, ApiErrorListener apiErrorListener) {
+    public ApiRequest(final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(method, url, apiListener, apiErrorListener);
         mApiListener = apiListener;
         mApiErrorListener = apiErrorListener;
@@ -149,7 +149,7 @@ public class ApiRequest extends StringRequest {
      * @param apiListener
      * @param apiErrorListener
      */
-    public ApiRequest(NetworkRequest networkRequest, ApiListener apiListener, ApiErrorListener apiErrorListener) {
+    public ApiRequest(final NetworkRequest networkRequest, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(networkRequest.mMethod, networkRequest.mUrl, apiListener, apiErrorListener);
         mApiListener = apiListener;
         mNetworkRequest = networkRequest;
@@ -167,7 +167,7 @@ public class ApiRequest extends StringRequest {
     }
 
     @Override
-    protected VolleyError parseNetworkError(VolleyError volleyError) {
+    protected VolleyError parseNetworkError(final VolleyError volleyError) {
         // ---------------------------------------------------------------
         // SetCookie
         // ---------------------------------------------------------------
@@ -213,7 +213,7 @@ public class ApiRequest extends StringRequest {
                 // }
                 final Header[] apacheHeaders = volleyError.networkResponse.apacheHeaders;
                 if (apacheHeaders != null) {
-                    int length = apacheHeaders.length;
+                    final int length = apacheHeaders.length;
                     for (int i = 0; i < length; i++) {
                         final String key = apacheHeaders[i].getName();
                         final String value = apacheHeaders[i].getValue();
@@ -224,7 +224,7 @@ public class ApiRequest extends StringRequest {
             try {
                 StringUtils.appendBuffer(log, "response body = ");
                 StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // 無視する。bodyがでか過ぎて無理なため。
             }
             final StringWriter sw = new StringWriter();
@@ -240,7 +240,7 @@ public class ApiRequest extends StringRequest {
     }
 
     @Override
-    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(final NetworkResponse response) {
         mNetworkResponse = response;
         // ---------------------------------------------------------------
         // gzip対応
@@ -262,9 +262,9 @@ public class ApiRequest extends StringRequest {
                     zis.close();
                 }
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             return Response.error(new ParseError(e));
         }
 
@@ -326,7 +326,7 @@ public class ApiRequest extends StringRequest {
 
             final Header[] apacheHeaders = mNetworkResponse.apacheHeaders;
             if (apacheHeaders != null) {
-                int length = apacheHeaders.length;
+                final int length = apacheHeaders.length;
                 for (int i = 0; i < length; i++) {
                     final String key = apacheHeaders[i].getName();
                     final String value = apacheHeaders[i].getValue();
@@ -337,7 +337,7 @@ public class ApiRequest extends StringRequest {
             try {
                 StringUtils.appendBuffer(log, "response body = ");
                 StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
-            } catch (OutOfMemoryError e) {
+            } catch (final OutOfMemoryError e) {
                 // 無視する。bodyがでか過ぎて無理なため。
             }
             StringUtils.appendBufferFormat(log, "\n---------------------------------------- end ----------------------------------------\n");
@@ -346,7 +346,7 @@ public class ApiRequest extends StringRequest {
         String parsed;
         try {
             parsed = new String(mNetworkResponse.data, HttpHeaderParser.parseCharset(mNetworkResponse.headers, HTTP.UTF_8));
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             parsed = new String(mNetworkResponse.data);
         }
         return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(mNetworkResponse));
@@ -357,31 +357,31 @@ public class ApiRequest extends StringRequest {
      *
      * @param response
      */
-    private void setCookie(NetworkResponse response) {
-//        // レスポンスヘッダ出力
-//        NetworkResponse networkResponse = volleyError.networkResponse;
-//        if (networkResponse != null) {
-//            final Map<String, String> responseHeaders = networkResponse.headers;
-//            if (responseHeaders != null) {
-//                final Set<String> keySet = responseHeaders.keySet();
-//                final Iterator<String> keyIte = keySet.iterator();
-//                while (keyIte.hasNext()) {
-//                    final String key = keyIte.next();
-//                    final String value = responseHeaders.get(key);
-//                    if (StringUtils.equals("Set-Cookie", key)) {
-//                        CookieUtils.setValue(mNetworkRequest.mUrl, value);
-//                    }
-//                }
-//            }
-//        }
+    private void setCookie(final NetworkResponse response) {
+        //        // レスポンスヘッダ出力
+        //        NetworkResponse networkResponse = volleyError.networkResponse;
+        //        if (networkResponse != null) {
+        //            final Map<String, String> responseHeaders = networkResponse.headers;
+        //            if (responseHeaders != null) {
+        //                final Set<String> keySet = responseHeaders.keySet();
+        //                final Iterator<String> keyIte = keySet.iterator();
+        //                while (keyIte.hasNext()) {
+        //                    final String key = keyIte.next();
+        //                    final String value = responseHeaders.get(key);
+        //                    if (StringUtils.equals("Set-Cookie", key)) {
+        //                        CookieUtils.setValue(mNetworkRequest.mUrl, value);
+        //                    }
+        //                }
+        //            }
+        //        }
 
         // ---------------------------------------------------------------
         // SetCookie
         // ---------------------------------------------------------------
-        if(response != null){
+        if (response != null) {
             final Header[] apacheHeaders = response.apacheHeaders;
             if (apacheHeaders != null) {
-                int length = apacheHeaders.length;
+                final int length = apacheHeaders.length;
                 for (int i = 0; i < length; i++) {
                     final String key = apacheHeaders[i].getName();
                     final String value = apacheHeaders[i].getValue();
@@ -394,7 +394,7 @@ public class ApiRequest extends StringRequest {
     }
 
     @Override
-    public void deliverResponse(String response) {
+    public void deliverResponse(final String response) {
         if (mApiListener != null) {
             mApiListener.onResponse(mNetworkResponse, mNetworkRequest.mId, response);
         }
@@ -402,7 +402,7 @@ public class ApiRequest extends StringRequest {
     }
 
     @Override
-    public void deliverError(VolleyError error) {
+    public void deliverError(final VolleyError error) {
         if (mApiErrorListener != null) {
             mApiErrorListener.onErrorResponse(error.networkResponse, mNetworkRequest.mId);
         }
@@ -445,10 +445,10 @@ public class ApiRequest extends StringRequest {
     /**
      * リクエストパラメータ設定
      *
-     * @param params
+     * @param body
      *            リクエストパラメータ
      */
-    public void setParams(String body) {
+    public void setParams(final String body) {
         this.mBody = body;
     }
 
@@ -458,7 +458,7 @@ public class ApiRequest extends StringRequest {
      * @param headers
      *            リクエストヘッダ
      */
-    public void setHeaders(Map<String, String> headers) {
+    public void setHeaders(final Map<String, String> headers) {
         mHeaders = headers;
     }
 

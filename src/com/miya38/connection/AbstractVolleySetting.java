@@ -21,7 +21,7 @@ import com.miya38.utils.AplUtils;
 
 /**
  * Volleyのシングルトンクラス
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class AbstractVolleySetting {
@@ -37,7 +37,7 @@ public abstract class AbstractVolleySetting {
      * <p>
      * リクエストヘッダに追加で乗せたいものがある場合は、このメソッドの引数{@link headers}のaddしたものリターンすること。
      * </p>
-     *
+     * 
      * @param headers
      *            リクエストヘッダ
      * @return 追加されたリクエストヘッダ
@@ -49,6 +49,7 @@ public abstract class AbstractVolleySetting {
      * <p>
      * リクエストのUser-Agentは、このメソッドを通じて設定すること。
      * </p>
+     * 
      * @return User-Agent
      */
     public abstract String getUserAgent();
@@ -56,21 +57,21 @@ public abstract class AbstractVolleySetting {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
     /**
      * コンストラクタを隠蔽し、インスタンス化を禁止します。
-     *
+     * 
      * @param imageCache
      *            イメージキャッシュ指定(BitmapLruCach/BitmapDiskLruCache)
      */
-    public AbstractVolleySetting(ImageCache imageCache) {
+    public AbstractVolleySetting(final ImageCache imageCache) {
         // ---------------------------------------------------------------
         // Volleyのqueue設定を行う
         // ---------------------------------------------------------------
@@ -78,15 +79,15 @@ public abstract class AbstractVolleySetting {
             if (AplUtils.hasGingerbread()) {
                 final CustomHurlStack stack = new CustomHurlStack() {
                     @Override
-                    protected HttpURLConnection createConnection(URL url) throws IOException {
-                        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    protected HttpURLConnection createConnection(final URL url) throws IOException {
+                        final HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                         // ユーザーエージェントを設定します
                         httpURLConnection.setRequestProperty("User-Agent", getUserAgent());
                         return httpURLConnection;
                     }
 
                     @Override
-                    public HttpResponse performRequest(Request<?> request, Map<String, String> headers) throws IOException, AuthFailureError {
+                    public HttpResponse performRequest(final Request<?> request, final Map<String, String> headers) throws IOException, AuthFailureError {
                         putHeaders(headers);
                         return super.performRequest(request, headers);
                     }
@@ -97,7 +98,7 @@ public abstract class AbstractVolleySetting {
                 // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html
                 final HttpClientStack stack = new HttpClientStack(AndroidHttpClient.newInstance(getUserAgent())) {
                     @Override
-                    public HttpResponse performRequest(Request<?> request, Map<String, String> headers)
+                    public HttpResponse performRequest(final Request<?> request, final Map<String, String> headers)
                             throws IOException, AuthFailureError {
                         // gzip対応
                         putHeaders(headers);
@@ -112,7 +113,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * Context取得
-     *
+     * 
      * @return {@link Context}
      */
     public static Context getContext() {
@@ -121,7 +122,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * RequestQueue取得
-     *
+     * 
      * @return {@link RequestQueue}
      */
     public RequestQueue getRequestQueue() {
@@ -130,7 +131,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * ImageLoader取得
-     *
+     * 
      * @return {@link ImageLoader}
      */
     public ImageLoader getImageLoader() {

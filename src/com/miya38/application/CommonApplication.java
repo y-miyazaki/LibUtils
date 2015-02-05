@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import com.miya38.BuildConfig;
 import com.miya38.connection.AbstractVolleySetting;
 import com.miya38.list.SettingListView;
-import com.miya38.list.SettingListViewNoPull;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.ConnectionUtils;
 import com.miya38.utils.ContextHelper;
@@ -37,6 +36,8 @@ public abstract class CommonApplication extends Application {
 
     /**
      * 証明書のハッシュ値を取得する。
+     *
+     * @return ハッシュ値
      */
     protected abstract String getSignatureHash();
 
@@ -57,7 +58,7 @@ public abstract class CommonApplication extends Application {
         ImageUtils.configure(getApplicationContext());
         LogUtils.configure(BuildConfig.DEBUG);
         SettingListView.configure(getApplicationContext());
-        SettingListViewNoPull.configure(getApplicationContext());
+        SettingListView.configure(getApplicationContext());
         SharedPreferencesUtils.configure(getApplicationContext());
         ResourceUtils.configure(getApplicationContext());
         ZipUtils.configure(getApplicationContext());
@@ -75,7 +76,7 @@ public abstract class CommonApplication extends Application {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(final Configuration newConfig) {
         LogUtils.d(TAG, "onConfigurationChanged");
     }
 

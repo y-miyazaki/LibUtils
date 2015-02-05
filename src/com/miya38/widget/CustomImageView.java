@@ -35,6 +35,12 @@ public class CustomImageView extends ImageView implements OnTouchListener {
     // ----------------------------------------------------------
     /** TAG */
     private static final String TAG = CustomImageView.class.getSimpleName();
+    /** アニメーション時間(ms) */
+    private static final int ANIMATION_DURATION = 500;
+    /** グレースケールカラー */
+    private static final int COLOR_GRAYSCALE = 0x80000000;
+    /** 角丸サイズ */
+    private static final int CORNER_RADIUS = 10;
 
     // ----------------------------------------------------------
     // attribute
@@ -54,7 +60,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
     /** OnClickListener */
     private OnClickListener mOnClickListener;
     /** animation duration */
-    private int mAnimationDuration = 500;
+    private int mAnimationDuration = ANIMATION_DURATION;
     /** クリック状態フラグ */
     private boolean mIsClick;
 
@@ -64,9 +70,10 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomImageView(Context context, AttributeSet attrs) {
+    public CustomImageView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
@@ -77,11 +84,12 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
-    public CustomImageView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomImageView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -92,13 +100,14 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs) {
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView);
-        int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
+        final int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
         this.mIsCorner = ta.getBoolean(R.styleable.CustomImageView_corner, false);
-        this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, 10);
+        this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, CORNER_RADIUS);
         this.mTint = ta.getColor(R.styleable.CustomImageView_tint, -1);
 
         if (mTint != -1) {
@@ -109,7 +118,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
             } else {
                 try {
                     mMode = (PorterDuff.Mode.valueOf(poterduffMode) == null) ? PorterDuff.Mode.SRC_ATOP : PorterDuff.Mode.valueOf(poterduffMode);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // 何もしない。
                 }
             }
@@ -141,8 +150,9 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * コーナー設定
      *
      * @param tint
+     *            tint attribute
      */
-    public void setTint(int tint) {
+    public void setTint(final int tint) {
         this.mTint = tint;
 
         if (tint == -1) {
@@ -160,7 +170,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * クリアする場合は、clearColorFilter()をすること。
      */
     private void setColorFilter() {
-        if(mTint != -1){
+        if (mTint != -1) {
             setColorFilter(new PorterDuffColorFilter(mTint, PorterDuff.Mode.SRC_ATOP));
         }
     }
@@ -170,11 +180,11 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * クリアする場合は、clearColorFilter()をすること。
      */
     public void setGrayScaleColorFilter() {
-        setColorFilter(new PorterDuffColorFilter(0x80000000, PorterDuff.Mode.SRC_ATOP));
+        setColorFilter(new PorterDuffColorFilter(COLOR_GRAYSCALE, PorterDuff.Mode.SRC_ATOP));
     }
 
     @Override
-    public void setOnClickListener(OnClickListener l) {
+    public void setOnClickListener(final OnClickListener l) {
         super.setOnClickListener(l);
         this.mOnClickListener = l;
     }
@@ -227,12 +237,12 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * @param animationDuration
      *            msec
      */
-    public void setAnimationDuration(int animationDuration) {
+    public void setAnimationDuration(final int animationDuration) {
         this.mAnimationDuration = animationDuration;
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(final View v, final MotionEvent event) {
         if (mMode != null) {
             switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -287,7 +297,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      *            コーナを表示するか？<br>
      *            true:表示する。/false:表示しない。
      */
-    public void setCorner(boolean corner) {
+    public void setCorner(final boolean corner) {
         this.mIsCorner = corner;
     }
 
@@ -306,25 +316,25 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * @param cornerRadius
      *            コーナーの角丸のサイズ
      */
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(final int cornerRadius) {
         this.mCornerRadius = cornerRadius;
     }
 
     @Override
-    public void setImageBitmap(Bitmap bm) {
+    public void setImageBitmap(final Bitmap bm) {
         try {
             if (mIsCorner) {
                 super.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bm, (int) mCornerRadius));
             } else {
                 super.setImageBitmap(bm);
             }
-        } catch (OutOfMemoryError e) {
+        } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "bitmap OutOfMemoryError", e);
         }
     }
 
     @Override
-    public void setImageResource(int resId) {
+    public void setImageResource(final int resId) {
         Bitmap bm = null;
         try {
             if (mIsCorner) {
@@ -333,7 +343,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
             } else {
                 super.setImageResource(resId);
             }
-        } catch (OutOfMemoryError e) {
+        } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "bitmap OutOfMemoryError", e);
             if (bm != null) {
                 bm.recycle();

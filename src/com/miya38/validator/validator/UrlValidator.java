@@ -11,20 +11,20 @@ public class UrlValidator extends AbstractValidator {
 
     private static Pattern mPattern = Patterns.WEB_URL;
 
-    private String mErrorMessage;
+    private final String mErrorMessage;
 
-    public UrlValidator(Context c, int errorMessage) {
+    public UrlValidator(final Context c, final int errorMessage) {
         super(c);
         mErrorMessage = mContext.getString(errorMessage);
     }
 
-    public UrlValidator(Context c, String errorMessage) {
+    public UrlValidator(final Context c, final String errorMessage) {
         super(c);
         mErrorMessage = errorMessage;
     }
 
     @Override
-    public boolean isValid(String url) {
+    public boolean isValid(final String url) {
         return mPattern.matcher(url).matches();
     }
 

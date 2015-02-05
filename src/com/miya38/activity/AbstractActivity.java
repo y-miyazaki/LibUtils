@@ -110,7 +110,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
          * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
          */
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(final Context context, final Intent intent) {
             // 特定のクラス名が指定されていた場合はそのクラスだけはfinishしない。
             final String className = intent.getStringExtra("ClassName");
             if (className == null) {
@@ -124,7 +124,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtils.d(TAG, "onCreate");
 
@@ -212,13 +212,13 @@ public abstract class AbstractActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogUtils.d(TAG, "onActivityResult");
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    public void onWindowFocusChanged(final boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (mOnWindowFocusChangedListener != null) {
             mOnWindowFocusChangedListener.onWindowFocusChanged(hasFocus);
@@ -250,7 +250,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      *            タイトル
      * @return タイトル設定したか？
      */
-    public boolean setHeaderTitle(String title) {
+    public boolean setHeaderTitle(final String title) {
         final CustomTextView customTextViewHeader01 = ViewHelper.findView(this, R.id.CustomTextViewHeader);
         if (customTextViewHeader01 == null) {
             final ActionBar actionBar = getSupportActionBar();
@@ -273,7 +273,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      *            タイトル
      * @return フッタ設定したか？
      */
-    public boolean setFooterTitle(String title) {
+    public boolean setFooterTitle(final String title) {
         final CustomTextView customTextViewFooter01 = ViewHelper.findView(this, R.id.CustomTextViewFooter);
         if (customTextViewFooter01 != null) {
             customTextViewFooter01.setText(title);
@@ -289,7 +289,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * @param clazz
      *            finishしないClass
      */
-    public final void finishAll(Class<?> clazz) {
+    public final void finishAll(final Class<?> clazz) {
         final Intent intent = new Intent();
         intent.putExtra("className", clazz.getSimpleName());
         intent.setAction(StringUtils.appendBuilder(AplUtils.getPackageName(), ".LOGOUT"));
@@ -299,9 +299,6 @@ public abstract class AbstractActivity extends ActionBarActivity {
     /**
      * 指定されたアクティビティクラス以外を全て殺す<br>
      * 指定された引数のクラス以外を全てfinish()する。
-     *
-     * @param clazz
-     *            finishしないClass
      */
     public final void finishAll() {
         final Intent intent = new Intent();
@@ -394,7 +391,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      *            {@link Configuration}
      */
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         LogUtils.d(TAG, "onConfigurationChanged");
     }
@@ -415,7 +412,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * @param l
      *            リスナーを登録するとコールバックリスナーが走ります。
      */
-    public final void setOnWindowFocusChangedListener(OnWindowFocusChangedListener l) {
+    public final void setOnWindowFocusChangedListener(final OnWindowFocusChangedListener l) {
         this.mOnWindowFocusChangedListener = l;
     }
 

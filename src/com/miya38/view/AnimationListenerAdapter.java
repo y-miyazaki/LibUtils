@@ -14,9 +14,14 @@ import com.miya38.utils.LogUtils;
  *
  */
 public abstract class AnimationListenerAdapter implements AnimationListener {
+    // ----------------------------------------------------------
+    // define
+    // ----------------------------------------------------------
     /** TAG */
     private static final String TAG = AnimationListenerAdapter.class.getSimpleName();
-
+    // ----------------------------------------------------------
+    // other
+    // ----------------------------------------------------------
     /** Fragment */
     private Fragment mFragment;
     /** Activity */
@@ -33,22 +38,24 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
      * コンストラクタ
      *
      * @param fragment
+     *            Fragment
      */
-    public AnimationListenerAdapter(Fragment fragment) {
+    public AnimationListenerAdapter(final Fragment fragment) {
         this.mFragment = fragment;
     }
 
     /**
      * コンストラクタ
      *
-     * @param mFragment
+     * @param activity
+     *            Activity
      */
-    public AnimationListenerAdapter(Activity activity) {
+    public AnimationListenerAdapter(final Activity activity) {
         this.mActivity = activity;
     }
 
     @Override
-    public void onAnimationEnd(Animation animation) {
+    public final void onAnimationEnd(final Animation animation) {
         LogUtils.d(TAG, "onAnimationEnd");
         if (mFragment != null && !mFragment.isDetached() && !mFragment.isRemoving() && mFragment.getView() != null) {
             onAnimationEndCustom(animation);
@@ -59,13 +66,25 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
     }
 
     @Override
-    public void onAnimationRepeat(Animation animation) {
+    public final void onAnimationRepeat(final Animation animation) {
         LogUtils.d(TAG, "onAnimationRepeat");
+        if (mFragment != null && !mFragment.isDetached() && !mFragment.isRemoving() && mFragment.getView() != null) {
+            onAnimationRepeatCustom(animation);
+        }
+        if (mActivity != null && !mActivity.isFinishing()) {
+            onAnimationRepeatCustom(animation);
+        }
     }
 
     @Override
-    public void onAnimationStart(Animation animation) {
+    public final void onAnimationStart(final Animation animation) {
         LogUtils.d(TAG, "onAnimationStart");
+        if (mFragment != null && !mFragment.isDetached() && !mFragment.isRemoving() && mFragment.getView() != null) {
+            onAnimationStartCustom(animation);
+        }
+        if (mActivity != null && !mActivity.isFinishing()) {
+            onAnimationStartCustom(animation);
+        }
     }
 
     /**
@@ -74,5 +93,24 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
      * @param animation
      *            {@link Animation}
      */
-    protected abstract void onAnimationEndCustom(Animation animation);
+    public void onAnimationEndCustom(final Animation animation) {
+    }
+
+    /**
+     * onAnimationRepeatのカスタムアダプター
+     *
+     * @param animation
+     *            {@link Animation}
+     */
+    public void onAnimationRepeatCustom(final Animation animation) {
+    }
+
+    /**
+     * onAnimationEndのカスタムアダプター
+     *
+     * @param animation
+     *            {@link Animation}
+     */
+    public void onAnimationStartCustom(final Animation animation) {
+    }
 }

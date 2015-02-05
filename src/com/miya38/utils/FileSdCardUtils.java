@@ -23,14 +23,17 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images.ImageColumns;
+import android.provider.MediaStore.MediaColumns;
 import android.text.format.DateFormat;
 
 import com.google.common.io.Closeables;
 
 /**
  * SDカード処理クラス
- *
+ * 
  * @author y-miyazaki
  */
 public final class FileSdCardUtils {
@@ -52,17 +55,17 @@ public final class FileSdCardUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
     /**
      * ファイル詳細情報クラス
-     *
+     * 
      * @author y-miyazaki
      */
     public static class FileResource {
@@ -86,7 +89,7 @@ public final class FileSdCardUtils {
          * @param title
          *            titleをセットする
          */
-        public void setTitle(String title) {
+        public void setTitle(final String title) {
             this.title = title;
         }
 
@@ -101,7 +104,7 @@ public final class FileSdCardUtils {
          * @param dateModified
          *            dateModifiedをセットする
          */
-        public void setDateModified(long dateModified) {
+        public void setDateModified(final long dateModified) {
             this.dateModified = dateModified;
         }
 
@@ -116,7 +119,7 @@ public final class FileSdCardUtils {
          * @param size
          *            sizeをセットする
          */
-        public void setSize(long size) {
+        public void setSize(final long size) {
             this.size = size;
         }
 
@@ -131,7 +134,7 @@ public final class FileSdCardUtils {
          * @param mimeType
          *            mimeTypeをセットする
          */
-        public void setMimeType(String mimeType) {
+        public void setMimeType(final String mimeType) {
             this.mimeType = mimeType;
         }
 
@@ -140,14 +143,14 @@ public final class FileSdCardUtils {
     /**
      * SDカードからBitmap読み込み<br>
      * filePathは、SDカードからの相対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            ファイル名(SDカードのパス以下から指定を行う)
      * @return ビットマップオブジェクト (存在しなければnull)
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static Bitmap readBitmap(String filePath) throws IOException {
+    public static Bitmap readBitmap(final String filePath) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -161,7 +164,7 @@ public final class FileSdCardUtils {
             fileInput = new FileInputStream(getPath(filePath));
             bufInput = new BufferedInputStream(fileInput);
             return BitmapFactory.decodeStream(bufInput);
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             // 握りつぶす
         } finally {
             Closeables.closeQuietly(fileInput);
@@ -173,7 +176,7 @@ public final class FileSdCardUtils {
     /**
      * SDカードからBitmap読み込み<br>
      * ギャラリーからID指定でBitmapを取得する
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param id
@@ -182,7 +185,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static Bitmap readBitmap(ContentResolver cr, int id) throws IOException {
+    public static Bitmap readBitmap(final ContentResolver cr, final int id) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -191,15 +194,15 @@ public final class FileSdCardUtils {
         }
 
         final Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // ストレージエリア
-                new String[] { MediaStore.Images.Media.DATA }, // ファイル
-                MediaStore.Images.Media._ID + " = ?", // selection(ID)
+                new String[] { MediaColumns.DATA }, // ファイル
+                BaseColumns._ID + " = ?", // selection(ID)
                 new String[] { String.valueOf(id) }, // selectionArgs(ID)
-                MediaStore.Images.Media._ID + " asc"); // sortOrder
+                BaseColumns._ID + " asc"); // sortOrder
         try {
             if (cursor != null) { // SDカードがない場合等nullの可能性あり
                 if (cursor.getCount() != 0) { // 削除データがある場合
                     cursor.moveToFirst();
-                    final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                    final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                     if (file.exists()) {
                         final FileInputStream fileInput = new FileInputStream(file);
                         final BufferedInputStream bufInput = new BufferedInputStream(fileInput);
@@ -207,7 +210,7 @@ public final class FileSdCardUtils {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // 握りつぶす
         } finally {
             if (cursor != null) {
@@ -219,7 +222,7 @@ public final class FileSdCardUtils {
 
     /**
      * ギャラリーからID指定で画像ファイル名を取得する
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param id
@@ -228,7 +231,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static String readFilename(ContentResolver cr, int id) throws IOException {
+    public static String readFilename(final ContentResolver cr, final int id) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -238,14 +241,14 @@ public final class FileSdCardUtils {
 
         String result = null; // ファイル名
         final Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // ストレージエリア
-                new String[] { MediaStore.Images.Media.DATA }, // ファイル
-                MediaStore.Images.Media._ID + " = ?", // selection(ID)
+                new String[] { MediaColumns.DATA }, // ファイル
+                BaseColumns._ID + " = ?", // selection(ID)
                 new String[] { String.valueOf(id) }, // selectionArgs(ID)
-                MediaStore.Images.Media._ID + " asc"); // sortOrder
+                BaseColumns._ID + " asc"); // sortOrder
         if (cursor != null) { // SDカードがない場合等nullの可能性あり
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
-                final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                 if (file.exists()) {
                     result = file.getPath();
                 }
@@ -257,14 +260,14 @@ public final class FileSdCardUtils {
 
     /**
      * SDカードに存在する画像ファイルを取得する。
-     *
+     * 
      * @param filePath
      *            ファイル名(SDカードのパス以下から指定を行う)
      * @return 画像ファイルリスト (存在しない場合は空のリスト)
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static List<File> readBitmapFileList(String filePath) throws IOException {
+    public static List<File> readBitmapFileList(final String filePath) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -285,7 +288,7 @@ public final class FileSdCardUtils {
         // アプリケーションディレクトリの画像ファイルを取得
         final File[] files = loadDir.listFiles(new FilenameFilter() {
             @Override
-            public boolean accept(File loadDir, String fileName) {
+            public boolean accept(final File loadDir, final String fileName) {
                 // CompressFormat
                 // JPEG = new CompressFormat("JPEG", 0);
                 // PNG = new CompressFormat("PNG", 1);
@@ -303,14 +306,14 @@ public final class FileSdCardUtils {
 
     /**
      * ギャラリーから画像ファイルリストを取得する。
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @return 画像ファイルリスト 存在しない場合は空のリスト
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static List<File> readBitmapGallaryFileList(ContentResolver cr) throws IOException {
+    public static List<File> readBitmapGallaryFileList(final ContentResolver cr) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -323,7 +326,7 @@ public final class FileSdCardUtils {
                 null, // projection
                 null, // selection
                 null, // selectionArgs
-                MediaStore.Images.Media._ID + " desc"); // sortOrder
+                BaseColumns._ID + " desc"); // sortOrder
         if (cursor != null) { // SDカードがない場合等nullの可能性あり
             try {
                 while (cursor.moveToNext()) {
@@ -335,7 +338,7 @@ public final class FileSdCardUtils {
                     // ----------------------------------------------------
                     // DBからファイル名を抜き出した後、ファイル存在チェックを行い、存在する場合にデータを設定する
                     // ----------------------------------------------------
-                    final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                    final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                     if (file.exists()) {
                         result.add(file);
                     }
@@ -349,7 +352,7 @@ public final class FileSdCardUtils {
 
     /**
      * ギャラリーからファイル名を指定し、IDを取得する。
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param filename
@@ -358,7 +361,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static int readBitmapGallaryId(ContentResolver cr, String filename) throws IOException {
+    public static int readBitmapGallaryId(final ContentResolver cr, final String filename) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -368,16 +371,16 @@ public final class FileSdCardUtils {
 
         int result = 0; // ID
         final Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // ストレージエリア
-                new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA }, // projection(ID)
-                MediaStore.Images.Media.DATA + " = ?", // selection(ファイル名)
+                new String[] { BaseColumns._ID, MediaColumns.DATA }, // projection(ID)
+                MediaColumns.DATA + " = ?", // selection(ファイル名)
                 new String[] { filename }, // selectionArgs(ファイル名)
-                MediaStore.Images.Media._ID + " asc"); // sortOrder
+                BaseColumns._ID + " asc"); // sortOrder
         if (cursor != null) { // SDカードがない場合等nullの可能性あり
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
-                final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                 if (file.exists()) {
-                    result = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
+                    result = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID));
                 }
             }
             Closeables.closeQuietly(cursor);
@@ -387,14 +390,14 @@ public final class FileSdCardUtils {
 
     /**
      * ギャラリーからIDのリストを取得する。
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @return IDリスト 存在しない場合は空のリスト
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static List<Integer> readBitmapGallaryIdList(ContentResolver cr) throws IOException {
+    public static List<Integer> readBitmapGallaryIdList(final ContentResolver cr) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -407,7 +410,7 @@ public final class FileSdCardUtils {
                 null, // projection
                 null, // selection
                 null, // selectionArgs
-                MediaStore.Images.Media._ID + " desc"); // sortOrder
+                BaseColumns._ID + " desc"); // sortOrder
         if (cursor != null) { // SDカードがない場合等nullの可能性あり
             try {
                 while (cursor.moveToNext()) {
@@ -419,9 +422,9 @@ public final class FileSdCardUtils {
                     // ----------------------------------------------------
                     // DBからファイル名を抜き出した後、ファイル存在チェックを行い、存在する場合にデータを設定する
                     // ----------------------------------------------------
-                    final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                    final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                     if (file.exists()) {
-                        result.add(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)));
+                        result.add(cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID)));
                     }
                 }
             } finally {
@@ -433,7 +436,7 @@ public final class FileSdCardUtils {
 
     /**
      * SDカードへの書き込み処理(ファイル版) filePathは、絶対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            ファイル名(SDカードのパス以下から指定を行う)
      * @param data
@@ -442,7 +445,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static boolean write(String filePath, String data) throws IOException {
+    public static boolean write(final String filePath, final String data) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -457,11 +460,11 @@ public final class FileSdCardUtils {
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(sdcardPath, true), "UTF-8"));
             bw.write(data);
             result = true; // 書き込み成功
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             return false;
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             return false;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             return false;
         } finally {
             Closeables.closeQuietly(bw);
@@ -471,7 +474,7 @@ public final class FileSdCardUtils {
 
     /**
      * SDカードへの書き込み処理(画像版) filePathは、絶対パスを指定してください。
-     *
+     * 
      * @param bitmap
      *            画像
      * @param filePath
@@ -481,7 +484,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static boolean write(String filePath, Bitmap bitmap) throws IOException {
+    public static boolean write(final String filePath, final Bitmap bitmap) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -507,7 +510,7 @@ public final class FileSdCardUtils {
             } else {
                 return false;
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             return false;
         } finally {
             Closeables.closeQuietly(fileOutputStream);
@@ -516,7 +519,7 @@ public final class FileSdCardUtils {
 
     /**
      * SDカードへの書き込み処理(画像版) ファイル名は自動的に付与するため、ディレクトリ名のみ指定
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param name
@@ -531,7 +534,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static boolean write(ContentResolver cr, String name, Context context, Bitmap bitmap, String filePath) throws IOException {
+    public static boolean write(final ContentResolver cr, final String name, final Context context, final Bitmap bitmap, final String filePath) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -567,17 +570,17 @@ public final class FileSdCardUtils {
                 outputStream.flush();
 
                 final ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, createFilename(dateTaken)); // _title
-                values.put(MediaStore.Images.Media.SIZE, ffilename.length()); // _size
-                values.put(MediaStore.Images.Media.DATE_ADDED, dateTaken / 1000); // _date_added
-                values.put(MediaStore.Images.Media.DATE_MODIFIED, dateTaken / 1000); // date_modified
-                values.put(MediaStore.Images.Media.DATE_TAKEN, dateTaken); // datetaken
-                values.put(MediaStore.Images.Media.MIME_TYPE, mimetype); // mime type
+                values.put(MediaColumns.TITLE, createFilename(dateTaken)); // _title
+                values.put(MediaColumns.SIZE, ffilename.length()); // _size
+                values.put(MediaColumns.DATE_ADDED, dateTaken / 1000); // _date_added
+                values.put(MediaColumns.DATE_MODIFIED, dateTaken / 1000); // date_modified
+                values.put(ImageColumns.DATE_TAKEN, dateTaken); // datetaken
+                values.put(MediaColumns.MIME_TYPE, mimetype); // mime type
                 cr.insert(URI, values);
             }
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             return false;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             return false;
         } finally {
             Closeables.closeQuietly(outputStream);
@@ -587,7 +590,7 @@ public final class FileSdCardUtils {
 
     /**
      * SDカード(ギャラリー保存）への書き込み(Insert)処理(画像版)
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param bitmap
@@ -596,7 +599,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static String writeBitmapGallary(ContentResolver cr, Bitmap bitmap) throws IOException {
+    public static String writeBitmapGallary(final ContentResolver cr, final Bitmap bitmap) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -614,20 +617,20 @@ public final class FileSdCardUtils {
         // ----------------------------------------------------
         final Uri uri = Uri.parse(uriStr); // Uriインスタンス生成
         final Cursor cursor = cr.query(uri, // ストレージエリアにある先程登録したファイル名を取得
-                new String[] { MediaStore.Images.Media.DATA }, // _data
+                new String[] { MediaColumns.DATA }, // _data
                 null, null, null);
         if (cursor != null) { // SDカードがない場合等nullの可能性あり
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst(); // 最初の1件目に移動
-                final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                final File file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                 final ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, createFilename(dateTaken)); // _title
-                values.put(MediaStore.Images.Media.SIZE, file.length()); // _size
-                values.put(MediaStore.Images.Media.DATE_ADDED, dateTaken / 1000); // _date_added
-                values.put(MediaStore.Images.Media.DATE_MODIFIED, dateTaken / 1000); // date_modified
-                values.put(MediaStore.Images.Media.DATE_TAKEN, dateTaken); // datetaken
+                values.put(MediaColumns.TITLE, createFilename(dateTaken)); // _title
+                values.put(MediaColumns.SIZE, file.length()); // _size
+                values.put(MediaColumns.DATE_ADDED, dateTaken / 1000); // _date_added
+                values.put(MediaColumns.DATE_MODIFIED, dateTaken / 1000); // date_modified
+                values.put(ImageColumns.DATE_TAKEN, dateTaken); // datetaken
                 // mime type
-                values.put(MediaStore.Images.Media.MIME_TYPE, ImageUtils.getImageMimeType(file.getPath()));
+                values.put(MediaColumns.MIME_TYPE, ImageUtils.getImageMimeType(file.getPath()));
                 cr.update(uri, values, null, null);
                 result = file.getPath();
             }
@@ -638,7 +641,7 @@ public final class FileSdCardUtils {
 
     /**
      * SDカード(ギャラリー保存）への書き込み(update)処理(画像版)
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param bitmap
@@ -649,7 +652,7 @@ public final class FileSdCardUtils {
      * @throws IOException
      *             SDカードがマウントされていない場合
      */
-    public static boolean updateBitmapGallary(ContentResolver cr, Bitmap bitmap, String filename) throws IOException {
+    public static boolean updateBitmapGallary(final ContentResolver cr, final Bitmap bitmap, final String filename) throws IOException {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -664,28 +667,28 @@ public final class FileSdCardUtils {
 
         try {
             cursor = cr.query(URI, // ストレージエリア
-                    new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA },// ID,DATA
-                    MediaStore.Images.Media.DATA + " = ?", // データ
+                    new String[] { BaseColumns._ID, MediaColumns.DATA },// ID,DATA
+                    MediaColumns.DATA + " = ?", // データ
                     new String[] { filename }, // ファイル名
                     null);
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
                 if (cursor.getCount() > 0) {
-                    file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
-                    final String id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
+                    file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
+                    final String id = cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID));
 
                     final ContentValues values = new ContentValues();
                     // values.put(MediaStore.Images.Media.TITLE,
                     // createFilename(dateTaken)); //_title
-                    values.put(MediaStore.Images.Media.SIZE, file.length()); // _size
+                    values.put(MediaColumns.SIZE, file.length()); // _size
                     // values.put(MediaStore.Images.Media.DATE_ADDED, dateTaken
                     // / 1000); //_date_added
-                    values.put(MediaStore.Images.Media.DATE_MODIFIED, dateTaken / 1000); // date_modified
-                    values.put(MediaStore.Images.Media.DATE_TAKEN, dateTaken); // datetaken
+                    values.put(MediaColumns.DATE_MODIFIED, dateTaken / 1000); // date_modified
+                    values.put(ImageColumns.DATE_TAKEN, dateTaken); // datetaken
                     // mime type
-                    values.put(MediaStore.Images.Media.MIME_TYPE, ImageUtils.getImageMimeType(file.getPath()));
-                    final Uri uri = ContentUris.appendId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon(), cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID))).build();
-                    cr.update(uri, values, MediaStore.Images.Media.DATA + " = ?", // データ
+                    values.put(MediaColumns.MIME_TYPE, ImageUtils.getImageMimeType(file.getPath()));
+                    final Uri uri = ContentUris.appendId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon(), cursor.getLong(cursor.getColumnIndex(BaseColumns._ID))).build();
+                    cr.update(uri, values, MediaColumns.DATA + " = ?", // データ
                             new String[] { filename }); // ファイル名
                     // ----------------------------------------------------
                     // サムネイルの削除
@@ -729,14 +732,14 @@ public final class FileSdCardUtils {
     /**
      * ギャラリーからファイルを取得する。<br>
      * 取得できない場合は、nullを返却する。
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param uri
      *            Uri
      * @return ファイル
      */
-    public static File getBitmapGallaryFile(ContentResolver cr, Uri uri) {
+    public static File getBitmapGallaryFile(final ContentResolver cr, final Uri uri) {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -744,15 +747,15 @@ public final class FileSdCardUtils {
             return null;
         }
         File file = null;
-        final String[] columns = { MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME };
+        final String[] columns = { MediaColumns.DATA, MediaColumns.DISPLAY_NAME };
 
         final Cursor cursor = cr.query(uri, columns, null, null, null);
 
         if (cursor != null) { // SDカードがない場合等nullの可能性あり
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
-                if (cursor.getColumnIndex(MediaStore.Images.Media.DATA) != -1 && cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)) != null) {
-                    file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)));
+                if (cursor.getColumnIndex(MediaColumns.DATA) != -1 && cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)) != null) {
+                    file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                 }
             }
             Closeables.closeQuietly(cursor);
@@ -763,14 +766,14 @@ public final class FileSdCardUtils {
     /**
      * ギャラリーからファイル詳細情報を取得する(ファイルネーム)<br>
      * 取得できない場合は、nullを返却する。
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param filename
      *            ファイル名(ファイル詳細情報を取得するための検索キー)
      * @return ファイル情報
      */
-    public static FileResource getDetailFileGallary(ContentResolver cr, String filename) {
+    public static FileResource getDetailFileGallary(final ContentResolver cr, final String filename) {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -780,21 +783,21 @@ public final class FileSdCardUtils {
         Cursor cursor = null;
         try {
             cursor = cr.query(URI, // ストレージエリア
-                    new String[] { MediaStore.Images.Media._ID, // ID
-                            MediaStore.Images.Media.TITLE, // タイトル
-                            MediaStore.Images.Media.DATE_MODIFIED, // 修正日付
-                            MediaStore.Images.Media.SIZE, // ファイルサイズ
-                            MediaStore.Images.Media.MIME_TYPE, // mime_type
-                    }, MediaStore.Images.Media.DATA + " = ?", // データ
+                    new String[] { BaseColumns._ID, // ID
+                            MediaColumns.TITLE, // タイトル
+                            MediaColumns.DATE_MODIFIED, // 修正日付
+                            MediaColumns.SIZE, // ファイルサイズ
+                            MediaColumns.MIME_TYPE, // mime_type
+                    }, MediaColumns.DATA + " = ?", // データ
                     new String[] { filename }, // ファイル名
                     null);
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
                 final FileResource fileResource = new FileResource();
-                fileResource.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.TITLE)));
-                fileResource.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE)));
-                fileResource.setSize(cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.SIZE)));
-                fileResource.setDateModified(cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)));
+                fileResource.setTitle(cursor.getString(cursor.getColumnIndex(MediaColumns.TITLE)));
+                fileResource.setMimeType(cursor.getString(cursor.getColumnIndex(MediaColumns.MIME_TYPE)));
+                fileResource.setSize(cursor.getLong(cursor.getColumnIndex(MediaColumns.SIZE)));
+                fileResource.setDateModified(cursor.getLong(cursor.getColumnIndex(MediaColumns.DATE_MODIFIED)));
                 return fileResource;
             }
         } finally {
@@ -805,14 +808,14 @@ public final class FileSdCardUtils {
 
     /**
      * ギャラリーからファイル詳細情報を取得する(ID) 取得できない場合は、nullを返却する。
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param id
      *            ID(ファイル詳細情報を取得するための検索キー)
      * @return 削除成功ならtrue、その他ならfalse
      */
-    public static FileResource getDetailFileGallary(ContentResolver cr, int id) {
+    public static FileResource getDetailFileGallary(final ContentResolver cr, final int id) {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -823,21 +826,21 @@ public final class FileSdCardUtils {
         Cursor cursor = null;
         try {
             cursor = cr.query(URI, // ストレージエリア
-                    new String[] { MediaStore.Images.Media._ID, // ID
-                            MediaStore.Images.Media.TITLE, // タイトル
-                            MediaStore.Images.Media.DATE_MODIFIED, // 修正日付
-                            MediaStore.Images.Media.SIZE, // ファイルサイズ
-                            MediaStore.Images.Media.MIME_TYPE, // mime_type
-                    }, MediaStore.Images.Media._ID + " = ?", // データ
+                    new String[] { BaseColumns._ID, // ID
+                            MediaColumns.TITLE, // タイトル
+                            MediaColumns.DATE_MODIFIED, // 修正日付
+                            MediaColumns.SIZE, // ファイルサイズ
+                            MediaColumns.MIME_TYPE, // mime_type
+                    }, BaseColumns._ID + " = ?", // データ
                     new String[] { String.valueOf(id) }, // ID
                     null);
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
                 final FileResource fileResource = new FileResource();
-                fileResource.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.TITLE)));
-                fileResource.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE)));
-                fileResource.setSize(cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.SIZE)));
-                fileResource.setDateModified(cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)));
+                fileResource.setTitle(cursor.getString(cursor.getColumnIndex(MediaColumns.TITLE)));
+                fileResource.setMimeType(cursor.getString(cursor.getColumnIndex(MediaColumns.MIME_TYPE)));
+                fileResource.setSize(cursor.getLong(cursor.getColumnIndex(MediaColumns.SIZE)));
+                fileResource.setDateModified(cursor.getLong(cursor.getColumnIndex(MediaColumns.DATE_MODIFIED)));
                 return fileResource;
             }
         } finally {
@@ -848,13 +851,13 @@ public final class FileSdCardUtils {
 
     /**
      * 指定したファイルを削除します。
-     *
+     * 
      * @param filePath
      *            ファイル名(SDカードのパス以下から指定を行う)
      * @return true:ファイル削除成功<br>
      *         false:ファイル削除失敗<br>
      */
-    public static boolean delete(String filePath) {
+    public static boolean delete(final String filePath) {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -870,14 +873,14 @@ public final class FileSdCardUtils {
 
     /**
      * ギャラリーからの削除処理
-     *
+     * 
      * @param cr
      *            ContentResolver
      * @param filename
      *            削除するファイル名
      * @return 削除成功ならtrue、その他ならfalse
      */
-    public static boolean deleteBitmapGallary(ContentResolver cr, String filename) {
+    public static boolean deleteBitmapGallary(final ContentResolver cr, final String filename) {
         // ----------------------------------------------------
         // SDカードマウント判定
         // ----------------------------------------------------
@@ -888,13 +891,13 @@ public final class FileSdCardUtils {
         Cursor cursor = null;
         try {
             cursor = cr.query(URI, // ストレージエリア
-                    new String[] { MediaStore.Images.Media._ID }, // ID
-                    MediaStore.Images.Media.DATA + " = ?", // データ
+                    new String[] { BaseColumns._ID }, // ID
+                    MediaColumns.DATA + " = ?", // データ
                     new String[] { filename }, // ファイル名
                     null);
             if (cursor.getCount() != 0) { // 削除データがある場合
                 cursor.moveToFirst();
-                final Uri uri = ContentUris.appendId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon(), cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID))).build();
+                final Uri uri = ContentUris.appendId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon(), cursor.getLong(cursor.getColumnIndex(BaseColumns._ID))).build();
                 cr.delete(uri, null, null);
                 return true;
             }
@@ -906,18 +909,18 @@ public final class FileSdCardUtils {
 
     /**
      * ファイル名の自動生成処理(時間名でファイル名を生成する)
-     *
+     * 
      * @param dateTaken
      *            現在のmsec
      * @return ファイル名
      */
-    private static String createFilename(long dateTaken) {
+    private static String createFilename(final long dateTaken) {
         return DateFormat.format("yyyy-MM-dd_hhmmss", dateTaken).toString();
     }
 
     /**
      * SDカードマウント判定
-     *
+     * 
      * @return true:マウント可能 false:マウント不可能
      */
     public static boolean isWrite() {
@@ -928,7 +931,7 @@ public final class FileSdCardUtils {
     /**
      * SDカードのパス取得<br>
      * パスが取得できない場合は、nullを返却する。
-     *
+     * 
      * @return SDカードのパス名
      */
     public static File getPath() {
@@ -942,13 +945,13 @@ public final class FileSdCardUtils {
     /**
      * SDカードのパス取得<br>
      * パスが取得できない場合は、nullを返却する。
-     *
+     * 
      * @param filePath
      *            ファイル名(SDカードのパス以下から指定を行う)
-     *
+     * 
      * @return SDカードのパス名
      */
-    public static String getPath(String filePath) {
+    public static String getPath(final String filePath) {
         if (isWrite()) {
             return StringUtils.appendBuilder(getPath().getPath(), filePath);
         }
@@ -957,7 +960,7 @@ public final class FileSdCardUtils {
 
     /**
      * Get the external app cache directory.
-     *
+     * 
      * @return SDカードのパス名
      */
     public static String getCachePath() {
@@ -984,12 +987,12 @@ public final class FileSdCardUtils {
 
     /**
      * Get the external app cache directory.
-     *
+     * 
      * @param filename
      *            ファイル名
      * @return SDカードのパス名
      */
-    public static String getCachePath(String filename) {
+    public static String getCachePath(final String filename) {
         if (AplUtils.hasFroyo()) {
             if (sContext.getExternalCacheDir() != null) {
                 final String cacheDir = sContext.getExternalCacheDir().getPath();
@@ -1013,13 +1016,13 @@ public final class FileSdCardUtils {
 
     /**
      * ファイルの存在有無を返却する
-     *
+     * 
      * @param filePath
      *            ファイルパス(フルパスで指定する。)
      * @return true:ファイルが存在する。<br>
      *         false:ファイルが存在しない。
      */
-    public static boolean isExists(String filePath) {
+    public static boolean isExists(final String filePath) {
         final File file = new File(filePath);
         if (file.exists()) {
             return true;
@@ -1029,20 +1032,20 @@ public final class FileSdCardUtils {
 
     /**
      * SDカードが指定サイズ以上の容量があるかをチェックする
-     *
+     * 
      * @param size
      *            指定容量
      * @return true:指定容量以上の空きサイズあり<br>
      *         false:指定容量以下の空きサイズしかない<br>
-     *
+     * 
      */
-    public static boolean isUsableSpace(long size) {
+    public static boolean isUsableSpace(final long size) {
         return getUsableSpace() >= size;
     }
 
     /**
      * SDカードの空きサイズ取得
-     *
+     * 
      * @return SD空きカードサイズ
      */
     @SuppressWarnings("deprecation")
@@ -1051,14 +1054,14 @@ public final class FileSdCardUtils {
         final StatFs statFs = new StatFs(file.getAbsolutePath());
         try {
             return statFs.getFreeBytes();
-        } catch (NoSuchMethodError e) {
+        } catch (final NoSuchMethodError e) {
             return (long) statFs.getAvailableBlocks() * (long) statFs.getBlockSize();
         }
     }
 
     /**
      * SDカードの最大サイズ取得
-     *
+     * 
      * @return SDカードサイズ
      */
     @SuppressWarnings("deprecation")
@@ -1067,7 +1070,7 @@ public final class FileSdCardUtils {
         final StatFs statFs = new StatFs(file.getAbsolutePath());
         try {
             return statFs.getTotalBytes();
-        } catch (NoSuchMethodError e) {
+        } catch (final NoSuchMethodError e) {
             return (long) statFs.getBlockCount() * (long) statFs.getBlockSize();
         }
     }

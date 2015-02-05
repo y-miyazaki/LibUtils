@@ -9,9 +9,9 @@ import android.text.TextUtils;
 
 /**
  * 文字列操作ユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class StringUtils {
     /** UTF-8 */
@@ -29,12 +29,12 @@ public final class StringUtils {
 
     /**
      * 文字列の前後からスペース(全角半角、改行、タブなど)を削除した文字列を取得
-     *
+     * 
      * @param string
      *            文字列
      * @return 前後のスペースを削除した文字列
      */
-    public static String trim(String string) {
+    public static String trim(final String string) {
         if (isEmpty(string)) {
             return string;
         }
@@ -44,14 +44,14 @@ public final class StringUtils {
 
     /**
      * 指定文字列数で以降の文字列を削除し、代わりに…で埋める。
-     *
+     * 
      * @param string
      *            文字列
      * @param count
      *            文字数
      * @return 変換した文字列
      */
-    public static String cut(String string, int count) {
+    public static String cut(final String string, final int count) {
         if (!isEmpty(string) && string.length() > count) {
             final String replace = string.substring(0, count);
             if (!string.equals(replace)) {
@@ -63,59 +63,59 @@ public final class StringUtils {
 
     /**
      * 文字列の空/nullチェック
-     *
+     * 
      * @param string
      * @return true:空/null false:それ以外
      */
-    public static boolean isEmpty(CharSequence string) {
+    public static boolean isEmpty(final CharSequence string) {
         return TextUtils.isEmpty(string);
     }
 
     /**
      * カンマ設定 例:999999999->999,999,999
-     *
+     * 
      * @param number
      *            対象数値
      * @return カンマを設定した文字列
      */
-    public static String getCanma(int number) {
+    public static String getCanma(final int number) {
         return String.format(Locale.getDefault(), "%1$,3d", number);
     }
 
     /**
      * 改行文字をsplitした配列を返却する
-     *
+     * 
      * @param string
      *            対象数値
      * @return カンマを設定した文字列
      */
-    public static String[] splitReturn(String string) {
+    public static String[] splitReturn(final String string) {
         return string.split("\r?\n");
     }
 
     /**
      * 文字列の配列を展開します。
-     *
+     * 
      * @param delimiter
      *            連結文字。
      * @param strings
      *            連結する文字列配列。
      * @return 連結済みの文字列。
      */
-    public static String explode(String delimiter, String[] strings) {
+    public static String explode(final String delimiter, final String[] strings) {
         return explode(delimiter, Arrays.asList(strings));
     }
 
     /**
      * 文字列のコレクションを展開します。
-     *
+     * 
      * @param delimiter
      *            連結文字。
      * @param strings
      *            連結する文字列一覧。
      * @return 連結済みの文字列。
      */
-    public static String explode(String delimiter, Collection<String> strings) {
+    public static String explode(final String delimiter, final Collection<String> strings) {
         if (strings == null) {
             return null;
         }
@@ -139,12 +139,12 @@ public final class StringUtils {
      * The returned array will be double the length of the passed array, as it
      * takes two characters to represent any
      * given byte.
-     *
+     * 
      * @param data
      *            a byte[] to convert to Hex characters
      * @return A char[] containing hexadecimal characters
      */
-    public static char[] encodeHex(byte[] data) {
+    public static char[] encodeHex(final byte[] data) {
         return encodeHex(data, true);
     }
 
@@ -154,7 +154,7 @@ public final class StringUtils {
      * The returned array will be double the length of the passed array, as it
      * takes two characters to represent any
      * given byte.
-     *
+     * 
      * @param data
      *            a byte[] to convert to Hex characters
      * @param toLowerCase
@@ -162,7 +162,7 @@ public final class StringUtils {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    public static char[] encodeHex(byte[] data, boolean toLowerCase) {
+    public static char[] encodeHex(final byte[] data, final boolean toLowerCase) {
         return encodeHex(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
     }
 
@@ -172,7 +172,7 @@ public final class StringUtils {
      * The returned array will be double the length of the passed array, as it
      * takes two characters to represent any
      * given byte.
-     *
+     * 
      * @param data
      *            a byte[] to convert to Hex characters
      * @param toDigits
@@ -180,9 +180,9 @@ public final class StringUtils {
      * @return A char[] containing hexadecimal characters
      * @since 1.4
      */
-    public static char[] encodeHex(byte[] data, char[] toDigits) {
+    public static char[] encodeHex(final byte[] data, final char[] toDigits) {
         final int l = data.length;
-        char[] out = new char[l << 1];
+        final char[] out = new char[l << 1];
         // two characters form the hex value.
         for (int i = 0, j = 0; i < l; i++) {
             out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
@@ -196,13 +196,13 @@ public final class StringUtils {
      * values of each byte in order. The returned
      * String will be double the length of the passed array, as it takes two
      * characters to represent any given byte.
-     *
+     * 
      * @param data
      *            a byte[] to convert to Hex characters
      * @return A String containing hexadecimal characters
      * @since 1.4
      */
-    public static String encodeHexString(byte[] data) {
+    public static String encodeHexString(final byte[] data) {
         return new String(encodeHex(data));
     }
 
@@ -213,13 +213,13 @@ public final class StringUtils {
      * two characters to represent any given
      * byte. An exception is thrown if the passed char array has an odd number
      * of elements.
-     *
+     * 
      * @param data
      *            An array of characters containing hexidecimal digits
      * @return A byte array containing binary data decoded from the supplied
      *         char array.
      */
-    public static byte[] decodeHex(char[] data) {
+    public static byte[] decodeHex(final char[] data) {
 
         final int len = data.length;
 
@@ -227,7 +227,7 @@ public final class StringUtils {
             throw new IllegalArgumentException("Odd number of characters.");
         }
 
-        byte[] out = new byte[len >> 1];
+        final byte[] out = new byte[len >> 1];
 
         // two characters form the hex value.
         for (int i = 0, j = 0; j < len; i++) {
@@ -243,7 +243,7 @@ public final class StringUtils {
 
     /**
      * Converts a hexadecimal character to an integer.
-     *
+     * 
      * @param ch
      *            A character to convert to an integer digit
      * @param index
@@ -252,7 +252,7 @@ public final class StringUtils {
      * @throws DecoderException
      *             Thrown if ch is an illegal hex character
      */
-    public static int toDigit(char ch, int index) {
+    public static int toDigit(final char ch, final int index) {
         final int digit = Character.digit(ch, 16);
         if (digit == -1) {
             throw new IllegalArgumentException("Illegal hexadecimal charcter " + ch + " at index " + index);
@@ -262,15 +262,15 @@ public final class StringUtils {
 
     /**
      * 数値チェック(少数も含む)
-     *
+     * 
      * @param str
      * @return true:数値、false：数値でない
      */
-    public static boolean isNumber(String str) {
+    public static boolean isNumber(final String str) {
         try {
             Double.parseDouble(str);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return false;
         }
     }
@@ -280,7 +280,7 @@ public final class StringUtils {
      * <p>
      * text1,text2がnullであってもNullPointerExceptionで落ちずに比較可能なメソッド
      * </p>
-     *
+     * 
      * @param text1
      *            文字列1
      * @param text2
@@ -288,7 +288,7 @@ public final class StringUtils {
      * @return true:一致している<br>
      *         false:一致していない
      */
-    public static boolean equals(String text1, String text2) {
+    public static boolean equals(final String text1, final String text2) {
         if (text1 == null) {
             if (text2 == null) {
                 return true;
@@ -301,12 +301,12 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuilder版)
-     *
+     * 
      * @param texts
      *            連結対象文字列
      * @return 連結した文字列
      */
-    public static String appendBuilder(String... texts) {
+    public static String appendBuilder(final String... texts) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final String text : texts) {
             if (text != null) {
@@ -318,13 +318,13 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuilder版)
-     *
+     * 
      * @param src
      *            連結元
      * @param texts
      *            連結対象文字列
      */
-    public static void appendBuilder(StringBuilder src, String... texts) {
+    public static void appendBuilder(final StringBuilder src, final String... texts) {
         for (final String text : texts) {
             if (text != null) {
                 src.append(text);
@@ -334,11 +334,11 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuffer版)
-     *
+     * 
      * @param texts
      * @return 連結した文字列
      */
-    public static String appendBuffer(String... texts) {
+    public static String appendBuffer(final String... texts) {
         final StringBuffer stringBuffer = new StringBuffer();
         for (final String text : texts) {
             if (text != null) {
@@ -350,13 +350,13 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuffer版)
-     *
+     * 
      * @param src
      *            連結元
      * @param texts
      *            連結対象文字列
      */
-    public static void appendBuffer(StringBuffer src, String... texts) {
+    public static void appendBuffer(final StringBuffer src, final String... texts) {
         for (final String text : texts) {
             if (text != null) {
                 src.append(text);
@@ -366,7 +366,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理+String.format(StringBuffer版)
-     *
+     * 
      * @param src
      *            連結元
      * @param format
@@ -374,7 +374,7 @@ public final class StringUtils {
      * @param args
      *            フォーマットに適用する変数
      */
-    public static void appendBufferFormat(StringBuffer src, String format, Object... args) {
+    public static void appendBufferFormat(final StringBuffer src, final String format, final Object... args) {
         if (format != null) {
             src.append(String.format(format, args));
         }
@@ -382,7 +382,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理+String.format(StringBuffer版)
-     *
+     * 
      * @param src
      *            連結元
      * @param format
@@ -390,7 +390,7 @@ public final class StringUtils {
      * @param args
      *            フォーマットに適用する変数
      */
-    public static void appendBuilderFormat(StringBuilder src, String format, Object... args) {
+    public static void appendBuilderFormat(final StringBuilder src, final String format, final Object... args) {
         if (format != null) {
             src.append(String.format(format, args));
         }
@@ -398,7 +398,7 @@ public final class StringUtils {
 
     /**
      * 文字列の指定区切りをArrayListに変換する
-     *
+     * 
      * @param text
      *            文字列
      * @param split
@@ -423,7 +423,7 @@ public final class StringUtils {
 
     /**
      * startWithメソッド呼ぶ
-     *
+     * 
      * @param text
      *            文字列
      * @param prefix
@@ -440,7 +440,7 @@ public final class StringUtils {
 
     /**
      * 文字列が含まれているかチェックします。
-     *
+     * 
      * @param str
      *            対象文字列
      * @param containStr
@@ -456,7 +456,7 @@ public final class StringUtils {
 
     /**
      * ブランクかどうか返します。
-     *
+     * 
      * @param str
      *            文字列
      * @return ブランクかどうか

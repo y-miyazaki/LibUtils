@@ -32,14 +32,16 @@ public class HttpHeaderParser {
 
     /**
      * Extracts a {@link Cache.Entry} from a {@link NetworkResponse}.
-     *
-     * @param response The network response to parse headers from
-     * @return a cache entry for the given response, or null if the response is not cacheable.
+     * 
+     * @param response
+     *            The network response to parse headers from
+     * @return a cache entry for the given response, or null if the response is
+     *         not cacheable.
      */
-    public static Cache.Entry parseCacheHeaders(NetworkResponse response) {
-        long now = System.currentTimeMillis();
+    public static Cache.Entry parseCacheHeaders(final NetworkResponse response) {
+        final long now = System.currentTimeMillis();
 
-        Map<String, String> headers = response.headers;
+        final Map<String, String> headers = response.headers;
 
         long serverDate = 0;
         long serverExpires = 0;
@@ -58,15 +60,15 @@ public class HttpHeaderParser {
         headerValue = headers.get("Cache-Control");
         if (headerValue != null) {
             hasCacheControl = true;
-            String[] tokens = headerValue.split(",");
-            for (int i = 0; i < tokens.length; i++) {
-                String token = tokens[i].trim();
+            final String[] tokens = headerValue.split(",");
+            for (final String token2 : tokens) {
+                final String token = token2.trim();
                 if (token.equals("no-cache") || token.equals("no-store")) {
                     return null;
                 } else if (token.startsWith("max-age=")) {
                     try {
                         maxAge = Long.parseLong(token.substring(8));
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                     }
                 } else if (token.equals("must-revalidate") || token.equals("proxy-revalidate")) {
                     maxAge = 0;
@@ -90,7 +92,7 @@ public class HttpHeaderParser {
             softExpire = now + (serverExpires - serverDate);
         }
 
-        Cache.Entry entry = new Cache.Entry();
+        final Cache.Entry entry = new Cache.Entry();
         entry.data = response.data;
         entry.etag = serverEtag;
         entry.softTtl = softExpire;
@@ -104,11 +106,11 @@ public class HttpHeaderParser {
     /**
      * Parse date in RFC1123 format, and return its value as epoch
      */
-    public static long parseDateAsEpoch(String dateStr) {
+    public static long parseDateAsEpoch(final String dateStr) {
         try {
             // Parse date in RFC1123 format if this header contains one
             return DateUtils.parseDate(dateStr).getTime();
-        } catch (DateParseException e) {
+        } catch (final DateParseException e) {
             // Date in invalid format, fallback to 0
             return 0;
         }
@@ -118,12 +120,12 @@ public class HttpHeaderParser {
      * Returns the charset specified in the Content-Type of this header,
      * or the HTTP default (ISO-8859-1) if none can be found.
      */
-    public static String parseCharset(Map<String, String> headers, String defaultCharset) {
-        String contentType = headers.get(HTTP.CONTENT_TYPE);
+    public static String parseCharset(final Map<String, String> headers, final String defaultCharset) {
+        final String contentType = headers.get(HTTP.CONTENT_TYPE);
         if (contentType != null) {
-            String[] params = contentType.split(";");
+            final String[] params = contentType.split(";");
             for (int i = 1; i < params.length; i++) {
-                String[] pair = params[i].trim().split("=");
+                final String[] pair = params[i].trim().split("=");
                 if (pair.length == 2) {
                     if (pair[0].equals("charset")) {
                         return pair[1];

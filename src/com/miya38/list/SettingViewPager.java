@@ -16,8 +16,8 @@ import com.miya38.widget.CustomViewPager;
 
 /**
  * ノーローディングViewPager生成クラス
- *
- *
+ * 
+ * 
  * @author y-miyazaki
  * @param <T>
  *            Adapter
@@ -38,13 +38,13 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param mActivity
      *            Activityのthis
      */
-    public SettingViewPager(T adapter, Activity activity) {
+    public SettingViewPager(final T adapter, final Activity activity) {
         LogUtils.d(TAG, "SettingViewPager1");
         this.mAdapter = adapter;
         this.mActivity = activity;
@@ -52,13 +52,13 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
      *            ListViewが設定されているView
      */
-    public SettingViewPager(T adapter, View view) {
+    public SettingViewPager(final T adapter, final View view) {
         LogUtils.d(TAG, "SettingViewPager2");
         this.mAdapter = adapter;
         this.mView = view;
@@ -66,13 +66,13 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
      *            ダイアログ
      */
-    public SettingViewPager(T adapter, Dialog customDialog) {
+    public SettingViewPager(final T adapter, final Dialog customDialog) {
         LogUtils.d(TAG, "SettingViewPager3");
         this.mAdapter = adapter;
         this.mDialog = customDialog;
@@ -80,19 +80,19 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            ViewPagerのID(ex:R.id.ViewPager01)
      * @param pagerMargin
      *            ページ間マージン
      */
-    public void setView(int viewPagerId, int pagerMargin) {
+    public void setView(final int viewPagerId, final int pagerMargin) {
         setView(viewPagerId, 0, pagerMargin);
     }
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            ViewPagerのID(ex:R.id.ViewPager01)
      * @param viewPagerEmptyId
@@ -100,7 +100,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
      * @param pagerMargin
      *            ページ間マージン
      */
-    public void setView(int viewPagerId, int viewPagerEmptyId, int pagerMargin) {
+    public void setView(final int viewPagerId, final int viewPagerEmptyId, final int pagerMargin) {
         if (mActivity != null) {
             mCustomViewPager = ViewHelper.findView(mActivity, viewPagerId);
         } else if (mView != null) {
@@ -118,7 +118,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            View自身
      * @param onPageChangeListener
@@ -126,13 +126,13 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
      * @param pagerMargin
      *            ページ間マージン
      */
-    public void setView(int viewPagerId, OnPageChangeListener onPageChangeListener, int pagerMargin) {
+    public void setView(final int viewPagerId, final OnPageChangeListener onPageChangeListener, final int pagerMargin) {
         setView(viewPagerId, onPageChangeListener, 0, pagerMargin, 1);
     }
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            View自身
      * @param onPageChangeListener
@@ -142,13 +142,13 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
      * @param duration
      *            ページャーのスクロールスピード
      */
-    public void setView(int viewPagerId, OnPageChangeListener onPageChangeListener, int pagerMargin, int duration) {
+    public void setView(final int viewPagerId, final OnPageChangeListener onPageChangeListener, final int pagerMargin, final int duration) {
         setView(viewPagerId, onPageChangeListener, 0, pagerMargin, duration);
     }
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            View自身
      * @param onPageChangeListener
@@ -160,7 +160,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
      * @param duration
      *            ページャーのスクロールスピード
      */
-    private void setView(int viewPagerId, OnPageChangeListener onPageChangeListener, int viewPagerEmptyId, int pagerMargin, int duration) {
+    private void setView(final int viewPagerId, final OnPageChangeListener onPageChangeListener, final int viewPagerEmptyId, final int pagerMargin, final int duration) {
         if (mActivity != null) {
             mCustomViewPager = ViewHelper.findView(mActivity, viewPagerId);
         } else if (mView != null) {
@@ -181,10 +181,10 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * 空の場合のレイアウト
-     *
+     * 
      * @param viewPagerEmptyId
      */
-    public void setEmptyView(int viewPagerEmptyId) {
+    public void setEmptyView(final int viewPagerEmptyId) {
         if (viewPagerEmptyId == 0) {
             return;
         }
@@ -213,7 +213,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public U getItem(int position) {
+    public U getItem(final int position) {
         return mAdapter.getItem(position);
     }
 
@@ -223,7 +223,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void setItem(U item, int position) {
+    public void setItem(final U item, final int position) {
         if (item != null) {
             mAdapter.setItem(position, item);
             mAdapter.notifyDataSetChanged();
@@ -231,7 +231,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void setItems(List<U> items) {
+    public void setItems(final List<U> items) {
         if (items != null) {
             mAdapter.setItems(items);
             mAdapter.notifyDataSetChanged();
@@ -239,7 +239,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void insertItem(U item, int position) {
+    public void insertItem(final U item, final int position) {
         if (item != null) {
             mAdapter.insert(item, position);
             mAdapter.notifyDataSetChanged();
@@ -247,7 +247,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void addBefore(U item) {
+    public void addBefore(final U item) {
         if (item != null) {
             mAdapter.insert(item, 0);
             mAdapter.notifyDataSetChanged();
@@ -255,7 +255,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void addBefore(List<U> items) {
+    public void addBefore(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.insert(item, 0);
@@ -265,7 +265,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void addAfter(List<U> items) {
+    public void addAfter(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.add(item);
@@ -275,7 +275,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void addAfter(U item) {
+    public void addAfter(final U item) {
         if (item != null) {
             mAdapter.add(item);
             mAdapter.notifyDataSetChanged();
@@ -293,7 +293,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void setAdapter(T adapter) {
+    public void setAdapter(final T adapter) {
         mAdapter = adapter;
     }
 

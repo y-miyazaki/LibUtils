@@ -25,13 +25,13 @@ import com.miya38.widget.CustomGridView;
  * CustomListViewに関する設定は全てこのクラスを使うことで操作を行うことで設定漏れ等を極力なくすのが目的である。<br>
  * 主にCustomGridView、Adapterに関する操作をこのクラスでは実装している。<br>
  * </p>
- *
- *
+ * 
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- *
+ * 
  * @author y-miyazaki
  */
 public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends AbstractSettingGridView<T, U> {
@@ -50,13 +50,13 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
      *            Activityのthis
      */
-    public SettingGridView(T adapter, Activity activity) { // NOPMD by y-miyazaki on 14/07/08 10:03
+    public SettingGridView(final T adapter, final Activity activity) { // NOPMD by y-miyazaki on 14/07/08 10:03
         Preconditions.checkNotNull(adapter, "adapter should not be null.");
         Preconditions.checkNotNull(activity, "activity should not be null.");
         this.mAdapter = adapter;
@@ -65,13 +65,13 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
      *            ダイアログ
      */
-    public SettingGridView(T adapter, Dialog customDialog) {
+    public SettingGridView(final T adapter, final Dialog customDialog) {
         Preconditions.checkNotNull(adapter, "adapter should not be null.");
         Preconditions.checkNotNull(customDialog, "activity should not be null.");
         this.mAdapter = adapter;
@@ -80,13 +80,13 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
      *            GridViewが設定されているview
      */
-    public SettingGridView(T adapter, View view) {
+    public SettingGridView(final T adapter, final View view) {
         Preconditions.checkNotNull(adapter, "adapter should not be null.");
         Preconditions.checkNotNull(view, "activity should not be null.");
         this.mAdapter = adapter;
@@ -95,11 +95,11 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      */
-    public final void setView(int gridViewId) {
+    public final void setView(final int gridViewId) {
         mGridView = getView(gridViewId);
         mGridView.setAdapter(mAdapter);
         setEmptyView();
@@ -107,20 +107,20 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      * @param gridViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public final void setView(int gridViewId, int gridViewEmptyId) {
+    public final void setView(final int gridViewId, final int gridViewEmptyId) {
         this.mGridViewEmptyId = gridViewEmptyId;
         setView(gridViewId);
     }
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      * @param onItemClickListener
@@ -128,7 +128,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param onRefreshListener
      *            プル時のリスナー
      */
-    public final void setView(int gridViewId, OnItemClickListener onItemClickListener, OnRefreshListener<GridView> onRefreshListener) {
+    public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener<GridView> onRefreshListener) {
         mGridView = getView(gridViewId);
         mGridView.setAdapter(mAdapter);
         setOnItemClickListener(onItemClickListener);
@@ -138,7 +138,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      * @param onItemClickListener
@@ -148,18 +148,18 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
      * @param gridViewEmptyId
      *            Empty時に表示するViewのId
      */
-    public final void setView(int gridViewId, OnItemClickListener onItemClickListener, OnRefreshListener<GridView> onRefreshListener, int gridViewEmptyId) {
+    public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener, final OnRefreshListener<GridView> onRefreshListener, final int gridViewEmptyId) {
         this.mGridViewEmptyId = gridViewEmptyId;
         setView(gridViewId, onItemClickListener, onRefreshListener);
     }
 
     /**
      * View取得
-     *
+     * 
      * @param id
      * @return
      */
-    private <V extends View> V getView(int id) {
+    private <V extends View> V getView(final int id) {
         if (mActivity != null) {
             return ViewHelper.findView(mActivity, id);
         } else if (mView != null) {
@@ -172,7 +172,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void setMode(Mode mode) {
+    public final void setMode(final Mode mode) {
         mGridView.setMode(mode);
     }
 
@@ -192,7 +192,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final U getItem(int position) {
+    public final U getItem(final int position) {
         return mAdapter.getItem(position);
     }
 
@@ -202,7 +202,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void setItem(U item, int position) {
+    public final void setItem(final U item, final int position) {
         if (item != null) {
             mAdapter.setItem(position, item);
             mAdapter.notifyDataSetChanged();
@@ -211,7 +211,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void setItems(List<U> items) {
+    public final void setItems(final List<U> items) {
         if (items != null) {
             mAdapter.setItems(items);
             mAdapter.notifyDataSetChanged();
@@ -220,7 +220,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void insertItem(U item, int position) {
+    public final void insertItem(final U item, final int position) {
         if (item != null) {
             mAdapter.insert(item, position);
             mAdapter.notifyDataSetChanged();
@@ -229,7 +229,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void addBefore(U item) {
+    public final void addBefore(final U item) {
         if (item != null) {
             mAdapter.insert(item, 0);
             mAdapter.notifyDataSetChanged();
@@ -238,7 +238,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void addBefore(List<U> items) {
+    public final void addBefore(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.insert(item, 0);
@@ -249,7 +249,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void addAfter(List<U> items) {
+    public final void addAfter(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
             for (final U item : items) {
                 mAdapter.add(item);
@@ -260,7 +260,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void addAfter(U item) {
+    public final void addAfter(final U item) {
         if (item != null) {
             mAdapter.add(item);
             mAdapter.notifyDataSetChanged();
@@ -279,7 +279,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void setAdapter(T adapter) {
+    public final void setAdapter(final T adapter) {
         this.mAdapter = adapter;
     }
 
@@ -294,7 +294,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void setOnItemClickListener(OnItemClickListener l) {
+    public final void setOnItemClickListener(final OnItemClickListener l) {
         if (l == null) {
             mGridView.getRefreshableView().setSelector(android.R.color.transparent);
         }
@@ -302,7 +302,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public final void setOnRefreshListener(OnRefreshListener<GridView> l) {
+    public final void setOnRefreshListener(final OnRefreshListener<GridView> l) {
         if (l == null) {
             mGridView.setMode(Mode.DISABLED);
         } else {

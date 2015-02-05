@@ -51,6 +51,9 @@ import android.widget.TextView;
  */
 @SuppressWarnings({ "unchecked", "deprecation" })
 public final class ViewHelper {
+    // ----------------------------------------------------------
+    // define
+    // ----------------------------------------------------------
     /** ステータスバーの高さ(low) */
     private static final int LOW_DPI_STATUS_BAR_HEIGHT = 19;
     /** ステータスバーの高さ(medium) */
@@ -91,8 +94,7 @@ public final class ViewHelper {
      *            id
      * @return View
      */
-    public static <V extends View> V findView(final Activity activity,
-            final int id) {
+    public static <V extends View> V findView(final Activity activity, final int id) {
         return (V) activity.findViewById(id);
     }
 
@@ -151,8 +153,7 @@ public final class ViewHelper {
      * @param l
      *            {@link OnClickListener}
      */
-    public static void setOnClickListener(final Activity activity,
-            final int id, final OnClickListener l) {
+    public static void setOnClickListener(final Activity activity, final int id, final OnClickListener l) {
         activity.findViewById(id).setOnClickListener(l);
     }
 
@@ -166,8 +167,7 @@ public final class ViewHelper {
      * @param l
      *            {@link OnClickListener}
      */
-    public static void setOnClickListener(final View view, final int id,
-            final OnClickListener l) {
+    public static void setOnClickListener(final View view, final int id, final OnClickListener l) {
         view.findViewById(id).setOnClickListener(l);
     }
 
@@ -181,8 +181,7 @@ public final class ViewHelper {
      * @param l
      *            {@link OnClickListener}
      */
-    public static void setOnClickListener(final Dialog dialog, final int id,
-            final OnClickListener l) {
+    public static void setOnClickListener(final Dialog dialog, final int id, final OnClickListener l) {
         dialog.findViewById(id).setOnClickListener(l);
     }
 
@@ -212,8 +211,7 @@ public final class ViewHelper {
      * @param text
      *            テキスト
      */
-    public static void setText(final Activity activity, final int id,
-            final CharSequence text) {
+    public static void setText(final Activity activity, final int id, final CharSequence text) {
         ((TextView) activity.findViewById(id)).setText(text);
     }
 
@@ -227,8 +225,7 @@ public final class ViewHelper {
      * @param stringId
      *            文字列リソースID
      */
-    public static void setText(final Activity activity, final int id,
-            final int stringId) {
+    public static void setText(final Activity activity, final int id, final int stringId) {
         if (stringId > 0) {
             ((TextView) activity.findViewById(id)).setText(stringId);
         }
@@ -244,8 +241,7 @@ public final class ViewHelper {
      * @param text
      *            テキスト
      */
-    public static void setText(final View v, final int id,
-            final CharSequence text) {
+    public static void setText(final View v, final int id, final CharSequence text) {
         ((TextView) v.findViewById(id)).setText(text);
     }
 
@@ -259,8 +255,7 @@ public final class ViewHelper {
      * @param stringId
      *            文字列リソースID
      */
-    public static void setText(final Dialog dialog, final int id,
-            final int stringId) {
+    public static void setText(final Dialog dialog, final int id, final int stringId) {
         if (stringId > 0) {
             ((TextView) dialog.findViewById(id)).setText(stringId);
         }
@@ -276,8 +271,7 @@ public final class ViewHelper {
      * @param text
      *            テキスト
      */
-    public static void setText(final Dialog dialog, final int id,
-            final CharSequence text) {
+    public static void setText(final Dialog dialog, final int id, final CharSequence text) {
         ((TextView) dialog.findViewById(id)).setText(text);
     }
 
@@ -291,8 +285,7 @@ public final class ViewHelper {
      * @param text
      *            テキスト
      */
-    public static void setHtml(final Activity activity, final int id,
-            final CharSequence text) {
+    public static void setHtml(final Activity activity, final int id, final CharSequence text) {
         ((TextView) activity.findViewById(id)).setText(Html.fromHtml(text
                 .toString()));
     }
@@ -307,8 +300,7 @@ public final class ViewHelper {
      * @param text
      *            テキスト
      */
-    public static void setHtml(final View v, final int id,
-            final CharSequence text) {
+    public static void setHtml(final View v, final int id, final CharSequence text) {
         ((TextView) v.findViewById(id)).setText(Html.fromHtml(text.toString()));
     }
 
@@ -322,8 +314,7 @@ public final class ViewHelper {
      * @param text
      *            テキスト
      */
-    public static void setHtml(final Dialog dialog, final int id,
-            final CharSequence text) {
+    public static void setHtml(final Dialog dialog, final int id, final CharSequence text) {
         ((TextView) dialog.findViewById(id)).setText(Html.fromHtml(text
                 .toString()));
     }
@@ -416,8 +407,7 @@ public final class ViewHelper {
      * @param resourceId
      *            リソースID
      */
-    public static void setImage(final Activity activity, final int id,
-            final int resourceId) {
+    public static void setImage(final Activity activity, final int id, final int resourceId) {
         ((ImageView) activity.findViewById(id)).setImageResource(resourceId);
     }
 
@@ -431,8 +421,7 @@ public final class ViewHelper {
      * @param drawable
      *            Drawable
      */
-    public static void setImage(final Activity activity, final int id,
-            final Drawable drawable) {
+    public static void setImage(final Activity activity, final int id, final Drawable drawable) {
         ((ImageView) activity.findViewById(id)).setImageDrawable(drawable);
     }
 
@@ -446,8 +435,7 @@ public final class ViewHelper {
      * @param bitmap
      *            Bitmap
      */
-    public static void setImage(final Activity activity, final int id,
-            final Bitmap bitmap) {
+    public static void setImage(final Activity activity, final int id, final Bitmap bitmap) {
         ((ImageView) activity.findViewById(id)).setImageBitmap(bitmap);
     }
 
@@ -475,8 +463,7 @@ public final class ViewHelper {
      * @param drawable
      *            Drawable
      */
-    public static void setImage(final View v, final int id,
-            final Drawable drawable) {
+    public static void setImage(final View v, final int id, final Drawable drawable) {
         ((ImageView) v.findViewById(id)).setImageDrawable(drawable);
     }
 
@@ -504,8 +491,7 @@ public final class ViewHelper {
      * @param resourceId
      *            リソースID
      */
-    public static void setImage(final Dialog dialog, final int id,
-            final int resourceId) {
+    public static void setImage(final Dialog dialog, final int id, final int resourceId) {
         ((ImageView) dialog.findViewById(id)).setImageResource(resourceId);
     }
 
@@ -519,8 +505,7 @@ public final class ViewHelper {
      * @param drawable
      *            Drawable
      */
-    public static void setImage(final Dialog dialog, final int id,
-            final Drawable drawable) {
+    public static void setImage(final Dialog dialog, final int id, final Drawable drawable) {
         ((ImageView) dialog.findViewById(id)).setImageDrawable(drawable);
     }
 
@@ -534,8 +519,7 @@ public final class ViewHelper {
      * @param bitmap
      *            Bitmap
      */
-    public static void setImage(final Dialog dialog, final int id,
-            final Bitmap bitmap) {
+    public static void setImage(final Dialog dialog, final int id, final Bitmap bitmap) {
         ((ImageView) dialog.findViewById(id)).setImageBitmap(bitmap);
     }
 
@@ -549,8 +533,7 @@ public final class ViewHelper {
      * @param resourceId
      *            リソースID
      */
-    public static void setBackground(final Activity activity, final int id,
-            final int resourceId) {
+    public static void setBackground(final Activity activity, final int id, final int resourceId) {
         activity.findViewById(id).setBackgroundResource(resourceId);
     }
 
@@ -564,8 +547,7 @@ public final class ViewHelper {
      * @param drawable
      *            Drawable
      */
-    public static void setBackground(final Activity activity, final int id,
-            final Drawable drawable) {
+    public static void setBackground(final Activity activity, final int id, final Drawable drawable) {
         activity.findViewById(id).setBackgroundDrawable(drawable);
     }
 
@@ -579,8 +561,7 @@ public final class ViewHelper {
      * @param bitmap
      *            Bitmap
      */
-    public static void setBackground(final Activity activity, final int id,
-            final Bitmap bitmap) {
+    public static void setBackground(final Activity activity, final int id, final Bitmap bitmap) {
         activity.findViewById(id).setBackgroundDrawable(
                 new BitmapDrawable(bitmap));
     }
@@ -595,8 +576,7 @@ public final class ViewHelper {
      * @param resourceId
      *            リソースID
      */
-    public static void setBackground(final View v, final int id,
-            final int resourceId) {
+    public static void setBackground(final View v, final int id, final int resourceId) {
         v.findViewById(id).setBackgroundResource(resourceId);
     }
 
@@ -610,8 +590,7 @@ public final class ViewHelper {
      * @param drawable
      *            Drawable
      */
-    public static void setBackground(final View v, final int id,
-            final Drawable drawable) {
+    public static void setBackground(final View v, final int id, final Drawable drawable) {
         v.findViewById(id).setBackgroundDrawable(drawable);
     }
 
@@ -625,8 +604,7 @@ public final class ViewHelper {
      * @param bitmap
      *            Bitmap
      */
-    public static void setBackground(final View v, final int id,
-            final Bitmap bitmap) {
+    public static void setBackground(final View v, final int id, final Bitmap bitmap) {
         v.findViewById(id).setBackgroundDrawable(new BitmapDrawable(bitmap));
     }
 
@@ -640,8 +618,7 @@ public final class ViewHelper {
      * @param resourceId
      *            リソースID
      */
-    public static void setBackground(final Dialog dialog, final int id,
-            final int resourceId) {
+    public static void setBackground(final Dialog dialog, final int id, final int resourceId) {
         dialog.findViewById(id).setBackgroundResource(resourceId);
     }
 
@@ -655,8 +632,7 @@ public final class ViewHelper {
      * @param drawable
      *            Drawable
      */
-    public static void setBackground(final Dialog dialog, final int id,
-            final Drawable drawable) {
+    public static void setBackground(final Dialog dialog, final int id, final Drawable drawable) {
         dialog.findViewById(id).setBackgroundDrawable(drawable);
     }
 
@@ -670,8 +646,7 @@ public final class ViewHelper {
      * @param bitmap
      *            Bitmap
      */
-    public static void setBackground(final Dialog dialog, final int id,
-            final Bitmap bitmap) {
+    public static void setBackground(final Dialog dialog, final int id, final Bitmap bitmap) {
         dialog.findViewById(id).setBackgroundDrawable(
                 new BitmapDrawable(bitmap));
     }
@@ -686,8 +661,7 @@ public final class ViewHelper {
      * @param visibility
      *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      */
-    public static void setVisibility(final Activity activity, final int id,
-            final int visibility) {
+    public static void setVisibility(final Activity activity, final int id, final int visibility) {
         activity.findViewById(id).setVisibility(visibility);
     }
 
@@ -701,8 +675,7 @@ public final class ViewHelper {
      * @param visibility
      *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      */
-    public static void setVisibility(final View v, final int id,
-            final int visibility) {
+    public static void setVisibility(final View v, final int id, final int visibility) {
         v.findViewById(id).setVisibility(visibility);
     }
 
@@ -716,8 +689,7 @@ public final class ViewHelper {
      * @param visibility
      *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      */
-    public static void setVisibility(final Dialog dialog, final int id,
-            final int visibility) {
+    public static void setVisibility(final Dialog dialog, final int id, final int visibility) {
         dialog.findViewById(id).setVisibility(visibility);
     }
 
@@ -735,11 +707,8 @@ public final class ViewHelper {
      * @param duration
      *            アニメーション時間
      */
-    public static void setVisibility(final Activity activity, final int id,
-            final int visibility, final AnimationKind animationKind,
-            final int duration) {
-        setVisibility(activity.findViewById(id), visibility, animationKind,
-                duration);
+    public static void setVisibility(final Activity activity, final int id, final int visibility, final AnimationKind animationKind, final int duration) {
+        setVisibility(activity.findViewById(id), visibility, animationKind, duration);
     }
 
     /**
@@ -756,9 +725,7 @@ public final class ViewHelper {
      * @param duration
      *            アニメーション時間
      */
-    public static void setVisibility(final View v, final int id,
-            final int visibility, final AnimationKind animationKind,
-            final int duration) {
+    public static void setVisibility(final View v, final int id, final int visibility, final AnimationKind animationKind, final int duration) {
         setVisibility(v.findViewById(id), visibility, animationKind, duration);
     }
 
@@ -776,11 +743,8 @@ public final class ViewHelper {
      * @param duration
      *            アニメーション時間
      */
-    public static void setVisibility(final Dialog dialog, final int id,
-            final int visibility, final AnimationKind animationKind,
-            final int duration) {
-        setVisibility(dialog.findViewById(id), visibility, animationKind,
-                duration);
+    public static void setVisibility(final Dialog dialog, final int id, final int visibility, final AnimationKind animationKind, final int duration) {
+        setVisibility(dialog.findViewById(id), visibility, animationKind, duration);
     }
 
     /**
@@ -795,8 +759,7 @@ public final class ViewHelper {
      * @param duration
      *            アニメーション時間
      */
-    public static void setVisibility(final View v, final int visibility,
-            final AnimationKind animationKind, final int duration) {
+    public static void setVisibility(final View v, final int visibility, final AnimationKind animationKind, final int duration) {
         // 同一の場合は何もしない。
         if (v.getVisibility() == visibility) {
             return;
@@ -816,25 +779,15 @@ public final class ViewHelper {
             }
         } else if (animationKind == AnimationKind.SCALE) {
             if (visibility == View.VISIBLE) {
-                animation = new ScaleAnimation(1, 1, 0, 1,
-                        Animation.RELATIVE_TO_SELF, 1,
-                        Animation.RELATIVE_TO_SELF, 1);
+                animation = new ScaleAnimation(1, 1, 0, 1, Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 1);
             } else {
-                animation = new ScaleAnimation(1, 1, 1, 0,
-                        Animation.RELATIVE_TO_SELF, 0,
-                        Animation.RELATIVE_TO_SELF, 1);
+                animation = new ScaleAnimation(1, 1, 1, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
             }
         } else if (animationKind == AnimationKind.TRANSLATE) {
             if (visibility == View.VISIBLE) {
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                        0, Animation.RELATIVE_TO_SELF, 0,
-                        Animation.RELATIVE_TO_SELF, 1,
-                        Animation.RELATIVE_TO_SELF, 0);
+                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0);
             } else {
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                        0, Animation.RELATIVE_TO_SELF, 0,
-                        Animation.RELATIVE_TO_SELF, 0,
-                        Animation.RELATIVE_TO_SELF, 1);
+                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
             }
         }
         if (animation != null) {
@@ -858,6 +811,46 @@ public final class ViewHelper {
             });
             v.startAnimation(animation);
         }
+    }
+
+    /**
+     * 文字を指定回数で点滅させる
+     *
+     * @param v
+     *            View
+     * @param duration
+     *            点滅間隔
+     * @param blinkCount
+     *            点滅回数
+     */
+    public static void setBlink(final View v, final int duration, final int blinkCount) {
+        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
+        alpha.setDuration(duration);
+        alpha.setRepeatMode(Animation.REVERSE);
+        alpha.setRepeatCount(blinkCount);
+        alpha.setFillEnabled(true);
+        alpha.setFillAfter(true);
+        alpha.setFillBefore(false);
+        v.startAnimation(alpha);
+    }
+
+    /**
+     * 無限に文字を点滅させる
+     *
+     * @param v
+     *            View
+     * @param duration
+     *            点滅間隔
+     */
+    public static void setBlink(final View v, final int duration) {
+        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
+        alpha.setDuration(duration);
+        alpha.setRepeatMode(Animation.REVERSE);
+        alpha.setRepeatCount(AlphaAnimation.INFINITE);
+        alpha.setFillEnabled(true);
+        alpha.setFillAfter(true);
+        alpha.setFillBefore(false);
+        v.startAnimation(alpha);
     }
 
     /**
@@ -917,8 +910,7 @@ public final class ViewHelper {
      * @param clazz
      *            クラス
      */
-    public static <T> void addLinks(final TextView textView,
-            final String linkString, final Class<T> clazz) {
+    public static <T> void addLinks(final TextView textView, final String linkString, final Class<T> clazz) {
         final Pattern pattern = Pattern.compile(linkString);
         final SpannableString spannable = SpannableString.valueOf(textView
                 .getText());
@@ -927,8 +919,7 @@ public final class ViewHelper {
         // Create class for each match
         while (matcher.find()) {
             try {
-                spannable.setSpan(clazz.newInstance(), matcher.start(),
-                        matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannable.setSpan(clazz.newInstance(), matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             } catch (final IllegalAccessException e) {
                 // 握りつぶす
             } catch (final InstantiationException e) {
@@ -981,12 +972,7 @@ public final class ViewHelper {
                     final int frames = animationDrawable
                             .getNumberOfFrames();
                     for (int i = 0; i < frames; ++i) {
-                        final Drawable frame = animationDrawable
-                                .getFrame(i);
-                        if (frame instanceof BitmapDrawable) {
-                            // ((BitmapDrawable)
-                            // frame).getBitmap().recycle();
-                        }
+                        final Drawable frame = animationDrawable.getFrame(i);
                         frame.setCallback(null);
                     }
                 }
@@ -999,10 +985,6 @@ public final class ViewHelper {
                     for (int i = 0; i < frames; ++i) {
                         final Drawable frame = animationDrawable
                                 .getFrame(i);
-                        if (frame instanceof BitmapDrawable) {
-                            // ((BitmapDrawable)
-                            // frame).getBitmap().recycle();
-                        }
                         frame.setCallback(null);
                     }
                 }
@@ -1130,6 +1112,7 @@ public final class ViewHelper {
                         }
                     }
                 } catch (final Exception e) {
+                    // 何もしない。
                 }
 
                 try {
@@ -1150,12 +1133,11 @@ public final class ViewHelper {
                                 "mWindowManager");
                         field.setAccessible(true);
                         if (context instanceof Activity) {
-                            field.set(configCallback,
-                                    ((Activity) context).getWindowManager());
+                            field.set(configCallback, ((Activity) context).getWindowManager());
                         }
                     }
                 } catch (final Exception e) {
-
+                    // 何もしない。
                 }
             }
         }
@@ -1255,11 +1237,9 @@ public final class ViewHelper {
      *
      * @return リソースID
      */
-    public static int getResourcesId(final String targetResourcesName,
-            final String targetResources, final Context context) {
+    public static int getResourcesId(final String targetResourcesName, final String targetResources, final Context context) {
         // リソースIDを取得
-        return context.getResources().getIdentifier(targetResourcesName,
-                targetResources, context.getPackageName());
+        return context.getResources().getIdentifier(targetResourcesName, targetResources, context.getPackageName());
     }
 
     /**

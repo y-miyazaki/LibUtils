@@ -1,8 +1,6 @@
 package com.miya38.widget;
 
 import java.lang.reflect.Field;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,6 +51,13 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     /** field mImageContainer */
     private static final Field F_MCACHE = ClassUtils.getField(ImageLoader.class, "mCache");
 
+    /** アニメーション時間(ms) */
+    private static final int ANIMATION_DURATION = 500;
+    /** グレースケールカラー */
+    private static final int COLOR_GRAYSCALE = 0x80000000;
+    /** 角丸サイズ */
+    private static final int CORNER_RADIUS = 10;
+
     // ----------------------------------------------------------
     // attribute
     // ----------------------------------------------------------
@@ -71,7 +76,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     /** OnClickListener */
     private OnClickListener mOnClickListener;
     /** animation duration */
-    private int mAnimationDuration = 500;
+    private int mAnimationDuration = ANIMATION_DURATION;
     /** クリック状態フラグ */
     private boolean mIsClick;
 
@@ -82,6 +87,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     private List<String> mUrls;
     /** 現在読み込み中のURLインデックス */
     private int mIndex;
+    /** タイマー */
     private Timer mTimer;
 
     /**
@@ -90,9 +96,10 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomNetworkImageView(Context context, AttributeSet attrs) {
+    public CustomNetworkImageView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
@@ -103,11 +110,12 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
-    public CustomNetworkImageView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomNetworkImageView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -118,13 +126,14 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs) {
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView);
-        int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
+        final int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
         this.mIsCorner = ta.getBoolean(R.styleable.CustomImageView_corner, false);
-        this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, 10);
+        this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, CORNER_RADIUS);
         this.mTint = ta.getInt(R.styleable.CustomImageView_tint, -1);
         if (mTint != -1) {
             final String poterduffMode = ta.getString(R.styleable.CustomImageView_porterduff_mode);
@@ -134,7 +143,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
             } else {
                 try {
                     mMode = (PorterDuff.Mode.valueOf(poterduffMode) == null) ? PorterDuff.Mode.SRC_ATOP : PorterDuff.Mode.valueOf(poterduffMode);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // 握りつぶす
                 }
             }
@@ -162,8 +171,9 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * コーナー設定
      *
      * @param tint
+     *            colorFilter
      */
-    public void setTint(int tint) {
+    public void setTint(final int tint) {
         this.mTint = tint;
 
         if (tint == -1) {
@@ -189,11 +199,11 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * クリアする場合は、clearColorFilter()をすること。
      */
     public void setGrayScaleColorFilter() {
-        setColorFilter(new PorterDuffColorFilter(0x80000000, PorterDuff.Mode.SRC_ATOP));
+        setColorFilter(new PorterDuffColorFilter(COLOR_GRAYSCALE, PorterDuff.Mode.SRC_ATOP));
     }
 
     @Override
-    public void setOnClickListener(OnClickListener l) {
+    public void setOnClickListener(final OnClickListener l) {
         super.setOnClickListener(l);
         this.mOnClickListener = l;
     }
@@ -246,12 +256,12 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * @param animationDuration
      *            msec
      */
-    public void setAnimationDuration(int animationDuration) {
+    public void setAnimationDuration(final int animationDuration) {
         this.mAnimationDuration = animationDuration;
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(final View v, final MotionEvent event) {
         if (mMode != null) {
             switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -306,7 +316,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      *            コーナを表示するか？<br>
      *            true:表示する。/false:表示しない。
      */
-    public void setCorner(boolean corner) {
+    public void setCorner(final boolean corner) {
         this.mIsCorner = corner;
     }
 
@@ -325,19 +335,19 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * @param cornerRadius
      *            コーナーの角丸のサイズ
      */
-    public void setCornerRadius(int cornerRadius) {
+    public void setCornerRadius(final int cornerRadius) {
         this.mCornerRadius = cornerRadius;
     }
 
     @Override
-    public void setImageBitmap(Bitmap bm) {
+    public void setImageBitmap(final Bitmap bm) {
         try {
             if (mIsCorner) {
                 super.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bm, (int) mCornerRadius));
             } else {
                 super.setImageBitmap(bm);
             }
-        } catch (OutOfMemoryError e) {
+        } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "setImageBitmap bitmap OutOfMemoryError", e);
         }
     }
@@ -352,7 +362,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * @param imageLoader
      *            {@link ImageLoader}
      */
-    public void setImageUrl(List<String> urls, int period, final ImageLoader imageLoader) {
+    public void setImageUrl(final List<String> urls, final int period, final ImageLoader imageLoader) {
         mUrls = urls;
         mIndex = 0;
 
@@ -368,13 +378,11 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
                     @Override
                     public void run() {
                         try {
-                            setImageUrl(mUrls.get(mIndex), imageLoader, 0, 0, false);
-                            mIndex++;
-                        } catch (IndexOutOfBoundsException e) {
+                            setImageUrl(mUrls.get(mIndex++), imageLoader, 0, 0, false);
+                        } catch (final IndexOutOfBoundsException e) {
                             mIndex = 0;
-                            setImageUrl(mUrls.get(mIndex), imageLoader, 0, 0, false);
-                            mIndex++;
-                        } catch (NullPointerException e) {
+                            setImageUrl(mUrls.get(mIndex++), imageLoader, 0, 0, false);
+                        } catch (final NullPointerException e) {
                             // 何もしない。
                         }
                     }
@@ -384,12 +392,12 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     }
 
     @Override
-    public void setImageUrl(final String url, ImageLoader imageLoader) {
+    public void setImageUrl(final String url, final ImageLoader imageLoader) {
         setImageUrl(url, imageLoader, 0, 0, true);
     }
 
     @Override
-    public void setImageUrl(final String url, ImageLoader imageLoader, int maxWidth, int maxHeight) {
+    public void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight) {
         setImageUrl(url, imageLoader, maxWidth, maxHeight, true);
     }
 
@@ -409,7 +417,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      *            true:タイマーをキャンセルする。<br>
      *            false:タイマーをキャンセルしない。
      */
-    private void setImageUrl(String url, ImageLoader imageLoader, int maxWidth, int maxHeight, boolean isTimerCancel) {
+    private void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight, final boolean isTimerCancel) {
         if (StringUtils.isEmpty(url)) {
             return;
         }
@@ -418,10 +426,10 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }
         try {
             if (ImageUtils.isDataUriScheme(url)) {
-                ImageCache imageCache = (ImageCache) F_MCACHE.get(imageLoader);
-                Bitmap cacheBitmap = imageCache.getBitmap(url);
+                final ImageCache imageCache = (ImageCache) F_MCACHE.get(imageLoader);
+                final Bitmap cacheBitmap = imageCache.getBitmap(url);
                 if (cacheBitmap == null) {
-                    Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
+                    final Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
                     imageCache.putBitmap(url, bitmap);
                     setImageBitmap(bitmap);
                 } else {
@@ -430,12 +438,12 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
             } else {
                 super.setImageUrl(url, imageLoader, maxWidth, maxHeight);
             }
-        } catch (OutOfMemoryError e) {
+        } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "setImageUrl bitmap OutOfMemoryError", e);
             setImageBitmap(null);
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             // 何もしない。
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // 何もしない。
         }
     }
@@ -451,36 +459,9 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
                 imageContainer.cancelRequest();
                 F_MIMAGE_CONTAINER.set(this, null);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         }
-    }
-
-    /**
-     * Data URI Scheme用キャッシュキー
-     *
-     * @param data
-     *            Data URI Scheme
-     * @return キャッシュキー
-     */
-    private String getCacheKey(String data) {
-        StringBuilder hex = new StringBuilder();
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(data.getBytes());
-            byte[] digest = md.digest();
-            for (byte b : digest) {
-                String hexString = Integer.toHexString(b & 0xff);
-                if (hexString.length() == 1) {
-                    hex.append("0").append(hexString);
-                } else {
-                    hex.append(hexString);
-                }
-            }
-        } catch (NoSuchAlgorithmException e) {
-            return data;
-        }
-        return hex.toString();
     }
 
     @Override

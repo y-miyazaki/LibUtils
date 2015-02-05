@@ -8,7 +8,7 @@ import com.miya38.connection.NetworkRequest;
 
 /**
  * Fragment コネクション用抽象化クラス
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class AbstractConnectionFragment extends AbstractFragment {
@@ -21,7 +21,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
     protected abstract AbstractConnectionCommon getConnectionCommon();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         mAbstractConnectionCommon = getConnectionCommon();
         super.onCreate(savedInstanceState);
     }
@@ -38,13 +38,13 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param title
      *            タイトル
      * @param message
      *            メッセージ
      */
-    public void setError(String title, String message) {
+    public void setError(final String title, final String message) {
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.setError(title, message);
         }
@@ -52,7 +52,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
@@ -60,7 +60,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
      * @param object
      *            受信データ
      */
-    public boolean setError(NetworkRequest networkRequest, NetworkResponse networkResponse, Object object) {
+    public boolean setError(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final Object object) {
         if (mAbstractConnectionCommon != null) {
             return mAbstractConnectionCommon.setError(networkRequest, networkResponse, object);
         }
@@ -71,7 +71,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
      * リクエストAPI
      * <p>
      * </p>
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      */

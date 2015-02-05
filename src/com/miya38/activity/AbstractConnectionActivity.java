@@ -17,11 +17,13 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
 
     /**
      * コネクション共通処理取得
+     *
+     * @return {@link AbstractConnectionCommon}
      */
     protected abstract AbstractConnectionCommon getConnectionCommon();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         mAbstractConnectionCommon = getConnectionCommon();
         super.onCreate(savedInstanceState);
     }
@@ -29,7 +31,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mAbstractConnectionCommon != null){
+        if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.getRequestQueue().cancelAll(getApplicationContext());
             mAbstractConnectionCommon.clear();
         }
@@ -44,7 +46,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
      * @param message
      *            メッセージ
      */
-    public void setError(String title, String message) {
+    public void setError(final String title, final String message) {
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.setError(title, message);
         }
@@ -59,8 +61,9 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
      *            {@link NetworkResponse}
      * @param object
      *            受信データ
+     * @return {@code true} エラーである。/{@code false} エラーではない。
      */
-    public boolean setError(NetworkRequest networkRequest, NetworkResponse networkResponse, Object object) {
+    public boolean setError(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final Object object) {
         if (mAbstractConnectionCommon != null) {
             return mAbstractConnectionCommon.setError(networkRequest, networkResponse, object);
         }
@@ -69,8 +72,6 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
 
     /**
      * リクエストAPI
-     * <p>
-     * </p>
      *
      * @param networkRequest
      *            {@link NetworkRequest}

@@ -1,10 +1,10 @@
-package com.miya38.widget;
+package com.miya38.widget.callback;
 
 /**
  * フリックリスナーインタフェース
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public interface OnFlickListener {
     /**

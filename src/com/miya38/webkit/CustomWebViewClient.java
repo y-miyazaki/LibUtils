@@ -28,10 +28,18 @@ import com.miya38.utils.ViewHelper;
  *
  */
 public class CustomWebViewClient extends WebViewClient {
+    // ----------------------------------------------------------
+    // define
+    // ----------------------------------------------------------
     /** TAG */
     private static final String TAG = CustomWebViewClient.class.getSimpleName();
+    /** TAG */
+    private static final String PROTOCOL_MAILTO = "mailto:";
+    // ----------------------------------------------------------
+    // other
+    // ----------------------------------------------------------
     /** Activity */
-    private Activity mActivity;
+    private final Activity mActivity;
 
     /**
      * コンストラクタ
@@ -39,30 +47,19 @@ public class CustomWebViewClient extends WebViewClient {
      * @param activity
      *            Activity
      */
-    public CustomWebViewClient(Activity activity) {
-        super();
-        mActivity = activity;
-    }
-
-    /**
-     * コンストラクタ
-     *
-     * @param activity
-     *            Activity
-     */
-    public CustomWebViewClient(Activity activity, boolean isDebugable) {
+    public CustomWebViewClient(final Activity activity) {
         super();
         mActivity = activity;
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
         LogUtils.d(TAG, "shouldOverrideUrlLoading url = %s", url);
         // ------------------------------------------------------------
         // mailtoチェック
         // ------------------------------------------------------------
-        if (url.substring(0, 7).equals("mailto:")) {
-            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(url));
+        if (url.startsWith(PROTOCOL_MAILTO)) {
+            final Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(url));
             mActivity.startActivity(intent);
             view.reload();
             return true;
@@ -71,37 +68,37 @@ public class CustomWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+    public void onPageStarted(final WebView view, final String url, final Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         LogUtils.d(TAG, "onPageStarted: url = %s", url);
     }
 
     @Override
-    public void onPageFinished(WebView view, String url) {
+    public void onPageFinished(final WebView view, final String url) {
         super.onPageFinished(view, url);
         LogUtils.d(TAG, "onPageFinished: url = %s", url);
     }
 
     @Override
-    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+    public void onReceivedError(final WebView view, final int errorCode, final String description, final String failingUrl) {
         LogUtils.d(TAG, "onReceivedError: errorCode = %d / description = %s / failingUrl = %s", errorCode, description, failingUrl);
     }
 
     @Override
-    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+    public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
         super.onReceivedSslError(view, handler, error);
         LogUtils.d(TAG, "onReceivedSslError");
     }
 
     @Override
-    public void onReceivedHttpAuthRequest(WebView view, final HttpAuthHandler handler, final String host, final String realm) {
+    public void onReceivedHttpAuthRequest(final WebView view, final HttpAuthHandler handler, final String host, final String realm) {
         LogUtils.d(TAG, "onReceivedHttpAuthRequest");
 
         String userName = null;
         String userPass = null;
 
         if (handler.useHttpAuthUsernamePassword() && view != null) {
-            String[] haup = view.getHttpAuthUsernamePassword(host, realm);
+            final String[] haup = view.getHttpAuthUsernamePassword(host, realm);
             if (haup != null && haup.length == 2) {
                 userName = haup[0];
                 userPass = haup[1];
@@ -118,22 +115,31 @@ public class CustomWebViewClient extends WebViewClient {
      * Basic認証ダイアログ表示
      *
      * @param webView
+     *            WebView
      * @param handler
+     *            {@link HttpAuthHandler}
      * @param host
+     *            ホスト
      * @param realm
+     *            the realm for which authentication is required
      */
     private void showHttpAuthDialog(final WebView webView, final HttpAuthHandler handler, final String host, final String realm) {
-        LayoutInflater layoutInflator = LayoutInflater.from(mActivity);
+        // Activityが死んでいる場合は、ダイアログを出さない。
+        if (mActivity.isFinishing() || mActivity.isDestroyed()) {
+            return;
+        }
+        final LayoutInflater layoutInflator = LayoutInflater.from(mActivity);
         final View view = layoutInflator.inflate(R.layout.common_dialog_basic, null);
 
         final AlertDialog.Builder mHttpAuthDialog = new AlertDialog.Builder(mActivity);
         mHttpAuthDialog.setTitle(mActivity.getString(R.string.common_dialog_basic_message, host, realm)).setView(view).setCancelable(true);
         mHttpAuthDialog.setPositiveButton(mActivity.getString(R.string.common_dialog_basic_button_login), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                EditText etUserName = ViewHelper.findView(view, R.id.CustomEditText01);
-                String userName = etUserName.getText().toString();
-                EditText etUserPass = ViewHelper.findView(view, R.id.CustomEditText02);
-                String userPass = etUserPass.getText().toString();
+            @Override
+            public void onClick(final DialogInterface dialog, final int whichButton) {
+                final EditText etUserName = ViewHelper.findView(view, R.id.CustomEditText01);
+                final String userName = etUserName.getText().toString();
+                final EditText etUserPass = ViewHelper.findView(view, R.id.CustomEditText02);
+                final String userPass = etUserPass.getText().toString();
 
                 webView.setHttpAuthUsernamePassword(host, realm, userName, userPass);
                 handler.proceed(userName, userPass);
@@ -141,7 +147,8 @@ public class CustomWebViewClient extends WebViewClient {
             }
         });
         mHttpAuthDialog.setNegativeButton(mActivity.getString(R.string.common_dialog_basic_button_cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+            @Override
+            public void onClick(final DialogInterface dialog, final int whichButton) {
                 handler.cancel();
                 dialog.dismiss();
             }
@@ -150,7 +157,7 @@ public class CustomWebViewClient extends WebViewClient {
         // backキー
         mHttpAuthDialog.setOnKeyListener(new OnKeyListener() {
             @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+            public boolean onKey(final DialogInterface dialog, final int keyCode, final KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     handler.cancel();
                     dialog.dismiss();
@@ -164,7 +171,7 @@ public class CustomWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onScaleChanged(WebView view, float oldScale, float newScale) {
+    public void onScaleChanged(final WebView view, final float oldScale, final float newScale) {
         if (view != null) {
             view.invalidate();
         }

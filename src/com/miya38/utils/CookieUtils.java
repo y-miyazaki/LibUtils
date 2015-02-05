@@ -10,9 +10,9 @@ import android.webkit.CookieSyncManager;
 
 /**
  * Cookieユーティリティクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class CookieUtils {
     /** Context */
@@ -27,36 +27,36 @@ public final class CookieUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
     /**
      * Cookie値全取得
-     *
+     * 
      * @param url
      *            URL
      * @return 指定したurlのCookie値を返却
      */
-    public static String get(String url) {
+    public static String get(final String url) {
         CookieSyncManager.createInstance(sContext);
         return StringUtils.trim(CookieManager.getInstance().getCookie(url));// 文字列でCookieを取得
     }
 
     /**
      * Cookie値取得
-     *
+     * 
      * @param url
      *            URL
      * @param key
      *            Cookieキー
      * @return 指定したkeyのCookie値を返却
      */
-    public static String getValue(String url, String key) {
+    public static String getValue(final String url, final String key) {
         CookieSyncManager.createInstance(sContext);
         String cookie = StringUtils.trim(CookieManager.getInstance().getCookie(url));// 文字列でCookieを取得
         if (StringUtils.isEmpty(cookie)) {
@@ -66,12 +66,12 @@ public final class CookieUtils {
         if (!cookie.endsWith(";")) {
             cookie = StringUtils.appendBuilder(cookie, ";");
         }
-        Pattern cookiePattern = Pattern.compile("([^= ]+)=\"?([^\\;]*?)\"?;\\s?");
-        Matcher matcher = cookiePattern.matcher(cookie);
+        final Pattern cookiePattern = Pattern.compile("([^= ]+)=\"?([^\\;]*?)\"?;\\s?");
+        final Matcher matcher = cookiePattern.matcher(cookie);
 
         while (matcher.find()) {
-            String cookieKey = matcher.group(1);
-            String cookieValue = matcher.group(2);
+            final String cookieKey = matcher.group(1);
+            final String cookieValue = matcher.group(2);
             if (StringUtils.equals(cookieKey, key)) {
                 return StringUtils.trim(Uri.decode(cookieValue));
             }
@@ -81,15 +81,15 @@ public final class CookieUtils {
 
     /**
      * Cookie値設定
-     *
+     * 
      * @param url
      *            URL
      * @param value
      *            クッキー
      */
-    public static void setValue(String url, String value) {
+    public static void setValue(final String url, final String value) {
         CookieSyncManager.createInstance(sContext);
-        CookieManager cookieManager = CookieManager.getInstance();
+        final CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
 
         cookieManager.setCookie(url, value);
@@ -98,11 +98,11 @@ public final class CookieUtils {
 
     /**
      * WebViewの指定したURLのCookieを全削除
-     *
+     * 
      * @param url
      *            URL
      */
-    public static void removeAll(String url) {
+    public static void removeAll(final String url) {
         CookieSyncManager.createInstance(sContext);
         final CookieManager cookieManager = CookieManager.getInstance();
         final String cookie = cookieManager.getCookie(url);// 文字列でCookieを取得
@@ -110,7 +110,7 @@ public final class CookieUtils {
             final String[] oneCookie = cookie.split(";");
             for (String pair : oneCookie) {
                 pair = StringUtils.trim(pair);
-                String[] set = pair.split("=");
+                final String[] set = pair.split("=");
                 set[0] = StringUtils.trim(set[0]);
                 cookieManager.setCookie(url, set[0] + "=;");
             }

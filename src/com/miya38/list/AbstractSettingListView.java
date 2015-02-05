@@ -13,9 +13,9 @@ import com.miya38.widget.CustomListView;
 
 /**
  * ListView抽象化クラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
@@ -35,7 +35,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ヘッダー削除
-     *
+     * 
      * @param headerView
      *            headerView
      */
@@ -43,7 +43,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ヘッダー追加
-     *
+     * 
      * @param headerViewLayout
      *            ヘッダーに設定するレイアウトのID(ex:R.layout.header)
      */
@@ -51,7 +51,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ヘッダー追加
-     *
+     * 
      * @param headerView
      *            headerView
      */
@@ -59,14 +59,14 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * モード取得
-     *
+     * 
      * @return 上方・下方のpull設定モード
      */
     public abstract Mode getMode();
 
     /**
      * モード設定
-     *
+     * 
      * @param mode
      *            上方・下方のpull設定モード
      */
@@ -79,7 +79,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(getItem)
-     *
+     * 
      * @param position
      *            アイテム設定位置
      * @return アイテム
@@ -88,14 +88,14 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(getItems)
-     *
+     * 
      * @return アイテム
      */
     public abstract List<U> getItems();
 
     /**
      * ListView設定(setItem)
-     *
+     * 
      * @param item
      *            アイテム
      * @param position
@@ -105,7 +105,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(setItems)
-     *
+     * 
      * @param items
      *            アイテム
      */
@@ -113,7 +113,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(insertItem)
-     *
+     * 
      * @param item
      *            アイテム
      * @param position
@@ -123,7 +123,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(addView)(before)
-     *
+     * 
      * @param item
      *            アイテム
      */
@@ -131,7 +131,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(addView)(before)
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -139,7 +139,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(addView)(after)
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -147,7 +147,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * ListView設定(addView)(after)
-     *
+     * 
      * @param item
      *            アイテム
      */
@@ -155,21 +155,21 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * adapterにセットされている数を返却する
-     *
+     * 
      * @return カウント数
      */
     public abstract int getCount();
 
     /**
      * Adapter取得
-     *
+     * 
      * @return adapter アダプター
      */
     public abstract T getAdapter();
 
     /**
      * Adapter設定
-     *
+     * 
      * @param adapter
      *            アダプター
      */
@@ -177,21 +177,21 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * CustomListView取得
-     *
+     * 
      * @return CustomListView
      */
     public abstract CustomListView getCustomListView();
 
     /**
      * ListView取得
-     *
+     * 
      * @return ListView
      */
     public abstract ListView getListView();
 
     /**
      * onItemClickListenner設定
-     *
+     * 
      * @param l
      *            OnItemClickListener
      */
@@ -199,7 +199,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * onRefreshListener設定
-     *
+     * 
      * @param l
      *            OnRefreshListener
      */
@@ -207,7 +207,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * onRefreshListener設定
-     *
+     * 
      * @param l
      *            OnRefreshListener
      * @param mode
@@ -217,7 +217,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * onRefreshListener設定
-     *
+     * 
      * @param l
      *            OnRefreshListener2
      */
@@ -225,7 +225,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * onRefreshListener設定
-     *
+     * 
      * @param l
      *            OnRefreshListener2
      * @param mode
@@ -235,7 +235,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * プル時の表示文字列設定
-     *
+     * 
      * @param includeStart
      *            上プル時に表示される文字列
      * @param includeEnd
@@ -245,7 +245,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * リフレッシュ中の表示文字列設定
-     *
+     * 
      * @param includeStart
      *            上プル時に表示される文字列
      * @param includeEnd
@@ -255,7 +255,7 @@ public abstract class AbstractSettingListView<T, U> {
 
     /**
      * 話した際の表示文字列設定
-     *
+     * 
      * @param includeStart
      *            上プル時に表示される文字列
      * @param includeEnd

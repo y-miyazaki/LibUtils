@@ -33,7 +33,7 @@ import android.view.View.OnClickListener;
 /**
  * Collection of utility functions used in this package.
  */
-@SuppressWarnings ("javadoc")
+@SuppressWarnings("javadoc")
 public class TrimingUtil {
     @SuppressWarnings("unused")
     private static final String TAG = "TrimingUtil";
@@ -45,17 +45,17 @@ public class TrimingUtil {
 
     // Rotates the bitmap by the specified degree.
     // If a new bitmap is created, the original bitmap is recycled.
-    public static Bitmap rotate(Bitmap b, int degrees) {
+    public static Bitmap rotate(Bitmap b, final int degrees) {
         if (degrees != 0 && b != null) {
-            Matrix m = new Matrix();
+            final Matrix m = new Matrix();
             m.setRotate(degrees, (float) b.getWidth() / 2, (float) b.getHeight() / 2);
             try {
-                Bitmap b2 = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
+                final Bitmap b2 = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
                 if (b != b2) {
                     b.recycle();
                     b = b2;
                 }
-            } catch (OutOfMemoryError ex) {
+            } catch (final OutOfMemoryError ex) {
                 // We have no memory to rotate. Return the original bitmap.
             }
         }
@@ -75,9 +75,9 @@ public class TrimingUtil {
      * generates a smaller bitmap, unless minSideLength = IImage.UNCONSTRAINED.
      */
 
-    public static Bitmap transform(Matrix scaler, Bitmap source, int targetWidth, int targetHeight, boolean scaleUp) {
-        int deltaX = source.getWidth() - targetWidth;
-        int deltaY = source.getHeight() - targetHeight;
+    public static Bitmap transform(Matrix scaler, final Bitmap source, final int targetWidth, final int targetHeight, final boolean scaleUp) {
+        final int deltaX = source.getWidth() - targetWidth;
+        final int deltaY = source.getHeight() - targetHeight;
 
         // スケールアップの場合
         if (!scaleUp && (deltaX < 0 || deltaY < 0)) {
@@ -87,31 +87,31 @@ public class TrimingUtil {
              * as possible into the target and leaving the top/bottom or
              * left/right (or both) black.
              */
-            Bitmap b2 = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(b2);
+            final Bitmap b2 = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888);
+            final Canvas c = new Canvas(b2);
 
-            int deltaXHalf = Math.max(0, deltaX / 2);
-            int deltaYHalf = Math.max(0, deltaY / 2);
-            Rect src = new Rect(deltaXHalf, deltaYHalf, deltaXHalf + Math.min(targetWidth, source.getWidth()), deltaYHalf + Math.min(targetHeight, source.getHeight()));
-            int dstX = (targetWidth - src.width()) / 2;
-            int dstY = (targetHeight - src.height()) / 2;
-            Rect dst = new Rect(dstX, dstY, targetWidth - dstX, targetHeight - dstY);
+            final int deltaXHalf = Math.max(0, deltaX / 2);
+            final int deltaYHalf = Math.max(0, deltaY / 2);
+            final Rect src = new Rect(deltaXHalf, deltaYHalf, deltaXHalf + Math.min(targetWidth, source.getWidth()), deltaYHalf + Math.min(targetHeight, source.getHeight()));
+            final int dstX = (targetWidth - src.width()) / 2;
+            final int dstY = (targetHeight - src.height()) / 2;
+            final Rect dst = new Rect(dstX, dstY, targetWidth - dstX, targetHeight - dstY);
             c.drawBitmap(source, src, dst, null);
             return b2;
         }
 
         // スケールダウンの場合
-        float bitmapWidthF = source.getWidth();
-        float bitmapHeightF = source.getHeight();
+        final float bitmapWidthF = source.getWidth();
+        final float bitmapHeightF = source.getHeight();
 
         // アスペクト比算出
-        float bitmapAspect = bitmapWidthF / bitmapHeightF;
-        float viewAspect = (float) targetWidth / targetHeight;
+        final float bitmapAspect = bitmapWidthF / bitmapHeightF;
+        final float viewAspect = (float) targetWidth / targetHeight;
 
         // サイズ変更前と変更あとのアスペクト比比較
         if (bitmapAspect > viewAspect) {
             // リサイズ前のほうが大きい
-            float scale = targetHeight / bitmapHeightF;
+            final float scale = targetHeight / bitmapHeightF;
             if (scale < .9F || scale > 1F) {
                 scaler.setScale(scale, scale);
             } else {
@@ -119,7 +119,7 @@ public class TrimingUtil {
             }
         } else {
             // リサイズ後のほうが小さい
-            float scale = targetWidth / bitmapWidthF;
+            final float scale = targetWidth / bitmapWidthF;
             if (scale < .9F || scale > 1F) {
                 scaler.setScale(scale, scale);
             } else {
@@ -135,10 +135,10 @@ public class TrimingUtil {
             b1 = source;
         }
 
-        int dx1 = Math.max(0, b1.getWidth() - targetWidth);
-        int dy1 = Math.max(0, b1.getHeight() - targetHeight);
+        final int dx1 = Math.max(0, b1.getWidth() - targetWidth);
+        final int dy1 = Math.max(0, b1.getHeight() - targetHeight);
 
-        Bitmap b2 = Bitmap.createBitmap(b1, dx1 / 2, dy1 / 2, targetWidth, targetHeight);
+        final Bitmap b2 = Bitmap.createBitmap(b1, dx1 / 2, dy1 / 2, targetWidth, targetHeight);
 
         if (b1 != source) {
             b1.recycle();
@@ -149,14 +149,14 @@ public class TrimingUtil {
 
     /**
      * Creates a centered bitmap of the desired size. Recycles the input.
-     *
+     * 
      * @param source
      */
-    public static Bitmap extractMiniThumb(Bitmap source, int width, int height) {
+    public static Bitmap extractMiniThumb(final Bitmap source, final int width, final int height) {
         return TrimingUtil.extractMiniThumb(source, width, height, true);
     }
 
-    public static Bitmap extractMiniThumb(Bitmap source, int width, int height, boolean recycle) {
+    public static Bitmap extractMiniThumb(final Bitmap source, final int width, final int height, final boolean recycle) {
         if (source == null) {
             return null;
         }
@@ -167,9 +167,9 @@ public class TrimingUtil {
         } else {
             scale = height / (float) source.getHeight();
         }
-        Matrix matrix = new Matrix();
+        final Matrix matrix = new Matrix();
         matrix.setScale(scale, scale);
-        Bitmap miniThumbnail = transform(matrix, source, width, height, false);
+        final Bitmap miniThumbnail = transform(matrix, source, width, height, false);
 
         if (recycle && miniThumbnail != source) {
             source.recycle();
@@ -185,11 +185,11 @@ public class TrimingUtil {
     /**
      * Create a video thumbnail for a video. May return null if the video is
      * corrupt.
-     *
+     * 
      * @param filePath
      */
-    public static Bitmap createVideoThumbnail(String filePath) {
-        Bitmap bitmap = null;
+    public static Bitmap createVideoThumbnail(final String filePath) {
+        final Bitmap bitmap = null;
         /*
          * MediaMetadataRetriever retriever = new MediaMetadataRetriever();
          * try {
@@ -211,8 +211,8 @@ public class TrimingUtil {
         return bitmap;
     }
 
-    public static <T> int indexOf(T[] array, T s) {
-        int length = array.length;
+    public static <T> int indexOf(final T[] array, final T s) {
+        final int length = array.length;
         for (int i = 0; i < length; i++) {
             if (array[i].equals(s)) {
                 return i;
@@ -221,47 +221,49 @@ public class TrimingUtil {
         return -1;
     }
 
-    public static void closeSilently(Closeable c) {
-        if (c == null)
+    public static void closeSilently(final Closeable c) {
+        if (c == null) {
             return;
+        }
         try {
             c.close();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             // do nothing
         }
     }
 
-    public static void closeSilently(ParcelFileDescriptor c) {
-        if (c == null)
+    public static void closeSilently(final ParcelFileDescriptor c) {
+        if (c == null) {
             return;
+        }
         try {
             c.close();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             // do nothing
         }
     }
 
     /**
      * Make a bitmap from a given Uri.
-     *
+     * 
      * @param uri
      */
-    private static ParcelFileDescriptor makeInputStream(Uri uri, ContentResolver cr) {
+    private static ParcelFileDescriptor makeInputStream(final Uri uri, final ContentResolver cr) {
         try {
             return cr.openFileDescriptor(uri, "r");
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             return null;
         }
     }
 
-    public static void debugWhere(String tag, String msg) {
+    public static void debugWhere(final String tag, final String msg) {
         Log.d(tag, msg + " --- stack trace begins: ");
-        StackTraceElement elements[] = Thread.currentThread().getStackTrace();
+        final StackTraceElement elements[] = Thread.currentThread().getStackTrace();
         // skip first 3 element, they are not related to the caller
-        int length = elements.length;
+        final int length = elements.length;
         for (int i = 3, n = length; i < n; ++i) {
-            StackTraceElement st = elements[i];
-            String message = String.format("    at %s.%s(%s:%s)", st.getClassName(), st.getMethodName(), st.getFileName(), st.getLineNumber());
+            final StackTraceElement st = elements[i];
+            final String message = String.format("    at %s.%s(%s:%s)", st.getClassName(), st.getMethodName(), st.getFileName(), st.getLineNumber());
             Log.d(tag, message);
         }
         Log.d(tag, msg + " --- stack trace ends.");
@@ -270,20 +272,21 @@ public class TrimingUtil {
     public static synchronized OnClickListener getNullOnClickListener() {
         if (sNullOnClickListener == null) {
             sNullOnClickListener = new OnClickListener() {
-                public void onClick(View v) {
+                @Override
+                public void onClick(final View v) {
                 }
             };
         }
         return sNullOnClickListener;
     }
 
-    public static void Assert(boolean cond) {
+    public static void Assert(final boolean cond) {
         if (!cond) {
             throw new AssertionError();
         }
     }
 
-    public static boolean equals(String a, String b) {
+    public static boolean equals(final String a, final String b) {
         // return true if both string are null or the content equals
         return a == b || a.equals(b);
     }
@@ -295,14 +298,16 @@ public class TrimingUtil {
         private final Runnable mJob;
         private final Handler mHandler;
         private final Runnable mCleanupRunner = new Runnable() {
+            @Override
             public void run() {
                 mActivity.removeLifeCycleListener(BackgroundJob.this);
-                if (mDialog.getWindow() != null)
+                if (mDialog.getWindow() != null) {
                     mDialog.dismiss();
+                }
             }
         };
 
-        public BackgroundJob(MonitoredActivity activity, Runnable job, ProgressDialog dialog, Handler handler) {
+        public BackgroundJob(final MonitoredActivity activity, final Runnable job, final ProgressDialog dialog, final Handler handler) {
             mActivity = activity;
             mDialog = dialog;
             mJob = job;
@@ -310,6 +315,7 @@ public class TrimingUtil {
             mHandler = handler;
         }
 
+        @Override
         public void run() {
             try {
                 mJob.run();
@@ -319,7 +325,7 @@ public class TrimingUtil {
         }
 
         @Override
-        public void onActivityDestroyed(MonitoredActivity activity) {
+        public void onActivityDestroyed(final MonitoredActivity activity) {
             // We get here only when the onDestroyed being called before
             // the mCleanupRunner. So, run it now and remove it from the queue
             mCleanupRunner.run();
@@ -327,37 +333,37 @@ public class TrimingUtil {
         }
 
         @Override
-        public void onActivityStopped(MonitoredActivity activity) {
+        public void onActivityStopped(final MonitoredActivity activity) {
             mDialog.hide();
         }
 
         @Override
-        public void onActivityStarted(MonitoredActivity activity) {
+        public void onActivityStarted(final MonitoredActivity activity) {
             mDialog.show();
         }
     }
 
-    public static void startBackgroundJob(MonitoredActivity activity, String title, String message, Runnable job, Handler handler) {
+    public static void startBackgroundJob(final MonitoredActivity activity, final String title, final String message, final Runnable job, final Handler handler) {
         // Make the progress dialog uncancelable, so that we can gurantee
         // the thread will be done before the activity getting destroyed.
-        ProgressDialog dialog = ProgressDialog.show(activity, title, message, true, false);
+        final ProgressDialog dialog = ProgressDialog.show(activity, title, message, true, false);
         new Thread(new BackgroundJob(activity, job, dialog, handler)).start();
     }
 
     // Returns Options that set the puregeable flag for Bitmap decode.
     public static BitmapFactory.Options createNativeAllocOptions() {
-        BitmapFactory.Options options = new BitmapFactory.Options();
+        final BitmapFactory.Options options = new BitmapFactory.Options();
         // options.inNativeAlloc = true;
         return options;
     }
 
     // Thong added for rotate
-    public static Bitmap rotateImage(Bitmap src, float degree) {
+    public static Bitmap rotateImage(final Bitmap src, final float degree) {
         // create new matrix
-        Matrix matrix = new Matrix();
+        final Matrix matrix = new Matrix();
         // setup rotation degree
         matrix.postRotate(degree);
-        Bitmap bmp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        final Bitmap bmp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
         return bmp;
     }
 }

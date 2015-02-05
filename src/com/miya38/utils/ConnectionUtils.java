@@ -26,7 +26,7 @@ import android.text.TextUtils;
 
 /**
  * コネクションユーティリティークラス
- *
+ * 
  * @author y-miyazaki
  */
 public final class ConnectionUtils {
@@ -42,25 +42,25 @@ public final class ConnectionUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
     /**
      * ホスト名取得
-     *
+     * 
      * @param url
      *            URL
      * @return ホスト名
      */
-    public static String getHost(String url) {
+    public static String getHost(final String url) {
         try {
             return new URL(url).getHost();
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             // 握りつぶす
         }
         return null;
@@ -68,15 +68,15 @@ public final class ConnectionUtils {
 
     /**
      * パス名取得
-     *
+     * 
      * @param url
      *            URL
      * @return ホスト名
      */
-    public static String getPath(String url) {
+    public static String getPath(final String url) {
         try {
             return new URL(url).getPath();
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             // 握りつぶす
         }
         return null;
@@ -84,15 +84,15 @@ public final class ConnectionUtils {
 
     /**
      * クエリーを除いたURLを取得
-     *
+     * 
      * @param url
      *            URL
      * @return ホスト名
      */
-    public static String getDeleteQuery(String url) {
+    public static String getDeleteQuery(final String url) {
         try {
             return url.split("\\?")[0];
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         }
         return url;
@@ -100,19 +100,19 @@ public final class ConnectionUtils {
 
     /**
      * URLからクエリーのMapを取得
-     *
+     * 
      * @param url
      *            URL
      * @return クエリーのMAP
      */
-    public static Map<String, String> getQuery(String url) {
+    public static Map<String, String> getQuery(final String url) {
         final HashMap<String, String> map = new HashMap<String, String>();
         try {
             final List<NameValuePair> parameters = URLEncodedUtils.parse(new URI(url), "UTF-8");
             for (final NameValuePair p : parameters) {
                 map.put(p.getName(), p.getValue());
             }
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             // 握りつぶす
         }
         return map;
@@ -120,14 +120,14 @@ public final class ConnectionUtils {
 
     /**
      * URL・クエリーの組み合わせを取得
-     *
+     * 
      * @param url
      *            URL
      * @param query
      *            クエリーmap
      * @return URL
      */
-    public static String getUrl(String url, Map<String, String> query) {
+    public static String getUrl(final String url, final Map<String, String> query) {
         // URL設定
         final StringBuilder stringBuilderUrl = new StringBuilder();
 
@@ -151,7 +151,7 @@ public final class ConnectionUtils {
                     count++;
                 }
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             // 握りつぶす
         }
         return stringBuilderUrl.insert(0, url).toString();
@@ -159,12 +159,12 @@ public final class ConnectionUtils {
 
     /**
      * クエリーパラメータ生成
-     *
+     * 
      * @param query
      * @return クエリーパラメータ<br>
      *         ex) name1=value1&name2=value2
      */
-    public static String getQuery(Map<String, String> query) {
+    public static String getQuery(final Map<String, String> query) {
         try {
             // URL設定
             final StringBuilder queryParameter = new StringBuilder();
@@ -188,7 +188,7 @@ public final class ConnectionUtils {
                 }
             }
             return queryParameter.toString();
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             // 握りつぶす
         }
         return null;
@@ -196,12 +196,12 @@ public final class ConnectionUtils {
 
     /**
      * ボディー設定
-     *
+     * 
      * @param body
      *            ボディ
      * @return キーバリューのペア
      */
-    public static List<NameValuePair> getParams(Map<String, String> body) {
+    public static List<NameValuePair> getParams(final Map<String, String> body) {
         final List<NameValuePair> params = new ArrayList<NameValuePair>();
 
         if (body != null) {
@@ -219,12 +219,12 @@ public final class ConnectionUtils {
 
     /**
      * gzip判定
-     *
+     * 
      * @param response
      *            レスポンス
      * @return gzip有:true gzip無:false
      */
-    public static boolean isGZipHttpResponse(HttpResponse response) {
+    public static boolean isGZipHttpResponse(final HttpResponse response) {
         final Header header = response.getEntity().getContentEncoding();
         if (header == null) {
             return false;
@@ -235,7 +235,7 @@ public final class ConnectionUtils {
 
     /**
      * ネットワークが使用可能かを返却する
-     *
+     * 
      * @return true:ネットワーク使用可能 false:ネットワーク使用不可
      */
     public static boolean isAvailableNetwork() {

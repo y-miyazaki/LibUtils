@@ -9,9 +9,9 @@ import com.miya38.utils.ConnectionUtils;
 
 /**
  * ネットワークパラメータクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class NetworkRequest {
     /**
@@ -63,7 +63,7 @@ public class NetworkRequest {
 
     /**
      * GET/DELETEリクエストコンストラクタ
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#GET}<br>
@@ -77,7 +77,7 @@ public class NetworkRequest {
      *            リクエストID<br>
      *            このパラメータでデータを受信した際に何をリクエストした結果であるかを判定することが出来る。
      */
-    public NetworkRequest(int method, String url, Map<String, String> query, int id) {
+    public NetworkRequest(final int method, final String url, final Map<String, String> query, final int id) {
         if (method != Method.GET && method != Method.DELETE) {
             throw new ApplicationException("method should set Method.GET or Method.DELETE.");
         }
@@ -92,7 +92,7 @@ public class NetworkRequest {
      * <p>
      * 通常のGET/DELETEリクエストに加え、リクエストヘッダを指定したい場合には本コンストラクタを使用する。
      * </p>
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#GET}<br>
@@ -108,7 +108,7 @@ public class NetworkRequest {
      * @param headers
      *            リクエストヘッダー
      */
-    public NetworkRequest(int method, String url, Map<String, String> query, int id, Map<String, String> headers) {
+    public NetworkRequest(final int method, final String url, final Map<String, String> query, final int id, final Map<String, String> headers) {
         if (method != Method.GET && method != Method.DELETE) {
             throw new ApplicationException("method should set Method.GET or Method.DELETE.");
         }
@@ -121,7 +121,7 @@ public class NetworkRequest {
 
     /**
      * POST/PUTリクエストコンストラクタ
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#POST}<br>
@@ -135,7 +135,7 @@ public class NetworkRequest {
      *            リクエストID<br>
      *            このパラメータでデータを受信した際に何をリクエストした結果であるかを判定することが出来る。
      */
-    public NetworkRequest(int method, String url, String body, int id) {
+    public NetworkRequest(final int method, final String url, final String body, final int id) {
         if (method != Method.POST && method != Method.PUT) {
             throw new ApplicationException("method should set Method.POST or Method.PUT.");
         }
@@ -150,7 +150,7 @@ public class NetworkRequest {
      * <p>
      * 通常のPOST/PUTリクエストに加え、リクエストヘッダを指定したい場合には本コンストラクタを使用する。
      * </p>
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#POST}<br>
@@ -166,7 +166,7 @@ public class NetworkRequest {
      * @param headers
      *            リクエストヘッダー
      */
-    public NetworkRequest(int method, String url, String body, int id, Map<String, String> headers) {
+    public NetworkRequest(final int method, final String url, final String body, final int id, final Map<String, String> headers) {
         if (method != Method.POST && method != Method.PUT) {
             throw new ApplicationException("method should set Method.POST or Method.PUT.");
         }
@@ -188,7 +188,7 @@ public class NetworkRequest {
      * @param mMethod
      *            セットする mMethod
      */
-    public final void setMethod(int mMethod) {
+    public final void setMethod(final int mMethod) {
         this.mMethod = mMethod;
     }
 
@@ -203,7 +203,7 @@ public class NetworkRequest {
      * @param mUrl
      *            セットする mUrl
      */
-    public final void setUrl(String mUrl) {
+    public final void setUrl(final String mUrl) {
         this.mUrl = mUrl;
     }
 
@@ -218,7 +218,7 @@ public class NetworkRequest {
      * @param mQuery
      *            セットする mQuery
      */
-    public final void setQuery(Map<String, String> mQuery) {
+    public final void setQuery(final Map<String, String> mQuery) {
         this.mQuery = mQuery;
     }
 
@@ -233,7 +233,7 @@ public class NetworkRequest {
      * @param mBody
      *            セットする mBody
      */
-    public final void setBody(String mBody) {
+    public final void setBody(final String mBody) {
         this.mBody = mBody;
     }
 
@@ -248,7 +248,7 @@ public class NetworkRequest {
      * @param mId
      *            セットする mId
      */
-    public final void setId(int mId) {
+    public final void setId(final int mId) {
         this.mId = mId;
     }
 
@@ -263,7 +263,7 @@ public class NetworkRequest {
      * @param mHeaders
      *            セットする mHeaders
      */
-    public final void setHeaders(Map<String, String> mHeaders) {
+    public final void setHeaders(final Map<String, String> mHeaders) {
         this.mHeaders = mHeaders;
     }
 
@@ -278,7 +278,7 @@ public class NetworkRequest {
      * @param mIsDisplayProgress
      *            セットする mIsDisplayProgress
      */
-    public final void setIsDisplayProgress(boolean mIsDisplayProgress) {
+    public final void setIsDisplayProgress(final boolean mIsDisplayProgress) {
         this.mIsDisplayProgress = mIsDisplayProgress;
     }
 
@@ -293,7 +293,7 @@ public class NetworkRequest {
      * @param mIsErrorCheck
      *            セットする mIsErrorCheck
      */
-    public final void setIsErrorCheck(boolean mIsErrorCheck) {
+    public final void setIsErrorCheck(final boolean mIsErrorCheck) {
         this.mIsErrorCheck = mIsErrorCheck;
     }
 
@@ -308,7 +308,7 @@ public class NetworkRequest {
      * @param mDialogListenerId
      *            セットする mDialogListenerId
      */
-    public final void setDialogListenerId(int mDialogListenerId) {
+    public final void setDialogListenerId(final int mDialogListenerId) {
         this.mDialogListenerId = mDialogListenerId;
     }
 

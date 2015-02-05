@@ -24,7 +24,8 @@ import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 
 /**
- * Handles fetching an image from a URL as well as the life-cycle of the associated request.
+ * Handles fetching an image from a URL as well as the life-cycle of the
+ * associated request.
  */
 public class NetworkImageView extends ImageView {
     /** The URL of the network image to load */
@@ -35,7 +36,8 @@ public class NetworkImageView extends ImageView {
     private int mMaxHeight;
 
     /**
-     * Resource ID of the image to be used as a placeholder until the network image is loaded.
+     * Resource ID of the image to be used as a placeholder until the network
+     * image is loaded.
      */
     private int mDefaultImageId;
 
@@ -50,32 +52,34 @@ public class NetworkImageView extends ImageView {
     /** Current ImageContainer. (either in-flight or finished) */
     private ImageContainer mImageContainer;
 
-    public NetworkImageView(Context context) {
+    public NetworkImageView(final Context context) {
         this(context, null);
     }
 
-    public NetworkImageView(Context context, AttributeSet attrs) {
+    public NetworkImageView(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public NetworkImageView(Context context, AttributeSet attrs, int defStyle) {
+    public NetworkImageView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
     }
 
     /**
-     * Sets URL of the image that should be loaded into this view. Note that calling this will immediately either set
+     * Sets URL of the image that should be loaded into this view. Note that
+     * calling this will immediately either set
      * the cached image (if available) or the default image specified by
      * {@link NetworkImageView#setDefaultImageResId(int)} on the view.
-     *
-     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)} and
-     * {@link NetworkImageView#setErrorImageResId(int)} should be called prior to calling this function.
-     *
+     * 
+     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)}
+     * and {@link NetworkImageView#setErrorImageResId(int)} should be called
+     * prior to calling this function.
+     * 
      * @param url
      *            The URL that should be loaded into this ImageView.
      * @param imageLoader
      *            ImageLoader that will be used to make the request.
      */
-    public void setImageUrl(String url, ImageLoader imageLoader) {
+    public void setImageUrl(final String url, final ImageLoader imageLoader) {
         mUrl = url;
         mImageLoader = imageLoader;
         // The URL has potentially changed. See if we need to load it.
@@ -83,13 +87,15 @@ public class NetworkImageView extends ImageView {
     }
 
     /**
-     * Sets URL of the image that should be loaded into this view. Note that calling this will immediately either set
+     * Sets URL of the image that should be loaded into this view. Note that
+     * calling this will immediately either set
      * the cached image (if available) or the default image specified by
      * {@link NetworkImageView#setDefaultImageResId(int)} on the view.
-     *
-     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)} and
-     * {@link NetworkImageView#setErrorImageResId(int)} should be called prior to calling this function.
-     *
+     * 
+     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)}
+     * and {@link NetworkImageView#setErrorImageResId(int)} should be called
+     * prior to calling this function.
+     * 
      * @param url
      *            The URL that should be loaded into this ImageView.
      * @param imageLoader
@@ -99,7 +105,7 @@ public class NetworkImageView extends ImageView {
      * @param maxHeight
      *            最大縦幅
      */
-    public void setImageUrl(String url, ImageLoader imageLoader, int maxWidth, int maxHeight) {
+    public void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight) {
         mUrl = url;
         mImageLoader = imageLoader;
         mMaxWidth = maxWidth;
@@ -109,30 +115,32 @@ public class NetworkImageView extends ImageView {
     }
 
     /**
-     * Sets the default image resource ID to be used for this view until the attempt to load it completes.
+     * Sets the default image resource ID to be used for this view until the
+     * attempt to load it completes.
      */
-    public void setDefaultImageResId(int defaultImage) {
+    public void setDefaultImageResId(final int defaultImage) {
         mDefaultImageId = defaultImage;
     }
 
     /**
-     * Sets the error image resource ID to be used for this view in the event that the image requested fails to load.
+     * Sets the error image resource ID to be used for this view in the event
+     * that the image requested fails to load.
      */
-    public void setErrorImageResId(int errorImage) {
+    public void setErrorImageResId(final int errorImage) {
         mErrorImageId = errorImage;
     }
 
     /**
      * Loads the image for the view if it isn't already loaded.
-     *
+     * 
      * @param isInLayoutPass
      *            True if this was invoked from a layout pass, false otherwise.
      */
     public void loadImageIfNecessary(final boolean isInLayoutPass) {
-        int width = getWidth();
-        int height = getHeight();
+        final int width = getWidth();
+        final int height = getHeight();
 
-        boolean isFullyWrapContent = getLayoutParams() != null
+        final boolean isFullyWrapContent = getLayoutParams() != null
                 && getLayoutParams().height == LayoutParams.WRAP_CONTENT
                 && getLayoutParams().width == LayoutParams.WRAP_CONTENT;
         // if the view's bounds aren't known yet, and this is not a wrap-content/wrap-content
@@ -171,14 +179,14 @@ public class NetworkImageView extends ImageView {
             newContainer = mImageLoader.get(mUrl,
                     new ImageListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(final VolleyError error) {
                             if (mErrorImageId != 0) {
                                 setImageResource(mErrorImageId);
                             }
                         }
 
                         @Override
-                        public void onResponse(final ImageContainer response, boolean isImmediate) {
+                        public void onResponse(final ImageContainer response, final boolean isImmediate) {
                             // If this was an immediate response that was delivered inside of a layout
                             // pass do not set the image immediately as it will trigger a requestLayout
                             // inside of a layout. Instead, defer setting the image by posting back to
@@ -206,14 +214,14 @@ public class NetworkImageView extends ImageView {
             newContainer = mImageLoader.get(mUrl,
                     new ImageListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(final VolleyError error) {
                             if (mErrorImageId != 0) {
                                 setImageResource(mErrorImageId);
                             }
                         }
 
                         @Override
-                        public void onResponse(final ImageContainer response, boolean isImmediate) {
+                        public void onResponse(final ImageContainer response, final boolean isImmediate) {
                             // If this was an immediate response that was delivered inside of a layout
                             // pass do not set the image immediately as it will trigger a requestLayout
                             // inside of a layout. Instead, defer setting the image by posting back to
@@ -251,7 +259,7 @@ public class NetworkImageView extends ImageView {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         loadImageIfNecessary(true);
     }

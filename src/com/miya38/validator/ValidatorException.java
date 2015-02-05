@@ -11,21 +11,21 @@ public class ValidatorException extends Exception {
      * @param detailMessage
      * @param throwable
      */
-    public ValidatorException(String detailMessage, Throwable throwable) {
+    public ValidatorException(final String detailMessage, final Throwable throwable) {
         super(detailMessage, throwable);
     }
 
     /**
      * @param detailMessage
      */
-    public ValidatorException(String detailMessage) {
+    public ValidatorException(final String detailMessage) {
         super(detailMessage);
     }
 
     /**
      * @param throwable
      */
-    public ValidatorException(Throwable throwable) {
+    public ValidatorException(final Throwable throwable) {
         super(throwable);
     }
 }

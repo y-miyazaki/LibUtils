@@ -19,9 +19,9 @@ import com.miya38.utils.ViewHelper;
  * このクラスはFragmentベースなので、再生成が行われることを考慮し、コールバックはインタフェースを用いて行い、<br>
  * また匿名型クラスでは行えない仕様とする。<br>
  * Activity/Fragmentに対してDialogFragmentListenerをimplementsすること。<br>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public abstract class AbstractDialogFragment extends DialogFragment {
     // ---------------------------------------------------------------
@@ -68,14 +68,14 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * <p>
      * 特にDialog表示時にテーマを指定しない場合は、0を指定してください。
      * </p>
-     *
+     * 
      * @return テーマID
      */
     protected abstract int getThemeId();
 
     /**
      * ビューレイアウトのリソースIDを取得します。
-     *
+     * 
      * @return リソースID。
      */
     protected abstract int getViewLayoutId();
@@ -85,7 +85,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * <p>
      * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、0を指定してください。
      * </p>
-     *
+     * 
      * @return ビュースタブID
      */
     protected abstract int getViewStubLayoutId();
@@ -93,7 +93,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
     /**
      * このインタフェースは、ダイアログからのボタンイベント、キャンセルイベント、クローズイベントを受け取る。 <br>
      * setOnDialogFramgentListenerにリスナーを設定することでイベントを受け取ることが出来る。
-     *
+     * 
      * @see #onEvent(int, int)
      */
     public interface OnDialogFragmentListener {
@@ -112,7 +112,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
         /**
          * On event.
-         *
+         * 
          * @param listenerId
          *            listener id
          * @param event
@@ -130,7 +130,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         LogUtils.d(TAG, "onCreateDialog");
         // ----------------------------------------------------------------
         // Bundleからデータを取得
@@ -213,7 +213,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * stack. When the fragment is dismissed, a new
      * transaction will be executed to
      * remove it from the activity.
-     *
+     * 
      * @param manager
      *            The FragmentManager this fragment will be added to.
      */
@@ -273,7 +273,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * イベント設定
-     *
+     * 
      * @param event
      *            event is either of the following.<br>
      *            {@link #DIALOG_DISMISS}<br>
@@ -315,7 +315,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * Fragmentが終了中・Viewが取れない等の状態を確認する。
-     *
+     * 
      * @return 削除中/Detach/Viewが取れない場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isFinishing() {
@@ -327,7 +327,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * Fragmentが生存状態かを確認する。
-     *
+     * 
      * @return 削除中/Detachの場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isAlive() {
@@ -339,7 +339,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * リスナーID取得
-     *
+     * 
      * @return リスナーID
      */
     public int getListnerId() {

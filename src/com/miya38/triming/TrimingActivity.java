@@ -34,16 +34,16 @@ import com.miya38.utils.LogUtils;
 
 /**
  * 画像トリミングクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
-@SuppressWarnings ("javadoc")
+@SuppressWarnings("javadoc")
 public class TrimingActivity extends MonitoredActivity {
     private static final String TAG = TrimingActivity.class.getSimpleName();
 
     // These are various options can be specified in the intent.
-    private Bitmap.CompressFormat mOutputFormat = Bitmap.CompressFormat.JPEG; // only used with mSaveUri
+    private final Bitmap.CompressFormat mOutputFormat = Bitmap.CompressFormat.JPEG; // only used with mSaveUri
     private Uri mSaveUri = null;
     private int mAspectX, mAspectY;
     private boolean mCircleCrop = false;
@@ -56,7 +56,7 @@ public class TrimingActivity extends MonitoredActivity {
     private boolean mScaleUp = true;
 
     // 顔認識フラグオフ
-    private boolean mDoFaceDetection = false;
+    private final boolean mDoFaceDetection = false;
 
     public boolean mWaitingToPick; // Whether we are wait the user to pick a face.
     public boolean mSaving; // Whether the "save" button is already clicked.
@@ -81,7 +81,7 @@ public class TrimingActivity extends MonitoredActivity {
      * @see jp.co.mote.aune.activity.common.MonitoredActivity#onCreate(android.os.Bundle)
      */
     @Override
-    public void onCreate(Bundle icicle) {
+    public void onCreate(final Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_triming_layout);
         mContentResolver = getContentResolver();
@@ -92,8 +92,8 @@ public class TrimingActivity extends MonitoredActivity {
         isStartTrim = false;
 
         // パラメータ取得
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
+        final Intent intent = getIntent();
+        final Bundle extras = intent.getExtras();
         if (extras != null) {
             if (extras.getString("circleCrop") != null) {
                 mCircleCrop = true;
@@ -107,8 +107,8 @@ public class TrimingActivity extends MonitoredActivity {
             // ----------------------------------------------
             // サイズを考慮し画面サイズ程度に抑える。
             // ----------------------------------------------
-            int width = AplUtils.getWindowWidth();
-            int height = AplUtils.getWindowHeight();
+            final int width = AplUtils.getWindowWidth();
+            final int height = AplUtils.getWindowHeight();
             _bmOriginal = ImageUtils.imageResize(mImagePath, (width > height) ? height : width, (width > height) ? height : width);
 
             if (_bmOriginal == null) {
@@ -143,27 +143,30 @@ public class TrimingActivity extends MonitoredActivity {
 
             // トリミングボタン
             findViewById(R.id.CustomButton01).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                @Override
+                public void onClick(final View v) {
                     onSaveClicked();
                 }
             });
 
             // 左へ回転ボタン
             findViewById(R.id.CustomButton02).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                @Override
+                public void onClick(final View v) {
                     // mBitmap = scaleFramLayout(TrimingUtil.rotateImage(mBitmap, -90));
                     mBitmap = TrimingUtil.rotateImage(mBitmap, -90);
-                    RotateBitmap rotateBitmap = new RotateBitmap(mBitmap);
+                    final RotateBitmap rotateBitmap = new RotateBitmap(mBitmap);
                     mImageView.setImageRotateBitmapResetBase(rotateBitmap, true);
                     mRunFaceDetection.run();
                 }
             });
             // 右へ回転ボタン
             findViewById(R.id.CustomButton03).setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                @Override
+                public void onClick(final View v) {
                     // mBitmap = scaleFramLayout(TrimingUtil.rotateImage(mBitmap, 90));
                     mBitmap = TrimingUtil.rotateImage(mBitmap, 90);
-                    RotateBitmap rotateBitmap = new RotateBitmap(mBitmap);
+                    final RotateBitmap rotateBitmap = new RotateBitmap(mBitmap);
                     mImageView.setImageRotateBitmapResetBase(rotateBitmap, true);
                     mRunFaceDetection.run();
                 }
@@ -176,7 +179,7 @@ public class TrimingActivity extends MonitoredActivity {
      * @see android.app.Activity#onWindowFocusChanged(boolean)
      */
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    public void onWindowFocusChanged(final boolean hasFocus) {
 
         if (!isStartTrim) {
             isStartTrim = true;
@@ -201,13 +204,13 @@ public class TrimingActivity extends MonitoredActivity {
 
     /**
      * FramLayoutのサイズに合わせて画像をリサイズ
-     *
+     * 
      * @param bitmap
      *            オリジナル画像ファイル
      * @return
      *         サイズ調整後画像ファイル
      */
-    private Bitmap scaleFramLayout(Bitmap bitmap) {
+    private Bitmap scaleFramLayout(final Bitmap bitmap) {
 
         int dstWidth = 0;
         int dstHeight = 0;
@@ -215,14 +218,14 @@ public class TrimingActivity extends MonitoredActivity {
         // ----------------------------------------------
         // LinearLayoutの高さ・幅を取得する
         // ----------------------------------------------
-        int _width = ((LinearLayout) findViewById(R.id.li1)).getWidth();
-        int _height = ((LinearLayout) findViewById(R.id.li1)).getHeight();
+        final int _width = ((LinearLayout) findViewById(R.id.li1)).getWidth();
+        final int _height = ((LinearLayout) findViewById(R.id.li1)).getHeight();
 
         // ----------------------------------------------
         // FrameLayoutに対して画像のスケールを計算し、スケールの小さい方を取得しビットマップを作成する。
         // ----------------------------------------------
-        float _scaleW = (float) _width / (float) bitmap.getWidth();
-        float _scaleH = (float) _height / (float) bitmap.getHeight();
+        final float _scaleW = (float) _width / (float) bitmap.getWidth();
+        final float _scaleH = (float) _height / (float) bitmap.getHeight();
         final float _scale = Math.min(_scaleW, _scaleH);
 
         // "IllegalArgumentException: width and height must be > 0 "対策
@@ -238,29 +241,29 @@ public class TrimingActivity extends MonitoredActivity {
 
     /**
      * getImageUri
-     *
+     * 
      * @param path
      * @return
      */
-    private Uri getImageUri(String path) {
+    private Uri getImageUri(final String path) {
         return Uri.fromFile(new File(path));
     }
 
     /**
      * BitMap取得
-     *
+     * 
      * @param path
      * @return
      */
-    private Bitmap getBitmap(String path) {
-        Uri uri = getImageUri(path);
+    private Bitmap getBitmap(final String path) {
+        final Uri uri = getImageUri(path);
         InputStream in = null;
         try {
             final int IMAGE_MAX_SIZE = 2048;
             in = mContentResolver.openInputStream(uri);
 
             // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
+            final BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
 
             BitmapFactory.decodeStream(in, null, o);
@@ -271,16 +274,16 @@ public class TrimingActivity extends MonitoredActivity {
                 scale = (int) Math.pow(2, (int) Math.round(Math.log(IMAGE_MAX_SIZE / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
             }
 
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            final BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
             in = mContentResolver.openInputStream(uri);
-            Bitmap b = BitmapFactory.decodeStream(in, null, o2);
+            final Bitmap b = BitmapFactory.decodeStream(in, null, o2);
             in.close();
 
             return b;
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             LogUtils.e(TAG, "file %s not found", path);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LogUtils.e(TAG, "file %s not found", path);
         }
         return null;
@@ -296,11 +299,13 @@ public class TrimingActivity extends MonitoredActivity {
 
         mImageView.setImageBitmapResetBase(mBitmap, true);
 
-        TrimingUtil.startBackgroundJob((MonitoredActivity) this, null, "Please wait\u2026", new Runnable() {
+        TrimingUtil.startBackgroundJob(this, null, "Please wait\u2026", new Runnable() {
+            @Override
             public void run() {
                 final CountDownLatch latch = new CountDownLatch(1);
                 final Bitmap b = (mImage != null) ? mImage.fullSizeBitmap(IImage.UNCONSTRAINED, 1024 * 1024) : mBitmap;
                 mHandler.post(new Runnable() {
+                    @Override
                     public void run() {
                         if (b != mBitmap && b != null) {
                             mImageView.setImageBitmapResetBase(b, true);
@@ -315,7 +320,7 @@ public class TrimingActivity extends MonitoredActivity {
                 });
                 try {
                     latch.await();
-                } catch (InterruptedException e) {
+                } catch (final InterruptedException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -331,8 +336,9 @@ public class TrimingActivity extends MonitoredActivity {
         // TODO this code needs to change to use the decode/crop/encode single
         // step api so that we don't require that the whole (possibly large)
         // bitmap doesn't have to be read into memory
-        if (mSaving)
+        if (mSaving) {
             return;
+        }
 
         if (mCrop == null) {
             return;
@@ -341,16 +347,16 @@ public class TrimingActivity extends MonitoredActivity {
         mSaving = true;
 
         try {
-            Rect r = mCrop.getCropRect();
-            int width = r.width();
-            int height = r.height();
+            final Rect r = mCrop.getCropRect();
+            final int width = r.width();
+            final int height = r.height();
 
             // If we are circle cropping, we want alpha channel, which is the
             // third param here.
             Bitmap croppedImage = Bitmap.createBitmap(width, height, mCircleCrop ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
             {
-                Canvas canvas = new Canvas(croppedImage);
-                Rect dstRect = new Rect(0, 0, width, height);
+                final Canvas canvas = new Canvas(croppedImage);
+                final Rect dstRect = new Rect(0, 0, width, height);
                 canvas.drawBitmap(mBitmap, r, dstRect, null);
             }
 
@@ -375,7 +381,7 @@ public class TrimingActivity extends MonitoredActivity {
             if (mOutputX != 0 && mOutputY != 0) {
                 if (mScale) {
                     /* Scale the image to the required dimensions */
-                    Bitmap old = croppedImage;
+                    final Bitmap old = croppedImage;
                     LogUtils.d(TAG, "Scale Org size width[%d]height[%d]", old.getWidth(), old.getHeight());
 
                     // 画像を200*200ピクセルにリサイズ
@@ -393,14 +399,14 @@ public class TrimingActivity extends MonitoredActivity {
 
                     // Don't scale the image but instead fill it so it's the
                     // required dimension
-                    Bitmap b = Bitmap.createBitmap(mOutputX, mOutputY, Bitmap.Config.RGB_565);
-                    Canvas canvas = new Canvas(b);
+                    final Bitmap b = Bitmap.createBitmap(mOutputX, mOutputY, Bitmap.Config.RGB_565);
+                    final Canvas canvas = new Canvas(b);
 
-                    Rect srcRect = mCrop.getCropRect();
-                    Rect dstRect = new Rect(0, 0, mOutputX, mOutputY);
+                    final Rect srcRect = mCrop.getCropRect();
+                    final Rect dstRect = new Rect(0, 0, mOutputX, mOutputY);
 
-                    int dx = (srcRect.width() - dstRect.width()) / 2;
-                    int dy = (srcRect.height() - dstRect.height()) / 2;
+                    final int dx = (srcRect.width() - dstRect.width()) / 2;
+                    final int dy = (srcRect.height() - dstRect.height()) / 2;
 
                     /* If the srcRect is too big, use the center part of it. */
                     srcRect.inset(Math.max(0, dx), Math.max(0, dy));
@@ -426,10 +432,10 @@ public class TrimingActivity extends MonitoredActivity {
             LogUtils.d(TAG, "setResult OK writeBitmapToFile After[%s] width[%d]height[%d]", mImagePath, croppedImage.getWidth(), croppedImage.getHeight());
 
             // 呼び出し元画面へ戻す
-            Intent intent = new Intent();
+            final Intent intent = new Intent();
             intent.putExtra("file", mImagePath);
             setResult(RESULT_OK, intent);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             LogUtils.d(TAG, "setResult Cancel");
             setResult(RESULT_CANCELED);
         } finally {
@@ -437,7 +443,7 @@ public class TrimingActivity extends MonitoredActivity {
         }
     }
 
-    private void saveOutput(Bitmap croppedImage) {
+    private void saveOutput(final Bitmap croppedImage) {
         if (mSaveUri != null) {
             OutputStream outputStream = null;
             try {
@@ -445,13 +451,13 @@ public class TrimingActivity extends MonitoredActivity {
                 if (outputStream != null) {
                     croppedImage.compress(mOutputFormat, 75, outputStream);
                 }
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 // TODO: report error to caller
                 LogUtils.e(TAG, "Cannot open file %s", mSaveUri, ex);
             } finally {
                 TrimingUtil.closeSilently(outputStream);
             }
-            Bundle extras = new Bundle();
+            final Bundle extras = new Bundle();
             setResult(RESULT_OK, new Intent(mSaveUri.toString()).putExtras(extras));
         } else {
             LogUtils.e(TAG, "not defined image url");
@@ -483,32 +489,32 @@ public class TrimingActivity extends MonitoredActivity {
     }
 
     Runnable mRunFaceDetection = new Runnable() {
-        @SuppressWarnings ("hiding")
+        @SuppressWarnings("hiding")
         float mScale = 1F;
         Matrix mImageMatrix;
         FaceDetector.Face[] mFaces = new FaceDetector.Face[3];
         int mNumFaces;
 
         // For each face, we create a HightlightView for it.
-        private void handleFace(FaceDetector.Face f) {
-            PointF midPoint = new PointF();
+        private void handleFace(final FaceDetector.Face f) {
+            final PointF midPoint = new PointF();
 
-            int r = ((int) (f.eyesDistance() * mScale)) * 2;
+            final int r = ((int) (f.eyesDistance() * mScale)) * 2;
             f.getMidPoint(midPoint);
             midPoint.x *= mScale;
             midPoint.y *= mScale;
 
-            int midX = (int) midPoint.x;
-            int midY = (int) midPoint.y;
+            final int midX = (int) midPoint.x;
+            final int midY = (int) midPoint.y;
 
-            HighlightView hv = new HighlightView(mImageView);
+            final HighlightView hv = new HighlightView(mImageView);
 
-            int width = mBitmap.getWidth();
-            int height = mBitmap.getHeight();
+            final int width = mBitmap.getWidth();
+            final int height = mBitmap.getHeight();
 
-            Rect imageRect = new Rect(0, 0, width, height);
+            final Rect imageRect = new Rect(0, 0, width, height);
 
-            RectF faceRect = new RectF(midX, midY, midX, midY);
+            final RectF faceRect = new RectF(midX, midY, midX, midY);
             faceRect.inset(-r, -r);
             if (faceRect.left < 0) {
                 faceRect.inset(-faceRect.left, -faceRect.left);
@@ -533,12 +539,12 @@ public class TrimingActivity extends MonitoredActivity {
 
         // Create a default HightlightView if we found no face in the picture.
         private void makeDefault() {
-            HighlightView hv = new HighlightView(mImageView);
+            final HighlightView hv = new HighlightView(mImageView);
 
-            int width = mBitmap.getWidth();
-            int height = mBitmap.getHeight();
+            final int width = mBitmap.getWidth();
+            final int height = mBitmap.getHeight();
 
-            Rect imageRect = new Rect(0, 0, width, height);
+            final Rect imageRect = new Rect(0, 0, width, height);
 
             // make the default size about 4/5 of the width or height
             int cropWidth = Math.min(width, height) * 4 / 5;
@@ -552,10 +558,10 @@ public class TrimingActivity extends MonitoredActivity {
                 }
             }
 
-            int x = (width - cropWidth) / 2;
-            int y = (height - cropHeight) / 2;
+            final int x = (width - cropWidth) / 2;
+            final int y = (height - cropHeight) / 2;
 
-            RectF cropRect = new RectF(x, y, x + cropWidth, y + cropHeight);
+            final RectF cropRect = new RectF(x, y, x + cropWidth, y + cropHeight);
             hv.setup(mImageMatrix, imageRect, cropRect, mCircleCrop, mAspectX != 0 && mAspectY != 0);
 
             mImageView.mHighlightViews.clear(); // Thong added for rotate
@@ -573,19 +579,20 @@ public class TrimingActivity extends MonitoredActivity {
             if (mBitmap.getWidth() > 256) {
                 mScale = 256.0F / mBitmap.getWidth();
             }
-            Matrix matrix = new Matrix();
+            final Matrix matrix = new Matrix();
             matrix.setScale(mScale, mScale);
-            Bitmap faceBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+            final Bitmap faceBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
             return faceBitmap;
         }
 
+        @Override
         public void run() {
             mImageMatrix = mImageView.getImageMatrix();
-            Bitmap faceBitmap = prepareBitmap();
+            final Bitmap faceBitmap = prepareBitmap();
 
             mScale = 1.0F / mScale;
             if (faceBitmap != null && mDoFaceDetection) {
-                FaceDetector detector = new FaceDetector(faceBitmap.getWidth(), faceBitmap.getHeight(), mFaces.length);
+                final FaceDetector detector = new FaceDetector(faceBitmap.getWidth(), faceBitmap.getHeight(), mFaces.length);
                 mNumFaces = detector.findFaces(faceBitmap, mFaces);
             }
 
@@ -594,6 +601,7 @@ public class TrimingActivity extends MonitoredActivity {
             }
 
             mHandler.post(new Runnable() {
+                @Override
                 public void run() {
                     mWaitingToPick = mNumFaces > 1;
                     if (mNumFaces > 0) {
@@ -623,15 +631,15 @@ public class TrimingActivity extends MonitoredActivity {
     public static final int NO_STORAGE_ERROR = -1;
     public static final int CANNOT_STAT_ERROR = -2;
 
-    public static void showStorageToast(Activity activity) {
+    public static void showStorageToast(final Activity activity) {
         showStorageToast(activity, calculatePicturesRemaining());
     }
 
-    public static void showStorageToast(Activity activity, int remaining) {
+    public static void showStorageToast(final Activity activity, final int remaining) {
         String noStorageText = null;
 
         if (remaining == NO_STORAGE_ERROR) {
-            String state = Environment.getExternalStorageState();
+            final String state = Environment.getExternalStorageState();
             if (state == Environment.MEDIA_CHECKING) {
                 noStorageText = "Preparing card";
             } else {
@@ -654,12 +662,12 @@ public class TrimingActivity extends MonitoredActivity {
              * return NO_STORAGE_ERROR;
              * } else {
              */
-            String storageDirectory = Environment.getExternalStorageDirectory().toString();
-            StatFs stat = new StatFs(storageDirectory);
-            float remaining = ((float) stat.getAvailableBlocks() * (float) stat.getBlockSize()) / 400000F;
+            final String storageDirectory = Environment.getExternalStorageDirectory().toString();
+            final StatFs stat = new StatFs(storageDirectory);
+            final float remaining = ((float) stat.getAvailableBlocks() * (float) stat.getBlockSize()) / 400000F;
             return (int) remaining;
             // }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             // if we can't stat the filesystem then we don't know how many
             // pictures are remaining. it might be zero but just leave it
             // blank since we really don't know.

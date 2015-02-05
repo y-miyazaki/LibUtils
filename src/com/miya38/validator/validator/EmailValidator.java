@@ -9,22 +9,22 @@ import com.miya38.validator.AbstractValidator;
 
 public class EmailValidator extends AbstractValidator {
 
-    private String mErrorMessage;
+    private final String mErrorMessage;
 
     private String mDomainName = "";
 
-    public EmailValidator(Context c, int errorMessage) {
+    public EmailValidator(final Context c, final int errorMessage) {
         super(c);
         mErrorMessage = mContext.getString(errorMessage);
     }
 
-    public EmailValidator(Context c, String errorMessage) {
+    public EmailValidator(final Context c, final String errorMessage) {
         super(c);
         mErrorMessage = errorMessage;
     }
 
     @Override
-    public boolean isValid(String charseq) {
+    public boolean isValid(final String charseq) {
         if (charseq.length() > 0) {
             boolean matchFound = false;
 
@@ -41,8 +41,11 @@ public class EmailValidator extends AbstractValidator {
                 // check whether match is found
                 matchFound = m.matches();
 
-                if (matchFound) return true;
-                else return false;
+                if (matchFound) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 // test sans le domaine
 
@@ -54,8 +57,11 @@ public class EmailValidator extends AbstractValidator {
                 matchFound = m.matches();
             }
 
-            if (matchFound) return true;
-            else return false;
+            if (matchFound) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return true;
         }
@@ -67,14 +73,15 @@ public class EmailValidator extends AbstractValidator {
     }
 
     /**
-     * Lets say that the email address must be valid for such domain. This function only accepts strings of Regexp
-     *
+     * Lets say that the email address must be valid for such domain. This
+     * function only accepts strings of Regexp
+     * 
      * @param name
      *            Regexp Domain Name
-     *
+     * 
      *            example : gmail.com
      */
-    public void setDomainName(String name) {
+    public void setDomainName(final String name) {
         mDomainName = name;
     }
 }

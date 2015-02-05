@@ -12,29 +12,30 @@ import com.miya38.validator.Validate;
 import com.miya38.validator.validator.NotEmptyValidator;
 
 /**
- * Validator class to validate if the fields are empty fields of 2 or not. If one of them is null, no error. If both are
+ * Validator class to validate if the fields are empty fields of 2 or not. If
+ * one of them is null, no error. If both are
  * nulls: Error
- *
+ * 
  * @author throrin19
- *
+ * 
  */
 public class OrTwoRequiredValidate extends AbstractValidate {
 
-    private TextView mField1;
-    private TextView mField2;
-    private Context mContext;
+    private final TextView mField1;
+    private final TextView mField2;
+    private final Context mContext;
     private String mErrorMessage;
-    private TextView mSource;
+    private final TextView mSource;
     private String mErrorMessage2;
 
-    public OrTwoRequiredValidate(TextView field1, TextView field2) {
+    public OrTwoRequiredValidate(final TextView field1, final TextView field2) {
         this.mField1 = field1;
         this.mField2 = field2;
         mSource = mField1;
         mContext = field1.getContext();
     }
 
-    public OrTwoRequiredValidate(TextView field1, TextView field2, int errorMessage) {
+    public OrTwoRequiredValidate(final TextView field1, final TextView field2, final int errorMessage) {
         this.mField1 = field1;
         this.mField2 = field2;
         mSource = mField1;
@@ -42,7 +43,7 @@ public class OrTwoRequiredValidate extends AbstractValidate {
         mErrorMessage = mContext.getString(errorMessage);
     }
 
-    public OrTwoRequiredValidate(TextView field1, TextView field2, String errorMessage) {
+    public OrTwoRequiredValidate(final TextView field1, final TextView field2, final String errorMessage) {
         this.mField1 = field1;
         this.mField2 = field2;
         mSource = mField1;
@@ -51,7 +52,7 @@ public class OrTwoRequiredValidate extends AbstractValidate {
     }
 
     @Override
-    public boolean isValid(String value) {
+    public boolean isValid(final String value) {
         final Validate field1Validator = new Validate(mField1);
         field1Validator.addValidator(new NotEmptyValidator(mContext, mErrorMessage));
 
@@ -73,13 +74,13 @@ public class OrTwoRequiredValidate extends AbstractValidate {
 
     @Override
     public List<String> getMessages() {
-        List<String> result = new ArrayList<String>();
+        final List<String> result = new ArrayList<String>();
         result.add(mErrorMessage);
         return result;
     }
 
     @Override
-    public void addValidator(AbstractValidator validator) {
+    public void addValidator(final AbstractValidator validator) {
     }
 
     @Override

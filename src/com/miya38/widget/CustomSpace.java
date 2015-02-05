@@ -15,17 +15,18 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Space is a lightweight View subclass that may be used to create gaps between components in general purpose layouts.
+ * Space is a lightweight View subclass that may be used to create gaps between
+ * components in general purpose layouts.
  */
 public final class CustomSpace extends View {
     /**
      * Constructor
-     *
+     * 
      * @param context
      * @param attrs
      * @param defStyle
      */
-    public CustomSpace(Context context, AttributeSet attrs, int defStyle) {
+    public CustomSpace(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         if (getVisibility() == VISIBLE) {
             setVisibility(INVISIBLE);
@@ -34,40 +35,41 @@ public final class CustomSpace extends View {
 
     /**
      * Constructor
-     *
+     * 
      * @param context
      * @param attrs
      */
-    public CustomSpace(Context context, AttributeSet attrs) {
+    public CustomSpace(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
     /**
      * Constructor
-     *
+     * 
      * @param context
      */
-    public CustomSpace(Context context) {
+    public CustomSpace(final Context context) {
         // noinspection NullableProblems
         this(context, null);
     }
 
     /**
      * Draw nothing.
-     *
+     * 
      * @param canvas
      *            an unused parameter.
      */
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(final Canvas canvas) {
         // 何もしない。
     }
 
     /**
-     * Compare to: {@link View#getDefaultSize(int, int)} If mode is AT_MOST, return the child size instead of the parent
+     * Compare to: {@link View#getDefaultSize(int, int)} If mode is AT_MOST,
+     * return the child size instead of the parent
      * size (unless it is too big).
      */
-    private static int getDefaultSize2(int size, int measureSpec) {
+    private static int getDefaultSize2(final int size, final int measureSpec) {
         final int specMode = MeasureSpec.getMode(measureSpec);
         final int specSize = MeasureSpec.getSize(measureSpec);
 
@@ -85,7 +87,7 @@ public final class CustomSpace extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize2(getSuggestedMinimumWidth(), widthMeasureSpec), getDefaultSize2(getSuggestedMinimumHeight(), heightMeasureSpec));
     }
 }

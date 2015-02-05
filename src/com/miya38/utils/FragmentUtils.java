@@ -2,6 +2,7 @@ package com.miya38.utils;
 
 import java.io.Serializable;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,10 +18,6 @@ import android.support.v4.app.FragmentTransaction;
 public final class FragmentUtils {
     /** スライドin */
     private static int sInRight;
-    /** スライドin */
-    private static int sInLeft;
-    /** スライドOut */
-    private static int sOutRight;
     /** スライドOut */
     private static int sOutLeft;
 
@@ -30,6 +27,10 @@ public final class FragmentUtils {
     private FragmentUtils() {
 
     }
+
+    // ////////////////////////////////////////////////
+    // public
+    // ////////////////////////////////////////////////
 
     /**
      * カスタムアニメーション設定
@@ -43,10 +44,8 @@ public final class FragmentUtils {
      * @param slideOutRight
      *            画面戻りアニメーションID(右)
      */
-    public static void setCustomAnimations(int slideInRight, int slideOutLeft, int slideInLeft, int slideOutRight) {
+    public static void setCustomAnimations(final int slideInRight, final int slideOutLeft, final int slideInLeft, final int slideOutRight) {
         sInRight = slideInRight;
-        sInLeft = slideInLeft;
-        sOutRight = slideOutRight;
         sOutLeft = slideOutLeft;
     }
 
@@ -59,9 +58,9 @@ public final class FragmentUtils {
      *            取得対象のキー
      * @return 引き渡された値
      */
-    public static Integer getInt(Fragment fragment, String key) {
+    public static Integer getInt(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
-            if (fragment.getArguments().getInt(key, 0) == 0) {
+            if (fragment.getArguments().getInt(key, -1) == -1) {
                 return null;
             }
             return fragment.getArguments().getInt(key);
@@ -80,7 +79,7 @@ public final class FragmentUtils {
      *            未設定の場合に返却される値
      * @return 引き渡された値
      */
-    public static Integer getInt(Fragment fragment, String key, int defaultValue) {
+    public static Integer getInt(final Fragment fragment, final String key, final int defaultValue) {
         if (fragment.getArguments() != null) {
             return fragment.getArguments().getInt(key, defaultValue);
         }
@@ -96,7 +95,7 @@ public final class FragmentUtils {
      *            取得対象のキー
      * @return 引き渡された値
      */
-    public static Long getLong(Fragment fragment, String key) {
+    public static Long getLong(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
             if (fragment.getArguments().getLong(key, 0L) == 0L) {
                 return null;
@@ -117,7 +116,7 @@ public final class FragmentUtils {
      *            未設定の場合に返却される値
      * @return 引き渡された値
      */
-    public static Long getLong(Fragment fragment, String key, long defaultValue) {
+    public static Long getLong(final Fragment fragment, final String key, final long defaultValue) {
         if (fragment.getArguments() != null) {
             return fragment.getArguments().getLong(key, defaultValue);
         }
@@ -133,7 +132,7 @@ public final class FragmentUtils {
      *            取得対象のキー
      * @return 引き渡された値(未設定の場合はnullを返却する。)
      */
-    public static String getString(Fragment fragment, String key) {
+    public static String getString(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
             return fragment.getArguments().getString(key);
         }
@@ -151,7 +150,7 @@ public final class FragmentUtils {
      *            未設定の場合に返却される値
      * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
      */
-    public static String getString(Fragment fragment, String key, String defaultValue) {
+    public static String getString(final Fragment fragment, final String key, final String defaultValue) {
         if (fragment.getArguments() != null) {
             return fragment.getArguments().getString(key, defaultValue);
         }
@@ -167,9 +166,9 @@ public final class FragmentUtils {
      *            取得対象のキー
      * @return 引き渡された値(未設定の場合はnullを返却する。)
      */
-    public static Boolean getBoolean(Fragment fragment, String key) {
+    public static String[] getStringArray(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
-            return fragment.getArguments().getBoolean(key);
+            return fragment.getArguments().getStringArray(key);
         }
         return null;
     }
@@ -185,7 +184,7 @@ public final class FragmentUtils {
      *            未設定の場合に返却される値
      * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
      */
-    public static Boolean getBoolean(Fragment fragment, String key, boolean defaultValue) {
+    public static Boolean getBoolean(final Fragment fragment, final String key, final boolean defaultValue) {
         if (fragment.getArguments() != null) {
             return fragment.getArguments().getBoolean(key, defaultValue);
         }
@@ -195,6 +194,8 @@ public final class FragmentUtils {
     /**
      * 前画面からデータを取得する
      *
+     * @param <V>
+     *            Serializable
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -202,9 +203,28 @@ public final class FragmentUtils {
      * @return 引き渡された値
      */
     @SuppressWarnings("unchecked")
-    public static <V extends Serializable> V getSerializable(Fragment fragment, String key) {
+    public static <V extends Serializable> V getSerialize(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
             return (V) fragment.getArguments().getSerializable(key);
+        }
+        return null;
+    }
+
+    /**
+     * 前画面からデータを取得する
+     *
+     * @param <V>
+     *            Parcelable
+     * @param fragment
+     *            フラグメントのインスタンス
+     * @param key
+     *            取得対象のキー
+     * @return 引き渡された値
+     */
+    @SuppressWarnings("unchecked")
+    public static <V extends Parcelable> V getParcelable(final Fragment fragment, final String key) {
+        if (fragment.getArguments() != null) {
+            return (V) fragment.getArguments().getParcelable(key);
         }
         return null;
     }
@@ -231,7 +251,7 @@ public final class FragmentUtils {
      *            true:全てバックスタックからポップする<br>
      *            false:そのままバックスタックを残す。<br>
      */
-    public static void startFragment(FragmentActivity activity, int viewId, Fragment fragment, boolean isAddToBackStack, boolean isAllPopBackStack) {
+    public static void startFragment(final FragmentActivity activity, final int viewId, final Fragment fragment, final boolean isAddToBackStack, final boolean isAllPopBackStack) {
         // Insert the fragment by replacing any existing fragment
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -243,7 +263,6 @@ public final class FragmentUtils {
                 fragmentManager.popBackStack();
             }
         }
-        // fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         // カスタムアニメーションを設定されている場合
         if (sInRight != 0) {
             fragmentTransaction.setCustomAnimations(sInRight, sOutLeft, sOutLeft, sInRight);
@@ -251,7 +270,6 @@ public final class FragmentUtils {
         fragmentTransaction.replace(viewId, fragment);
 
         if (isAddToBackStack) {
-            // fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
             fragmentTransaction.addToBackStack(null);
             fragmentManager.addOnBackStackChangedListener(new OnBackStackChangedListener() {
                 @Override
@@ -279,12 +297,11 @@ public final class FragmentUtils {
      * @param isAddToBackStack
      *            バックスタックを積むか？
      */
-    public static void startFragment(FragmentActivity activity, int viewId, Fragment fragment, boolean isAddToBackStack) {
+    public static void startFragment(final FragmentActivity activity, final int viewId, final Fragment fragment, final boolean isAddToBackStack) {
         // Insert the fragment by replacing any existing fragment
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         // カスタムアニメーションを設定されている場合
         if (sInRight != 0) {
             fragmentTransaction.setCustomAnimations(sInRight, sOutLeft, sOutLeft, sInRight);
@@ -312,12 +329,11 @@ public final class FragmentUtils {
      * @param activity
      *            FragmentActivity
      */
-    public static void finishAllFragment(FragmentActivity activity) {
+    public static void finishAllFragment(final FragmentActivity activity) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         // もしtrueの場合はフラグメントスタックを全てpopする。
-        // fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         // カスタムアニメーションを設定されている場合
         if (sInRight != 0) {
             fragmentTransaction.setCustomAnimations(sInRight, sOutLeft, sOutLeft, sInRight);
@@ -338,7 +354,7 @@ public final class FragmentUtils {
      * @param activity
      *            FragmentActivity
      */
-    public static void finishFragment(FragmentActivity activity, int viewId) {
+    public static void finishFragment(final FragmentActivity activity, final int viewId) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentManager.popBackStackImmediate();
@@ -350,7 +366,7 @@ public final class FragmentUtils {
      *
      * @return Fragment
      */
-    public static Fragment getVisibleFragment(FragmentActivity activity) {
+    public static Fragment getVisibleFragment(final FragmentActivity activity) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
         for (final Fragment fragment : fragmentManager.getFragments()) {
             if (fragment != null && fragment.isVisible()) {
@@ -359,4 +375,13 @@ public final class FragmentUtils {
         }
         return null;
     }
+
+    // ////////////////////////////////////////////////
+    // private
+    // ////////////////////////////////////////////////
+
+    // ////////////////////////////////////////////////
+    // inner class
+    // ////////////////////////////////////////////////
+
 }

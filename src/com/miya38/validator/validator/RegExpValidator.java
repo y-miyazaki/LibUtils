@@ -12,33 +12,33 @@ import com.miya38.validator.ValidatorException;
  */
 public class RegExpValidator extends AbstractValidator {
 
-
     private Pattern mPattern;
 
-    private String mErrorMessage;
+    private final String mErrorMessage;
 
-    public RegExpValidator(Context c, int errorMessage) {
+    public RegExpValidator(final Context c, final int errorMessage) {
         super(c);
         mErrorMessage = mContext.getString(errorMessage);
     }
-    public RegExpValidator(Context c, String errorMessage) {
+
+    public RegExpValidator(final Context c, final String errorMessage) {
         super(c);
         mErrorMessage = errorMessage;
     }
 
-    public void setPattern(String pattern){
+    public void setPattern(final String pattern) {
         mPattern = Pattern.compile(pattern);
     }
 
-    public void setPattern(Pattern pattern) {
+    public void setPattern(final Pattern pattern) {
         mPattern = pattern;
     }
 
     @Override
-    public boolean isValid(String value) throws ValidatorException {
-        if(mPattern != null){
+    public boolean isValid(final String value) throws ValidatorException {
+        if (mPattern != null) {
             return mPattern.matcher(value).matches();
-        }else{
+        } else {
             throw new ValidatorException("You can set Regexp Pattern first");
         }
     }

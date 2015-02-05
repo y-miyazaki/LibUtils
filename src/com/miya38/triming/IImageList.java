@@ -43,7 +43,7 @@ import android.os.Parcelable;
 /**
  * The interface of all image collections used in gallery.
  */
-@SuppressWarnings ("javadoc")
+@SuppressWarnings("javadoc")
 public interface IImageList extends Parcelable {
     public HashMap<String, String> getBucketIds();
 
@@ -51,7 +51,7 @@ public interface IImageList extends Parcelable {
 
     /**
      * Returns the count of image objects.
-     *
+     * 
      * @return the number of images
      */
     public int getCount();
@@ -63,7 +63,7 @@ public interface IImageList extends Parcelable {
 
     /**
      * Returns the image at the ith position.
-     *
+     * 
      * @param i
      *            the position
      * @return the image at the ith position
@@ -72,14 +72,14 @@ public interface IImageList extends Parcelable {
 
     /**
      * Returns the image with a particular Uri.
-     *
+     * 
      * @param uri
      * @return the image with a particular Uri. null if not found.
      */
     public IImage getImageForUri(Uri uri);
 
     /**
-     *
+     * 
      * @param image
      * @return true if the image was removed.
      */
@@ -87,7 +87,7 @@ public interface IImageList extends Parcelable {
 
     /**
      * Removes the image at the ith position.
-     *
+     * 
      * @param i
      *            the position
      */
@@ -97,7 +97,7 @@ public interface IImageList extends Parcelable {
 
     /**
      * Generate thumbnail for the image (if it has not been generated.)
-     *
+     * 
      * @param index
      *            the position of the image
      */

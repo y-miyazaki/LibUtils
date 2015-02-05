@@ -30,7 +30,7 @@ public final class FileApplicationUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -41,7 +41,7 @@ public final class FileApplicationUtils {
     /**
      * アプリケーション領域からファイル読み込み<br>
      * filePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            読み込みパス(相対パス+ファイル名)
      * @return ファイルデータ
@@ -67,7 +67,7 @@ public final class FileApplicationUtils {
     /**
      * アプリケーション領域からファイル読み込み<br>
      * filePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            読み込みパス(相対パス+ファイル名)
      * @return ファイルデータ
@@ -93,7 +93,7 @@ public final class FileApplicationUtils {
     /**
      * アプリケーション領域からBitmap読み込み<br>
      * filePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            ファイル名のみを指定(アプリケーションエリアに書き込むため、パスは指定しない(test.txt)
      * @return ビットマップオブジェクト (存在しなければnull)
@@ -117,7 +117,7 @@ public final class FileApplicationUtils {
     /**
      * アプリケーション領域へのファイル書き込み<br>
      * filePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            保存パス(相対パス+ファイル名)
      * @param data
@@ -147,7 +147,7 @@ public final class FileApplicationUtils {
 
     /**
      * アプリケーション領域への画像ファイル書き込み filePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param bitmap
      *            画像
      * @param filePath
@@ -184,7 +184,7 @@ public final class FileApplicationUtils {
     /**
      * 指定したファイルを削除します。<br>
      * filePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param filePath
      *            削除するためのファイルパス
      * @return true:ファイル削除成功<br>
@@ -198,7 +198,7 @@ public final class FileApplicationUtils {
     /**
      * ファイルコピー<br>
      * srcFilePath/dstFilePathは、アプリケーションディレクトリからの相対パスを指定してください。
-     *
+     * 
      * @param srcFilePath
      *            コピーファイル元[ファイル名のみを指定(アプリケーションエリアに書き込むため、パスは指定しない(test1.txt)]
      * @param dstFilePath
@@ -238,7 +238,7 @@ public final class FileApplicationUtils {
 
     /**
      * アプリケーションディレクトリ
-     *
+     * 
      * @return アプリケーションディレクトリ
      */
     public static String getPath() {
@@ -247,7 +247,7 @@ public final class FileApplicationUtils {
 
     /**
      * アプリケーションディレクトリ+ファイル名返却
-     *
+     * 
      * @param filename
      *            ファイル名
      * @return アプリケーションディレクトリ+ファイル名返却
@@ -258,7 +258,7 @@ public final class FileApplicationUtils {
 
     /**
      * ファイルの存在有無を返却する
-     *
+     * 
      * @param filePath
      *            ファイルパス(フルパスで指定する。)
      * @return true:ファイルが存在する。<br>
@@ -274,7 +274,7 @@ public final class FileApplicationUtils {
 
     /**
      * 内部ストレージに使用可能な空き容量があるかをチェックする
-     *
+     * 
      * @param path
      *            ファイルパス
      * @param size
@@ -288,7 +288,7 @@ public final class FileApplicationUtils {
 
     /**
      * Check how much usable space is available at a given path.
-     *
+     * 
      * @param filePath
      *            ファイルパス
      * @return The space available in bytes
@@ -310,7 +310,7 @@ public final class FileApplicationUtils {
 
     /**
      * Check how much usable space is available at a given path.
-     *
+     * 
      * @param filePath
      *            ファイルパス
      * @return The space available in bytes

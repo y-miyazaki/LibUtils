@@ -14,9 +14,9 @@ import android.annotation.SuppressLint;
 
 /**
  * Date に関するユーティリティメソッドを提供します。
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class DateUtils {
     /**
@@ -81,11 +81,11 @@ public final class DateUtils {
     /**
      * 文字列フォーマット<br>
      * yyyy/MM/dd HH:mm:ss z形式で返却する
-     *
+     * 
      * @param date
      * @return フォーマットされた文字列
      */
-    public static String toString(Date date) {
+    public static String toString(final Date date) {
         if (null == date) {
             return null;
         }
@@ -94,12 +94,12 @@ public final class DateUtils {
 
     /**
      * 文字列フォーマット
-     *
+     * 
      * @param date
      * @param pattern
      * @return フォーマットされた文字列
      */
-    public static String toString(Date date, String pattern) {
+    public static String toString(final Date date, final String pattern) {
         if (null == date) {
             return null;
         }
@@ -110,7 +110,7 @@ public final class DateUtils {
     /**
      * 数値フォーマット<br>
      * 指定のパターン形式で返却する
-     *
+     * 
      * @param year
      * @param month
      * @param day
@@ -118,12 +118,12 @@ public final class DateUtils {
      *            日付フォーマット(ex:yyyy/MM/dd HH:mm:ss z)
      * @return フォーマットされた文字列
      */
-    public static String toString(int year, int month, int day, String pattern) {
+    public static String toString(final int year, final int month, final int day, final String pattern) {
         try {
             final DateFormat format1 = new SimpleDateFormat("yyyymmdd", Locale.JAPAN);
             final DateFormat format2 = new SimpleDateFormat(pattern, Locale.JAPAN);
             return format2.format(format1.parse(String.format("%04d%02d%02d", new ParsePosition(0))));
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             return null;
         }
     }
@@ -131,83 +131,83 @@ public final class DateUtils {
     /**
      * 数値フォーマット<br>
      * yyyy/MM/dd HH:mm:ss z形式で返却する
-     *
+     * 
      * @param year
      * @param month
      * @param day
      * @return フォーマットされた文字列
      */
-    public static String toString(int year, int month, int day) {
+    public static String toString(final int year, final int month, final int day) {
         try {
             final DateFormat format1 = new SimpleDateFormat("yyyyMMdd", Locale.JAPAN);
             final DateFormat format2 = new SimpleDateFormat(DATETIME_FORMAT, Locale.JAPAN);
             return format2.format(format1.parse(String.format("%04d%02d%02d", new ParsePosition(0))));
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             return null;
         }
     }
 
     /**
      * パース
-     *
+     * 
      * @param date
      * @return パースDate
      */
-    public static Date parse(String date) {
+    public static Date parse(final String date) {
         return parse(date, (Date) null);
     }
 
     /**
      * パース
-     *
+     * 
      * @param date
      * @param pattern
      * @return パースDate
      */
-    public static Date parse(String date, String pattern) {
+    public static Date parse(final String date, final String pattern) {
         return parse(date, null, pattern);
     }
 
     /**
      * パース
-     *
+     * 
      * @param date
      * @param defaultValue
      * @return パースDate
      */
-    public static Date parse(String date, Date defaultValue) {
+    public static Date parse(final String date, final Date defaultValue) {
         try {
             return new SimpleDateFormat(DATETIME_FORMAT, Locale.JAPAN).parse(date);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             return defaultValue;
         }
     }
 
     /**
      * パース
-     *
+     * 
      * @param date
      * @param defaultValue
      * @param pattern
      * @return パースDate
      */
-    public static Date parse(String date, Date defaultValue, String pattern) {
+    public static Date parse(final String date, final Date defaultValue, final String pattern) {
         try {
             return new SimpleDateFormat(pattern, Locale.JAPAN).parse(date);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             return defaultValue;
         }
     }
 
     /**
      * date型で返却
-     *
+     * 
      * @param year
      * @param month
      * @param date
      * @return Date型
      */
-    public static Date date(int year, int month, int date) {
+    public static Date date(final int year, final int month, final int date) {
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month - 1);
@@ -218,7 +218,7 @@ public final class DateUtils {
 
     /**
      * date型で返却
-     *
+     * 
      * @param year
      * @param month
      * @param date
@@ -227,7 +227,7 @@ public final class DateUtils {
      * @param sec
      * @return Date型
      */
-    public static Date date(int year, int month, int date, int hour, int min, int sec) {
+    public static Date date(final int year, final int month, final int date, final int hour, final int min, final int sec) {
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month - 1);
@@ -241,20 +241,20 @@ public final class DateUtils {
 
     /**
      * unixtimeから日付を指定されたフォーマットで返却する
-     *
+     * 
      * @param unixtime
      *            UNIXTIME
      * @param pattern
      * @return 現在時間文字列
      */
-    public static String getDate(int unixtime, String pattern) {
+    public static String getDate(final int unixtime, final String pattern) {
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.JAPAN);
         return simpleDateFormat.format(new Date((long) unixtime * 1000));
     }
 
     /**
      * 現在時間
-     *
+     * 
      * @return 現在時間
      */
     public static Date now() {
@@ -263,7 +263,7 @@ public final class DateUtils {
 
     /**
      * 現在時間
-     *
+     * 
      * @return 現在時間文字列
      */
     public static String nowToString() {
@@ -272,24 +272,24 @@ public final class DateUtils {
 
     /**
      * 現在時間
-     *
+     * 
      * @param pattern
      * @return 現在時間文字列
      */
-    public static String nowToString(String pattern) {
+    public static String nowToString(final String pattern) {
         return toString(now(), pattern);
     }
 
     /**
      * 元の日付から追加で月を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addMonths
      *            月
      * @return 更新された時間
      */
-    public static Date addMonth(Date date, int addMonths) {
+    public static Date addMonth(final Date date, final int addMonths) {
         final Calendar c = Calendar.getInstance();
 
         c.setTime(date);
@@ -300,14 +300,14 @@ public final class DateUtils {
 
     /**
      * 元の日付から追加で日付を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addDays
      *            日付
      * @return 更新された時間
      */
-    public static Date addDay(Date date, int addDays) {
+    public static Date addDay(final Date date, final int addDays) {
         final Calendar c = Calendar.getInstance();
 
         c.setTime(date);
@@ -318,13 +318,13 @@ public final class DateUtils {
 
     /**
      * 元の時間から追加で時間を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addHours
      * @return 更新された時間
      */
-    public static Date addHour(Date date, int addHours) {
+    public static Date addHour(final Date date, final int addHours) {
         final Calendar c = Calendar.getInstance();
 
         c.setTime(date);
@@ -335,14 +335,14 @@ public final class DateUtils {
 
     /**
      * 元の時間から追加で分数を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addMinutes
      *            分数
      * @return 更新された時間
      */
-    public static Date addMinutes(Date date, int addMinutes) {
+    public static Date addMinutes(final Date date, final int addMinutes) {
         final Calendar c = Calendar.getInstance();
 
         c.setTime(date);
@@ -353,14 +353,14 @@ public final class DateUtils {
 
     /**
      * 元の時間から追加で秒数を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addSeconds
      *            秒数
      * @return 更新された時間
      */
-    public static Date addSecond(Date date, int addSeconds) {
+    public static Date addSecond(final Date date, final int addSeconds) {
         final Calendar c = Calendar.getInstance();
 
         c.setTime(date);
@@ -371,37 +371,37 @@ public final class DateUtils {
 
     /**
      * 指定した日付が「新しい」かどうか判別します。
-     *
+     * 
      * 「新しい」と判定する期間は、freshDays に指定した日にちの間とします。
-     *
+     * 
      * @param date
      * @param freshDays
      * @return 新しい場合はtrue, 古い場合はfalse
      */
-    public static boolean isFreshDate(Date date, int freshDays) {
+    public static boolean isFreshDate(final Date date, final int freshDays) {
         return addDay(now(), -freshDays).before(date);
     }
 
     /**
      * 指定した日付が「新しい」かどうか判別します。
-     *
+     * 
      * 「新しい」と判定する期間は、freshHours に指定した時間の間とします。
-     *
+     * 
      * @param date
      * @param freshHours
      * @return 新しい場合はtrue, 古い場合はfalse
      */
-    public static boolean isFreshHour(Date date, int freshHours) {
+    public static boolean isFreshHour(final Date date, final int freshHours) {
         return addHour(now(), -freshHours).before(date);
     }
 
     /**
      * 当月の初日を取得します。
-     *
+     * 
      * @param date
      * @return 当月の初日
      */
-    public static Date getFirstDateOfMonth(Date date) {
+    public static Date getFirstDateOfMonth(final Date date) {
         final Calendar c = Calendar.getInstance();
         c.setTime(date);
         setZero(c);
@@ -411,11 +411,11 @@ public final class DateUtils {
 
     /**
      * 当月の最終日時を取得します。
-     *
+     * 
      * @param date
      * @return 最終日の日付
      */
-    public static Date getLastDateOfMonth(Date date) {
+    public static Date getLastDateOfMonth(final Date date) {
         final Calendar c = Calendar.getInstance();
         c.setTime(date);
         setZero(c);
@@ -429,18 +429,18 @@ public final class DateUtils {
     /**
      * 文字列型からDate型に変更する。<br>
      * yyyy/MM/dd HH:mm:ss z
-     *
+     * 
      * @param date
      *            文字列型の日付
      * @param format
      *            第1引数で指定した日付のフォーマット
      * @return Date Date型
      */
-    public static Date getStringToDate(String date, String format) {
+    public static Date getStringToDate(final String date, final String format) {
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.JAPAN);
         try {
             return simpleDateFormat.parse(date);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             return null;
         }
     }
@@ -448,21 +448,21 @@ public final class DateUtils {
     /**
      * 文字列型からDate型に変更する。<br>
      * デフォルトフォーマットの「yyyy/MM/dd HH:mm:ss z」を元にパースする。
-     *
+     * 
      * @param date
      *            文字列型の日付
      * @return Date Date型
      */
-    public static Date getStringToDate(String date) {
+    public static Date getStringToDate(final String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATETIME_FORMAT, Locale.JAPAN);
         try {
             return simpleDateFormat.parse(date);
-        } catch (ParseException e1) {
+        } catch (final ParseException e1) {
             try {
                 final String replaceDate = date.replaceAll("JST", "");
                 simpleDateFormat = new SimpleDateFormat(DATETIME_FORMAT2, Locale.JAPAN);
                 return simpleDateFormat.parse(replaceDate);
-            } catch (ParseException e2) {
+            } catch (final ParseException e2) {
                 return null;
             }
         }
@@ -470,17 +470,19 @@ public final class DateUtils {
 
     /**
      * 2つの日付の差を求めます。
-     *
-     * 計算方法は以下となります。 1.最初に2つの日付を long 値に変換します。 　※この long 値は 1970 年 1 月 1 日 00:00:00 GMT からの 　経過ミリ秒数となります。 2.次にその差を求めます。
-     * 3.上記の計算で出た数量を 1 日の時間で割ることで 　日付の差を求めることができます。 　※1 日 ( 24 時間) は、86,400,000 ミリ秒です。
-     *
+     * 
+     * 計算方法は以下となります。 1.最初に2つの日付を long 値に変換します。 　※この long 値は 1970 年 1 月 1 日
+     * 00:00:00 GMT からの 　経過ミリ秒数となります。 2.次にその差を求めます。
+     * 3.上記の計算で出た数量を 1 日の時間で割ることで 　日付の差を求めることができます。 　※1 日 ( 24 時間) は、86,400,000
+     * ミリ秒です。
+     * 
      * @param date1
      *            日付 java.util.Date
      * @param date2
      *            日付 java.util.Date
      * @return 2つの日付の差
      */
-    public static int diffDateDay(Date date1, Date date2) {
+    public static int diffDateDay(final Date date1, final Date date2) {
         final long datetime1 = date1.getTime();
         final long datetime2 = date2.getTime();
         final long one_date_time = 1000 * 60 * 60 * 24;
@@ -489,15 +491,15 @@ public final class DateUtils {
 
     /**
      * 差分の時間を返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
-    public static int diffDateHour(Date date1, Date date2) {
+    public static int diffDateHour(final Date date1, final Date date2) {
         // ミリ秒単位で差を求める
         final long result = date1.getTime() - date2.getTime();
 
@@ -507,15 +509,15 @@ public final class DateUtils {
 
     /**
      * 差分の分数を返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
-    public static int diffDateMin(Date date1, Date date2) {
+    public static int diffDateMin(final Date date1, final Date date2) {
         // ミリ秒単位で差を求める
         final long result = date1.getTime() - date2.getTime();
 
@@ -525,15 +527,15 @@ public final class DateUtils {
 
     /**
      * 差分のsecを返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
-    public static int diffDateSec(Date date1, Date date2) {
+    public static int diffDateSec(final Date date1, final Date date2) {
         // ミリ秒単位で差を求める
         final long result = date1.getTime() - date2.getTime();
 
@@ -543,44 +545,44 @@ public final class DateUtils {
 
     /**
      * 差分のmsecを返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
-    public static long diffDateMsec(Date date1, Date date2) {
+    public static long diffDateMsec(final Date date1, final Date date2) {
         // ミリ秒単位で差を求める
         return date1.getTime() - date2.getTime();
     }
 
     /**
      * どちらの日付が進んでいるかを比較する
-     *
+     * 
      * @param date1
      *            比較対象の日付
      * @param date2
      *            比較対象の日付
-     *
+     * 
      * @return true:date1の方が新しい時間 false:date2の方が新しい時間
      */
-    public static boolean isDateCheck(Date date1, Date date2) {
+    public static boolean isDateCheck(final Date date1, final Date date2) {
         return (date1.getTime() - date2.getTime()) > 0;
     }
 
     /**
      * 最低年から現在年までのリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
      */
-    public static List<Integer> getYears(int minYear, boolean isAsc) {
-        List<Integer> years = new ArrayList<Integer>();
-        Calendar calendar = Calendar.getInstance();
-        int nowYear = calendar.get(Calendar.YEAR);
+    public static List<Integer> getYears(final int minYear, final boolean isAsc) {
+        final List<Integer> years = new ArrayList<Integer>();
+        final Calendar calendar = Calendar.getInstance();
+        final int nowYear = calendar.get(Calendar.YEAR);
         if (minYear <= nowYear) {
             if (isAsc) {
                 for (int i = minYear; i <= nowYear; i++) {
@@ -597,15 +599,15 @@ public final class DateUtils {
 
     /**
      * 最低年から現在年までのリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
      */
-    public static List<String> getYearsToString(int minYear, boolean isAsc) {
-        List<String> years = new ArrayList<String>();
-        Calendar calendar = Calendar.getInstance();
-        int nowYear = calendar.get(Calendar.YEAR);
+    public static List<String> getYearsToString(final int minYear, final boolean isAsc) {
+        final List<String> years = new ArrayList<String>();
+        final Calendar calendar = Calendar.getInstance();
+        final int nowYear = calendar.get(Calendar.YEAR);
         if (minYear <= nowYear) {
             if (isAsc) {
                 for (int i = minYear; i <= nowYear; i++) {
@@ -622,13 +624,13 @@ public final class DateUtils {
 
     /**
      * 月のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
      */
-    public static List<Integer> getMonths(boolean isAsc) {
-        List<Integer> months = new ArrayList<Integer>();
+    public static List<Integer> getMonths(final boolean isAsc) {
+        final List<Integer> months = new ArrayList<Integer>();
         if (isAsc) {
             for (int i = 1; i <= 12; i++) {
                 months.add(i);
@@ -643,13 +645,13 @@ public final class DateUtils {
 
     /**
      * 月のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
      */
-    public static List<String> getMonthsToString(boolean isAsc) {
-        List<String> months = new ArrayList<String>();
+    public static List<String> getMonthsToString(final boolean isAsc) {
+        final List<String> months = new ArrayList<String>();
         if (isAsc) {
             for (int i = 1; i <= 12; i++) {
                 months.add(Integer.toString(i));
@@ -664,13 +666,13 @@ public final class DateUtils {
 
     /**
      * 日のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
      */
-    public static List<Integer> getDays(boolean isAsc) {
-        List<Integer> days = new ArrayList<Integer>();
+    public static List<Integer> getDays(final boolean isAsc) {
+        final List<Integer> days = new ArrayList<Integer>();
         if (isAsc) {
             for (int i = 1; i <= 31; i++) {
                 days.add(i);
@@ -685,13 +687,13 @@ public final class DateUtils {
 
     /**
      * 日のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
      */
-    public static List<String> getDaysToString(boolean isAsc) {
-        List<String> days = new ArrayList<String>();
+    public static List<String> getDaysToString(final boolean isAsc) {
+        final List<String> days = new ArrayList<String>();
         if (isAsc) {
             for (int i = 1; i <= 31; i++) {
                 days.add(Integer.toString(i));
@@ -706,7 +708,7 @@ public final class DateUtils {
 
     /**
      * 曜日表示用の文字列を取得する
-     *
+     * 
      * @param date
      *            Date
      * @param englishFlg
@@ -714,7 +716,7 @@ public final class DateUtils {
      *            false:日本語
      * @return 曜日文字列
      */
-    public static String getWeek(Date date, boolean englishFlg) {
+    public static String getWeek(final Date date, final boolean englishFlg) {
         final Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         if (englishFlg) {
@@ -726,7 +728,7 @@ public final class DateUtils {
 
     /**
      * 曜日表示用の文字列を取得する
-     *
+     * 
      * @param cal
      *            Calender
      * @param englishFlg
@@ -734,7 +736,7 @@ public final class DateUtils {
      *            false:日本語
      * @return 曜日文字列
      */
-    public static String getWeek(Calendar cal, boolean englishFlg) {
+    public static String getWeek(final Calendar cal, final boolean englishFlg) {
         if (englishFlg) {
             return WEEK_EU[cal.get(Calendar.DAY_OF_WEEK) - 1];
         } else {
@@ -744,7 +746,7 @@ public final class DateUtils {
 
     /**
      * 曜日表示用の文字列を取得する
-     *
+     * 
      * @param year
      *            年
      * @param month
@@ -756,7 +758,7 @@ public final class DateUtils {
      *            false:日本語
      * @return 曜日文字列
      */
-    public static String getWeek(int year, int month, int day, boolean englishFlg) {
+    public static String getWeek(final int year, final int month, final int day, final boolean englishFlg) {
         final Calendar cal = Calendar.getInstance();
         cal.set(year, month - 1, day);
         if (englishFlg) {
@@ -768,7 +770,7 @@ public final class DateUtils {
 
     /**
      * 成年確認
-     *
+     * 
      * @param year
      *            生年月日:年
      * @param month
@@ -776,9 +778,9 @@ public final class DateUtils {
      * @param day
      *            生年月日:日
      * @return true 未成年(20歳未満),false 成年(20歳以上)
-     *
+     * 
      */
-    public static boolean isAdult(int year, int month, int day) {
+    public static boolean isAdult(final int year, final int month, final int day) {
         final Calendar calendar1 = Calendar.getInstance(); // 現在の日付
         final Calendar calendar2 = Calendar.getInstance(); // 生年月日
         final Calendar calendar3 = Calendar.getInstance(); // 18歳の日付
@@ -793,13 +795,13 @@ public final class DateUtils {
 
     /**
      * hh:mm:ss時間に変換する
-     *
+     * 
      * @param time
      *            msecを指定する
      * @return 時間(hh:mm:ss)
      */
     @SuppressLint("DefaultLocale")
-    public static String getClock(int time) {
+    public static String getClock(final int time) {
         final int hour_current_position = time / 3600000;
         final int min_current_position = (time - (hour_current_position * 3600000)) / 60000;
         final int sec_current_position = (time - (min_current_position * 60000)) / 1000;
@@ -808,13 +810,13 @@ public final class DateUtils {
 
     /**
      * 指定された時間(msec)からYYYY/MM/DD hh:mm:ss時間に変換する
-     *
+     * 
      * @param time
      *            msecを指定する
      * @return YYYY/MM/DD hh:mm:ssにて返却する
      */
     @SuppressLint("DefaultLocale")
-    public static String getDateClock(long time) {
+    public static String getDateClock(final long time) {
         final Date date = new Date(time);
         final DateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.JAPAN);
         return df.format(date);
@@ -822,13 +824,13 @@ public final class DateUtils {
 
     /**
      * HttpヘッダのExpiredをYYYY/MM/DD hh:mm:ssに変換する
-     *
+     * 
      * @param expires
      *            ex:Thu, 01 Dec 1994 16:00:00 GMT
      * @return YYYY/MM/DD hh:mm:ssにて返却する
      */
     @SuppressLint("DefaultLocale")
-    public static String getExpiresDateTime(String expires) {
+    public static String getExpiresDateTime(final String expires) {
         final String[] expiredSplit = expires.split(" ");
         final String[] month = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         final int length = month.length;
@@ -842,12 +844,12 @@ public final class DateUtils {
 
     /**
      * 月日時分の数値を2桁にあわせる
-     *
+     * 
      * @param num
      *            数値
      * @return 2桁数値
      */
-    public static String addZero(int num) {
+    public static String addZero(final int num) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (0 <= num && num <= 9) {
             stringBuilder.append(0);
@@ -860,12 +862,12 @@ public final class DateUtils {
 
     /**
      * 月日時分の数値を2桁にあわせる
-     *
+     * 
      * @param num
      *            数値
      * @return 2桁数値
      */
-    public static String addZero(String num) {
+    public static String addZero(final String num) {
         final StringBuilder stringBuilder = new StringBuilder();
 
         final int number = Integer.valueOf(num);
@@ -878,7 +880,7 @@ public final class DateUtils {
         return stringBuilder.toString();
     }
 
-    private static Calendar setZero(Calendar c) {
+    private static Calendar setZero(final Calendar c) {
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);

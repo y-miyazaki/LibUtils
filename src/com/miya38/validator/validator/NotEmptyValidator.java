@@ -6,25 +6,26 @@ import com.miya38.validator.AbstractValidator;
 
 public class NotEmptyValidator extends AbstractValidator {
 
-    private String mErrorMessage;
+    private final String mErrorMessage;
 
-    public NotEmptyValidator(Context c, int errorMessage) {
+    public NotEmptyValidator(final Context c, final int errorMessage) {
         super(c);
         mErrorMessage = mContext.getString(errorMessage);
     }
 
-    public NotEmptyValidator(Context c, String errorMessage) {
+    public NotEmptyValidator(final Context c, final String errorMessage) {
         super(c);
         mErrorMessage = errorMessage;
     }
 
     @Override
-    public boolean isValid(String value) {
+    public boolean isValid(final String value) {
         if (value != null) {
-            if (value.length() > 0)
+            if (value.length() > 0) {
                 return true;
-            else
+            } else {
                 return false;
+            }
         } else {
             return false;
         }

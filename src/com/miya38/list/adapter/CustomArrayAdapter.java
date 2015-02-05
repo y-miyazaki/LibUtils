@@ -23,7 +23,7 @@ import com.miya38.utils.CollectionUtils;
  * {@link CustomArrayAdapter#getLastPosition}</li>
  * </ul>
  * </p>
- *
+ * 
  * @author y-miyazaki
  * @param <T>
  *            item
@@ -69,7 +69,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      * <p>
      * GridViewが0ポジションを連打するのを防ぐための対応
      * </p>
-     *
+     * 
      * @param position
      *            ポジション
      * @param convertView
@@ -82,7 +82,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context
      * @param itemResourceId
@@ -97,7 +97,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテムリソースID取得
-     *
+     * 
      * @return アイテムリソースID
      */
     public int getItemResourceId() {
@@ -106,7 +106,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * レイアウトインフレータ取得
-     *
+     * 
      * @return レイアウトインフレータ
      */
     public LayoutInflater getLayoutInflater() {
@@ -115,7 +115,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * レイアウトViewを取得
-     *
+     * 
      * @return レイアウトView
      */
     public View getLayoutView() {
@@ -124,7 +124,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * 最後のポジションを返却する
-     *
+     * 
      * @return last position
      */
     public int getSeeLastPosition() {
@@ -133,7 +133,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテム全取得
-     *
+     * 
      * @return アイテムリスト
      */
     public List<T> getItems() {
@@ -147,7 +147,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテム設定
-     *
+     * 
      * @param position
      *            ポジション
      * @param item
@@ -164,7 +164,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテムリスト設定
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -220,7 +220,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * 最初に見えているアイテム
-     *
+     * 
      * @return firstVisibleItem
      */
     public int getFirstVisibleItem() {
@@ -229,7 +229,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * 見えているアイテム数
-     *
+     * 
      * @return visibleItemCount
      */
     public int getVisibleItemCount() {
@@ -238,7 +238,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * 全アイテム数
-     *
+     * 
      * @return totalItemCount
      */
     public int getTotalItemCount() {
@@ -247,7 +247,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * ListViewインスタンスを取得
-     *
+     * 
      * @return AbsListView
      */
     public AbsListView getAbsListView() {
@@ -256,7 +256,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * スクロール状態を取得
-     *
+     * 
      * @return 以下のものをリターンする<br>
      *         {@link OnScrollListener#SCROLL_STATE_FLING}<br>
      *         {@link OnScrollListener#SCROLL_STATE_IDLE}<br>
@@ -268,7 +268,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * スクロール位置を取得
-     *
+     * 
      * @param view
      *            View
      * @param firstVisibleItem
@@ -287,7 +287,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * スクロール状態を設定
-     *
+     * 
      * @param view
      *            View
      * @param scrollState
@@ -306,7 +306,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * スクロール状態を設定
-     *
+     * 
      * @param scrollState
      *            スクロール状態<br>
      *            {@link OnScrollListener#SCROLL_STATE_FLING}<br>

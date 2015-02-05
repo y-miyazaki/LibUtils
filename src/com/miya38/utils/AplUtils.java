@@ -26,6 +26,9 @@ import android.view.inputmethod.InputMethodManager;
  * @author y-miyazaki
  */
 public final class AplUtils {
+    // ----------------------------------------------------------
+    // ohter
+    // ----------------------------------------------------------
     /** Context */
     private static Context sContext;
 
@@ -42,7 +45,7 @@ public final class AplUtils {
      * @param context
      *            {@link Context}
      */
-    public static void configure(Context context) {
+    public static void configure(final Context context) {
         sContext = context;
     }
 
@@ -209,6 +212,15 @@ public final class AplUtils {
     }
 
     /**
+     * JellyBean(5.0/21)以上のバージョンかチェック
+     *
+     * @return true:Lollipop以上 false;Lollipop未満
+     */
+    public static boolean hasLollipop() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
+    /**
      * アプリケーションバージョンを返却する
      *
      * @return アプリケーションバージョン文字列
@@ -216,7 +228,7 @@ public final class AplUtils {
     public static String getAplVersion() {
         try {
             return sContext.getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionName;
-        } catch (NameNotFoundException e) {
+        } catch (final NameNotFoundException e) {
             return null;
         }
     }
@@ -272,7 +284,7 @@ public final class AplUtils {
      * @param activity
      *            Activity
      */
-    public static void closeKeyboard(Activity activity) {
+    public static void closeKeyboard(final Activity activity) {
         final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
@@ -285,7 +297,7 @@ public final class AplUtils {
      * @param view
      *            View
      */
-    public static void closeKeyboard(Context context, View view) {
+    public static void closeKeyboard(final Context context, final View view) {
         final InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
@@ -298,9 +310,9 @@ public final class AplUtils {
      *
      * @return dpからpxに変換された値を返却する
      */
-    public static int getDpToPx(int dp) {
+    public static int getDpToPx(final int dp) {
         final float scale = sContext.getResources().getDisplayMetrics().density;
-        return (int)(dp * scale + 0.5f);
+        return (int) (dp * scale + 0.5f);
     }
 
     /**
@@ -311,9 +323,9 @@ public final class AplUtils {
      *
      * @return pxからdpに変換された値を返却する
      */
-    public static int getPxToDp(int px) {
+    public static int getPxToDp(final int px) {
         final float scale = sContext.getResources().getDisplayMetrics().density;
-        return (int)(px / scale);
+        return (int) (px / scale);
     }
 
     /**
@@ -324,9 +336,9 @@ public final class AplUtils {
      *
      * @return spからpxに変換された値を返却する
      */
-    public static int getSpToPx(int sp) {
+    public static int getSpToPx(final int sp) {
         final float scale = sContext.getResources().getDisplayMetrics().scaledDensity;
-        return (int)(sp * (scale + 0.5f));
+        return (int) (sp * (scale + 0.5f));
     }
 
     /**
@@ -338,7 +350,7 @@ public final class AplUtils {
      * @return true:起動中<br>
      *         false:未起動
      */
-    public static boolean hasRunningApplication(String appName) {
+    public static boolean hasRunningApplication(final String appName) {
         final ActivityManager activityManager = (ActivityManager) sContext.getSystemService(Context.ACTIVITY_SERVICE);
 
         // 起動中のアプリ情報を取得
@@ -352,7 +364,7 @@ public final class AplUtils {
                     if (appName.equals(packageManager.getApplicationLabel(appInfo).toString())) {
                         return true;
                     }
-                } catch (NameNotFoundException e) {
+                } catch (final NameNotFoundException e) {
                     // ネームが取れないことが普通にあるので、握りつぶす
                 }
             }
@@ -384,12 +396,13 @@ public final class AplUtils {
      * 指定のパッケージに属するアクティビティが起動しているか確認する
      *
      * @param activityName
-     *            パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity. HomeActivity)
+     *            パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
+     *            HomeActivity)
      *
      * @return true:起動中<br>
      *         false:未起動
      */
-    public static boolean hasApplicationActivityRunning(String activityName) {
+    public static boolean hasApplicationActivityRunning(final String activityName) {
         final ActivityManager activityManager = (ActivityManager) sContext.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(100);
         if (!CollectionUtils.isNullOrEmpty(tasks)) {
@@ -411,7 +424,7 @@ public final class AplUtils {
      * @return true:起動中<br>
      *         false:未起動
      */
-    public static boolean hasApplicationActivityRunningByPackageName(String activityName) {
+    public static boolean hasApplicationActivityRunningByPackageName(final String activityName) {
         final ActivityManager activityManager = (ActivityManager) sContext.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(100);
         if (!CollectionUtils.isNullOrEmpty(tasks)) {
@@ -436,7 +449,7 @@ public final class AplUtils {
      * @return true:バージョンアップ必要<br>
      *         false:バージョンアップ不必要
      */
-    public static boolean isUpdate(String serverAplVersion) {
+    public static boolean isUpdate(final String serverAplVersion) {
         try {
             // サーバ側バージョン
             final String[] serverAplVersions = serverAplVersion.split("\\.");
@@ -448,7 +461,7 @@ public final class AplUtils {
                     return true;
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         }
         return false;
@@ -456,6 +469,8 @@ public final class AplUtils {
 
     /**
      * 証明書ハッシュ値取得
+     *
+     * @return 証明書ハッシュ値
      */
     public static String getSignatureHash() {
         final PackageManager pm = sContext.getPackageManager();
@@ -466,21 +481,21 @@ public final class AplUtils {
                 final byte[] sha256 = computeSha256(sig.toByteArray());
                 return byte2hex(sha256);
             }
-        } catch (NameNotFoundException e) {
+        } catch (final NameNotFoundException e) {
             // 握りつぶす
         }
         return null;
     }
 
     /**
-     * 署名ハッシュ値チェック
+     * 証明書ハッシュ値チェック
      *
-     * @param hash
-     *            ハッシュ
+     * @param signatureHash
+     *            証明書ハッシュ値
      * @return true:正しい署名のハッシュ値<br>
      *         false:正しくない署名のハッシュ値
      */
-    public static boolean isSignatureHash(String signatureHash) {
+    public static boolean isSignatureHash(final String signatureHash) {
         return StringUtils.equals(signatureHash, getSignatureHash());
     }
 
@@ -488,12 +503,13 @@ public final class AplUtils {
      * sha-256変換
      *
      * @param data
-     * @return
+     *            変換元
+     * @return sha-256変換後データ
      */
-    private static byte[] computeSha256(byte[] data) {
+    private static byte[] computeSha256(final byte[] data) {
         try {
             return MessageDigest.getInstance("SHA-256").digest(data);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             return null;
         }
     }
@@ -502,9 +518,10 @@ public final class AplUtils {
      * byte→hex変換
      *
      * @param data
-     * @return
+     *            変換元
+     * @return HEXデータ
      */
-    private static String byte2hex(byte[] data) {
+    private static String byte2hex(final byte[] data) {
         if (data == null) {
             return null;
         }

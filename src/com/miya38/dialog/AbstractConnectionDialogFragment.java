@@ -11,9 +11,9 @@ import com.miya38.connection.NetworkRequest;
  * このクラスはFragmentベースなので、再生成が行われることを考慮し、コールバックはインタフェースを用いて行い、<br>
  * また匿名型クラスでは行えない仕様とする。<br>
  * Activity/Fragmentに対してDialogFragmentListenerをimplementsすること。<br>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public abstract class AbstractConnectionDialogFragment extends AbstractDialogFragment {
     /** AbstractConnectionCommon */
@@ -25,7 +25,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
     protected abstract AbstractConnectionCommon getConnectionCommon();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         mAbstractConnectionCommon = getConnectionCommon();
         super.onCreate(savedInstanceState);
     }
@@ -42,13 +42,13 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param title
      *            タイトル
      * @param message
      *            メッセージ
      */
-    public void setError(String title, String message) {
+    public void setError(final String title, final String message) {
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.setError(title, message);
         }
@@ -56,7 +56,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
@@ -64,7 +64,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
      * @param object
      *            受信データ
      */
-    public boolean setError(NetworkRequest networkRequest, NetworkResponse networkResponse, Object object) {
+    public boolean setError(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final Object object) {
         if (mAbstractConnectionCommon != null) {
             return mAbstractConnectionCommon.setError(networkRequest, networkResponse, object);
         }
@@ -75,7 +75,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
      * リクエストAPI
      * <p>
      * </p>
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      */

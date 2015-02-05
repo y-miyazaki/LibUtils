@@ -1,6 +1,5 @@
 package com.miya38.widget;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Html;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -23,15 +21,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.miya38.R;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.CollectionUtils;
-import com.miya38.utils.LogUtils;
 
 /**
  * カスタムボタンクラス
@@ -47,6 +41,10 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     // ----------------------------------------------------------
     /** TAG */
     private static final String TAG = CustomButton.class.getSimpleName();
+    /** グレースケールカラー */
+    private static final int COLOR_GRAYSCALE = 0x80000000;
+    /** 最小の文字サイズ */
+    private static final float MIN_TEXT_SIZE = 1.0f;
 
     // ----------------------------------------------------------
     // キャッシュ
@@ -63,18 +61,16 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     // ----------------------------------------------------------
     // カスタムプロパティ(same CustomTextView)
     // ----------------------------------------------------------
+    /** 文字サイズの初期値 */
+    private float mDefaultTextSize = 0.0f;
+    /** 調整後の文字サイズ */
+    private float mResizeTextSize = 0.0f;
     /** 文字列のリサイズをするか？ */
     private boolean mIsResize;
-    /** 明滅設定 */
-    private boolean mIsBlink;
     /** 最後を省略するか？ */
     private boolean mIsEllipsize;
     /** 最後を省略に必要な最大行数 */
     private int mEllipsizeMaxlines = 1;
-    /** 明滅間隔 */
-    private int mBlinkDuration = 500;
-    /** 明滅回数 */
-    private int mBlinkCount = -1;
 
     // ----------------------------------------------------------
     // カスタムプロパティ
@@ -91,6 +87,8 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     private OnClickListener mOnClickListener;
     /** TouchState */
     private boolean mIsTouchState;
+    /** テキスト幅計測用のペイント */
+    private final Paint mPaintForMeasure = new Paint();
 
     /**
      * コンストラクタ
@@ -98,9 +96,10 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomButton(Context context, AttributeSet attrs) {
+    public CustomButton(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
@@ -111,11 +110,12 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
-    public CustomButton(Context context, AttributeSet attrs, int defStyle) {
+    public CustomButton(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -126,9 +126,13 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, final AttributeSet attrs) {
+        // テキストサイズ
+        mDefaultTextSize = getTextSize();
+
         final TypedArray ta1 = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView);
         final String htmlText = ta1.getString(R.styleable.CustomTextView_html_text);
         final String editText = ta1.getString(R.styleable.CustomTextView_edit_text);
@@ -136,9 +140,6 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
         this.mIsResize = ta1.getBoolean(R.styleable.CustomTextView_resize, false);
         this.mIsEllipsize = ta1.getBoolean(R.styleable.CustomTextView_ellipsize, false);
         this.mEllipsizeMaxlines = ta1.getInteger(R.styleable.CustomTextView_ellipsize_maxlines, 1);
-        this.mIsBlink = ta1.getBoolean(R.styleable.CustomTextView_blink, false);
-        this.mBlinkCount = ta1.getInt(R.styleable.CustomTextView_blink_count, -1);
-        this.mBlinkDuration = ta1.getInt(R.styleable.CustomTextView_blink_duration, 500);
         ta1.recycle();
 
         try {
@@ -150,7 +151,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
             }
             if (sTextStyleId == -1) {
                 synchronized (this) {
-                    sTextStyleId = (Integer) Class.forName("com.android.internal.R$styleable").getField("TextView_textStyle").getInt(null);
+                    sTextStyleId = Class.forName("com.android.internal.R$styleable").getField("TextView_textStyle").getInt(null);
                 }
             }
             final TypedArray ta3 = context.obtainStyledAttributes(attrs, sStyleable);
@@ -160,7 +161,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
                 setTypeface(sTypefaceList.get(typeFace), ta3.getInt(sTextStyleId, 0));
             }
             ta3.recycle();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // 握りつぶす
         }
 
@@ -175,7 +176,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
             } else {
                 try {
                     mMode = (PorterDuff.Mode.valueOf(poterduffMode) == null) ? PorterDuff.Mode.SRC_ATOP : PorterDuff.Mode.valueOf(poterduffMode);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // 握りつぶす
                 }
             }
@@ -201,7 +202,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mIsResize) {
             fitTextSize();
@@ -209,19 +210,16 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         // 1行を超える場合は、...を付与する
         setEllipSize();
         // 画面にフィットしたサイズにする
         fitTextSize();
-        if (this.mIsBlink) {
-            setBlink();
-        }
     }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int start, int lengthBefore, int lengthAfter) {
+    public void onTextChanged(final CharSequence charSequence, final int start, final int lengthBefore, final int lengthAfter) {
         super.onTextChanged(charSequence, start, lengthBefore, lengthAfter);
         if (mIsResize) {
             fitTextSize();
@@ -229,12 +227,12 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     }
 
     @Override
-    public void beforeTextChanged(CharSequence paramCharSequence, int paramInt1, int paramInt2, int paramInt3) {
+    public void beforeTextChanged(final CharSequence paramCharSequence, final int paramInt1, final int paramInt2, final int paramInt3) {
         // 何もしない。
     }
 
     @Override
-    public void afterTextChanged(Editable paramEditable) {
+    public void afterTextChanged(final Editable paramEditable) {
         // 何もしない。
     }
 
@@ -248,7 +246,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(final View v, final MotionEvent event) {
         if (mMode != null) {
             switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -291,7 +289,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         setClickable(false);
         if (mOnClickListener != null) {
             mOnClickListener.onClick(v);
@@ -301,12 +299,12 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     }
 
     @Override
-    public void setOnClickListener(OnClickListener l) {
+    public void setOnClickListener(final OnClickListener l) {
         this.mOnClickListener = l;
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(final Canvas canvas) {
         // Arrows対応
         if (!isEnabled()) {
             setPressed(true);
@@ -314,15 +312,167 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
         super.onDraw(canvas);
     }
 
-    private TextPaint getTextPaint() {
+    /**
+     * HTMLフォーマットのTextに変換する。
+     *
+     * @param text
+     *            HTML文字列
+     */
+    public void setHtml(final CharSequence text) {
+        if (text == null) {
+            setText(null);
+        } else {
+            final ImageGetterImpl imageGetter = new ImageGetterImpl(getContext().getApplicationContext());
+            setText(Html.fromHtml(text.toString(), imageGetter, null));
+        }
+    }
+
+    /**
+     * タイプフェースで追加したものをindex指定する。
+     *
+     * @return Typeface数
+     */
+    public static int getCustomTypefaceCount() {
+        return sTypefaceList == null ? 0 : sTypefaceList.size();
+    }
+
+    /**
+     * タイプフェースで追加したものをindex指定する。
+     *
+     * @param index
+     *            タイプフェース取得のためのインデックス(0から指定)
+     */
+    public static void setDefaultCustomTypeface(final int index) {
+        sDefaultTypefaceIndex = index;
+    }
+
+    /**
+     * タイプフェース追加
+     *
+     * @param typeface
+     *            {@link Typeface}
+     */
+    public static synchronized void addCustomTypeface(final Typeface typeface) {
+        if (sTypefaceList == null) {
+            sTypefaceList = new ArrayList<Typeface>();
+        }
+        sTypefaceList.add(typeface);
+    }
+
+    /**
+     * 追加したタイプフェースを指定する
+     *
+     * @param index
+     *            タイプフェース設定のためのインデックス(0から指定)
+     */
+    public void setCustomTypeface(final int index) {
         try {
-            final Field mTextPaint = TextView.class.getDeclaredField("mTextPaint");
-            mTextPaint.setAccessible(true);
-            return (TextPaint) mTextPaint.get(this);
-        } catch (Exception e) {
-            LogUtils.e(TAG, "error", e);
+            if (!CollectionUtils.isNullOrEmpty(sTypefaceList)) {
+                setTypeface(sTypefaceList.get(index));
+            }
+        } catch (final ArrayIndexOutOfBoundsException e) {
+            // 握りつぶす
+        }
+    }
+
+    /**
+     * 追加したタイプフェースを取得する。
+     *
+     * @param index
+     *            タイプフェース設定のためのインデックス(0から指定)
+     * @return Typeface フォント
+     */
+    public static Typeface getCustomTypeface(final int index) {
+        try {
+            if (sTypefaceList != null) {
+                return sTypefaceList.get(index);
+            }
+        } catch (final ArrayIndexOutOfBoundsException e) {
+            // 握りつぶす
         }
         return null;
+    }
+
+    /**
+     * tint設定を取得する。
+     *
+     * @return tint設定<br>
+     */
+    public int getTint() {
+        return this.mTint;
+    }
+
+    /**
+     * コーナー設定
+     *
+     * @param tint
+     *            tint attribute
+     */
+    public void setTint(final int tint) {
+        this.mTint = tint;
+
+        if (tint == -1) {
+            this.mMode = null;
+            setOnTouchListener(null);
+        } else {
+            // デフォルトでSRC_ATOPとしている
+            this.mMode = PorterDuff.Mode.SRC_ATOP;
+            setOnTouchListener(this);
+        }
+    }
+
+    /**
+     * グレースケールのカラーフィルターを掛ける<br>
+     * クリアする場合は、clearColorFilter()をすること。
+     */
+    public void setGrayScaleColorFilter() {
+        final Drawable drawable = getBackground();
+        if (drawable != null) {
+            drawable.setColorFilter(new PorterDuffColorFilter(COLOR_GRAYSCALE, PorterDuff.Mode.SRC_ATOP));
+            drawable.invalidateSelf();
+        }
+    }
+
+    /**
+     * グレースケールのカラーフィルターを掛ける<br>
+     * クリアする場合は、clearColorFilter()をすること。
+     */
+    public void clearColorFilter() {
+        final Drawable drawable = getBackground();
+        if (drawable != null) {
+            drawable.clearColorFilter();
+            drawable.invalidateSelf();
+        }
+    }
+
+    /**
+     * カラーフィルターを掛ける<br>
+     * クリアする場合は、clearColorFilter()をすること。
+     *
+     * @param v
+     *            View
+     */
+    private void setColorFilter(final View v) {
+        if (v != null && v.getBackground() != null) {
+            if (mTint != -1) {
+                v.getBackground().setColorFilter(new PorterDuffColorFilter(mTint, PorterDuff.Mode.SRC_ATOP));
+                v.getBackground().invalidateSelf();
+            }
+        }
+    }
+
+    /**
+     * グレースケールのカラーフィルターを掛ける<br>
+     * クリアする場合は、clearColorFilter()をすること。
+     *
+     * @param v
+     *            View
+     */
+    private void clearColorFilter(final View v) {
+        if (v != null && v.getBackground() != null) {
+            v.getBackground().clearColorFilter();
+            v.getBackground().invalidateSelf();
+        }
     }
 
     /**
@@ -344,7 +494,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
                     }
                 }
             }
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (final StringIndexOutOfBoundsException e) {
             // 握りつぶす
         }
     }
@@ -356,9 +506,9 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
         if (!mIsResize) {
             return;
         }
-        int textSize = (int) getTextSize();
-        final Paint textPaint = new Paint();
-        textPaint.setTextSize(textSize);
+        // 設定された文字サイズで初期化する
+        mResizeTextSize = mDefaultTextSize;
+        mPaintForMeasure.setTextSize(mResizeTextSize);
 
         // 適切なサイズになるまで小さくしていきます。(paddingも考慮します。)
         final int targetWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
@@ -370,212 +520,37 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
         // 最大幅と対象文字列を保存
         for (final String str : stringList) {
-            stringWidth = stringWidth > textPaint.measureText(str) ? stringWidth : textPaint.measureText(str);
-            string = textPaint.measureText(string) > textPaint.measureText(str) ? string : str;
+            stringWidth = stringWidth > mPaintForMeasure.measureText(str) ? stringWidth : mPaintForMeasure.measureText(str);
+            string = mPaintForMeasure.measureText(string) > mPaintForMeasure.measureText(str) ? string : str;
         }
 
         // 幅に合うように文字列を縮小する
-        int count = 0;
-        while (targetWidth < stringWidth) {
-            count++;
-            textPaint.setTextSize(--textSize);
-            stringWidth = textPaint.measureText(string);
+        while (targetWidth < mPaintForMeasure.measureText(string)) {
+            mPaintForMeasure.setTextSize(--mResizeTextSize);
 
-            // 永久ループ対策
-            if (100 < count) {
+            // 最小文字サイズより小さくなった場合は、文字サイズをセットして終了する
+            if (mResizeTextSize <= MIN_TEXT_SIZE) {
+                mResizeTextSize = MIN_TEXT_SIZE;
                 break;
             }
         }
-        setTextSize(textSize);
-        getTextPaint().setTextSize(textSize);
+        super.setTextSize(mResizeTextSize);
     }
 
     /**
-     * HTMLフォーマットのTextに変換する。
+     * テキスト幅を取得
      *
+     * @param textSize
+     *            文字サイズ
      * @param text
-     *            HTML文字列
+     *            文字列
+     * @param typeFace
+     *            文字種
+     * @return テキスト幅
      */
-    public void setHtml(CharSequence text) {
-        if (text == null) {
-            setText(null);
-        } else {
-            ImageGetterImpl imageGetter = new ImageGetterImpl(getContext().getApplicationContext());
-            setText(Html.fromHtml(text.toString(), imageGetter, null));
-        }
-    }
-
-    /**
-     * 文字を明滅させる
-     *
-     * @param blinkCount
-     *            明滅回数
-     * @param blinkDuration
-     *            明滅間隔(msec)
-     *
-     */
-    public void setBlink(int blinkCount, int blinkDuration) {
-        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
-        alpha.setDuration(blinkDuration);
-        alpha.setRepeatMode(Animation.REVERSE);
-        alpha.setRepeatCount(blinkCount);
-        alpha.setFillEnabled(true);
-        alpha.setFillAfter(true);
-        alpha.setFillBefore(false);
-        startAnimation(alpha);
-    }
-
-    /**
-     * 文字を明滅させる
-     *
-     */
-    public void setBlink() {
-        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
-        alpha.setDuration(mBlinkDuration);
-        alpha.setRepeatMode(Animation.REVERSE);
-        alpha.setRepeatCount(mBlinkCount);
-        alpha.setFillEnabled(true);
-        alpha.setFillAfter(true);
-        alpha.setFillBefore(false);
-        startAnimation(alpha);
-    }
-
-    /**
-     * タイプフェースで追加したものをindex指定する。
-     */
-    public static int getCustomTypefaceCount() {
-        return sTypefaceList == null ? 0 : sTypefaceList.size();
-    }
-
-    /**
-     * タイプフェースで追加したものをindex指定する。
-     *
-     * @param index
-     *            タイプフェース取得のためのインデックス(0から指定)
-     */
-    public static void setDefaultCustomTypeface(int index) {
-        sDefaultTypefaceIndex = index;
-    }
-
-    /**
-     * タイプフェース追加
-     *
-     * @param typeface
-     *            {@link Typeface}
-     */
-    public synchronized static void addCustomTypeface(Typeface typeface) {
-        if (sTypefaceList == null) {
-            sTypefaceList = new ArrayList<Typeface>();
-        }
-        sTypefaceList.add(typeface);
-    }
-
-    /**
-     * 追加したタイプフェースを指定する
-     *
-     * @param index
-     *            タイプフェース設定のためのインデックス(0から指定)
-     */
-    public void setCustomTypeface(int index) {
-        try {
-            if (!CollectionUtils.isNullOrEmpty(sTypefaceList)) {
-                setTypeface(sTypefaceList.get(index));
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // 握りつぶす
-        }
-    }
-
-    /**
-     * 追加したタイプフェースを取得する。
-     *
-     * @param index
-     *            タイプフェース設定のためのインデックス(0から指定)
-     * @return
-     */
-    public static Typeface getCustomTypeface(int index) {
-        try {
-            if (sTypefaceList != null) {
-                return sTypefaceList.get(index);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // 握りつぶす
-        }
-        return null;
-    }
-
-    /**
-     * tint設定を取得する。
-     *
-     * @return tint設定<br>
-     */
-    public int getTint() {
-        return this.mTint;
-    }
-
-    /**
-     * コーナー設定
-     *
-     * @param tint
-     */
-    public void setTint(int tint) {
-        this.mTint = tint;
-
-        if (tint == -1) {
-            this.mMode = null;
-            setOnTouchListener(null);
-        } else {
-            // デフォルトでSRC_ATOPとしている
-            this.mMode = PorterDuff.Mode.SRC_ATOP;
-            setOnTouchListener(this);
-        }
-    }
-
-    /**
-     * カラーフィルターを掛ける<br>
-     * クリアする場合は、clearColorFilter()をすること。
-     */
-    private void setColorFilter(View v) {
-        if (v != null && v.getBackground() != null) {
-            if(mTint != -1){
-                v.getBackground().setColorFilter(new PorterDuffColorFilter(mTint, PorterDuff.Mode.SRC_ATOP));
-                v.getBackground().invalidateSelf();
-            }
-        }
-    }
-
-    /**
-     * グレースケールのカラーフィルターを掛ける<br>
-     * クリアする場合は、clearColorFilter()をすること。
-     */
-    private void clearColorFilter(View v) {
-        if (v != null && v.getBackground() != null) {
-            v.getBackground().clearColorFilter();
-            v.getBackground().invalidateSelf();
-        }
-    }
-
-    /**
-     * グレースケールのカラーフィルターを掛ける<br>
-     * クリアする場合は、clearColorFilter()をすること。
-     */
-    public void setGrayScaleColorFilter() {
-        final Drawable drawable = getBackground();
-        if (drawable != null) {
-            drawable.setColorFilter(new PorterDuffColorFilter(0x80000000, PorterDuff.Mode.SRC_ATOP));
-            drawable.invalidateSelf();
-        }
-    }
-
-    /**
-     * グレースケールのカラーフィルターを掛ける<br>
-     * クリアする場合は、clearColorFilter()をすること。
-     */
-    public void clearColorFilter() {
-        final Drawable drawable = getBackground();
-        if (drawable != null) {
-            drawable.clearColorFilter();
-            drawable.invalidateSelf();
-        }
+    private float getTextWidth(final float textSize, final String text, final Typeface typeFace) {
+        mPaintForMeasure.setTextSize(textSize);
+        mPaintForMeasure.setTypeface(typeFace);
+        return mPaintForMeasure.measureText(text);
     }
 }

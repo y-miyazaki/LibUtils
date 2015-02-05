@@ -1,5 +1,7 @@
 package com.miya38.widget;
 
+import com.miya38.widget.callback.OnLayoutListener;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
@@ -9,7 +11,7 @@ import android.widget.HorizontalScrollView;
  * <ul>
  * <li>レイアウト確定イベントリスナー追加</li>
  * </ul>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomHorizontalScrollView extends HorizontalScrollView {
@@ -21,32 +23,34 @@ public class CustomHorizontalScrollView extends HorizontalScrollView {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      */
-    public CustomHorizontalScrollView(Context context, AttributeSet attrs) {
+    public CustomHorizontalScrollView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is processed here
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
      * @param defStyle
      *            Default style for this View
      */
-    public CustomHorizontalScrollView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomHorizontalScrollView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    protected void onLayout(final boolean changed, final int l, final int t, final int r, final int b) {
         super.onLayout(changed, l, t, r, b);
         if (mOnLayoutListener != null) {
             mOnLayoutListener.onLayout();
@@ -55,11 +59,11 @@ public class CustomHorizontalScrollView extends HorizontalScrollView {
 
     /**
      * レイアウトリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnLayoutListener}
      */
-    public final void setOnLayoutListener(OnLayoutListener l) {
+    public final void setOnLayoutListener(final OnLayoutListener l) {
         mOnLayoutListener = l;
     }
 }

@@ -1,10 +1,10 @@
-package com.miya38.widget;
+package com.miya38.widget.callback;
 
 /**
  * レイアウトリスナー
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public interface OnGlobalLayoutListener2 {
     /**

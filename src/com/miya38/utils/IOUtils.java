@@ -15,7 +15,7 @@ import com.google.common.io.Closeables;
 
 /**
  * 入出力に関するユーティリティクラス。
- *
+ * 
  * @author y-miyazaki
  */
 public final class IOUtils {
@@ -30,12 +30,12 @@ public final class IOUtils {
 
     /**
      * 指定した出力ストリームに、入力ストリームが尽きるまで書き込みます。
-     *
+     * 
      * @param inputStream
      * @param outputStream
      * @throws IOException
      */
-    public static void write(InputStream inputStream, OutputStream outputStream) throws IOException {
+    public static void write(final InputStream inputStream, final OutputStream outputStream) throws IOException {
         int b = -1;
         while (0 <= (b = inputStream.read())) {
             outputStream.write(b);
@@ -44,16 +44,16 @@ public final class IOUtils {
 
     /**
      * 指定した出力ストリームに、入力ストリームから bufferSize 分読み込んで書き込みます。<br>
-     *
+     * 
      * 入力ストリームが尽きたら false を返します。
-     *
+     * 
      * @param inputStream
      * @param outputStream
      * @param bufferSize
      * @return result
      * @throws IOException
      */
-    public static int write(InputStream inputStream, OutputStream outputStream, int bufferSize) throws IOException {
+    public static int write(final InputStream inputStream, final OutputStream outputStream, final int bufferSize) throws IOException {
         final byte[] buffer = new byte[bufferSize];
         final int result = inputStream.read(buffer);
 
@@ -66,23 +66,23 @@ public final class IOUtils {
 
     /**
      * 指定したパスにファイルをストリームを書き込みます。
-     *
+     * 
      * @param inputStream
      * @param filePath
      * @throws IOException
      */
-    public static void writeFile(InputStream inputStream, String filePath) throws IOException {
+    public static void writeFile(final InputStream inputStream, final String filePath) throws IOException {
         writeFile(inputStream, new File(filePath));
     }
 
     /**
      * 指定したファイルにストリームを書き込みます。
-     *
+     * 
      * @param inputStream
      * @param file
      * @throws IOException
      */
-    public static void writeFile(InputStream inputStream, File file) throws IOException {
+    public static void writeFile(final InputStream inputStream, final File file) throws IOException {
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);
@@ -94,11 +94,11 @@ public final class IOUtils {
 
     /**
      * 指定したファイルを削除します。
-     *
+     * 
      * @param filePath
      * @throws IOException
      */
-    public static void deleteFile(String filePath) throws IOException {
+    public static void deleteFile(final String filePath) throws IOException {
         final File file = new File(filePath);
         if (file.exists() && file.isFile() && file.canWrite()) {
             file.delete();
@@ -107,15 +107,15 @@ public final class IOUtils {
 
     /**
      * 安全にディレクトリを作成するユーティリティメソッド。
-     *
+     * 
      * @param dir
      * @return 指定したディレクトリを作成した結果を返す
      */
-    public static File mkdirs(File dir) {
+    public static File mkdirs(final File dir) {
         if (!dir.exists()) {
             try {
                 dir.mkdirs();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 LogUtils.w(TAG, "directory create failed.", e);
             }
         }
@@ -131,7 +131,7 @@ public final class IOUtils {
 
     /**
      * <code>{@link Cursor}</code>をクローズします。 クローズ時に例外が発生しても無視します。
-     *
+     * 
      * @param c
      *            {@link Cursor}
      */
@@ -147,7 +147,7 @@ public final class IOUtils {
 
     /**
      * <code>{@link Closeable}</code>をクローズします。 クローズ時に例外が発生しても無視します。
-     *
+     * 
      * @param closeable
      *            {@link Closeable}
      */
@@ -163,7 +163,7 @@ public final class IOUtils {
 
     /**
      * ストリームの内容をコピーします。
-     *
+     * 
      * @param in
      *            {@link InputStream}
      * @param out
@@ -192,7 +192,7 @@ public final class IOUtils {
 
     /**
      * ストリームの内容をバイト列として取得します。
-     *
+     * 
      * @param in
      *            {@link InputStream}
      * @return byte[]
@@ -213,7 +213,7 @@ public final class IOUtils {
 
     /**
      * ストリームの内容を文字列として取得します。
-     *
+     * 
      * @param in
      *            {@link InputStream}
      * @param charset
