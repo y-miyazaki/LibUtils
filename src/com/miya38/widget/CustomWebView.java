@@ -1,9 +1,11 @@
 package com.miya38.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.miya38.utils.StringUtils;
@@ -156,5 +158,30 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
         mOnFlickListener = null;
         mGestureDetector = null;
         super.onDetachedFromWindow();
+    }
+
+    /**
+     * スマートフォンにおけるデフォルト設定を行うメソッド
+     */
+    @SuppressLint("SetJavaScriptEnabled")
+    public void setSmartPhoneDefaultSetting() {
+        //スクロールバーの隙間を空かないようにする。
+        setVerticalScrollbarOverlay(true);
+
+        // webViewの設定
+        final WebSettings settings = getSettings();
+        // マルチウィンドウモードOFF
+        settings.setSupportMultipleWindows(false);
+        settings.setLoadsImagesAutomatically(true);
+        // 読み込み時にページ横幅を画面幅に合わせる
+        settings.setLoadWithOverviewMode(true);
+        // ワイドビューポートの有効・無効の指定(trueならページ全体表示)
+        settings.setUseWideViewPort(false);
+        // JS利用
+        settings.setJavaScriptEnabled(true);
+        // キャッシュ設定
+        settings.setAppCacheEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
     }
 }

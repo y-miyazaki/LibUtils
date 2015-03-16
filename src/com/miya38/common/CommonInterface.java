@@ -38,7 +38,7 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException
+         * @throws IOException IOException
          */
         void onGetLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -81,7 +81,7 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException
+         * @throws IOException IOException
          */
         void onPostLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -123,7 +123,7 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException
+         * @throws IOException IOException
          */
         void onPutLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -165,7 +165,7 @@ public class CommonInterface {
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException
+         * @throws IOException IOException
          */
         void onDeleteLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 

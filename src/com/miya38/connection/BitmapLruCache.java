@@ -10,11 +10,11 @@ import com.android.volley.toolbox.ImageLoader.ImageCache;
  * <p>
  * メモリベースキャッシュで画像を管理する。
  * </p>
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
-public class BitmapLruCache implements ImageCache {
+public final class BitmapLruCache implements ImageCache {
     /** メモリキャッシュサイズ(5M) */
     private static final int MAX_BITMAP_DISKCACHE_BYTESIZE = 1024 * 1024 * 5;
     /** シングルトンBitmapCache */
@@ -36,7 +36,7 @@ public class BitmapLruCache implements ImageCache {
 
     /**
      * インスタンス取得
-     * 
+     *
      * @return {@link BitmapLruCache}
      */
     public static BitmapLruCache getInstance() {

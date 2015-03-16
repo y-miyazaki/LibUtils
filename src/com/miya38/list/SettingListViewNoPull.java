@@ -20,13 +20,13 @@ import com.miya38.list.adapter.CustomArrayAdapter;
  * ここではSettingListViewの内容に対して、
  * PULLDOWN時に単純にFooterを表示するのみでPULLのように引っ張らなくてもイベントを投げるように修正したクラス
  * </p>
- * 
- * 
+ *
+ *
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- * 
+ *
  * @author y-miyazaki
  * @param <T>
  * @param <U>
@@ -48,13 +48,13 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * コンストラクタ
-     * 
-     * @param adapter
-     *            リストビュー
+     *
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
      *            Activityのthis
+     * @param layoutInflater
+     *            {@link LayoutInflater}
      * @param footerViewResId
      *            フッターのリソースID
      */
@@ -65,7 +65,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param adapter
      *            リストビューに設定するAdapter
      * @param dialog
@@ -82,7 +82,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
@@ -99,7 +99,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * ListView設定(初期設定)
-     * 
+     *
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -124,7 +124,7 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * ListView設定(初期設定)
-     * 
+     *
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -144,12 +144,12 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
 
     /**
      * ListView設定(初期設定)
-     * 
+     *
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
      *            リスト選択時のリスナー
-     * @param onRefreshListener
+     * @param onRefreshListener2
      *            プル時のリスナー
      * @param mode
      *            Mode
@@ -223,6 +223,12 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
         mOnRefreshListener2 = l;
     }
 
+    /**
+     * スクロールリスナー設定
+     *
+     * @param l
+     *            {@link OnScrollListener}
+     */
     public void setOnScrollListener(final OnScrollListener l) {
         mListView.setOnScrollListener(l);
     }

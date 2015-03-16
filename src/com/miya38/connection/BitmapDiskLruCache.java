@@ -11,11 +11,11 @@ import com.miya38.utils.DiskLruCache;
  * <p>
  * 最悪ディスクベースキャッシュが使えなくても、メモリベースキャッシュに移行する。
  * </p>
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
-public class BitmapDiskLruCache implements ImageCache {
+public final class BitmapDiskLruCache implements ImageCache {
     /** メモリキャッシュサイズ(5M) */
     private static final int MAX_BITMAP_DISKCACHE_BYTESIZE = 1024 * 1024 * 5;
     /** シングルトンBitmapCache */
@@ -27,7 +27,7 @@ public class BitmapDiskLruCache implements ImageCache {
 
     /**
      * コンストラクタ Bitmapのキャッシュサイズ指定、DiskLruCacheの設定を行う。
-     * 
+     *
      * @param context
      *            Context
      */
@@ -40,7 +40,9 @@ public class BitmapDiskLruCache implements ImageCache {
 
     /**
      * インスタンス取得
-     * 
+     *
+     * @param context
+     *            {@link Context}
      * @return {@link BitmapDiskLruCache}
      */
     public static BitmapDiskLruCache getInstance(final Context context) {

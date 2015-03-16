@@ -24,13 +24,13 @@ import com.miya38.widget.CustomGallery;
  * CustomListViewに関する設定は全てこのクラスを使うことで操作を行うことで設定漏れ等を極力なくすのが目的である。<br>
  * 主にCustomGallery、Adapterに関する操作をこのクラスでは実装している。<br>
  * </p>
- * 
- * 
+ *
+ *
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- * 
+ *
  * @author y-miyazaki
  */
 public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends AbstractSettingGallery<T, U> {
@@ -49,7 +49,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
@@ -64,7 +64,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
@@ -79,7 +79,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
@@ -94,7 +94,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     * 
+     *
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      */
@@ -106,7 +106,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     * 
+     *
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param gridViewEmptyId
@@ -119,13 +119,11 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     * 
+     *
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
      *            リスト選択時のリスナー
-     * @param onRefreshListener
-     *            プル時のリスナー
      */
     public final void setView(final int gridViewId, final OnItemClickListener onItemClickListener) {
         setView(gridViewId, onItemClickListener, null, 0);
@@ -133,7 +131,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     * 
+     *
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -148,7 +146,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     * 
+     *
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -162,7 +160,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * Gallery設定(初期設定)
-     * 
+     *
      * @param gridViewId
      *            Gallery自身(ex:R.id.Gallery)
      * @param onItemClickListener
@@ -182,9 +180,12 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
 
     /**
      * View取得
-     * 
+     *
+     * @param <V>
+     *            Viewの継承View
      * @param id
-     * @return
+     *            View ID
+     * @return View
      */
     private <V extends View> V getView(final int id) {
         if (mActivity != null) {

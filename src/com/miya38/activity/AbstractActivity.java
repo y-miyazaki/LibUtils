@@ -107,16 +107,18 @@ public abstract class AbstractActivity extends ActionBarActivity {
     private class LogoutBroadcastReceiver extends BroadcastReceiver {
         /*
          * (非 Javadoc)
-         * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+         * @see
+         * android.content.BroadcastReceiver#onReceive(android.content.Context,
+         * android.content.Intent)
          */
         @Override
         public void onReceive(final Context context, final Intent intent) {
             // 特定のクラス名が指定されていた場合はそのクラスだけはfinishしない。
-            final String className = intent.getStringExtra("ClassName");
+            final String className = intent.getStringExtra("className");
             if (className == null) {
                 finish();
             } else {
-                if (!getClass().getSimpleName().equals(className)) {
+                if (!AbstractActivity.this.getClass().getSimpleName().equals(className)) {
                     finish();
                 }
             }

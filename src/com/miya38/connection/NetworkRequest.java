@@ -9,9 +9,9 @@ import com.miya38.utils.ConnectionUtils;
 
 /**
  * ネットワークパラメータクラス
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
 public class NetworkRequest {
     /**
@@ -63,7 +63,7 @@ public class NetworkRequest {
 
     /**
      * GET/DELETEリクエストコンストラクタ
-     * 
+     *
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#GET}<br>
@@ -92,7 +92,7 @@ public class NetworkRequest {
      * <p>
      * 通常のGET/DELETEリクエストに加え、リクエストヘッダを指定したい場合には本コンストラクタを使用する。
      * </p>
-     * 
+     *
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#GET}<br>
@@ -121,7 +121,7 @@ public class NetworkRequest {
 
     /**
      * POST/PUTリクエストコンストラクタ
-     * 
+     *
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#POST}<br>
@@ -150,7 +150,7 @@ public class NetworkRequest {
      * <p>
      * 通常のPOST/PUTリクエストに加え、リクエストヘッダを指定したい場合には本コンストラクタを使用する。
      * </p>
-     * 
+     *
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#POST}<br>
@@ -185,11 +185,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mMethod
+     * @param method
      *            セットする mMethod
      */
-    public final void setMethod(final int mMethod) {
-        this.mMethod = mMethod;
+    public final void setMethod(final int method) {
+        this.mMethod = method;
     }
 
     /**
@@ -200,11 +200,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mUrl
+     * @param url
      *            セットする mUrl
      */
-    public final void setUrl(final String mUrl) {
-        this.mUrl = mUrl;
+    public final void setUrl(final String url) {
+        this.mUrl = url;
     }
 
     /**
@@ -215,11 +215,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mQuery
+     * @param query
      *            セットする mQuery
      */
-    public final void setQuery(final Map<String, String> mQuery) {
-        this.mQuery = mQuery;
+    public final void setQuery(final Map<String, String> query) {
+        this.mQuery = query;
     }
 
     /**
@@ -230,11 +230,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mBody
+     * @param body
      *            セットする mBody
      */
-    public final void setBody(final String mBody) {
-        this.mBody = mBody;
+    public final void setBody(final String body) {
+        this.mBody = body;
     }
 
     /**
@@ -245,11 +245,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mId
+     * @param id
      *            セットする mId
      */
-    public final void setId(final int mId) {
-        this.mId = mId;
+    public final void setId(final int id) {
+        this.mId = id;
     }
 
     /**
@@ -260,11 +260,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mHeaders
+     * @param headers
      *            セットする mHeaders
      */
-    public final void setHeaders(final Map<String, String> mHeaders) {
-        this.mHeaders = mHeaders;
+    public final void setHeaders(final Map<String, String> headers) {
+        this.mHeaders = headers;
     }
 
     /**
@@ -275,11 +275,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mIsDisplayProgress
+     * @param isDisplayProgress
      *            セットする mIsDisplayProgress
      */
-    public final void setIsDisplayProgress(final boolean mIsDisplayProgress) {
-        this.mIsDisplayProgress = mIsDisplayProgress;
+    public final void setIsDisplayProgress(final boolean isDisplayProgress) {
+        this.mIsDisplayProgress = isDisplayProgress;
     }
 
     /**
@@ -290,11 +290,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mIsErrorCheck
+     * @param isErrorCheck
      *            セットする mIsErrorCheck
      */
-    public final void setIsErrorCheck(final boolean mIsErrorCheck) {
-        this.mIsErrorCheck = mIsErrorCheck;
+    public final void setIsErrorCheck(final boolean isErrorCheck) {
+        this.mIsErrorCheck = isErrorCheck;
     }
 
     /**
@@ -305,11 +305,11 @@ public class NetworkRequest {
     }
 
     /**
-     * @param mDialogListenerId
+     * @param dialogListenerId
      *            セットする mDialogListenerId
      */
-    public final void setDialogListenerId(final int mDialogListenerId) {
-        this.mDialogListenerId = mDialogListenerId;
+    public final void setDialogListenerId(final int dialogListenerId) {
+        this.mDialogListenerId = dialogListenerId;
     }
 
 }

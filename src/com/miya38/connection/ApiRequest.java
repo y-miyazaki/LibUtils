@@ -78,7 +78,7 @@ public class ApiRequest extends StringRequest {
      * @author y-miyazaki
      *
      */
-    public static abstract class ApiListener implements Listener<String> {
+    public abstract static class ApiListener implements Listener<String> {
         /**
          * レスポンスを受信したときにコールする
          *
@@ -103,7 +103,7 @@ public class ApiRequest extends StringRequest {
      * @author y-miyazaki
      *
      */
-    public static abstract class ApiErrorListener implements ErrorListener {
+    public abstract static class ApiErrorListener implements ErrorListener {
         /**
          * エラーレスポンスを受信したときにコールする
          *
@@ -124,10 +124,16 @@ public class ApiRequest extends StringRequest {
      * コンストラクタ
      *
      * @param method
+     *            {@link Method#GET},{@link Method#POST},{@link Method#DELETE},
+     *            {@link Method#PUT}
      * @param url
+     *            URL
      * @param id
+     *            リクエストID
      * @param apiListener
+     *            {@link ApiListener}
      * @param apiErrorListener
+     *            {@link ApiErrorListener}
      */
     public ApiRequest(final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(method, url, apiListener, apiErrorListener);
@@ -146,8 +152,11 @@ public class ApiRequest extends StringRequest {
      * コンストラクタ このコンストラクタは、自動的にsetParams/setHeadersを行う。
      *
      * @param networkRequest
+     *            {@link NetworkResponse}
      * @param apiListener
+     *            {@link ApiListener}
      * @param apiErrorListener
+     *            {@link ApiErrorListener}
      */
     public ApiRequest(final NetworkRequest networkRequest, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(networkRequest.mMethod, networkRequest.mUrl, apiListener, apiErrorListener);
@@ -312,18 +321,6 @@ public class ApiRequest extends StringRequest {
             // ステータスコード出力
             StringUtils.appendBufferFormat(log, "response status code = %s\n", mNetworkResponse.statusCode);
 
-            // レスポンスヘッダ出力
-            // final Map<String, String> headers = mNetworkResponse.headers;
-            // if (headers != null) {
-            // final Set<String> keySet = headers.keySet();
-            // final Iterator<String> keyIte = keySet.iterator();
-            // while (keyIte.hasNext()) {
-            // final String key = keyIte.next();
-            // final String value = headers.get(key);
-            // StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
-            // }
-            // }
-
             final Header[] apacheHeaders = mNetworkResponse.apacheHeaders;
             if (apacheHeaders != null) {
                 final int length = apacheHeaders.length;
@@ -356,25 +353,9 @@ public class ApiRequest extends StringRequest {
      * set-Cookie設定処理
      *
      * @param response
+     *            {@link NetworkResponse}
      */
     private void setCookie(final NetworkResponse response) {
-        //        // レスポンスヘッダ出力
-        //        NetworkResponse networkResponse = volleyError.networkResponse;
-        //        if (networkResponse != null) {
-        //            final Map<String, String> responseHeaders = networkResponse.headers;
-        //            if (responseHeaders != null) {
-        //                final Set<String> keySet = responseHeaders.keySet();
-        //                final Iterator<String> keyIte = keySet.iterator();
-        //                while (keyIte.hasNext()) {
-        //                    final String key = keyIte.next();
-        //                    final String value = responseHeaders.get(key);
-        //                    if (StringUtils.equals("Set-Cookie", key)) {
-        //                        CookieUtils.setValue(mNetworkRequest.mUrl, value);
-        //                    }
-        //                }
-        //            }
-        //        }
-
         // ---------------------------------------------------------------
         // SetCookie
         // ---------------------------------------------------------------
@@ -429,8 +410,10 @@ public class ApiRequest extends StringRequest {
      * 本アプリではJSONをそのまま投げる形式のため。
      * </p>
      *
+     * @return bodyのバイト配列
      * @throws AuthFailureError
      *             in the event of auth failure
+     *
      */
     @Override
     public byte[] getBody() throws AuthFailureError {

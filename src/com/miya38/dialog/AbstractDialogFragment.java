@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
@@ -19,9 +20,9 @@ import com.miya38.utils.ViewHelper;
  * このクラスはFragmentベースなので、再生成が行われることを考慮し、コールバックはインタフェースを用いて行い、<br>
  * また匿名型クラスでは行えない仕様とする。<br>
  * Activity/Fragmentに対してDialogFragmentListenerをimplementsすること。<br>
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
 public abstract class AbstractDialogFragment extends DialogFragment {
     // ---------------------------------------------------------------
@@ -68,14 +69,14 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * <p>
      * 特にDialog表示時にテーマを指定しない場合は、0を指定してください。
      * </p>
-     * 
+     *
      * @return テーマID
      */
     protected abstract int getThemeId();
 
     /**
      * ビューレイアウトのリソースIDを取得します。
-     * 
+     *
      * @return リソースID。
      */
     protected abstract int getViewLayoutId();
@@ -85,7 +86,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * <p>
      * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、0を指定してください。
      * </p>
-     * 
+     *
      * @return ビュースタブID
      */
     protected abstract int getViewStubLayoutId();
@@ -93,7 +94,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
     /**
      * このインタフェースは、ダイアログからのボタンイベント、キャンセルイベント、クローズイベントを受け取る。 <br>
      * setOnDialogFramgentListenerにリスナーを設定することでイベントを受け取ることが出来る。
-     * 
+     *
      * @see #onEvent(int, int)
      */
     public interface OnDialogFragmentListener {
@@ -112,7 +113,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
         /**
          * On event.
-         * 
+         *
          * @param listenerId
          *            listener id
          * @param event
@@ -213,11 +214,11 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * stack. When the fragment is dismissed, a new
      * transaction will be executed to
      * remove it from the activity.
-     * 
+     *
      * @param manager
      *            The FragmentManager this fragment will be added to.
      */
-    public synchronized final void show(final FragmentManager manager) {
+    public final synchronized void show(final FragmentManager manager) {
         // 該当タグのダイアログが起動している場合は、2重起動しないよう制御する。
         if (!isDialogShow(manager, TAG)) {
             showDialog(manager, TAG);
@@ -231,11 +232,23 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      *            TAG
      */
     private void showDialog(final FragmentManager manager, final String tag) {
-        super.show(manager, tag);
+        try {
+            manager.executePendingTransactions();
+            final AbstractDialogFragment previous = (AbstractDialogFragment) manager.findFragmentByTag(TAG);
+            if (null == previous) {
+                final FragmentTransaction transaction = manager.beginTransaction();
+                super.show(transaction, tag);
+            }
+        } catch (final Exception e) {
+            // 稀に発生するIllgalExceptionを握りつぶす
+        }
     }
 
     /**
      * ポジティブ選択
+     *
+     * @param bundle
+     *            バンドル
      */
     public void onPositive(final Bundle bundle) {
         onEvent(OnDialogFragmentListener.DIALOG_POSITIVE, bundle);
@@ -244,6 +257,9 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * ネガティブ選択
+     *
+     * @param bundle
+     *            バンドル
      */
     public void onNegative(final Bundle bundle) {
         onEvent(OnDialogFragmentListener.DIALOG_NEGATIVE, bundle);
@@ -252,6 +268,9 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * ニュートラル選択
+     *
+     * @param bundle
+     *            バンドル
      */
     public void onNeutral(final Bundle bundle) {
         onEvent(OnDialogFragmentListener.DIALOG_NEUTRAL, bundle);
@@ -273,7 +292,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * イベント設定
-     * 
+     *
      * @param event
      *            event is either of the following.<br>
      *            {@link #DIALOG_DISMISS}<br>
@@ -315,7 +334,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * Fragmentが終了中・Viewが取れない等の状態を確認する。
-     * 
+     *
      * @return 削除中/Detach/Viewが取れない場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isFinishing() {
@@ -327,7 +346,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * Fragmentが生存状態かを確認する。
-     * 
+     *
      * @return 削除中/Detachの場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isAlive() {
@@ -339,7 +358,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
     /**
      * リスナーID取得
-     * 
+     *
      * @return リスナーID
      */
     public int getListnerId() {

@@ -8,9 +8,9 @@ import android.support.v4.view.PagerAdapter;
 
 /**
  * カスタムアダプタークラス
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  * @param <T>
  */
 public abstract class CustomPagerAdapter<T> extends PagerAdapter {
@@ -36,7 +36,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context
      * @param itemResourceId
@@ -52,7 +52,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * Context取得
-     * 
+     *
      * @return Context
      */
     protected Context getContext() {
@@ -61,7 +61,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムリソースID取得
-     * 
+     *
      * @return アイテムリソースID
      */
     public int getItemResourceId() {
@@ -75,7 +75,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * 最後のポジションを返却する
-     * 
+     *
      * @return last position
      */
     public int getLastPosition() {
@@ -84,8 +84,9 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムに追加
-     * 
+     *
      * @param object
+     *            指定したアイテム
      */
     public void add(final T object) {
         if (mItems != null) {
@@ -100,9 +101,11 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムの指定位置に追加設定
-     * 
+     *
      * @param object
+     *            指定したアイテム
      * @param index
+     *            追加したいインデックス位置
      */
     public void insert(final T object, final int index) {
         if (mItems != null) {
@@ -117,7 +120,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテム削除
-     * 
+     *
      * @param item
      *            削除対応アイテム
      */
@@ -148,9 +151,10 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテム取得
-     * 
+     *
      * @param position
-     * @return item
+     *            取得したいアイテムのポジション
+     * @return item アイテム
      */
     public T getItem(final int position) {
         return mItems.get(position);
@@ -158,7 +162,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * Returns the position of the specified item in the array.
-     * 
+     *
      * @param item
      *            The item to retrieve the position of.
      * @return The position of the specified item.
@@ -169,9 +173,10 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * position取得
-     * 
+     *
      * @param position
-     * @return position
+     *            ポジション
+     * @return position 現在のポジション
      */
     public long getItemId(final int position) {
         return position;
@@ -179,9 +184,11 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムの指定位置に設定
-     * 
+     *
      * @param position
+     *            ポジション
      * @param item
+     *            アイテム
      */
     public void setItem(final int position, final T item) {
         mItems.set(position, item);
@@ -189,7 +196,7 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムリスト取得
-     * 
+     *
      * @return items
      */
     public List<T> getItems() {
@@ -198,8 +205,10 @@ public abstract class CustomPagerAdapter<T> extends PagerAdapter {
 
     /**
      * アイテムリスト設定
-     * 
+     *
      * @param items
+     *            アイテムリスト
+     *
      */
     public void setItems(final List<T> items) {
         this.mItems = new ArrayList<T>(items);

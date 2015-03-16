@@ -13,15 +13,15 @@ import com.miya38.utils.DiskLruCache;
  * このクラスは、返却する際にはメモリから優先的に返却し、存在しない場合はディスクから返却する。
  * メモリから優先的に取ることにより速度を重視しつつ、メモリがクリアされた場合でもディスクから取り出すことで安易なキャッシュクリアをしない設計としている。
  * </p>
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
-public class BitmapLDCache implements ImageCache {
+public final class BitmapLDCache implements ImageCache {
     /** メモリキャッシュサイズ(5M) */
     private static final int MAX_BITMAP_DISKCACHE_BYTESIZE = 1024 * 1024 * 5;
     /** シングルトンBitmapCache */
-    private static BitmapLDCache BitmapLruCacheAndDiskCache;
+    private static BitmapLDCache sBitmapLruCacheAndDiskCache;
     /** LruCache */
     private final LruCache<String, Bitmap> mCache;
     /** DiskLruCache */
@@ -29,7 +29,7 @@ public class BitmapLDCache implements ImageCache {
 
     /**
      * コンストラクタ Bitmapのキャッシュサイズ指定、LruCacheの設定を行う。
-     * 
+     *
      * @param context
      *            {@link Context}
      */
@@ -45,16 +45,16 @@ public class BitmapLDCache implements ImageCache {
 
     /**
      * インスタンス取得
-     * 
+     *
      * @param context
      *            {@link Context}
      * @return {@link BitmapLDCache}
      */
     public static BitmapLDCache getInstance(final Context context) {
-        if (BitmapLruCacheAndDiskCache == null) {
-            BitmapLruCacheAndDiskCache = new BitmapLDCache(context);
+        if (sBitmapLruCacheAndDiskCache == null) {
+            sBitmapLruCacheAndDiskCache = new BitmapLDCache(context);
         }
-        return BitmapLruCacheAndDiskCache;
+        return sBitmapLruCacheAndDiskCache;
     }
 
     @Override
