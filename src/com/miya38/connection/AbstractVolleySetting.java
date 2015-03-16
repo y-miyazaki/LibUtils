@@ -3,12 +3,25 @@ package com.miya38.connection;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpResponse;
 
 import android.content.Context;
 import android.net.http.AndroidHttpClient;
+import android.util.AndroidRuntimeException;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,7 +34,7 @@ import com.miya38.utils.AplUtils;
 
 /**
  * Volleyのシングルトンクラス
- * 
+ *
  * @author y-miyazaki
  */
 public abstract class AbstractVolleySetting {
@@ -37,7 +50,7 @@ public abstract class AbstractVolleySetting {
      * <p>
      * リクエストヘッダに追加で乗せたいものがある場合は、このメソッドの引数{@link headers}のaddしたものリターンすること。
      * </p>
-     * 
+     *
      * @param headers
      *            リクエストヘッダ
      * @return 追加されたリクエストヘッダ
@@ -49,7 +62,7 @@ public abstract class AbstractVolleySetting {
      * <p>
      * リクエストのUser-Agentは、このメソッドを通じて設定すること。
      * </p>
-     * 
+     *
      * @return User-Agent
      */
     public abstract String getUserAgent();
@@ -57,7 +70,7 @@ public abstract class AbstractVolleySetting {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
      *            {@link Context}
      */
@@ -67,7 +80,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * コンストラクタを隠蔽し、インスタンス化を禁止します。
-     * 
+     *
      * @param imageCache
      *            イメージキャッシュ指定(BitmapLruCach/BitmapDiskLruCache)
      */
@@ -113,7 +126,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * Context取得
-     * 
+     *
      * @return {@link Context}
      */
     public static Context getContext() {
@@ -122,7 +135,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * RequestQueue取得
-     * 
+     *
      * @return {@link RequestQueue}
      */
     public RequestQueue getRequestQueue() {
@@ -131,10 +144,54 @@ public abstract class AbstractVolleySetting {
 
     /**
      * ImageLoader取得
-     * 
+     *
      * @return {@link ImageLoader}
      */
     public ImageLoader getImageLoader() {
         return mImageLoader;
+    }
+
+    /**
+     * SSL証明書の検証スルー用のSSLSocketFactoryを返却する
+     *
+     * @return {@link SSLSocketFactory}
+     */
+    private static SSLSocketFactory getAllAllowsSocketFactory() {
+        try {
+            // ホスト名検証をスキップする
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(final String hostname, final SSLSession session) {
+                    return true;
+                }
+            });
+
+            // 証明書検証スキップする空の TrustManager
+            final TrustManager[] manager = { new X509TrustManager() {
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+
+                @Override
+                public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+                    // do nothing
+                }
+
+                @Override
+                public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+                    // do nothing
+                }
+            } };
+            final SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, manager, null);
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+            return sslContext.getSocketFactory();
+        } catch (final NoSuchAlgorithmException e) {
+            throw new AndroidRuntimeException(e);
+        } catch (final KeyManagementException e) {
+            throw new AndroidRuntimeException(e);
+        }
     }
 }

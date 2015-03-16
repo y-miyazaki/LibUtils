@@ -35,7 +35,7 @@ public final class LogUtils {
     /**
      * ログユーティリティを初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param isDebugable
      *            debug有無<br>
      *            true:デバッグモード false:非デバッグモード
@@ -46,7 +46,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(debug)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -60,7 +60,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(debug)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -76,7 +76,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(info)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -90,7 +90,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(info)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -106,7 +106,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(error)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -120,7 +120,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(error)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -136,7 +136,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(verbose)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -150,7 +150,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(verbose)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -166,7 +166,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(warning)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -180,7 +180,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(warning)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -196,7 +196,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(what a terrible error)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -210,7 +210,7 @@ public final class LogUtils {
 
     /**
      * ログ出力(warning)
-     * 
+     *
      * @param tag
      *            タグ
      * @param message
@@ -226,7 +226,9 @@ public final class LogUtils {
 
     /**
      * 初期処理
-     * 
+     *
+     * @param logLevel
+     *            ログレベル
      * @param tag
      *            タグ
      * @param message
@@ -349,7 +351,7 @@ public final class LogUtils {
 
     /**
      * カット処理
-     * 
+     *
      * @param target
      *            ターゲットの文字列
      * @param cutBytes

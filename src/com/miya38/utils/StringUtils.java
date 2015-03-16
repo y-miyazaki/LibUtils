@@ -1,5 +1,6 @@
 package com.miya38.utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,9 +10,9 @@ import android.text.TextUtils;
 
 /**
  * 文字列操作ユーティリティ
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
 public final class StringUtils {
     /** UTF-8 */
@@ -29,7 +30,7 @@ public final class StringUtils {
 
     /**
      * 文字列の前後からスペース(全角半角、改行、タブなど)を削除した文字列を取得
-     * 
+     *
      * @param string
      *            文字列
      * @return 前後のスペースを削除した文字列
@@ -44,7 +45,7 @@ public final class StringUtils {
 
     /**
      * 指定文字列数で以降の文字列を削除し、代わりに…で埋める。
-     * 
+     *
      * @param string
      *            文字列
      * @param count
@@ -63,8 +64,9 @@ public final class StringUtils {
 
     /**
      * 文字列の空/nullチェック
-     * 
+     *
      * @param string
+     *            文字列
      * @return true:空/null false:それ以外
      */
     public static boolean isEmpty(final CharSequence string) {
@@ -73,7 +75,7 @@ public final class StringUtils {
 
     /**
      * カンマ設定 例:999999999->999,999,999
-     * 
+     *
      * @param number
      *            対象数値
      * @return カンマを設定した文字列
@@ -84,7 +86,7 @@ public final class StringUtils {
 
     /**
      * 改行文字をsplitした配列を返却する
-     * 
+     *
      * @param string
      *            対象数値
      * @return カンマを設定した文字列
@@ -95,7 +97,7 @@ public final class StringUtils {
 
     /**
      * 文字列の配列を展開します。
-     * 
+     *
      * @param delimiter
      *            連結文字。
      * @param strings
@@ -108,7 +110,7 @@ public final class StringUtils {
 
     /**
      * 文字列のコレクションを展開します。
-     * 
+     *
      * @param delimiter
      *            連結文字。
      * @param strings
@@ -139,7 +141,7 @@ public final class StringUtils {
      * The returned array will be double the length of the passed array, as it
      * takes two characters to represent any
      * given byte.
-     * 
+     *
      * @param data
      *            a byte[] to convert to Hex characters
      * @return A char[] containing hexadecimal characters
@@ -154,7 +156,7 @@ public final class StringUtils {
      * The returned array will be double the length of the passed array, as it
      * takes two characters to represent any
      * given byte.
-     * 
+     *
      * @param data
      *            a byte[] to convert to Hex characters
      * @param toLowerCase
@@ -172,7 +174,7 @@ public final class StringUtils {
      * The returned array will be double the length of the passed array, as it
      * takes two characters to represent any
      * given byte.
-     * 
+     *
      * @param data
      *            a byte[] to convert to Hex characters
      * @param toDigits
@@ -196,7 +198,7 @@ public final class StringUtils {
      * values of each byte in order. The returned
      * String will be double the length of the passed array, as it takes two
      * characters to represent any given byte.
-     * 
+     *
      * @param data
      *            a byte[] to convert to Hex characters
      * @return A String containing hexadecimal characters
@@ -213,7 +215,7 @@ public final class StringUtils {
      * two characters to represent any given
      * byte. An exception is thrown if the passed char array has an odd number
      * of elements.
-     * 
+     *
      * @param data
      *            An array of characters containing hexidecimal digits
      * @return A byte array containing binary data decoded from the supplied
@@ -243,7 +245,7 @@ public final class StringUtils {
 
     /**
      * Converts a hexadecimal character to an integer.
-     * 
+     *
      * @param ch
      *            A character to convert to an integer digit
      * @param index
@@ -262,13 +264,14 @@ public final class StringUtils {
 
     /**
      * 数値チェック(少数も含む)
-     * 
+     *
      * @param str
+     *            数値文字列
      * @return true:数値、false：数値でない
      */
     public static boolean isNumber(final String str) {
         try {
-            Double.parseDouble(str);
+            new BigDecimal(str);
             return true;
         } catch (final NumberFormatException e) {
             return false;
@@ -280,7 +283,7 @@ public final class StringUtils {
      * <p>
      * text1,text2がnullであってもNullPointerExceptionで落ちずに比較可能なメソッド
      * </p>
-     * 
+     *
      * @param text1
      *            文字列1
      * @param text2
@@ -301,7 +304,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuilder版)
-     * 
+     *
      * @param texts
      *            連結対象文字列
      * @return 連結した文字列
@@ -318,7 +321,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuilder版)
-     * 
+     *
      * @param src
      *            連結元
      * @param texts
@@ -334,8 +337,9 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuffer版)
-     * 
+     *
      * @param texts
+     *            テキストリスト
      * @return 連結した文字列
      */
     public static String appendBuffer(final String... texts) {
@@ -350,7 +354,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理(StringBuffer版)
-     * 
+     *
      * @param src
      *            連結元
      * @param texts
@@ -366,7 +370,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理+String.format(StringBuffer版)
-     * 
+     *
      * @param src
      *            連結元
      * @param format
@@ -382,7 +386,7 @@ public final class StringUtils {
 
     /**
      * 文字列連結処理+String.format(StringBuffer版)
-     * 
+     *
      * @param src
      *            連結元
      * @param format
@@ -398,7 +402,7 @@ public final class StringUtils {
 
     /**
      * 文字列の指定区切りをArrayListに変換する
-     * 
+     *
      * @param text
      *            文字列
      * @param split
@@ -423,7 +427,7 @@ public final class StringUtils {
 
     /**
      * startWithメソッド呼ぶ
-     * 
+     *
      * @param text
      *            文字列
      * @param prefix
@@ -440,7 +444,7 @@ public final class StringUtils {
 
     /**
      * 文字列が含まれているかチェックします。
-     * 
+     *
      * @param str
      *            対象文字列
      * @param containStr
@@ -456,7 +460,7 @@ public final class StringUtils {
 
     /**
      * ブランクかどうか返します。
-     * 
+     *
      * @param str
      *            文字列
      * @return ブランクかどうか
@@ -472,5 +476,4 @@ public final class StringUtils {
         }
         return true;
     }
-
 }

@@ -3,15 +3,16 @@ package com.miya38.utils;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 /**
  * SharePreferencesユーティリティ
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
 public final class SharedPreferencesUtils {
     /** PRIVATE KEY */
@@ -29,7 +30,7 @@ public final class SharedPreferencesUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
      *            {@link Context}
      */
@@ -39,12 +40,13 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにStringを保存します。
-     * 
+     *
      * @param key
      *            キー
      * @param value
      *            値
      */
+    @SuppressLint("CommitPrefEdits")
     public static void putString(final String key, final String value) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -54,7 +56,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからStringを取得します。
-     * 
+     *
      * @param key
      *            キー
      * @return String
@@ -66,12 +68,13 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにintを保存します。
-     * 
+     *
      * @param key
      *            キー
      * @param value
      *            値
      */
+    @SuppressLint("CommitPrefEdits")
     public static void putInt(final String key, final Integer value) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -81,7 +84,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからintを取得します。
-     * 
+     *
      * @param key
      *            キー
      * @return int
@@ -93,12 +96,13 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにLongを保存します。
-     * 
+     *
      * @param key
      *            キー
      * @param value
      *            値
      */
+    @SuppressLint("CommitPrefEdits")
     public static void putLong(final String key, final Long value) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -108,7 +112,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからLongを取得します。
-     * 
+     *
      * @param key
      *            キー
      * @return long
@@ -120,12 +124,13 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにFloatを保存します。
-     * 
+     *
      * @param key
      *            キー
      * @param value
      *            値
      */
+    @SuppressLint("CommitPrefEdits")
     public static void putFloat(final String key, final Float value) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -135,7 +140,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからFloatを取得します。
-     * 
+     *
      * @param key
      *            キー
      * @return float
@@ -147,12 +152,13 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにBooleanを保存します。
-     * 
+     *
      * @param key
      *            キー
      * @param value
      *            値
      */
+    @SuppressLint("CommitPrefEdits")
     public static void putBoolean(final String key, final Boolean value) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -162,7 +168,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからBooleanを取得します。
-     * 
+     *
      * @param key
      *            キー
      * @return boolean
@@ -174,9 +180,11 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesから指定のキーを削除します。
-     * 
+     *
      * @param key
+     *            キー
      */
+    @SuppressLint("CommitPrefEdits")
     public static void remove(final String key) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -187,6 +195,7 @@ public final class SharedPreferencesUtils {
     /**
      * SharedPreferencesからすべてのキーを削除します。
      */
+    @SuppressLint("CommitPrefEdits")
     public static void clear() {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Editor editor = preferences.edit();
@@ -196,10 +205,11 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesから指定されたExcludeのものを除いて全て削除します。
-     * 
+     *
      * @param excludeList
      *            削除対象外リストキー
      */
+    @SuppressLint("CommitPrefEdits")
     public static void clear(final List<String> excludeList) {
         final SharedPreferences preferences = sContext.getSharedPreferences(PERERENCE_KEY, Context.MODE_PRIVATE);
         final Map<String, ?> list = preferences.getAll();
@@ -222,8 +232,9 @@ public final class SharedPreferencesUtils {
 
     /**
      * Editer commit/applyメソッド
-     * 
+     *
      * @param editor
+     *            {@link Editor}
      */
     private static void editorCommit(final Editor editor) {
         if (AplUtils.hasGingerbread()) {

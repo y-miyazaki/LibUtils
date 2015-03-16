@@ -1,6 +1,7 @@
 package com.miya38.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -169,6 +170,22 @@ public final class FragmentUtils {
     public static String[] getStringArray(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
             return fragment.getArguments().getStringArray(key);
+        }
+        return null;
+    }
+
+    /**
+     * 前画面からデータを取得する
+     *
+     * @param fragment
+     *            フラグメントのインスタンス
+     * @param key
+     *            取得対象のキー
+     * @return 引き渡された値(未設定の場合はnullを返却する。)
+     */
+    public static ArrayList<Integer> getIntArrayList(final Fragment fragment, final String key) {
+        if (fragment.getArguments() != null) {
+            return fragment.getArguments().getIntegerArrayList(key);
         }
         return null;
     }
@@ -353,6 +370,8 @@ public final class FragmentUtils {
      *
      * @param activity
      *            FragmentActivity
+     * @param viewId
+     *            View ID
      */
     public static void finishFragment(final FragmentActivity activity, final int viewId) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
@@ -364,7 +383,9 @@ public final class FragmentUtils {
     /**
      * 現在のFragement取得
      *
-     * @return Fragment
+     * @param activity
+     *            {@link FragmentActivity}
+     * @return 表示されているFragment
      */
     public static Fragment getVisibleFragment(final FragmentActivity activity) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();

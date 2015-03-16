@@ -1271,7 +1271,7 @@ public final class ViewHelper {
             case DisplayMetrics.DENSITY_LOW:
                 statusBarHeight = LOW_DPI_STATUS_BAR_HEIGHT;
                 break;
-            case 320: // XHIGH
+            case DisplayMetrics.DENSITY_XHIGH: // XHIGH
                 statusBarHeight = XHIGH_DPI_STATUS_BAR_HEIGHT;
                 break;
             default:
