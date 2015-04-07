@@ -24,7 +24,7 @@ import com.miya38.widget.callback.OnSoftKeyShownListener;
  * <li>背景自動ダウンロード</li>
  * <li>setDispatchPressedを拒絶する機能</li>
  * </ul>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomLinearLayout extends LinearLayout {
@@ -63,7 +63,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -125,6 +125,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     /*
      * (非 Javadoc)
+     * 
      * @see android.view.View#onDetachedFromWindow()
      */
     @Override
@@ -147,7 +148,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     /**
      * ソフトキーボード表示リスナー設定
-     *
+     * 
      * @param onSoftKeyShownListener
      *            リスナー
      */
@@ -166,7 +167,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     /**
      * レイアウトリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnLayoutListener}
      */
@@ -176,7 +177,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     /**
      * グローバルレイアウトリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnGlobalLayoutListener2}
      */
@@ -191,7 +192,7 @@ public class CustomLinearLayout extends LinearLayout {
 
     /**
      * グローバルリスナー削除
-     *
+     * 
      * @param l
      *            {@link OnGlobalLayoutListener}
      */

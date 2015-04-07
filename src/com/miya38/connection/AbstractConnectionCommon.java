@@ -16,7 +16,6 @@ import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.google.common.base.Preconditions;
 import com.miya38.R;
 import com.miya38.activity.AbstractActivity;
 import com.miya38.common.CommonInterface.OnDeleteLoaderFinishListerner;
@@ -27,15 +26,16 @@ import com.miya38.connection.ApiRequest.ApiErrorListener;
 import com.miya38.connection.ApiRequest.ApiListener;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
+import com.miya38.utils.guava.Preconditions;
 
 /**
  * コネクション共通処理
  * <p>
  * Activity/Fragment/Dialogで使用するコネクション処理の共通部分を行う。
  * </p>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public abstract class AbstractConnectionCommon {
     // ---------------------------------------------------------------
@@ -74,7 +74,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * Jsonエラー表示用メソッド
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
@@ -89,7 +89,7 @@ public abstract class AbstractConnectionCommon {
      * <p>
      * 通信周りでエラーが発生した場合に本メソッドでエラーを表示する。
      * </p>
-     *
+     * 
      * @param title
      *            タイトル
      * @param message
@@ -102,7 +102,7 @@ public abstract class AbstractConnectionCommon {
      * <p>
      * 通信周りでエラーが発生した場合に本メソッドでエラーを表示する。
      * </p>
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
@@ -116,14 +116,14 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * Volley用のリクエストキューを取得します。
-     *
+     * 
      * @return Volleyインスタンスリクエストキュー
      */
     public abstract RequestQueue getRequestQueue();
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param activity
      *            {@link FragmentActivity}
      */
@@ -146,7 +146,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param fragment
      *            {@link Fragment}
      */
@@ -169,7 +169,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param dialogFragment
      *            {@link DialogFragment}
      */
@@ -192,7 +192,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * ロード完了
-     *
+     * 
      * @param networkRequest
      *            リクエストパラメータ<br>
      *            リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
@@ -222,7 +222,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * 各メソッド毎にコールバックメソッドを呼びだす。
-     *
+     * 
      * @param networkRequest
      *            リクエストパラメータ
      *            <p>
@@ -297,12 +297,14 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * リクエストAPI
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
+     * @throws IllegalAccessException
      */
     public final void requestAPI(final NetworkRequest networkRequest) {
         Preconditions.checkNotNull(networkRequest, "networkRequest should not be null.");
+
         // 文字列データリクエスト
         final ApiRequest apiRequest = new ApiRequest(networkRequest, new ApiListener() {
             @Override
@@ -321,7 +323,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * 画面にプログレスバーを表示するか
-     *
+     * 
      * @param display
      *            true:表示する/false:表示しない
      * @param id
@@ -383,7 +385,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * リソースから文字列取得
-     *
+     * 
      * @param resId
      *            リソースID
      * @return リソースから取得した文字列
@@ -403,7 +405,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * リソースから文字列取得
-     *
+     * 
      * @param resId
      *            リソースID
      * @param args
@@ -425,7 +427,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * Activity/Fragmentが生存状態かを確認する。
-     *
+     * 
      * @return 削除中/Detachの場合は、falseを返す 通常時はtrueを返す
      */
     public boolean isFinishing() {
@@ -446,7 +448,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * AbstractActivity取得
-     *
+     * 
      * @return {@link AbstractActivity}
      */
     public FragmentActivity getActivity() {
@@ -455,7 +457,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * Fragment取得
-     *
+     * 
      * @return {@link Fragment}
      */
     public Fragment getFragment() {
@@ -464,7 +466,7 @@ public abstract class AbstractConnectionCommon {
 
     /**
      * DialogFragment取得
-     *
+     * 
      * @return {@link DialogFragment}
      */
     public Fragment getDialogFragment() {

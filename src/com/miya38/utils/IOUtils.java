@@ -11,8 +11,6 @@ import java.io.OutputStream;
 
 import android.database.Cursor;
 
-import com.google.common.io.Closeables;
-
 /**
  * 入出力に関するユーティリティクラス。
  * 
@@ -88,7 +86,7 @@ public final class IOUtils {
             out = new FileOutputStream(file);
             write(inputStream, out);
         } finally {
-            Closeables.closeQuietly(out);
+            closeQuietly(out);
         }
     }
 

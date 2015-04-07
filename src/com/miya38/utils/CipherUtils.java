@@ -25,9 +25,9 @@ import android.util.Base64;
 
 /**
  * 暗号化・復号ユーティリティークラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class CipherUtils {
     // ----------------------------------------------------------
@@ -96,7 +96,7 @@ public final class CipherUtils {
 
     /**
      * キー生成(AES) 128bitのランダムのキーを自動生成する。
-     *
+     * 
      * @return キークラス
      */
     public static Key generateKey() {
@@ -112,7 +112,7 @@ public final class CipherUtils {
 
     /**
      * キー生成(AES) 128bitのランダムのキーを自動生成する。
-     *
+     * 
      * @return キー
      */
     public static byte[] generateByteKey() {
@@ -128,7 +128,7 @@ public final class CipherUtils {
 
     /**
      * キー生成(AES(base64))
-     *
+     * 
      * @return キー(base64にした秘密鍵)
      */
     public static String generateBase64Key() {
@@ -144,7 +144,7 @@ public final class CipherUtils {
 
     /**
      * ハッシュ(SHA256)
-     *
+     * 
      * @param target
      *            ハッシュ対象の文字列
      * @return ハッシュ
@@ -168,7 +168,7 @@ public final class CipherUtils {
     /**
      * ハッシュ(HMACSHA256)<br>
      * 秘密鍵がKey型版
-     *
+     * 
      * @param target
      *            ハッシュ対象の文字列
      * @param secretKey
@@ -195,7 +195,7 @@ public final class CipherUtils {
 
     /**
      * ハッシュ(HMACSHA256) 秘密鍵が文字列型版
-     *
+     * 
      * @param target
      *            ハッシュ対象の文字列
      * @param secretKey
@@ -224,7 +224,7 @@ public final class CipherUtils {
 
     /**
      * ハッシュ(HMACSHA256) 秘密鍵がbyte型版
-     *
+     * 
      * @param target
      *            ハッシュ対象の文字列
      * @param secretKey
@@ -253,7 +253,7 @@ public final class CipherUtils {
     /**
      * 暗号化(AES)(Base64)<br>
      * 秘密鍵がKey型版
-     *
+     * 
      * @param target
      *            暗号化対象の文字列
      * @param secretKey
@@ -288,7 +288,7 @@ public final class CipherUtils {
     /**
      * 復号(AES)<br>
      * 秘密鍵がKey型版
-     *
+     * 
      * @param targetEnCrypt
      *            復号対象文字列
      * @param secretKey
@@ -321,7 +321,7 @@ public final class CipherUtils {
     /**
      * 暗号化(AES)<br>
      * 秘密鍵が文字列型版
-     *
+     * 
      * @param target
      *            暗号化対象の文字列
      * @param secretKey
@@ -359,7 +359,7 @@ public final class CipherUtils {
     /**
      * 復号(AES)<br>
      * 秘密鍵が文字列型版
-     *
+     * 
      * @param targetEnCrypt
      *            復号対象文字列
      * @param secretKey
@@ -397,7 +397,7 @@ public final class CipherUtils {
     /**
      * 暗号化(AES)<br>
      * 秘密鍵が文字列型版
-     *
+     * 
      * @param target
      *            暗号化対象の文字列
      * @param secretKey
@@ -430,7 +430,7 @@ public final class CipherUtils {
     /**
      * 復号(AES)<br>
      * 秘密鍵が文字列型版
-     *
+     * 
      * @param targetEnCrypt
      *            復号対象文字列
      * @param secretKey
@@ -463,7 +463,7 @@ public final class CipherUtils {
 
     /**
      * 秘密鍵による暗号化(RSA)
-     *
+     * 
      * @param data
      *            暗号化するデータのバイト配列
      * @param privateKey
@@ -498,7 +498,7 @@ public final class CipherUtils {
 
     /**
      * 秘密鍵による復号(RSA)
-     *
+     * 
      * @param data
      *            復号するデータのバイト配列
      * @param privateKey
@@ -533,7 +533,7 @@ public final class CipherUtils {
 
     /**
      * 公開鍵による暗号化(RSA)
-     *
+     * 
      * @param data
      *            暗号化するデータのバイト配列
      * @param publicKey
@@ -568,7 +568,7 @@ public final class CipherUtils {
 
     /**
      * 公開鍵による復号(RSA)
-     *
+     * 
      * @param data
      *            復号するデータのバイト配列
      * @param publicKey
@@ -603,7 +603,7 @@ public final class CipherUtils {
 
     /**
      * 秘密鍵による暗号化(RSA)
-     *
+     * 
      * @param data
      *            暗号化するデータのバイト配列
      * @param privateKey
@@ -636,7 +636,7 @@ public final class CipherUtils {
 
     /**
      * 秘密鍵による復号(RSA)
-     *
+     * 
      * @param data
      *            復号するデータのバイト配列
      * @param privateKey
@@ -669,7 +669,7 @@ public final class CipherUtils {
 
     /**
      * 公開鍵による暗号化(RSA)
-     *
+     * 
      * @param data
      *            暗号化するデータのバイト配列
      * @param publicKeyData
@@ -702,7 +702,7 @@ public final class CipherUtils {
 
     /**
      * 公開鍵による復号(RSA)
-     *
+     * 
      * @param data
      *            復号するデータのバイト配列
      * @param publicKey

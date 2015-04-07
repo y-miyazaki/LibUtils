@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -28,8 +29,6 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.MediaColumns;
 import android.text.format.DateFormat;
-
-import com.google.common.io.Closeables;
 
 /**
  * SDカード処理クラス
@@ -167,8 +166,8 @@ public final class FileSdCardUtils {
         } catch (final FileNotFoundException e) {
             // 握りつぶす
         } finally {
-            Closeables.closeQuietly(fileInput);
-            Closeables.closeQuietly(bufInput);
+            IOUtils.closeQuietly(fileInput);
+            IOUtils.closeQuietly(bufInput);
         }
         return null;
     }
@@ -214,7 +213,7 @@ public final class FileSdCardUtils {
             // 握りつぶす
         } finally {
             if (cursor != null) {
-                Closeables.closeQuietly(cursor);
+                IOUtils.closeQuietly(cursor);
             }
         }
         return null;
@@ -253,7 +252,7 @@ public final class FileSdCardUtils {
                     result = file.getPath();
                 }
             }
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return result;
     }
@@ -344,7 +343,7 @@ public final class FileSdCardUtils {
                     }
                 }
             } finally {
-                Closeables.closeQuietly(cursor);
+                IOUtils.closeQuietly(cursor);
             }
         }
         return result;
@@ -383,7 +382,7 @@ public final class FileSdCardUtils {
                     result = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID));
                 }
             }
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return result;
     }
@@ -428,7 +427,7 @@ public final class FileSdCardUtils {
                     }
                 }
             } finally {
-                Closeables.closeQuietly(cursor);
+                IOUtils.closeQuietly(cursor);
             }
         }
         return result;
@@ -467,7 +466,7 @@ public final class FileSdCardUtils {
         } catch (final IOException e) {
             return false;
         } finally {
-            Closeables.closeQuietly(bw);
+            IOUtils.closeQuietly(bw);
         }
         return result;
     }
@@ -513,7 +512,7 @@ public final class FileSdCardUtils {
         } catch (final IOException e) {
             return false;
         } finally {
-            Closeables.closeQuietly(fileOutputStream);
+            IOUtils.closeQuietly(fileOutputStream);
         }
     }
 
@@ -583,7 +582,7 @@ public final class FileSdCardUtils {
         } catch (final IOException e) {
             return false;
         } finally {
-            Closeables.closeQuietly(outputStream);
+            IOUtils.closeQuietly(outputStream);
         }
         return true;
     }
@@ -634,7 +633,7 @@ public final class FileSdCardUtils {
                 cr.update(uri, values, null, null);
                 result = file.getPath();
             }
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return result;
     }
@@ -718,13 +717,13 @@ public final class FileSdCardUtils {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     }
                     outputStream.flush();
-                    Closeables.closeQuietly(outputStream);
+                    IOUtils.closeQuietly(outputStream);
                 }
                 return true;
             }
         } finally {
-            Closeables.closeQuietly(cursor);
-            Closeables.closeQuietly(cursor1);
+            IOUtils.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor1);
         }
         return false;
     }
@@ -758,7 +757,7 @@ public final class FileSdCardUtils {
                     file = new File(cursor.getString(cursor.getColumnIndexOrThrow(MediaColumns.DATA)));
                 }
             }
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return file;
     }
@@ -801,7 +800,7 @@ public final class FileSdCardUtils {
                 return fileResource;
             }
         } finally {
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return null;
     }
@@ -844,7 +843,7 @@ public final class FileSdCardUtils {
                 return fileResource;
             }
         } finally {
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return null;
     }
@@ -902,7 +901,7 @@ public final class FileSdCardUtils {
                 return true;
             }
         } finally {
-            Closeables.closeQuietly(cursor);
+            IOUtils.closeQuietly(cursor);
         }
         return false;
     }
@@ -1048,6 +1047,7 @@ public final class FileSdCardUtils {
      * 
      * @return SD空きカードサイズ
      */
+    @SuppressLint("NewApi")
     @SuppressWarnings("deprecation")
     public static long getUsableSpace() {
         final File file = Environment.getExternalStorageDirectory();
@@ -1064,6 +1064,7 @@ public final class FileSdCardUtils {
      * 
      * @return SDカードサイズ
      */
+    @SuppressLint("NewApi")
     @SuppressWarnings("deprecation")
     public static long getTotalSpace() {
         final File file = Environment.getExternalStorageDirectory();

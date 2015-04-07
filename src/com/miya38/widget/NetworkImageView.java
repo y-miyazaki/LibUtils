@@ -67,13 +67,11 @@ public class NetworkImageView extends ImageView {
     /**
      * Sets URL of the image that should be loaded into this view. Note that
      * calling this will immediately either set
-     * the cached image (if available) or the default image specified by
-     * {@link NetworkImageView#setDefaultImageResId(int)} on the view.
-     * 
-     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)}
-     * and {@link NetworkImageView#setErrorImageResId(int)} should be called
+     * the cached image (if available) or the default image specified by {@link NetworkImageView#setDefaultImageResId(int)} on the view.
+     *
+     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)} and {@link NetworkImageView#setErrorImageResId(int)} should be called
      * prior to calling this function.
-     * 
+     *
      * @param url
      *            The URL that should be loaded into this ImageView.
      * @param imageLoader
@@ -89,13 +87,11 @@ public class NetworkImageView extends ImageView {
     /**
      * Sets URL of the image that should be loaded into this view. Note that
      * calling this will immediately either set
-     * the cached image (if available) or the default image specified by
-     * {@link NetworkImageView#setDefaultImageResId(int)} on the view.
-     * 
-     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)}
-     * and {@link NetworkImageView#setErrorImageResId(int)} should be called
+     * the cached image (if available) or the default image specified by {@link NetworkImageView#setDefaultImageResId(int)} on the view.
+     *
+     * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)} and {@link NetworkImageView#setErrorImageResId(int)} should be called
      * prior to calling this function.
-     * 
+     *
      * @param url
      *            The URL that should be loaded into this ImageView.
      * @param imageLoader
@@ -106,10 +102,16 @@ public class NetworkImageView extends ImageView {
      *            最大縦幅
      */
     public void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight) {
-        mUrl = url;
+        // 同じURLの場合は何もしない。
+        if (TextUtils.equals(mUrl, url)) {
+            return;
+        } else {
+            setImageBitmap(null);
+        }
         mImageLoader = imageLoader;
         mMaxWidth = maxWidth;
         mMaxHeight = maxHeight;
+        mUrl = url;
         // The URL has potentially changed. See if we need to load it.
         loadImageIfNecessary(false);
     }
@@ -132,7 +134,7 @@ public class NetworkImageView extends ImageView {
 
     /**
      * Loads the image for the view if it isn't already loaded.
-     * 
+     *
      * @param isInLayoutPass
      *            True if this was invoked from a layout pass, false otherwise.
      */
@@ -274,9 +276,6 @@ public class NetworkImageView extends ImageView {
             // also clear out the container so we can reload the image if necessary.
             mImageContainer = null;
         }
-        // y-miyazaki custom start
-        mImageContainer = null;
-        // y-miyazaki custom end
         super.onDetachedFromWindow();
     }
 

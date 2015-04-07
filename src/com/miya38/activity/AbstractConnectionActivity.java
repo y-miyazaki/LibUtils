@@ -8,7 +8,7 @@ import com.miya38.connection.NetworkRequest;
 
 /**
  * Activity コネクション用抽象化クラス
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class AbstractConnectionActivity extends AbstractActivity {
@@ -17,7 +17,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
 
     /**
      * コネクション共通処理取得
-     *
+     * 
      * @return {@link AbstractConnectionCommon}
      */
     protected abstract AbstractConnectionCommon getConnectionCommon();
@@ -40,7 +40,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param title
      *            タイトル
      * @param message
@@ -54,7 +54,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
@@ -72,7 +72,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
 
     /**
      * リクエストAPI
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      */

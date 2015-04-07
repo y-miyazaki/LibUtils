@@ -33,15 +33,15 @@ import android.os.Environment;
 import android.os.StatFs;
 
 /**
- * 
+ *
  * キャッシュファイルクラス Least Recently Used (LRU): 最近最も使われていないデータを最初に捨てる
- * 
+ *
  * A simple disk LRU bitmap cache to illustrate how a disk cache would be used
  * for bitmap caching. A much more robust
  * and efficient disk LRU cache solution can be found in the ICS source code
  * (libcore/luni/src/main/java/libcore/io/DiskLruCache.java) and is preferable
  * to this simple implementation.
- * 
+ *
  * ①初期処理：initDiskLruCache<br>
  * →synchronizedMapに既存のキャッシュファイル情報を設定<br>
  * →既存キャッシュファイルの合計ファイルサイズを設定<br>
@@ -63,7 +63,7 @@ public abstract class DiskLruCache {
     // define
     // ----------------------------------------------------------
     /** IOバッファサイズ */
-    public static final int IO_BUFFER_SIZE = 1024; // 1KB
+    public static final int IO_BUFFER_SIZE = 32 * 1024; // 1KB
     /** PNG形式保存 */
     public static CompressFormat mCompressFormat = CompressFormat.PNG;
     /** 品質 */
@@ -111,7 +111,7 @@ public abstract class DiskLruCache {
      * instead use {@link DiskLruCache#openCache(Context, File, long)} which
      * runs some extra checks before creating a<br>
      * DiskLruCache instance.
-     * 
+     *
      * @param cacheDir
      *            キャッシュディレクトリ
      * @param maxByteSize
@@ -127,7 +127,7 @@ public abstract class DiskLruCache {
 
     /**
      * オープンキャッシュ Used to fetch an instance of DiskLruCache.
-     * 
+     *
      * @param context
      *            Context
      * @param cacheDir
@@ -170,7 +170,7 @@ public abstract class DiskLruCache {
 
     /**
      * Used to fetch an instance of DiskLruCache.
-     * 
+     *
      * @param context
      *            Context
      * @param maxByteSize
@@ -183,7 +183,7 @@ public abstract class DiskLruCache {
 
     /**
      * キャッシュから画像ファイル取得 Get an image from the disk cache.
-     * 
+     *
      * @param key
      *            The unique identifier for the bitmap
      * @return The bitmap or null if not found
@@ -198,7 +198,7 @@ public abstract class DiskLruCache {
                 // キャッシュMapにないが、ファイルが存在する場合は、キャッシュMapに書き込む
                 final String existingFile = createFilePath(mCacheDir, renameKey);
                 if (new File(existingFile).exists()) {
-                    put(renameKey, existingFile);
+                    put(key, existingFile);
                     return BitmapFactory.decodeFile(existingFile);
                 }
             }
@@ -208,7 +208,7 @@ public abstract class DiskLruCache {
 
     /**
      * キャッシュからファイルのパスを返す Get an File from the disk cache.
-     * 
+     *
      * @param key
      *            The unique identifier for the bitmap
      * @return The bitmap or null if not found
@@ -229,7 +229,7 @@ public abstract class DiskLruCache {
                 // キャッシュMapにないが、ファイルが存在する場合は、キャッシュMapに書き込む
                 final String existingFile = createFilePath(mCacheDir, renameKey);
                 if (new File(existingFile).exists()) {
-                    put(renameKey, existingFile);
+                    put(key, existingFile);
                     return existingFile;
                 }
             }
@@ -239,7 +239,7 @@ public abstract class DiskLruCache {
 
     /**
      * 画像データキャッシュ書き込み Add a bitmap to the disk cache.
-     * 
+     *
      * @param key
      *            A unique identifier for the bitmap.
      * @param data
@@ -251,7 +251,7 @@ public abstract class DiskLruCache {
 
     /**
      * 画像データキャッシュ書き込み Add a bitmap to the disk cache.
-     * 
+     *
      * @param key
      *            A unique identifier for the bitmap.
      * @param data
@@ -266,7 +266,7 @@ public abstract class DiskLruCache {
                 try {
                     final String file = createFilePath(mCacheDir, renameKey);
                     if (writeBitmapToFile(data, file)) {
-                        put(renameKey, file);
+                        put(key, file);
                         flushCache();
                     }
                 } catch (final FileNotFoundException e) {
@@ -280,7 +280,7 @@ public abstract class DiskLruCache {
 
     /**
      * 文字データキャッシュ書き込み Add a bitmap to the disk cache.
-     * 
+     *
      * @param key
      *            A unique identifier for the bitmap.
      * @param data
@@ -293,7 +293,7 @@ public abstract class DiskLruCache {
                 try {
                     final String file = createFilePath(mCacheDir, renameKey);
                     if (writeStringToFile(data, file)) {
-                        put(renameKey, file);
+                        put(key, file);
                         flushCache();
                     }
                 } catch (final FileNotFoundException e) {
@@ -305,7 +305,7 @@ public abstract class DiskLruCache {
 
     /**
      * Checks if a specific key exist in the cache.
-     * 
+     *
      * @param key
      *            The unique identifier for the bitmap
      * @return true if found, false otherwise
@@ -337,7 +337,7 @@ public abstract class DiskLruCache {
     /**
      * Sets the target compression format and quality for images written to the
      * disk cache.
-     * 
+     *
      * @param compressFormat
      * @param quality
      */
@@ -349,7 +349,7 @@ public abstract class DiskLruCache {
     /**
      * Removes all disk cache entries from the application cache directory in
      * the uniqueName sub-directory.
-     * 
+     *
      * @param context
      *            The context to use
      * @param uniqueName
@@ -363,9 +363,8 @@ public abstract class DiskLruCache {
 
     /**
      * Removes all disk cache entries from the given directory. This should not
-     * be called directly, call {@link DiskLruCache#clearCache(Context, String)}
-     * or {@link DiskLruCache#clearCache()} instead.
-     * 
+     * be called directly, call {@link DiskLruCache#clearCache(Context, String)} or {@link DiskLruCache#clearCache()} instead.
+     *
      * @param cacheDir
      *            The directory to remove the cache files from
      */
@@ -381,13 +380,13 @@ public abstract class DiskLruCache {
     /**
      * キャッシュディレクトリパス取得<br>
      * Get a usable cache directory (external if available, internal otherwise).
-     * 
+     *
      * @param context
      *            The context to use
      * @param uniqueName
      *            A unique directory name to append to the cache dir
      * @return The cache dir
-     * 
+     *
      */
     public static File getDiskCacheDir(final Context context, final String uniqueName) {
         // SdCardがマウントされている場合:sdcard(/mnt/sdcard/Android/data/パッケージ名/cache/ファイル名)
@@ -399,7 +398,7 @@ public abstract class DiskLruCache {
 
     /**
      * Check if external storage is built-in or removable.
-     * 
+     *
      * @return True if external storage is removable (like an SD card), false
      *         otherwise.
      */
@@ -413,7 +412,7 @@ public abstract class DiskLruCache {
 
     /**
      * Get the external app cache directory.
-     * 
+     *
      * @param context
      *            The context to use
      * @return The external cache dir
@@ -428,7 +427,7 @@ public abstract class DiskLruCache {
 
     /**
      * Check how much usable space is available at a given path.
-     * 
+     *
      * @param path
      *            The path to check
      * @return The space available in bytes
@@ -442,7 +441,7 @@ public abstract class DiskLruCache {
     }
 
     /**
-     * 
+     *
      * @param cacheDir
      *            キャッシュディレクトリ
      * @param key
@@ -453,10 +452,10 @@ public abstract class DiskLruCache {
     }
 
     /**
-     * 
+     *
      * Creates a constant cache file path given a target cache directory and an
      * image key.
-     * 
+     *
      * @param cacheDir
      *            キャッシュディレクトリ
      * @return ファイルパス
@@ -468,7 +467,7 @@ public abstract class DiskLruCache {
 
     /**
      * Removes a mapping with the specified key from this Map.
-     * 
+     *
      * @param key
      */
     public synchronized void remove(final String key) {
@@ -481,7 +480,7 @@ public abstract class DiskLruCache {
 
     /**
      * キャッシュファイル管理テーブルサイズ 取得
-     * 
+     *
      * @return
      */
     public int getMapSize() {
@@ -493,11 +492,10 @@ public abstract class DiskLruCache {
     // ----------------------------------------------------------
     /**
      * 画像データファイル書き込み<br>
-     * Writes a bitmap to a file. Call
-     * {@link DiskLruCache#setCompressParams(CompressFormat, int)} first to set
+     * Writes a bitmap to a file. Call {@link DiskLruCache#setCompressParams(CompressFormat, int)} first to set
      * the
      * target bitmap compression and format.
-     * 
+     *
      * @param bitmap
      * @param file
      * @return
@@ -516,11 +514,10 @@ public abstract class DiskLruCache {
 
     /**
      * 文字データファイル書き込み<br>
-     * Writes a data to a file. Call
-     * {@link DiskLruCache#setCompressParams(CompressFormat, int)} first to set
+     * Writes a data to a file. Call {@link DiskLruCache#setCompressParams(CompressFormat, int)} first to set
      * the target
      * bitmap compression and format.
-     * 
+     *
      * @param data
      * @param file
      * @return
@@ -545,7 +542,7 @@ public abstract class DiskLruCache {
      * keeping track of stale files in the cache directory that aren't in the
      * HashMap. If the images and keys in the
      * disk cache change often then they probably won't ever be removed.
-     * 
+     *
      */
     private void flushCache() {
         Entry<String, String> eldestEntry;
@@ -570,7 +567,7 @@ public abstract class DiskLruCache {
 
     /**
      * mLinkedHashMap設定
-     * 
+     *
      * @param key
      * @param file
      */
@@ -586,7 +583,7 @@ public abstract class DiskLruCache {
 
     /**
      * LinkedHashMap初期化
-     * 
+     *
      * @param files
      */
     private void initLinkedHashMap(final File files) {
@@ -603,7 +600,7 @@ public abstract class DiskLruCache {
      * <p>
      * ファイルベースの場合は使用できない文字があるのでURLエンコードする。
      * </p>
-     * 
+     *
      * @param key
      *            変換前キー
      * @return 変換後キー
@@ -614,7 +611,7 @@ public abstract class DiskLruCache {
 
     /**
      * 全ファイルサイズ取得
-     * 
+     *
      * @param files
      * @return 指定ディレクトリの全ファイルサイズの合算値
      */
@@ -650,7 +647,7 @@ public abstract class DiskLruCache {
 
         /**
          * Check how much usable space is available at a given path.
-         * 
+         *
          * @param path
          *            The path to check
          * @return The space available in bytes
@@ -667,7 +664,7 @@ public abstract class DiskLruCache {
 
         /**
          * Check if external storage is built-in or removable.
-         * 
+         *
          * @return True if external storage is removable (like an SD card),
          *         false otherwise.
          */
@@ -682,7 +679,7 @@ public abstract class DiskLruCache {
 
         /**
          * Get the external app cache directory.
-         * 
+         *
          * @param context
          *            The context to use
          * @return The external cache dir
@@ -712,7 +709,7 @@ public abstract class DiskLruCache {
 
         /**
          * Check how much usable space is available at a given path.
-         * 
+         *
          * @param path
          *            The path to check
          * @return The space available in bytes
@@ -724,7 +721,7 @@ public abstract class DiskLruCache {
 
         /**
          * Check if external storage is built-in or removable.
-         * 
+         *
          * @return True if external storage is removable (like an SD card),
          *         false otherwise.
          */
@@ -734,7 +731,7 @@ public abstract class DiskLruCache {
 
         /**
          * Get the external app cache directory.
-         * 
+         *
          * @param context
          *            The context to use
          * @return The external cache dir

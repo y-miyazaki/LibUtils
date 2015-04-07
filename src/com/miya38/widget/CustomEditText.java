@@ -18,9 +18,9 @@ import com.miya38.validator.validator.PhoneValidator;
 
 /**
  * 英数字フィルタリング用EditTextクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class CustomEditText extends EditText {
     /** 必須とするか？ */
@@ -46,7 +46,7 @@ public class CustomEditText extends EditText {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -60,7 +60,7 @@ public class CustomEditText extends EditText {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -76,7 +76,7 @@ public class CustomEditText extends EditText {
 
     /**
      * init
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -100,7 +100,7 @@ public class CustomEditText extends EditText {
 
     /**
      * Validate取得
-     *
+     * 
      * @return Validate
      */
     private Validate getValidate() {
@@ -127,7 +127,7 @@ public class CustomEditText extends EditText {
 
     /**
      * バリデーションチェック
-     *
+     * 
      * @return true:正常,false:エラー
      */
     public boolean isValid() {
@@ -140,7 +140,7 @@ public class CustomEditText extends EditText {
 
     /**
      * バリデーションエラーメッセージ
-     *
+     * 
      * @return エラーメッセージの配列
      */
     public List<String> getErrorMessages() {

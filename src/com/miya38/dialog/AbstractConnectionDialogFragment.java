@@ -11,9 +11,9 @@ import com.miya38.connection.NetworkRequest;
  * このクラスはFragmentベースなので、再生成が行われることを考慮し、コールバックはインタフェースを用いて行い、<br>
  * また匿名型クラスでは行えない仕様とする。<br>
  * Activity/Fragmentに対してDialogFragmentListenerをimplementsすること。<br>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public abstract class AbstractConnectionDialogFragment extends AbstractDialogFragment {
     /** AbstractConnectionCommon */
@@ -21,7 +21,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
 
     /**
      * コネクション共通処理取得
-     *
+     * 
      * @return {@link AbstractConnectionCommon}
      */
     protected abstract AbstractConnectionCommon getConnectionCommon();
@@ -44,7 +44,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param title
      *            タイトル
      * @param message
@@ -58,7 +58,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
@@ -78,7 +78,7 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
      * リクエストAPI
      * <p>
      * </p>
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      */

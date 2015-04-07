@@ -34,7 +34,7 @@ import com.miya38.utils.AplUtils;
 
 /**
  * Volleyのシングルトンクラス
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class AbstractVolleySetting {
@@ -50,7 +50,7 @@ public abstract class AbstractVolleySetting {
      * <p>
      * リクエストヘッダに追加で乗せたいものがある場合は、このメソッドの引数{@link headers}のaddしたものリターンすること。
      * </p>
-     *
+     * 
      * @param headers
      *            リクエストヘッダ
      * @return 追加されたリクエストヘッダ
@@ -62,7 +62,7 @@ public abstract class AbstractVolleySetting {
      * <p>
      * リクエストのUser-Agentは、このメソッドを通じて設定すること。
      * </p>
-     *
+     * 
      * @return User-Agent
      */
     public abstract String getUserAgent();
@@ -70,7 +70,7 @@ public abstract class AbstractVolleySetting {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -80,7 +80,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * コンストラクタを隠蔽し、インスタンス化を禁止します。
-     *
+     * 
      * @param imageCache
      *            イメージキャッシュ指定(BitmapLruCach/BitmapDiskLruCache)
      */
@@ -126,7 +126,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * Context取得
-     *
+     * 
      * @return {@link Context}
      */
     public static Context getContext() {
@@ -135,7 +135,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * RequestQueue取得
-     *
+     * 
      * @return {@link RequestQueue}
      */
     public RequestQueue getRequestQueue() {
@@ -144,7 +144,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * ImageLoader取得
-     *
+     * 
      * @return {@link ImageLoader}
      */
     public ImageLoader getImageLoader() {
@@ -153,7 +153,7 @@ public abstract class AbstractVolleySetting {
 
     /**
      * SSL証明書の検証スルー用のSSLSocketFactoryを返却する
-     *
+     * 
      * @return {@link SSLSocketFactory}
      */
     private static SSLSocketFactory getAllAllowsSocketFactory() {

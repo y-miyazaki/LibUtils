@@ -16,8 +16,8 @@ import com.miya38.widget.CustomViewPager;
 
 /**
  * ノーローディングViewPager生成クラス
- *
- *
+ * 
+ * 
  * @author y-miyazaki
  * @param <T>
  *            Adapter
@@ -38,7 +38,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
@@ -52,7 +52,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
@@ -66,7 +66,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
@@ -80,7 +80,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            ViewPagerのID(ex:R.id.ViewPager01)
      * @param pagerMargin
@@ -92,7 +92,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            ViewPagerのID(ex:R.id.ViewPager01)
      * @param viewPagerEmptyId
@@ -118,7 +118,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            View自身
      * @param onPageChangeListener
@@ -132,7 +132,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            View自身
      * @param onPageChangeListener
@@ -148,7 +148,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * ViewPager設定(初期設定)
-     *
+     * 
      * @param viewPagerId
      *            View自身
      * @param onPageChangeListener
@@ -181,7 +181,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
 
     /**
      * 空の場合のレイアウト
-     *
+     * 
      * @param viewPagerEmptyId
      *            空表示の場合のレイアウトID
      */

@@ -16,9 +16,9 @@ import com.miya38.widget.callback.OnFlickListener;
  * <p>
  * フリックイベントによりバックフォーワードイベントを取得することが可能。
  * </p>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class CustomWebView extends WebView implements GestureDetector.OnGestureListener {
     // ----------------------------------------------------------
@@ -37,7 +37,7 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      */
@@ -48,7 +48,7 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -62,7 +62,7 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -88,7 +88,7 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
 
     /**
      * コールバックリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnFlickListener}
      */
@@ -98,7 +98,7 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
 
     /**
      * GestureDetector設定
-     *
+     * 
      * @param gestureDetector
      *            {@link GestureDetector}
      */
@@ -157,6 +157,8 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
     protected void onDetachedFromWindow() {
         mOnFlickListener = null;
         mGestureDetector = null;
+        setWebChromeClient(null);
+        setWebViewClient(null);
         super.onDetachedFromWindow();
     }
 

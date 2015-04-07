@@ -9,9 +9,9 @@ import com.miya38.utils.ConnectionUtils;
 
 /**
  * ネットワークパラメータクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class NetworkRequest {
     /**
@@ -63,7 +63,7 @@ public class NetworkRequest {
 
     /**
      * GET/DELETEリクエストコンストラクタ
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#GET}<br>
@@ -92,7 +92,7 @@ public class NetworkRequest {
      * <p>
      * 通常のGET/DELETEリクエストに加え、リクエストヘッダを指定したい場合には本コンストラクタを使用する。
      * </p>
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#GET}<br>
@@ -121,7 +121,7 @@ public class NetworkRequest {
 
     /**
      * POST/PUTリクエストコンストラクタ
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#POST}<br>
@@ -150,7 +150,7 @@ public class NetworkRequest {
      * <p>
      * 通常のPOST/PUTリクエストに加え、リクエストヘッダを指定したい場合には本コンストラクタを使用する。
      * </p>
-     *
+     * 
      * @param method
      *            リクエストメソッド<br>
      *            {@link Method#POST}<br>

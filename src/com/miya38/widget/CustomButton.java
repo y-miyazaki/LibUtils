@@ -32,7 +32,7 @@ import com.miya38.utils.CollectionUtils;
  * <p>
  * 外部フォントを自動的に組み込む
  * </p>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomButton extends Button implements OnClickListener, OnTouchListener, TextWatcher {
@@ -92,7 +92,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -106,7 +106,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -122,7 +122,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * init
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -314,7 +314,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * HTMLフォーマットのTextに変換する。
-     *
+     * 
      * @param text
      *            HTML文字列
      */
@@ -329,7 +329,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * タイプフェースで追加したものをindex指定する。
-     *
+     * 
      * @return Typeface数
      */
     public static int getCustomTypefaceCount() {
@@ -338,7 +338,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * タイプフェースで追加したものをindex指定する。
-     *
+     * 
      * @param index
      *            タイプフェース取得のためのインデックス(0から指定)
      */
@@ -348,7 +348,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * タイプフェース追加
-     *
+     * 
      * @param typeface
      *            {@link Typeface}
      */
@@ -361,7 +361,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * 追加したタイプフェースを指定する
-     *
+     * 
      * @param index
      *            タイプフェース設定のためのインデックス(0から指定)
      */
@@ -377,7 +377,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * 追加したタイプフェースを取得する。
-     *
+     * 
      * @param index
      *            タイプフェース設定のためのインデックス(0から指定)
      * @return Typeface フォント
@@ -395,7 +395,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * tint設定を取得する。
-     *
+     * 
      * @return tint設定<br>
      */
     public int getTint() {
@@ -404,7 +404,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * コーナー設定
-     *
+     * 
      * @param tint
      *            tint attribute
      */
@@ -448,7 +448,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     /**
      * カラーフィルターを掛ける<br>
      * クリアする場合は、clearColorFilter()をすること。
-     *
+     * 
      * @param v
      *            View
      */
@@ -464,7 +464,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     /**
      * グレースケールのカラーフィルターを掛ける<br>
      * クリアする場合は、clearColorFilter()をすること。
-     *
+     * 
      * @param v
      *            View
      */
@@ -539,7 +539,7 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
     /**
      * テキスト幅を取得
-     *
+     * 
      * @param textSize
      *            文字サイズ
      * @param text

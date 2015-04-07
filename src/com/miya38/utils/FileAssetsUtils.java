@@ -5,8 +5,6 @@ import java.io.InputStream;
 
 import android.content.Context;
 
-import com.google.common.io.Closeables;
-
 /**
  * assetsファイル処理クラス<br>
  * このクラスは、assets領域の読み込みを対応する。
@@ -49,7 +47,7 @@ public final class FileAssetsUtils {
         } catch (final IOException e) {
             return null;
         } finally {
-            Closeables.closeQuietly(inputStream);
+            IOUtils.closeQuietly(inputStream);
         }
     }
 
@@ -70,7 +68,7 @@ public final class FileAssetsUtils {
         } catch (final IOException e) {
             // 握りつぶしてnullで返す
         } finally {
-            Closeables.closeQuietly(inputStream);
+            IOUtils.closeQuietly(inputStream);
         }
         return new byte[0];
     }

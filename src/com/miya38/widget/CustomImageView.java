@@ -26,7 +26,7 @@ import com.miya38.utils.LogUtils;
  * ImageViewを継承しているクラス。<br>
  * それに加え、もしonClickListenerを指定している場合に選択時されたことをグレースケールでわかるようにしている。<br>
  * </p>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomImageView extends ImageView implements OnTouchListener {
@@ -66,7 +66,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -80,7 +80,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -96,7 +96,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * init
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -139,7 +139,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * tint設定を取得する。
-     *
+     * 
      * @return tint設定<br>
      */
     public int getTint() {
@@ -148,7 +148,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定
-     *
+     * 
      * @param tint
      *            tint attribute
      */
@@ -191,7 +191,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * 画像を消えるようなアルファアニメーションを行う。<br>
-     *
+     * 
      * @return Animation
      */
     public Animation alphaOutAnimation() {
@@ -206,7 +206,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
-     *
+     * 
      * @return Animation
      */
     public Animation alphaInAnimation() {
@@ -220,7 +220,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * 画像がポップアップアニメーションを行う。<br>
-     *
+     * 
      * @return Animation
      */
     public Animation popUpAnimation() {
@@ -233,7 +233,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
     /**
      * アニメーション時間設定<br>
      * アニメーションにかかる時間をmsecで指定する。
-     *
+     * 
      * @param animationDuration
      *            msec
      */
@@ -282,7 +282,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定を取得する。
-     *
+     * 
      * @return コーナー設定<br>
      *         true:有り false:無し
      */
@@ -292,7 +292,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定
-     *
+     * 
      * @param corner
      *            コーナを表示するか？<br>
      *            true:表示する。/false:表示しない。
@@ -303,7 +303,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定を取得する。
-     *
+     * 
      * @return コーナー設定
      */
     public float getCornerRadius() {
@@ -312,7 +312,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定
-     *
+     * 
      * @param cornerRadius
      *            コーナーの角丸のサイズ
      */

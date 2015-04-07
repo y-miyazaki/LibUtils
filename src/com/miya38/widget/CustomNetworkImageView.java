@@ -15,7 +15,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
@@ -27,6 +26,7 @@ import com.miya38.utils.ClassUtils;
 import com.miya38.utils.ImageUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
+import com.miya38.utils.ViewHelper;
 
 /**
  * カスタムImageViewクラス
@@ -45,11 +45,11 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     private static final String TAG = CustomNetworkImageView.class.getSimpleName();
 
     /** field mUrl */
-    private static final Field F_URL = ClassUtils.getField(NetworkImageView.class, "mUrl");
+    private static final Field FIELD_URL = ClassUtils.getField(NetworkImageView.class, "mUrl");
     /** field mImageContainer */
-    private static final Field F_MIMAGE_CONTAINER = ClassUtils.getField(NetworkImageView.class, "mImageContainer");
+    private static final Field FIELD_MIMAGE_CONTAINER = ClassUtils.getField(NetworkImageView.class, "mImageContainer");
     /** field mImageContainer */
-    private static final Field F_MCACHE = ClassUtils.getField(ImageLoader.class, "mCache");
+    private static final Field FIELD_MCACHE = ClassUtils.getField(ImageLoader.class, "mCache");
 
     /** アニメーション時間(ms) */
     private static final int ANIMATION_DURATION = 500;
@@ -69,7 +69,8 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     private int mTint = -1;
     /** PorterDuff attribute */
     private PorterDuff.Mode mMode;
-
+    /** 表示時にアルファをかけて表示するか？ */
+    private boolean mIsAlphaAnimation;
     // ----------------------------------------------------------
     // other
     // ----------------------------------------------------------
@@ -134,6 +135,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         final int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
         this.mIsCorner = ta.getBoolean(R.styleable.CustomImageView_corner, false);
         this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, CORNER_RADIUS);
+        this.mIsAlphaAnimation = ta.getBoolean(R.styleable.CustomImageView_is_alpha_animation, false);
         this.mTint = ta.getInt(R.styleable.CustomImageView_tint, -1);
         if (mTint != -1) {
             final String poterduffMode = ta.getString(R.styleable.CustomImageView_porterduff_mode);
@@ -210,31 +212,16 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * 画像を消えるようなアルファアニメーションを行う。<br>
-     *
-     * @return Animation
      */
-    public Animation alphaOutAnimation() {
-        final AlphaAnimation alpha = new AlphaAnimation(1, 0);
-        alpha.setDuration(mAnimationDuration);
-        alpha.setFillEnabled(true);
-        alpha.setFillAfter(true);
-        alpha.setFillBefore(true);
-        startAnimation(alpha);
-        return alpha;
+    public void alphaOutAnimation() {
+        ViewHelper.setAlphaOutAnimation(this, mAnimationDuration);
     }
 
     /**
      * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
-     *
-     * @return Animation
      */
-    public Animation alphaInAnimation() {
-        final AlphaAnimation alpha = new AlphaAnimation(0, 1);
-        alpha.setDuration(mAnimationDuration);
-        // alpha.setFillEnabled(true);
-        // alpha.setFillAfter(true);
-        startAnimation(alpha);
-        return alpha;
+    public void alphaInAnimation() {
+        ViewHelper.setAlphaInAnimation(this, mAnimationDuration);
     }
 
     /**
@@ -341,11 +328,25 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     @Override
     public void setImageBitmap(final Bitmap bm) {
+        setImageBitmap(bm, mIsAlphaAnimation);
+    }
+
+    /**
+     *
+     * @param bm
+     * @param isAlphaAnimation
+     */
+    public void setImageBitmap(final Bitmap bm, final boolean isAlphaAnimation) {
         try {
             if (mIsCorner) {
                 super.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bm, (int) mCornerRadius));
             } else {
                 super.setImageBitmap(bm);
+            }
+            if (bm != null) {
+                //                if (isAlphaAnimation) {
+                //                    alphaInAnimation();
+                //                }
             }
         } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "setImageBitmap bitmap OutOfMemoryError", e);
@@ -426,14 +427,14 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }
         try {
             if (ImageUtils.isDataUriScheme(url)) {
-                final ImageCache imageCache = (ImageCache) F_MCACHE.get(imageLoader);
-                final Bitmap cacheBitmap = imageCache.getBitmap(url);
+                final ImageCache imageCache = (ImageCache) FIELD_MCACHE.get(imageLoader);
+                final Bitmap cacheBitmap = imageCache.getBitmap(getCacheKey(url, maxWidth, maxHeight));
                 if (cacheBitmap == null) {
                     final Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
                     imageCache.putBitmap(url, bitmap);
-                    setImageBitmap(bitmap);
+                    setImageBitmap(bitmap, false);
                 } else {
-                    setImageBitmap(cacheBitmap);
+                    setImageBitmap(cacheBitmap, false);
                 }
             } else {
                 super.setImageUrl(url, imageLoader, maxWidth, maxHeight);
@@ -448,16 +449,73 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }
     }
 
+    // TODO 非同期しないと結局非効率
+    //    /**
+    //     *
+    //     * @param url
+    //     *            URL
+    //     * @param imageLoader
+    //     *            {@link ImageLoader}
+    //     * @param maxWidth
+    //     *            最大横幅(アスペクト比考慮した最大長)<br>
+    //     *            0以下を指定した場合は、そのままの画像サイズを設定
+    //     * @param maxHeight
+    //     *            最大縦幅(アスペクト比考慮した最大長)<br>
+    //     *            0以下を指定した場合は、そのままの画像サイズを設定
+    //     * @param isTimerCancel
+    //     *            true:タイマーをキャンセルする。<br>
+    //     *            false:タイマーをキャンセルしない。
+    //     */
+    //    private void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight, final boolean isTimerCancel) {
+    //        if (StringUtils.isEmpty(url)) {
+    //            return;
+    //        }
+    //        if (isTimerCancel && mTimer != null) {
+    //            mTimer.cancel();
+    //        }
+    //
+    //        try {
+    //            final ImageCache imageCache = (ImageCache) FIELD_MCACHE.get(imageLoader);
+    //            final Bitmap cacheBitmap = imageCache.getBitmap(getCacheKey(url, maxWidth, maxHeight));
+    //
+    //            if (ImageUtils.isDataUriScheme(url)) {
+    //                if (cacheBitmap == null) {
+    //                    final Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
+    //                    imageCache.putBitmap(url, bitmap);
+    //                    setImageBitmap(bitmap, false);
+    //                } else {
+    //                    setImageBitmap(cacheBitmap, false);
+    //                }
+    //            } else {
+    //                if (cacheBitmap == null) {
+    //                    LogUtils.d(TAG, "cache no hit url = %s", url);
+    //                    setImageBitmap(null);
+    //                    super.setImageUrl(url, imageLoader, maxWidth, maxHeight);
+    //                } else {
+    //                    LogUtils.d(TAG, "cache hit url = %s", url);
+    //                    setImageBitmap(cacheBitmap, false);
+    //                }
+    //            }
+    //        } catch (final OutOfMemoryError e) {
+    //            LogUtils.e(TAG, "setImageUrl bitmap OutOfMemoryError", e);
+    //            setImageBitmap(null);
+    //        } catch (final IllegalAccessException e) {
+    //            // 何もしない。
+    //        } catch (final IllegalArgumentException e) {
+    //            // 何もしない。
+    //        }
+    //    }
+
     /**
      * リクエストをキャンセルする。
      */
     public void cancelRequest() {
         try {
-            F_URL.set(this, null);
-            final ImageContainer imageContainer = (ImageContainer) F_MIMAGE_CONTAINER.get(this);
+            FIELD_URL.set(this, null);
+            final ImageContainer imageContainer = (ImageContainer) FIELD_MIMAGE_CONTAINER.get(this);
             if (imageContainer != null) {
                 imageContainer.cancelRequest();
-                F_MIMAGE_CONTAINER.set(this, null);
+                FIELD_MIMAGE_CONTAINER.set(this, null);
             }
         } catch (final Exception e) {
             // 握りつぶす
@@ -474,5 +532,20 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }
         super.setImageBitmap(null);
         super.onDetachedFromWindow();
+    }
+
+    /**
+     * Creates a cache key for use with the L1 cache.
+     *
+     * @param url
+     *            The URL of the request.
+     * @param maxWidth
+     *            The max-width of the output.
+     * @param maxHeight
+     *            The max-height of the output.
+     */
+    public static String getCacheKey(final String url, final int maxWidth, final int maxHeight) {
+        return new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
+                .append("#H").append(maxHeight).append(url).toString();
     }
 }

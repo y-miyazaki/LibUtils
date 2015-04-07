@@ -26,7 +26,7 @@ import com.miya38.widget.callback.OnLayoutListener;
  * <li>背景自動ダウンロード</li>
  * <li>setDispatchPressedを拒絶する機能</li>
  * </ul>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomRelativeLayout extends RelativeLayout implements GestureDetector.OnGestureListener {
@@ -71,7 +71,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      */
@@ -83,7 +83,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -123,6 +123,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /*
      * (非 Javadoc)
+     * 
      * @see android.view.View#onDetachedFromWindow()
      */
     @Override
@@ -159,7 +160,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * <li>自動的に左詰めで右までいったら自動的に改行を行う。</li>
      * <li>onWindowFocusChangedの後に呼ぶこと。(Viewが確定しないと幅等が取得できない。</li>
      * </p>
-     *
+     * 
      * @param left
      *            マージンLeft
      * @param top
@@ -222,7 +223,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
      * <li>自動的に左詰めで右までいったら自動的に改行を行う。</li>
      * <li>onWindowFocusChangedの後に呼ぶこと。(Viewが確定しないと幅等が取得できない。</li>
      * </p>
-     *
+     * 
      * @return true:レイアウトのオートフィットが出来た場合
      *         false:レイアウトのオートフィットが出来なかった場合
      */
@@ -232,7 +233,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * レイアウトリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnLayoutListener}
      */
@@ -242,7 +243,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * グローバルレイアウトリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnGlobalLayoutListener2}
      */
@@ -257,7 +258,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * グローバルリスナー削除
-     *
+     * 
      * @param l
      *            {@link OnGlobalLayoutListener}
      */
@@ -274,7 +275,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * コールバックリスナー設定
-     *
+     * 
      * @param l
      *            {@link OnFlickListener}
      */
@@ -284,7 +285,7 @@ public class CustomRelativeLayout extends RelativeLayout implements GestureDetec
 
     /**
      * GestureDetector設定
-     *
+     * 
      * @param gestureDetector
      *            {@link GestureDetector}
      */

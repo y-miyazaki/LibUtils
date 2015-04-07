@@ -9,13 +9,13 @@ import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-import com.google.common.base.Preconditions;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.miya38.exception.ApplicationException;
 import com.miya38.list.adapter.CustomArrayAdapter;
 import com.miya38.utils.CollectionUtils;
 import com.miya38.utils.ViewHelper;
+import com.miya38.utils.guava.Preconditions;
 import com.miya38.widget.CustomGridView;
 
 /**
@@ -25,13 +25,13 @@ import com.miya38.widget.CustomGridView;
  * CustomListViewに関する設定は全てこのクラスを使うことで操作を行うことで設定漏れ等を極力なくすのが目的である。<br>
  * 主にCustomGridView、Adapterに関する操作をこのクラスでは実装している。<br>
  * </p>
- *
- *
+ * 
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- *
+ * 
  * @author y-miyazaki
  */
 public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends AbstractSettingGridView<T, U> {
@@ -50,7 +50,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
@@ -65,7 +65,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
@@ -80,7 +80,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
@@ -95,7 +95,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      */
@@ -107,7 +107,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      * @param gridViewEmptyId
@@ -120,7 +120,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      * @param onItemClickListener
@@ -138,7 +138,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * GridView設定(初期設定)
-     *
+     * 
      * @param gridViewId
      *            GridView自身(ex:R.id.GridView)
      * @param onItemClickListener
@@ -155,7 +155,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * View取得
-     *
+     * 
      * @param <V>
      *            Viewの継承View
      * @param id

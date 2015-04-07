@@ -12,7 +12,9 @@
         <attr name="error_image" format="string" />
         <!-- 編集時画像 -->
         <attr name="edit_src" format="reference" />
-    </declare-styleable>
+        <!-- 表示時にアルファをかけて表示するか？ -->
+        <attr name="is_alpha_animation" format="boolean" />
+        </declare-styleable>
 
     <!-- CustomLinearLayout -->
     <declare-styleable name="CustomLinearLayout">

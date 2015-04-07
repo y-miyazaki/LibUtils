@@ -4,9 +4,9 @@ import java.text.DecimalFormat;
 
 /**
  * 数値操作ユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class NumberUtils {
 
@@ -18,7 +18,7 @@ public final class NumberUtils {
 
     /**
      * Integer型数値オブジェクトの空/0チェック
-     *
+     * 
      * @param number
      *            数値
      * @return true:空/null false:それ以外
@@ -32,7 +32,7 @@ public final class NumberUtils {
 
     /**
      * Long型数値オブジェクトの空/0チェック
-     *
+     * 
      * @param number
      *            数値
      * @return true:空/null false:それ以外
@@ -47,7 +47,7 @@ public final class NumberUtils {
     /**
      * 数値をカンマ区切りにする。
      * ex:1000000->100,0000
-     *
+     * 
      * @param num
      *            数値
      * @param defaultValue
@@ -123,7 +123,7 @@ public final class NumberUtils {
 
     /**
      * カンマを取り除き、空文字場合は0を自動的に付与します。
-     *
+     * 
      * @param text
      *            テキスト
      * @return カンマ除去後の文字列

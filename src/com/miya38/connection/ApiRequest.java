@@ -124,8 +124,7 @@ public class ApiRequest extends StringRequest {
      * コンストラクタ
      *
      * @param method
-     *            {@link Method#GET},{@link Method#POST},{@link Method#DELETE},
-     *            {@link Method#PUT}
+     *            {@link Method#GET},{@link Method#POST},{@link Method#DELETE}, {@link Method#PUT}
      * @param url
      *            URL
      * @param id
@@ -334,11 +333,11 @@ public class ApiRequest extends StringRequest {
             try {
                 StringUtils.appendBuffer(log, "response body = ");
                 StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                StringUtils.appendBufferFormat(log, "\n---------------------------------------- end ----------------------------------------\n");
+                LogUtils.d(TAG, log.toString());
             } catch (final OutOfMemoryError e) {
                 // 無視する。bodyがでか過ぎて無理なため。
             }
-            StringUtils.appendBufferFormat(log, "\n---------------------------------------- end ----------------------------------------\n");
-            LogUtils.d(TAG, log.toString());
         }
         String parsed;
         try {

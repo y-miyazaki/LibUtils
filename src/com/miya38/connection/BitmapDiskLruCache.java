@@ -30,9 +30,12 @@ public final class BitmapDiskLruCache implements ImageCache {
      *
      * @param context
      *            Context
+     * @param cacheSize
+     *            バイト単位で指定する。1024 * 1024 * 5がデフォルト値
      */
-    private BitmapDiskLruCache(final Context context) {
-        mDiskLruCache = DiskLruCache.openCache(context, MAX_BITMAP_DISKCACHE_BYTESIZE);
+    private BitmapDiskLruCache(final Context context, int cacheSize) {
+        cacheSize = cacheSize == -1 ? MAX_BITMAP_DISKCACHE_BYTESIZE : cacheSize;
+        mDiskLruCache = DiskLruCache.openCache(context, cacheSize);
         if (mDiskLruCache == null) {
             mBitmapLruCashe = BitmapLruCache.getInstance();
         }
@@ -47,7 +50,23 @@ public final class BitmapDiskLruCache implements ImageCache {
      */
     public static BitmapDiskLruCache getInstance(final Context context) {
         if (sBitmapDiskLruCashe == null) {
-            sBitmapDiskLruCashe = new BitmapDiskLruCache(context);
+            sBitmapDiskLruCashe = new BitmapDiskLruCache(context, -1);
+        }
+        return sBitmapDiskLruCashe;
+    }
+
+    /**
+     * インスタンス取得
+     *
+     * @param context
+     *            {@link Context}
+     * @param cacheSize
+     *            バイト単位で指定する。1024 * 1024 * 5がデフォルト値
+     * @return {@link BitmapDiskLruCache}
+     */
+    public static BitmapDiskLruCache getInstance(final Context context, final int cacheSize) {
+        if (sBitmapDiskLruCashe == null) {
+            sBitmapDiskLruCashe = new BitmapDiskLruCache(context, cacheSize);
         }
         return sBitmapDiskLruCashe;
     }
@@ -66,7 +85,12 @@ public final class BitmapDiskLruCache implements ImageCache {
         if (mDiskLruCache == null) {
             mBitmapLruCashe.putBitmap(url, bitmap);
         } else {
-            mDiskLruCache.put(url, bitmap);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mDiskLruCache.put(url, bitmap);
+                }
+            }).start();
         }
     }
 }

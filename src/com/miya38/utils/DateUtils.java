@@ -15,9 +15,9 @@ import android.annotation.SuppressLint;
 
 /**
  * Date に関するユーティリティメソッドを提供します。
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class DateUtils {
     /**
@@ -98,7 +98,7 @@ public final class DateUtils {
     /**
      * 文字列フォーマット<br>
      * yyyy/MM/dd HH:mm:ss z形式で返却する
-     *
+     * 
      * @param date
      *            {@link Date}
      * @return フォーマットされた文字列
@@ -112,7 +112,7 @@ public final class DateUtils {
 
     /**
      * 文字列フォーマット
-     *
+     * 
      * @param date
      *            {@link Date}
      * @param pattern
@@ -130,7 +130,7 @@ public final class DateUtils {
     /**
      * 数値フォーマット<br>
      * 指定のパターン形式で返却する
-     *
+     * 
      * @param year
      *            年(yyyy)
      * @param month
@@ -154,7 +154,7 @@ public final class DateUtils {
     /**
      * 数値フォーマット<br>
      * yyyy/MM/dd HH:mm:ss z形式で返却する
-     *
+     * 
      * @param year
      *            年(yyyy)
      * @param month
@@ -175,7 +175,7 @@ public final class DateUtils {
 
     /**
      * 文字列からDate型へのパース
-     *
+     * 
      * @param date
      *            日付
      * @return パースされたDate型
@@ -186,7 +186,7 @@ public final class DateUtils {
 
     /**
      * 文字列からDate型へのパース
-     *
+     * 
      * @param date
      *            日付
      * @param pattern
@@ -199,7 +199,7 @@ public final class DateUtils {
 
     /**
      * 文字列からDate型へのパース
-     *
+     * 
      * @param date
      *            日付
      * @param defaultValue
@@ -216,7 +216,7 @@ public final class DateUtils {
 
     /**
      * 文字列からDate型へのパース
-     *
+     * 
      * @param date
      *            日付
      * @param defaultValue
@@ -235,7 +235,7 @@ public final class DateUtils {
 
     /**
      * date型で返却
-     *
+     * 
      * @param year
      *            年(yyyy)
      * @param month
@@ -255,7 +255,7 @@ public final class DateUtils {
 
     /**
      * date型で返却
-     *
+     * 
      * @param year
      *            年(yyyy)
      * @param month
@@ -284,7 +284,7 @@ public final class DateUtils {
 
     /**
      * unixtimeから日付を指定されたフォーマットで返却する
-     *
+     * 
      * @param unixtime
      *            UNIXTIME
      * @param pattern
@@ -298,7 +298,7 @@ public final class DateUtils {
 
     /**
      * 現在時間
-     *
+     * 
      * @return 現在時間
      */
     public static Date now() {
@@ -307,7 +307,7 @@ public final class DateUtils {
 
     /**
      * 現在時間
-     *
+     * 
      * @return 現在時間文字列
      */
     public static String nowToString() {
@@ -316,7 +316,7 @@ public final class DateUtils {
 
     /**
      * 現在時間
-     *
+     * 
      * @param pattern
      *            {@link Pattern}
      * @return 現在時間文字列
@@ -327,7 +327,7 @@ public final class DateUtils {
 
     /**
      * 元の日付から追加で月を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addMonths
@@ -345,7 +345,7 @@ public final class DateUtils {
 
     /**
      * 元の日付から追加で日付を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addDays
@@ -363,7 +363,7 @@ public final class DateUtils {
 
     /**
      * 元の時間から追加で時間を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addHours
@@ -381,7 +381,7 @@ public final class DateUtils {
 
     /**
      * 元の時間から追加で分数を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addMinutes
@@ -399,7 +399,7 @@ public final class DateUtils {
 
     /**
      * 元の時間から追加で秒数を更新する
-     *
+     * 
      * @param date
      *            元の時間
      * @param addSeconds
@@ -417,9 +417,9 @@ public final class DateUtils {
 
     /**
      * 指定した日付が「新しい」かどうか判別します。
-     *
+     * 
      * 「新しい」と判定する期間は、freshDays に指定した日にちの間とします。
-     *
+     * 
      * @param date
      *            指定されたDate
      * @param freshDays
@@ -432,9 +432,9 @@ public final class DateUtils {
 
     /**
      * 指定した日付が「新しい」かどうか判別します。
-     *
+     * 
      * 「新しい」と判定する期間は、freshHours に指定した時間の間とします。
-     *
+     * 
      * @param date
      *            指定されたDate
      * @param freshHours
@@ -447,7 +447,7 @@ public final class DateUtils {
 
     /**
      * 当月の初日を取得します。
-     *
+     * 
      * @param date
      *            指定されたDate
      * @return 当月の初日
@@ -462,7 +462,7 @@ public final class DateUtils {
 
     /**
      * 当月の最終日時を取得します。
-     *
+     * 
      * @param date
      *            指定されたDate
      * @return 最終日の日付
@@ -481,7 +481,7 @@ public final class DateUtils {
     /**
      * 文字列型からDate型に変更する。<br>
      * yyyy/MM/dd HH:mm:ss z
-     *
+     * 
      * @param date
      *            文字列型の日付
      * @param format
@@ -500,7 +500,7 @@ public final class DateUtils {
     /**
      * 文字列型からDate型に変更する。<br>
      * デフォルトフォーマットの「yyyy/MM/dd HH:mm:ss z」を元にパースする。
-     *
+     * 
      * @param date
      *            文字列型の日付
      * @return Date Date型
@@ -522,12 +522,12 @@ public final class DateUtils {
 
     /**
      * 2つの日付の差を求めます。
-     *
+     * 
      * 計算方法は以下となります。 1.最初に2つの日付を long 値に変換します。 　※この long 値は 1970 年 1 月 1 日
      * 00:00:00 GMT からの 　経過ミリ秒数となります。 2.次にその差を求めます。
      * 3.上記の計算で出た数量を 1 日の時間で割ることで 　日付の差を求めることができます。 　※1 日 ( 24 時間) は、86,400,000
      * ミリ秒です。
-     *
+     * 
      * @param date1
      *            日付 java.util.Date
      * @param date2
@@ -542,12 +542,12 @@ public final class DateUtils {
 
     /**
      * 差分の時間を返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
     public static int diffDateHour(final Date date1, final Date date2) {
@@ -560,12 +560,12 @@ public final class DateUtils {
 
     /**
      * 差分の分数を返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
     public static int diffDateMin(final Date date1, final Date date2) {
@@ -578,12 +578,12 @@ public final class DateUtils {
 
     /**
      * 差分のsecを返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
     public static int diffDateSec(final Date date1, final Date date2) {
@@ -596,12 +596,12 @@ public final class DateUtils {
 
     /**
      * 差分のmsecを返却する。
-     *
+     * 
      * @param date1
      *            比較対象の日付(新しい方の日付)
      * @param date2
      *            比較対象の日付(古い方の日付)
-     *
+     * 
      * @return 時間
      */
     public static long diffDateMsec(final Date date1, final Date date2) {
@@ -611,12 +611,12 @@ public final class DateUtils {
 
     /**
      * どちらの日付が進んでいるかを比較する
-     *
+     * 
      * @param date1
      *            比較対象の日付
      * @param date2
      *            比較対象の日付
-     *
+     * 
      * @return true:date1の方が新しい時間 false:date2の方が新しい時間
      */
     public static boolean isDateCheck(final Date date1, final Date date2) {
@@ -625,7 +625,7 @@ public final class DateUtils {
 
     /**
      * 最低年から現在年までのリストを作成する。
-     *
+     * 
      * @param minYear
      *            指定された年
      * @param isAsc
@@ -652,7 +652,7 @@ public final class DateUtils {
 
     /**
      * 最低年から現在年までのリストを作成する。
-     *
+     * 
      * @param minYear
      *            指定された年
      * @param isAsc
@@ -679,7 +679,7 @@ public final class DateUtils {
 
     /**
      * 月のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
@@ -700,7 +700,7 @@ public final class DateUtils {
 
     /**
      * 月のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
@@ -721,7 +721,7 @@ public final class DateUtils {
 
     /**
      * 日のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
@@ -742,7 +742,7 @@ public final class DateUtils {
 
     /**
      * 日のリストを作成する。
-     *
+     * 
      * @param isAsc
      *            true:昇順 false:降順
      * @return 年のList
@@ -763,7 +763,7 @@ public final class DateUtils {
 
     /**
      * 曜日表示用の文字列を取得する
-     *
+     * 
      * @param date
      *            Date
      * @param englishFlg
@@ -783,7 +783,7 @@ public final class DateUtils {
 
     /**
      * 曜日表示用の文字列を取得する
-     *
+     * 
      * @param cal
      *            Calender
      * @param englishFlg
@@ -801,7 +801,7 @@ public final class DateUtils {
 
     /**
      * 曜日表示用の文字列を取得する
-     *
+     * 
      * @param year
      *            年
      * @param month
@@ -825,7 +825,7 @@ public final class DateUtils {
 
     /**
      * 成年確認
-     *
+     * 
      * @param year
      *            生年月日:年
      * @param month
@@ -833,7 +833,7 @@ public final class DateUtils {
      * @param day
      *            生年月日:日
      * @return true 未成年(20歳未満),false 成年(20歳以上)
-     *
+     * 
      */
     public static boolean isAdult(final int year, final int month, final int day) {
         final Calendar calendar1 = Calendar.getInstance(); // 現在の日付
@@ -850,7 +850,7 @@ public final class DateUtils {
 
     /**
      * hh:mm:ss時間に変換する
-     *
+     * 
      * @param time
      *            msecを指定する
      * @return 時間(hh:mm:ss)
@@ -865,7 +865,7 @@ public final class DateUtils {
 
     /**
      * 指定された時間(msec)からYYYY/MM/DD hh:mm:ss時間に変換する
-     *
+     * 
      * @param time
      *            msecを指定する
      * @return YYYY/MM/DD hh:mm:ssにて返却する
@@ -879,7 +879,7 @@ public final class DateUtils {
 
     /**
      * HttpヘッダのExpiredをYYYY/MM/DD hh:mm:ssに変換する
-     *
+     * 
      * @param expires
      *            ex:Thu, 01 Dec 1994 16:00:00 GMT
      * @return YYYY/MM/DD hh:mm:ssにて返却する
@@ -899,7 +899,7 @@ public final class DateUtils {
 
     /**
      * 月日時分の数値を2桁にあわせる
-     *
+     * 
      * @param num
      *            数値
      * @return 2桁数値
@@ -917,7 +917,7 @@ public final class DateUtils {
 
     /**
      * 月日時分の数値を2桁にあわせる
-     *
+     * 
      * @param num
      *            数値
      * @return 2桁数値
@@ -937,7 +937,7 @@ public final class DateUtils {
 
     /**
      * 時間を日付、時間、分、秒まで0にセットする。
-     *
+     * 
      * @param c
      *            {@link Calendar}
      * @return {@link Calendar}

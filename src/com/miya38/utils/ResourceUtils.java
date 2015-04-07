@@ -7,9 +7,9 @@ import com.miya38.exception.ApplicationException;
 
 /**
  * アプリケーションユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class ResourceUtils {
     /** Context */
@@ -24,7 +24,7 @@ public final class ResourceUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -34,7 +34,7 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのString配列データを取得する
-     *
+     * 
      * @param arrayId
      *            リソースID
      * @return 文字列
@@ -45,7 +45,7 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのString配列データを取得する
-     *
+     * 
      * @param arrayId
      *            リソースID
      * @param index
@@ -63,7 +63,7 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのString配列データを取得する
-     *
+     * 
      * @param arrayId
      *            リソースID
      * @return 文字列
@@ -74,7 +74,7 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのString配列データから文字列を取得する
-     *
+     * 
      * @param arrayId
      *            リソースID
      * @param index
@@ -92,7 +92,7 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのTypedArray配列データを取得する
-     *
+     * 
      * @param arrayId
      *            リソースID
      * @return 文字列
@@ -103,7 +103,7 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのTypedArray配列データからresourceIdを取得する
-     *
+     * 
      * @param arrayId
      *            リソースID
      * @param index
@@ -121,7 +121,7 @@ public final class ResourceUtils {
 
     /**
      * drawableIdを文字列取得する。
-     *
+     * 
      * @param drawable
      *            画像名
      * @return R.drwable.{引数で設定したdrawable名}のID
@@ -132,7 +132,7 @@ public final class ResourceUtils {
 
     /**
      * カラーコード取得
-     *
+     * 
      * @param id
      *            R.color.???
      * @return カラーコード

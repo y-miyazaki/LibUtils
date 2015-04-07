@@ -26,12 +26,14 @@ import android.text.TextUtils;
 
 /**
  * コネクションユーティリティークラス
- * 
+ *
  * @author y-miyazaki
  */
 public final class ConnectionUtils {
     /** Context */
     private static Context sContext;
+    /** 基本の文字コード */
+    private static final String DEFAULT_CHARSET = "UTF-8";
 
     /**
      * コンストラクタを隠蔽し、インスタンス化を禁止します。
@@ -42,7 +44,7 @@ public final class ConnectionUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
      *            {@link Context}
      */
@@ -52,7 +54,7 @@ public final class ConnectionUtils {
 
     /**
      * ホスト名取得
-     * 
+     *
      * @param url
      *            URL
      * @return ホスト名
@@ -68,7 +70,7 @@ public final class ConnectionUtils {
 
     /**
      * パス名取得
-     * 
+     *
      * @param url
      *            URL
      * @return ホスト名
@@ -84,7 +86,7 @@ public final class ConnectionUtils {
 
     /**
      * クエリーを除いたURLを取得
-     * 
+     *
      * @param url
      *            URL
      * @return ホスト名
@@ -100,7 +102,7 @@ public final class ConnectionUtils {
 
     /**
      * URLからクエリーのMapを取得
-     * 
+     *
      * @param url
      *            URL
      * @return クエリーのMAP
@@ -108,7 +110,7 @@ public final class ConnectionUtils {
     public static Map<String, String> getQuery(final String url) {
         final HashMap<String, String> map = new HashMap<String, String>();
         try {
-            final List<NameValuePair> parameters = URLEncodedUtils.parse(new URI(url), "UTF-8");
+            final List<NameValuePair> parameters = URLEncodedUtils.parse(new URI(url), DEFAULT_CHARSET);
             for (final NameValuePair p : parameters) {
                 map.put(p.getName(), p.getValue());
             }
@@ -120,7 +122,7 @@ public final class ConnectionUtils {
 
     /**
      * URL・クエリーの組み合わせを取得
-     * 
+     *
      * @param url
      *            URL
      * @param query
@@ -146,7 +148,7 @@ public final class ConnectionUtils {
                     stringBuilderUrl.append(key);
                     stringBuilderUrl.append('=');
                     if (value != null) {
-                        stringBuilderUrl.append(URLEncoder.encode(value, "UTF-8"));
+                        stringBuilderUrl.append(URLEncoder.encode(value, DEFAULT_CHARSET));
                     }
                     count++;
                 }
@@ -159,7 +161,7 @@ public final class ConnectionUtils {
 
     /**
      * クエリーパラメータ生成
-     * 
+     *
      * @param query
      * @return クエリーパラメータ<br>
      *         ex) name1=value1&name2=value2
@@ -182,7 +184,7 @@ public final class ConnectionUtils {
                     queryParameter.append(key);
                     queryParameter.append('=');
                     if (value != null) {
-                        queryParameter.append(URLEncoder.encode(value, "UTF-8"));
+                        queryParameter.append(URLEncoder.encode(value, DEFAULT_CHARSET));
                     }
                     count++;
                 }
@@ -196,7 +198,7 @@ public final class ConnectionUtils {
 
     /**
      * ボディー設定
-     * 
+     *
      * @param body
      *            ボディ
      * @return キーバリューのペア
@@ -219,7 +221,7 @@ public final class ConnectionUtils {
 
     /**
      * gzip判定
-     * 
+     *
      * @param response
      *            レスポンス
      * @return gzip有:true gzip無:false
@@ -235,7 +237,7 @@ public final class ConnectionUtils {
 
     /**
      * ネットワークが使用可能かを返却する
-     * 
+     *
      * @return true:ネットワーク使用可能 false:ネットワーク使用不可
      */
     public static boolean isAvailableNetwork() {

@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.google.common.io.Closeables;
-
 /**
  * Stream に関するユーティリティメソッドを提供します。
  * 
@@ -32,10 +30,10 @@ public final class StreamUtils {
                 IOUtils.write(inputStream, out);
                 return out.toByteArray();
             } finally {
-                Closeables.closeQuietly(out);
+                IOUtils.closeQuietly(out);
             }
         } finally {
-            Closeables.closeQuietly(inputStream);
+            IOUtils.closeQuietly(inputStream);
         }
     }
 

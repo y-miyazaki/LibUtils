@@ -8,7 +8,7 @@ import com.miya38.connection.NetworkRequest;
 
 /**
  * Fragment コネクション用抽象化クラス
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class AbstractConnectionFragment extends AbstractFragment {
@@ -17,6 +17,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
 
     /**
      * コネクション共通処理取得
+     * 
      * @return {@link AbstractConnectionCommon}
      */
     protected abstract AbstractConnectionCommon getConnectionCommon();
@@ -39,7 +40,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param title
      *            タイトル
      * @param message
@@ -53,14 +54,14 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
 
     /**
      * エラー表示用メソッド
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
      *            {@link NetworkResponse}
      * @param object
      *            受信データ
-     *            @return true:エラー表示あり/false:エラー表示なし
+     * @return true:エラー表示あり/false:エラー表示なし
      */
     public boolean setError(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final Object object) {
         if (mAbstractConnectionCommon != null) {
@@ -73,7 +74,7 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
      * リクエストAPI
      * <p>
      * </p>
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      */

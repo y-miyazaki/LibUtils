@@ -12,9 +12,9 @@ import android.os.Parcelable;
 
 /**
  * インテントユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class IntentUtils {
     /**
@@ -29,7 +29,7 @@ public final class IntentUtils {
 
     /**
      * bundleの取得が可能か？
-     *
+     * 
      * @param intent
      *            Intent
      * @return true:bundleがnullではない<br>
@@ -48,7 +48,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(int)を取得する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -67,7 +67,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(int)を取得する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -88,7 +88,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(String)を取得する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -107,7 +107,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(String)を取得する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -129,7 +129,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(String)を取得する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -150,7 +150,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(Boolean)を取得する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -171,7 +171,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(Serializable)を取得する
-     *
+     * 
      * @param <V>
      *            Serializable
      * @param intent
@@ -193,7 +193,7 @@ public final class IntentUtils {
 
     /**
      * 前画面からデータ(Serializable)を取得する
-     *
+     * 
      * @param <V>
      *            Parcelable
      * @param intent
@@ -215,7 +215,7 @@ public final class IntentUtils {
 
     /**
      * 前画面から取得したキーを削除する
-     *
+     * 
      * @param intent
      *            Intent
      * @param key
@@ -235,7 +235,7 @@ public final class IntentUtils {
     // ---------------------------------------------------------------
     /**
      * ブラウザを起動します
-     *
+     * 
      * @param context
      *            Context
      * @param uri

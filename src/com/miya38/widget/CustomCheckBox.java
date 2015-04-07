@@ -6,13 +6,13 @@ import android.widget.CheckBox;
 
 /**
  * カスタムチェックボックスクラス
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomCheckBox extends CheckBox {
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      */
@@ -22,7 +22,7 @@ public class CustomCheckBox extends CheckBox {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -35,7 +35,7 @@ public class CustomCheckBox extends CheckBox {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs

@@ -5,9 +5,9 @@ import java.util.Map;
 
 /**
  * コレクションのユーティリティを提供します。
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class CollectionUtils {
     /**
@@ -18,7 +18,7 @@ public final class CollectionUtils {
 
     /**
      * コレクションのnull/空であるかを返します。
-     *
+     * 
      * @param <T>
      *            Collection
      * @param c
@@ -32,7 +32,7 @@ public final class CollectionUtils {
 
     /**
      * コレクションのnull/空であるかを返します。
-     *
+     * 
      * @param <T>
      *            Collection
      * @param o
@@ -46,7 +46,7 @@ public final class CollectionUtils {
 
     /**
      * マップのnull/空であるかを返します。
-     *
+     * 
      * @param <K>
      *            キー
      * @param <V>

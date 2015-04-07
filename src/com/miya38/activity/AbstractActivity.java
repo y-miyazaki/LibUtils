@@ -27,7 +27,7 @@ import com.miya38.widget.CustomTextView;
 
 /**
  * Activity抽象化クラス
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class AbstractActivity extends ActionBarActivity {
@@ -56,7 +56,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
     // ---------------------------------------------------------------
     /**
      * ヘッダ初期化処理
-     *
+     * 
      * @param savedInstanceState
      *            {@link Bundle}
      */
@@ -64,7 +64,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * フッタ初期化処理
-     *
+     * 
      * @param savedInstanceState
      *            {@link Bundle}
      */
@@ -72,7 +72,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ビュー初期化処理
-     *
+     * 
      * @param savedInstanceState
      *            {@link Bundle}
      */
@@ -80,7 +80,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ビューレイアウトのリソースIDを取得します。
-     *
+     * 
      * @return リソースID。
      */
     protected abstract int getViewLayoutId();
@@ -91,7 +91,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、<br>
      * {@link AbstractActivity#LAYOUT_NO_SETTING}を指定してください。
      * </p>
-     *
+     * 
      * @return ビュースタブID
      */
     protected abstract int getViewStubLayoutId();
@@ -101,12 +101,13 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * <p>
      * アクティビティに全てセットすることで全画面を一気にfinishすることが可能なブロードキャストレシーバー
      * </p>
-     *
+     * 
      * @author y-miyazaki
      */
     private class LogoutBroadcastReceiver extends BroadcastReceiver {
         /*
          * (非 Javadoc)
+         * 
          * @see
          * android.content.BroadcastReceiver#onReceive(android.content.Context,
          * android.content.Intent)
@@ -229,7 +230,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ヘッダー非表示処理
-     *
+     * 
      * @return タイトル非表示にしたか？
      */
     public boolean setNoHeader() {
@@ -247,7 +248,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ヘッダタイトル設定
-     *
+     * 
      * @param title
      *            タイトル
      * @return タイトル設定したか？
@@ -270,7 +271,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * フッタタイトル設定
-     *
+     * 
      * @param title
      *            タイトル
      * @return フッタ設定したか？
@@ -287,7 +288,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
     /**
      * 指定されたアクティビティクラス以外を全て殺す<br>
      * 指定された引数のクラス以外を全てfinish()する。
-     *
+     * 
      * @param clazz
      *            finishしないClass
      */
@@ -388,7 +389,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * 端末向き変更によるActivity再生成防止対策
-     *
+     * 
      * @param newConfig
      *            {@link Configuration}
      */
@@ -400,7 +401,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * Stop状態であるかを返却する
-     *
+     * 
      * @return true:ライフサイクルがstop状態<br>
      *         false:ライフサイクルがstop状態以外<br>
      */
@@ -410,7 +411,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナー登録<br>
-     *
+     * 
      * @param l
      *            リスナーを登録するとコールバックリスナーが走ります。
      */
@@ -420,7 +421,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナーのインスタンス返却
-     *
+     * 
      * @return OnKeyDownListener
      */
     public final OnWindowFocusChangedListener getOnWindowFocusChangedListener() {

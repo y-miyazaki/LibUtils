@@ -10,9 +10,9 @@ import android.webkit.CookieSyncManager;
 
 /**
  * Cookieユーティリティクラス
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
 public final class CookieUtils {
     /** Context */
@@ -27,7 +27,7 @@ public final class CookieUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
      *            {@link Context}
      */
@@ -37,19 +37,21 @@ public final class CookieUtils {
 
     /**
      * Cookie値全取得
-     * 
+     *
      * @param url
      *            URL
      * @return 指定したurlのCookie値を返却
      */
     public static String get(final String url) {
-        CookieSyncManager.createInstance(sContext);
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.createInstance(sContext);
+        }
         return StringUtils.trim(CookieManager.getInstance().getCookie(url));// 文字列でCookieを取得
     }
 
     /**
      * Cookie値取得
-     * 
+     *
      * @param url
      *            URL
      * @param key
@@ -57,7 +59,9 @@ public final class CookieUtils {
      * @return 指定したkeyのCookie値を返却
      */
     public static String getValue(final String url, final String key) {
-        CookieSyncManager.createInstance(sContext);
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.createInstance(sContext);
+        }
         String cookie = StringUtils.trim(CookieManager.getInstance().getCookie(url));// 文字列でCookieを取得
         if (StringUtils.isEmpty(cookie)) {
             return null;
@@ -81,29 +85,36 @@ public final class CookieUtils {
 
     /**
      * Cookie値設定
-     * 
+     *
      * @param url
      *            URL
      * @param value
      *            クッキー
      */
+    @SuppressWarnings("deprecation")
     public static void setValue(final String url, final String value) {
-        CookieSyncManager.createInstance(sContext);
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.createInstance(sContext);
+        }
         final CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
 
         cookieManager.setCookie(url, value);
-        CookieSyncManager.getInstance().sync();
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.getInstance().sync();
+        }
     }
 
     /**
      * WebViewの指定したURLのCookieを全削除
-     * 
+     *
      * @param url
      *            URL
      */
     public static void removeAll(final String url) {
-        CookieSyncManager.createInstance(sContext);
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.createInstance(sContext);
+        }
         final CookieManager cookieManager = CookieManager.getInstance();
         final String cookie = cookieManager.getCookie(url);// 文字列でCookieを取得
         if (cookie != null) {
@@ -115,14 +126,18 @@ public final class CookieUtils {
                 cookieManager.setCookie(url, set[0] + "=;");
             }
         }
-        CookieSyncManager.getInstance().sync();
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.getInstance().sync();
+        }
     }
 
     /**
      * WebViewのCookieを全削除
      */
     public static void removeAll() {
-        CookieSyncManager.createInstance(sContext);
+        if (!AplUtils.hasLollipop()) {
+            CookieSyncManager.createInstance(sContext);
+        }
         CookieManager.getInstance().removeAllCookie();
     }
 }

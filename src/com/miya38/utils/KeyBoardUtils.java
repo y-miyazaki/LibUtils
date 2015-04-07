@@ -10,9 +10,9 @@ import android.widget.EditText;
 
 /**
  * キーボードユーティリティクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class KeyBoardUtils {
 
@@ -25,7 +25,7 @@ public final class KeyBoardUtils {
 
     /**
      * キーボード非表示
-     *
+     * 
      * @param context
      *            Context
      * @param view
@@ -41,7 +41,7 @@ public final class KeyBoardUtils {
 
     /**
      * キーボード非表示
-     *
+     * 
      * @param activity
      *            Activity
      */
@@ -51,7 +51,7 @@ public final class KeyBoardUtils {
 
     /**
      * 非表示
-     *
+     * 
      * @param activity
      *            Activity
      */
@@ -61,7 +61,7 @@ public final class KeyBoardUtils {
 
     /**
      * キーボード表示
-     *
+     * 
      * @param context
      *            Context
      * @param editText
@@ -73,7 +73,7 @@ public final class KeyBoardUtils {
 
     /**
      * キーボード表示
-     *
+     * 
      * @param context
      *            Context
      * @param editText

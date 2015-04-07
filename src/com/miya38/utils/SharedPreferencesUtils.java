@@ -10,9 +10,9 @@ import android.content.SharedPreferences.Editor;
 
 /**
  * SharePreferencesユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class SharedPreferencesUtils {
     /** PRIVATE KEY */
@@ -30,7 +30,7 @@ public final class SharedPreferencesUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -40,7 +40,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにStringを保存します。
-     *
+     * 
      * @param key
      *            キー
      * @param value
@@ -56,7 +56,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからStringを取得します。
-     *
+     * 
      * @param key
      *            キー
      * @return String
@@ -68,7 +68,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにintを保存します。
-     *
+     * 
      * @param key
      *            キー
      * @param value
@@ -84,7 +84,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからintを取得します。
-     *
+     * 
      * @param key
      *            キー
      * @return int
@@ -96,7 +96,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにLongを保存します。
-     *
+     * 
      * @param key
      *            キー
      * @param value
@@ -112,7 +112,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからLongを取得します。
-     *
+     * 
      * @param key
      *            キー
      * @return long
@@ -124,7 +124,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにFloatを保存します。
-     *
+     * 
      * @param key
      *            キー
      * @param value
@@ -140,7 +140,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからFloatを取得します。
-     *
+     * 
      * @param key
      *            キー
      * @return float
@@ -152,7 +152,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesにBooleanを保存します。
-     *
+     * 
      * @param key
      *            キー
      * @param value
@@ -168,7 +168,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesからBooleanを取得します。
-     *
+     * 
      * @param key
      *            キー
      * @return boolean
@@ -180,7 +180,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesから指定のキーを削除します。
-     *
+     * 
      * @param key
      *            キー
      */
@@ -205,7 +205,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * SharedPreferencesから指定されたExcludeのものを除いて全て削除します。
-     *
+     * 
      * @param excludeList
      *            削除対象外リストキー
      */
@@ -232,7 +232,7 @@ public final class SharedPreferencesUtils {
 
     /**
      * Editer commit/applyメソッド
-     *
+     * 
      * @param editor
      *            {@link Editor}
      */

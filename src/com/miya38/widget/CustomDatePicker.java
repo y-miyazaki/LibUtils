@@ -20,7 +20,7 @@ public class CustomDatePicker extends DatePicker {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -34,7 +34,7 @@ public class CustomDatePicker extends DatePicker {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -50,7 +50,7 @@ public class CustomDatePicker extends DatePicker {
 
     /**
      * init
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -66,7 +66,7 @@ public class CustomDatePicker extends DatePicker {
 
     /**
      * 必須チェック
-     *
+     * 
      * @return true:正常,false:エラー
      */
     public boolean isValid() {

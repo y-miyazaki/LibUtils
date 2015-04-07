@@ -234,6 +234,19 @@ public final class AplUtils {
     }
 
     /**
+     * アプリケーションバージョンコードを返却する
+     *
+     * @return アプリケーションバージョンコード文字列
+     */
+    public static int getAplVersionCode() {
+        try {
+            return sContext.getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionCode;
+        } catch (final NameNotFoundException e) {
+            return 1;
+        }
+    }
+
+    /**
      * アプリケーションパッケージ名を返却する
      *
      * @return アプリケーションパッケージ名

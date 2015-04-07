@@ -7,9 +7,9 @@ import java.lang.annotation.Target;
 
 /**
  * データベース用アノテーション
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

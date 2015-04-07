@@ -30,7 +30,7 @@ import com.miya38.utils.CollectionUtils;
  * <p>
  * 指定した width に従って、文字列が収まるようにフォントサイズを自動縮小するカスタム TextView。 点滅も可能。
  * </p>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomTextView extends TextView implements TextWatcher {
@@ -78,14 +78,14 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * クリックリンクリスナークラス
-     *
+     * 
      * @author y-miyazaki
-     *
+     * 
      */
     public interface OnClickLinkListener {
         /**
          * リンクがクリックされた際のコールバックメソッド
-         *
+         * 
          * @param view
          *            View
          */
@@ -94,7 +94,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      */
@@ -106,7 +106,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -121,7 +121,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -137,7 +137,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * init
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -244,7 +244,22 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * HTMLフォーマットのTextに変換する。
-     *
+     * 
+     * @param resId
+     *            リソースID
+     */
+    public void setHtml(final int resId) {
+        if (resId <= 0) {
+            setText(null);
+        } else {
+            final ImageGetterImpl imageGetter = new ImageGetterImpl(getContext().getApplicationContext());
+            setText(Html.fromHtml(getContext().getResources().getText(resId).toString(), imageGetter, null));
+        }
+    }
+
+    /**
+     * HTMLフォーマットのTextに変換する。
+     * 
      * @param text
      *            HTML文字列
      */
@@ -259,7 +274,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * タイプフェースで追加したものをindex指定する。
-     *
+     * 
      * @return タイプフェースカウント数
      */
     public static int getCustomTypefaceCount() {
@@ -268,7 +283,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * タイプフェースで追加したものをindex指定する。
-     *
+     * 
      * @param index
      *            タイプフェース取得のためのインデックス(0から指定)
      */
@@ -278,7 +293,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * タイプフェース追加
-     *
+     * 
      * @param typeface
      *            {@link Typeface}
      */
@@ -291,7 +306,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * 追加したタイプフェースを指定する
-     *
+     * 
      * @param index
      *            タイプフェース設定のためのインデックス(0から指定)
      */
@@ -307,7 +322,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * 追加したタイプフェースを取得する。
-     *
+     * 
      * @param index
      *            タイプフェース設定のためのインデックス(0から指定)
      * @return Typeface
@@ -326,11 +341,10 @@ public class CustomTextView extends TextView implements TextWatcher {
     /**
      * テキストリンククリックリスナー
      * <p>
-     * テキスト中の文字列の一部をAタグのようにリンクし、{@link OnClickLinkListener}でクリックしたことを受け取ることができる。
-     * <br>
+     * テキスト中の文字列の一部をAタグのようにリンクし、{@link OnClickLinkListener}でクリックしたことを受け取ることができる。 <br>
      * リンクの文字列は引数linkで設定する。
      * </p>
-     *
+     * 
      * @param link
      *            リンク部分文字列
      * @param l
@@ -429,7 +443,7 @@ public class CustomTextView extends TextView implements TextWatcher {
 
     /**
      * テキスト幅を取得
-     *
+     * 
      * @param textSize
      *            文字サイズ
      * @param text

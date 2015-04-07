@@ -9,9 +9,9 @@ import com.miya38.utils.LogUtils;
 
 /**
  * アニメーションアダプター
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public abstract class AnimationListenerAdapter implements AnimationListener {
     // ----------------------------------------------------------
@@ -36,7 +36,7 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param fragment
      *            Fragment
      */
@@ -46,7 +46,7 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param activity
      *            Activity
      */
@@ -89,7 +89,7 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
 
     /**
      * onAnimationEndのカスタムアダプター
-     *
+     * 
      * @param animation
      *            {@link Animation}
      */
@@ -98,7 +98,7 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
 
     /**
      * onAnimationRepeatのカスタムアダプター
-     *
+     * 
      * @param animation
      *            {@link Animation}
      */
@@ -107,7 +107,7 @@ public abstract class AnimationListenerAdapter implements AnimationListener {
 
     /**
      * onAnimationEndのカスタムアダプター
-     *
+     * 
      * @param animation
      *            {@link Animation}
      */

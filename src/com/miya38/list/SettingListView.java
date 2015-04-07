@@ -15,6 +15,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.miya38.exception.ApplicationException;
 import com.miya38.list.adapter.CustomArrayAdapter;
+import com.miya38.utils.AplUtils;
 import com.miya38.utils.CollectionUtils;
 import com.miya38.utils.ViewHelper;
 import com.miya38.widget.CustomListView;
@@ -26,13 +27,13 @@ import com.miya38.widget.CustomListView;
  * CustomListViewに関する設定は全てこのクラスを使うことで操作を行うことで設定漏れ等を極力なくすのが目的である。<br>
  * 主にCustomListView、Adapterに関する操作をこのクラスでは実装している。<br>
  * </p>
- *
- *
+ * 
+ * 
  * @param <T>
  *            Adapter
  * @param <U>
  *            item
- *
+ * 
  * @author y-miyazaki
  */
 public class SettingListView<T extends CustomArrayAdapter<U>, U> extends AbstractSettingListView<T, U> {
@@ -58,7 +59,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -68,7 +69,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
@@ -81,7 +82,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param activity
@@ -98,7 +99,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param customDialog
@@ -114,7 +115,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param adapter
      *            リストビューに設定するAdapter
      * @param view
@@ -130,7 +131,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      */
@@ -142,7 +143,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param listViewEmptyId
@@ -155,7 +156,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -178,7 +179,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -197,7 +198,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -220,7 +221,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * ListView設定(初期設定)
-     *
+     * 
      * @param listViewId
      *            ListView自身(ex:R.id.ListView)
      * @param onItemClickListener
@@ -239,7 +240,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * View取得
-     *
+     * 
      * @param <V>
      *            Viewの継承View
      * @param id
@@ -270,7 +271,9 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
 
     /**
      * モード追加
-     * @param mode {@link Mode}
+     * 
+     * @param mode
+     *            {@link Mode}
      */
     public void addMode(final Mode mode) {
         switch (mListView.getMode()) {
@@ -386,7 +389,13 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     @Override
     public void addAll(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {
-            mAdapter.addAll(items);
+            if (AplUtils.hasHoneycomb()) {
+                mAdapter.addAll(items);
+            } else {
+                for (final U item : items) {
+                    mAdapter.add(item);
+                }
+            }
         }
         onRefreshComplete();
     }

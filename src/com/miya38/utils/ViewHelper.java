@@ -196,7 +196,7 @@ public final class ViewHelper {
      *            文字列リソースID
      */
     public static void setText(final View v, final int id, final int stringId) {
-        if (stringId > 0) {
+        if (stringId != 0) {
             ((TextView) v.findViewById(id)).setText(stringId);
         }
     }
@@ -226,7 +226,7 @@ public final class ViewHelper {
      *            文字列リソースID
      */
     public static void setText(final Activity activity, final int id, final int stringId) {
-        if (stringId > 0) {
+        if (stringId != 0) {
             ((TextView) activity.findViewById(id)).setText(stringId);
         }
     }
@@ -256,7 +256,7 @@ public final class ViewHelper {
      *            文字列リソースID
      */
     public static void setText(final Dialog dialog, final int id, final int stringId) {
-        if (stringId > 0) {
+        if (stringId != 0) {
             ((TextView) dialog.findViewById(id)).setText(stringId);
         }
     }
@@ -814,6 +814,38 @@ public final class ViewHelper {
     }
 
     /**
+     * アルファアニメーションで表示する。
+     *
+     * @param v
+     *            View
+     * @param duration
+     *            アニメーション時間
+     */
+    public static void setAlphaInAnimation(final View v, final int duration) {
+        Animation animation = null;
+        animation = new AlphaAnimation(0, 1);
+        animation.setDuration(duration);
+        animation.setRepeatCount(0);
+        v.startAnimation(animation);
+    }
+
+    /**
+     * アルファアニメーションで非表示にする。
+     *
+     * @param v
+     *            View
+     * @param duration
+     *            アニメーション時間
+     */
+    public static void setAlphaOutAnimation(final View v, final int duration) {
+        Animation animation = null;
+        animation = new AlphaAnimation(1, 0);
+        animation.setDuration(duration);
+        animation.setRepeatCount(0);
+        v.startAnimation(animation);
+    }
+
+    /**
      * 文字を指定回数で点滅させる
      *
      * @param v
@@ -846,7 +878,7 @@ public final class ViewHelper {
         final AlphaAnimation alpha = new AlphaAnimation(0, 1);
         alpha.setDuration(duration);
         alpha.setRepeatMode(Animation.REVERSE);
-        alpha.setRepeatCount(AlphaAnimation.INFINITE);
+        alpha.setRepeatCount(Animation.INFINITE);
         alpha.setFillEnabled(true);
         alpha.setFillAfter(true);
         alpha.setFillBefore(false);
@@ -1097,8 +1129,15 @@ public final class ViewHelper {
             // ---------------------------------------------------------------
             else if (view instanceof WebView) {
                 try {
-                    Field field = WebView.class
-                            .getDeclaredField("mWebViewCore");
+                    final WebView webView = (WebView) view;
+                    webView.setWebChromeClient(null);
+                    webView.setWebViewClient(null);
+                } catch (final Exception e) {
+                    // 何もしない。
+                }
+                try {
+
+                    Field field = WebView.class.getDeclaredField("mWebViewCore");
                     field = field.getType().getDeclaredField("mBrowserFrame");
                     field = field.getType().getDeclaredField("sConfigCallback");
                     field.setAccessible(true);
@@ -1111,26 +1150,22 @@ public final class ViewHelper {
                             field.set(configCallback, ((Activity) context).getWindowManager());
                         }
                     }
+
                 } catch (final Exception e) {
                     // 何もしない。
                 }
 
                 try {
-                    Field field = WebView.class
-                            .getDeclaredField("mWebView");
-                    field = field.getType().getDeclaredField(
-                            "mBrowserFrame");
-                    field = field.getType().getDeclaredField(
-                            "sConfigCallback");
+                    Field field = WebView.class.getDeclaredField("mWebView");
+                    field = field.getType().getDeclaredField("mBrowserFrame");
+                    field = field.getType().getDeclaredField("sConfigCallback");
                     field.setAccessible(true);
                     field.get(null);
                     final Object configCallback = field.get(null);
-                    field = field.getType().getDeclaredField(
-                            "mWindowManager");
+                    field = field.getType().getDeclaredField("mWindowManager");
                     field.setAccessible(true);
                     if (configCallback != null) {
-                        field = field.getType().getDeclaredField(
-                                "mWindowManager");
+                        field = field.getType().getDeclaredField("mWindowManager");
                         field.setAccessible(true);
                         if (context instanceof Activity) {
                             field.set(configCallback, ((Activity) context).getWindowManager());
@@ -1152,48 +1187,49 @@ public final class ViewHelper {
         // ---------------------------------------------------------------
         // View共通
         // ---------------------------------------------------------------
-        try {
-            view.setOnClickListener(null);
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
-        try {
-            view.setOnTouchListener(null);
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
-        try {
-            view.setOnCreateContextMenuListener(null);
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
-        try {
-            view.setOnFocusChangeListener(null);
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
-        try {
-            view.setOnKeyListener(null);
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
-        try {
-            view.setOnLongClickListener(null);
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
-        try {
-            view.clearAnimation();
-        } catch (final Throwable mayHappen) {
-            // 何もしない。
-        }
+        if (view != null) {
+            try {
+                view.setOnClickListener(null);
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
+            try {
+                view.setOnTouchListener(null);
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
+            try {
+                view.setOnCreateContextMenuListener(null);
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
+            try {
+                view.setOnFocusChangeListener(null);
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
+            try {
+                view.setOnKeyListener(null);
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
+            try {
+                view.setOnLongClickListener(null);
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
+            try {
+                view.clearAnimation();
+            } catch (final Throwable mayHappen) {
+                // 何もしない。
+            }
 
-        if (view.getBackground() != null) {
-            view.getBackground().setCallback(null);
+            if (view.getBackground() != null) {
+                view.getBackground().setCallback(null);
+            }
+            view.setBackgroundDrawable(null);
+            view.setTag(null);
         }
-        view.setBackgroundDrawable(null);
-        view.setTag(null);
-
         if (view instanceof ViewGroup) {
             final ViewGroup vg = (ViewGroup) view;
             final int size = vg.getChildCount();

@@ -5,8 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.google.common.io.Closeables;
-
 /**
  * コピーユーティリティークラス
  * 
@@ -51,10 +49,10 @@ public final class CopyUtils implements Cloneable {
             // Should not happen
             throw new CloneNotSupportedException();
         } finally {
-            Closeables.closeQuietly(baos);
-            Closeables.closeQuietly(oos);
-            Closeables.closeQuietly(bais);
-            Closeables.closeQuietly(os);
+            IOUtils.closeQuietly(baos);
+            IOUtils.closeQuietly(oos);
+            IOUtils.closeQuietly(bais);
+            IOUtils.closeQuietly(os);
         }
     }
 }

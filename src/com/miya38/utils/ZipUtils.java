@@ -13,9 +13,9 @@ import android.content.res.AssetManager;
 
 /**
  * Zipユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class ZipUtils {
     // ----------------------------------------------------------
@@ -38,7 +38,7 @@ public final class ZipUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -51,7 +51,7 @@ public final class ZipUtils {
      * <p>
      * 実際に解凍はせず解凍後の想定パスでしかないことを認識すること。
      * </p>
-     *
+     * 
      * @param zipPath
      *            zipのパス
      * @return zip解凍後のファイルリスト
@@ -82,7 +82,7 @@ public final class ZipUtils {
      * <p>
      * 実際に解凍はせず解凍後の想定パスでしかないことを認識すること。
      * </p>
-     *
+     * 
      * @param zipPath
      *            zipのパス
      * @return zip解凍後のファイルリスト
@@ -110,7 +110,7 @@ public final class ZipUtils {
 
     /**
      * Assets内のzipファイルをアプリケーションディレクトリにコピーする
-     *
+     * 
      * @param zipPath
      *            zipのパス
      * @return ファイルパス
@@ -156,7 +156,7 @@ public final class ZipUtils {
 
     /**
      * Assets内のzipファイルをSDカードディレクトリにコピーする
-     *
+     * 
      * @param zipPath
      *            zipのパス
      * @return SDカードのパス

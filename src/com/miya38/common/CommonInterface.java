@@ -12,14 +12,14 @@ import com.miya38.connection.NetworkRequest;
 
 /**
  * 共通インタフェース
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class CommonInterface {
     /**
      * GetLoaderインタフェース
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnGetLoaderFinishListerner {
@@ -27,18 +27,18 @@ public class CommonInterface {
          * <b>GET用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、getリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment
-         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException IOException
+         * @throws IOException
+         *             IOException
          */
         void onGetLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -48,7 +48,7 @@ public class CommonInterface {
          * onGetLoaderFinishedコール後に本メソッドがコールされる。<br>
          * ※本メソッド内ではView側の処理を記載すること。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
@@ -61,27 +61,27 @@ public class CommonInterface {
 
     /**
      * PostLoaderインタフェース
-     *
+     * 
      * @author y-miyazaki
-     *
+     * 
      */
     public interface OnPostLoaderFinishListerner {
         /**
          * <b>POST用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、postリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment
-         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException IOException
+         * @throws IOException
+         *             IOException
          */
         void onPostLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -91,7 +91,7 @@ public class CommonInterface {
          * onPostLoaderFinishedコール後に本メソッドがコールされる。<br>
          * ※本メソッド内ではView側の処理を記載すること。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
@@ -104,7 +104,7 @@ public class CommonInterface {
 
     /**
      * PutLoaderインタフェース
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnPutLoaderFinishListerner {
@@ -112,18 +112,18 @@ public class CommonInterface {
          * <b>PUT用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、putリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment
-         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException IOException
+         * @throws IOException
+         *             IOException
          */
         void onPutLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -133,7 +133,7 @@ public class CommonInterface {
          * onPutLoaderFinishedコール後に本メソッドがコールされる。<br>
          * ※本メソッド内ではView側の処理を記載すること。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
@@ -146,7 +146,7 @@ public class CommonInterface {
 
     /**
      * DeleteLoaderインタフェース
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnDeleteLoaderFinishListerner {
@@ -154,18 +154,18 @@ public class CommonInterface {
          * <b>DELETE用ロードフィニッシュイベントメソッド</b>
          * <p>
          * このイベントメソッドは、deleteリクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
-         * 200以外の場合はAbstractConnectionFragment
-         * /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
          * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
          *            {@link NetworkResponse}
          * @param data
          *            受信データ
-         * @throws IOException IOException
+         * @throws IOException
+         *             IOException
          */
         void onDeleteLoaderFinished(NetworkRequest networkRequest, NetworkResponse networkResponse, String data) throws IOException;
 
@@ -175,7 +175,7 @@ public class CommonInterface {
          * onDeleteLoaderFinishedコール後に本メソッドがコールされる。<br>
          * ※本メソッド内ではView側の処理を記載すること。<br>
          * </p>
-         *
+         * 
          * @param networkRequest
          *            {@link NetworkRequest}
          * @param networkResponse
@@ -192,7 +192,7 @@ public class CommonInterface {
     public interface OnAdapterClickListener {
         /**
          * クリック時の処理
-         *
+         * 
          * @param view
          *            View
          * @param position
@@ -207,7 +207,7 @@ public class CommonInterface {
     public interface OnGallerywButtonClickListener {
         /**
          * クリック時の処理
-         *
+         * 
          * @param view
          *            View
          * @param position
@@ -218,13 +218,13 @@ public class CommonInterface {
 
     /**
      * ListView用イメージクリックリスナー
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnListViewItemClickListener {
         /**
          * クリック時の処理
-         *
+         * 
          * @param position
          *            ListViewのposition
          * @param item
@@ -239,13 +239,13 @@ public class CommonInterface {
 
     /**
      * FragmentTabHost⇔Fragment間コールバックリスナー
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnFragmentEventListener {
         /**
          * クリック時の処理
-         *
+         * 
          * @param args
          *            コールバック内容は自由
          */
@@ -254,13 +254,13 @@ public class CommonInterface {
 
     /**
      * タイマー用リスナー 通信後の経過時間を取得することが可能
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnTimerListener {
         /**
          * クリック時の処理
-         *
+         * 
          * @param serverTime
          *            サーバータイム
          * @param sec
@@ -271,13 +271,13 @@ public class CommonInterface {
 
     /**
      * キーダウンリスナー
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnKeyDownListener {
         /**
          * キーダウンイベント
-         *
+         * 
          * @param keyCode
          *            キーコード
          * @param event
@@ -291,13 +291,13 @@ public class CommonInterface {
 
     /**
      * アニメーション終了リスナー
-     *
+     * 
      * @author y-miyazaki
      */
     public interface OnAnimationFinishedListener {
         /**
          * アニメーション終了リスナー
-         *
+         * 
          * @param v
          *            View
          */
@@ -310,7 +310,7 @@ public class CommonInterface {
     public interface OnWindowFocusChangedListener {
         /**
          * フォーカスチェンジ
-         *
+         * 
          * @param hasFocus
          *            フォーカス
          */

@@ -12,9 +12,9 @@ import android.support.v4.app.FragmentTransaction;
 
 /**
  * Fragmentユーティリティ
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class FragmentUtils {
     /** スライドin */
@@ -35,7 +35,7 @@ public final class FragmentUtils {
 
     /**
      * カスタムアニメーション設定
-     *
+     * 
      * @param slideInRight
      *            画面遷移アニメーションID(右)
      * @param slideOutLeft
@@ -52,7 +52,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -71,7 +71,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -89,7 +89,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -108,7 +108,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -126,7 +126,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -142,7 +142,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -160,7 +160,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -176,7 +176,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -192,7 +192,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param fragment
      *            フラグメントのインスタンス
      * @param key
@@ -210,7 +210,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param <V>
      *            Serializable
      * @param fragment
@@ -220,7 +220,7 @@ public final class FragmentUtils {
      * @return 引き渡された値
      */
     @SuppressWarnings("unchecked")
-    public static <V extends Serializable> V getSerialize(final Fragment fragment, final String key) {
+    public static <V extends Serializable> V getSerializable(final Fragment fragment, final String key) {
         if (fragment.getArguments() != null) {
             return (V) fragment.getArguments().getSerializable(key);
         }
@@ -229,7 +229,7 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     *
+     * 
      * @param <V>
      *            Parcelable
      * @param fragment
@@ -253,12 +253,12 @@ public final class FragmentUtils {
      * 第1引数には画面遷移をしたいFragmentを指定してください。 <br>
      * 第2引数には、画面遷移する際にバックスタックから全てのフラグメントをポップするかを指定してください。<br>
      * </p>
-     *
+     * 
      * @param activity
      *            FragmentActivity
      * @param viewId
      *            Fragmentを設定するviewのR.id.????
-     *
+     * 
      * @param fragment
      *            Fragment
      * @param isAddToBackStack
@@ -304,7 +304,7 @@ public final class FragmentUtils {
      * Fragmentの画面遷移を行うメソッドです。<br>
      * 第1引数には画面遷移をしたいFragmentを指定してください。 <br>
      * </p>
-     *
+     * 
      * @param activity
      *            FragmentActivity
      * @param viewId
@@ -342,7 +342,7 @@ public final class FragmentUtils {
      * <p>
      * Fragmentスタック全削除を行うメソッドです。<br>
      * </p>
-     *
+     * 
      * @param activity
      *            FragmentActivity
      */
@@ -367,7 +367,7 @@ public final class FragmentUtils {
      * <p>
      * Fragmentスタック削除を行うメソッドです。<br>
      * </p>
-     *
+     * 
      * @param activity
      *            FragmentActivity
      * @param viewId
@@ -382,7 +382,7 @@ public final class FragmentUtils {
 
     /**
      * 現在のFragement取得
-     *
+     * 
      * @param activity
      *            {@link FragmentActivity}
      * @return 表示されているFragment
