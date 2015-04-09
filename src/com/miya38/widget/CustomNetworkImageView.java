@@ -27,6 +27,7 @@ import com.miya38.utils.ImageUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
 import com.miya38.utils.ViewHelper;
+import com.miya38.widget.callback.OnNetworkImageViewListener;
 
 /**
  * カスタムImageViewクラス
@@ -76,6 +77,8 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     // ----------------------------------------------------------
     /** OnClickListener */
     private OnClickListener mOnClickListener;
+    /** OnNetworkImageViewListener */
+    private OnNetworkImageViewListener mOnNetworkImageViewListener;
     /** animation duration */
     private int mAnimationDuration = ANIMATION_DURATION;
     /** クリック状態フラグ */
@@ -343,10 +346,16 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
             } else {
                 super.setImageBitmap(bm);
             }
+
+            // Bitmap設定
+            if (mOnNetworkImageViewListener != null) {
+                mOnNetworkImageViewListener.onSetImageBitmap(bm);
+            }
+
             if (bm != null) {
-                //                if (isAlphaAnimation) {
-                //                    alphaInAnimation();
-                //                }
+                // if (isAlphaAnimation) {
+                // alphaInAnimation();
+                // }
             }
         } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "setImageBitmap bitmap OutOfMemoryError", e);
@@ -450,61 +459,63 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     }
 
     // TODO 非同期しないと結局非効率
-    //    /**
-    //     *
-    //     * @param url
-    //     *            URL
-    //     * @param imageLoader
-    //     *            {@link ImageLoader}
-    //     * @param maxWidth
-    //     *            最大横幅(アスペクト比考慮した最大長)<br>
-    //     *            0以下を指定した場合は、そのままの画像サイズを設定
-    //     * @param maxHeight
-    //     *            最大縦幅(アスペクト比考慮した最大長)<br>
-    //     *            0以下を指定した場合は、そのままの画像サイズを設定
-    //     * @param isTimerCancel
-    //     *            true:タイマーをキャンセルする。<br>
-    //     *            false:タイマーをキャンセルしない。
-    //     */
-    //    private void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight, final boolean isTimerCancel) {
-    //        if (StringUtils.isEmpty(url)) {
-    //            return;
-    //        }
-    //        if (isTimerCancel && mTimer != null) {
-    //            mTimer.cancel();
-    //        }
+    // /**
+    // *
+    // * @param url
+    // * URL
+    // * @param imageLoader
+    // * {@link ImageLoader}
+    // * @param maxWidth
+    // * 最大横幅(アスペクト比考慮した最大長)<br>
+    // * 0以下を指定した場合は、そのままの画像サイズを設定
+    // * @param maxHeight
+    // * 最大縦幅(アスペクト比考慮した最大長)<br>
+    // * 0以下を指定した場合は、そのままの画像サイズを設定
+    // * @param isTimerCancel
+    // * true:タイマーをキャンセルする。<br>
+    // * false:タイマーをキャンセルしない。
+    // */
+    // private void setImageUrl(final String url, final ImageLoader imageLoader,
+    // final int maxWidth, final int maxHeight, final boolean isTimerCancel) {
+    // if (StringUtils.isEmpty(url)) {
+    // return;
+    // }
+    // if (isTimerCancel && mTimer != null) {
+    // mTimer.cancel();
+    // }
     //
-    //        try {
-    //            final ImageCache imageCache = (ImageCache) FIELD_MCACHE.get(imageLoader);
-    //            final Bitmap cacheBitmap = imageCache.getBitmap(getCacheKey(url, maxWidth, maxHeight));
+    // try {
+    // final ImageCache imageCache = (ImageCache) FIELD_MCACHE.get(imageLoader);
+    // final Bitmap cacheBitmap = imageCache.getBitmap(getCacheKey(url,
+    // maxWidth, maxHeight));
     //
-    //            if (ImageUtils.isDataUriScheme(url)) {
-    //                if (cacheBitmap == null) {
-    //                    final Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
-    //                    imageCache.putBitmap(url, bitmap);
-    //                    setImageBitmap(bitmap, false);
-    //                } else {
-    //                    setImageBitmap(cacheBitmap, false);
-    //                }
-    //            } else {
-    //                if (cacheBitmap == null) {
-    //                    LogUtils.d(TAG, "cache no hit url = %s", url);
-    //                    setImageBitmap(null);
-    //                    super.setImageUrl(url, imageLoader, maxWidth, maxHeight);
-    //                } else {
-    //                    LogUtils.d(TAG, "cache hit url = %s", url);
-    //                    setImageBitmap(cacheBitmap, false);
-    //                }
-    //            }
-    //        } catch (final OutOfMemoryError e) {
-    //            LogUtils.e(TAG, "setImageUrl bitmap OutOfMemoryError", e);
-    //            setImageBitmap(null);
-    //        } catch (final IllegalAccessException e) {
-    //            // 何もしない。
-    //        } catch (final IllegalArgumentException e) {
-    //            // 何もしない。
-    //        }
-    //    }
+    // if (ImageUtils.isDataUriScheme(url)) {
+    // if (cacheBitmap == null) {
+    // final Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
+    // imageCache.putBitmap(url, bitmap);
+    // setImageBitmap(bitmap, false);
+    // } else {
+    // setImageBitmap(cacheBitmap, false);
+    // }
+    // } else {
+    // if (cacheBitmap == null) {
+    // LogUtils.d(TAG, "cache no hit url = %s", url);
+    // setImageBitmap(null);
+    // super.setImageUrl(url, imageLoader, maxWidth, maxHeight);
+    // } else {
+    // LogUtils.d(TAG, "cache hit url = %s", url);
+    // setImageBitmap(cacheBitmap, false);
+    // }
+    // }
+    // } catch (final OutOfMemoryError e) {
+    // LogUtils.e(TAG, "setImageUrl bitmap OutOfMemoryError", e);
+    // setImageBitmap(null);
+    // } catch (final IllegalAccessException e) {
+    // // 何もしない。
+    // } catch (final IllegalArgumentException e) {
+    // // 何もしない。
+    // }
+    // }
 
     /**
      * リクエストをキャンセルする。
@@ -547,5 +558,15 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     public static String getCacheKey(final String url, final int maxWidth, final int maxHeight) {
         return new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
                 .append("#H").append(maxHeight).append(url).toString();
+    }
+
+    /**
+     * OnNetworkImageViewListener設定
+     *
+     * @param l
+     *            {@link OnNetworkImageViewListener}
+     */
+    public void setOnNetworkImageViewListener(OnNetworkImageViewListener l) {
+        this.mOnNetworkImageViewListener = l;
     }
 }

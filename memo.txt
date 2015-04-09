@@ -1,7 +1,0 @@
-KeyBoradUtils“±“ü
-ListView‚ÉScrollTo‚Ì“±“ü(clearFocusŒn‚©‚ç)
-‚»‚Ì‘¼‘g‚İ‘g‚ß‚»‚¤‚È‚à‚ÌListView‚Ì‚‚³ŒvZŒn
-StringUtils‚Ìˆê•”
-AbstractActivity‚ÌClassName finishAll
-
-                if (!AbstractActivity.this.getClass().getSimpleName().equals(className)) {
