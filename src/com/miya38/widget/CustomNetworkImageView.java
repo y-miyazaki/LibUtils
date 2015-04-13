@@ -537,6 +537,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     protected void onDetachedFromWindow() {
         mUrls = null;
         mOnClickListener = null;
+        mOnNetworkImageViewListener = null;
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
