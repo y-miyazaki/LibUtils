@@ -9,7 +9,7 @@ import android.view.View;
  *
  * @author y-miyazaki
  */
-public class ActionBarUtils {
+public final class ActionBarUtils {
     /**
      * コンストラクタを隠蔽し、インスタンス化を禁止します。
      */
@@ -22,7 +22,7 @@ public class ActionBarUtils {
      * @param activity
      *            {@link Activity}
      */
-    public void hide(Activity activity) {
+    public static void hide(Activity activity) {
         View decorView = activity.getWindow().getDecorView();
         int resId;
         resId = activity.getResources().getIdentifier("action_bar_container", "id", activity.getPackageName());
@@ -37,7 +37,7 @@ public class ActionBarUtils {
      * @param activity
      *            {@link Activity}
      */
-    public void show(Activity activity) {
+    public static void show(Activity activity) {
         View decorView = activity.getWindow().getDecorView();
         int resId;
         resId = activity.getResources().getIdentifier("action_bar_container", "id", activity.getPackageName());
