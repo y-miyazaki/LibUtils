@@ -24,7 +24,7 @@ import com.miya38.widget.CustomTextView;
 
 /**
  * Fragment抽象化クラス
- * 
+ *
  * @author y-miyazaki
  */
 public abstract class AbstractFragment extends Fragment {
@@ -52,7 +52,7 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * ここでは、ヘッダに表示すべきViewの初期化処理を記載します。
      * </p>
-     * 
+     *
      * @param savedInstanceState
      *            {@link Bundle}
      */
@@ -63,7 +63,7 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * ここでは、フッタに表示すべきViewの初期化処理を記載します。
      * </p>
-     * 
+     *
      * @param savedInstanceState
      *            {@link Bundle}
      */
@@ -74,7 +74,7 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * ここでは、通信が走る前に記述すべきViewの初期化処理を記載します。
      * </p>
-     * 
+     *
      * @param savedInstanceState
      *            {@link Bundle}
      */
@@ -82,7 +82,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ビューレイアウトのリソースIDを取得します。
-     * 
+     *
      * @return リソースID。
      */
     protected abstract int getViewLayoutId();
@@ -92,7 +92,7 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、0を指定してください。
      * </p>
-     * 
+     *
      * @return ビュースタブID
      */
     protected abstract int getViewStubLayoutId();
@@ -128,14 +128,15 @@ public abstract class AbstractFragment extends Fragment {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
      * android.os.Bundle)
      */
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         LogUtils.d(TAG, "Fragment-onCreateView");
-        return inflater.inflate(getViewLayoutId(), container, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity().getApplicationContext());
+        return layoutInflater.inflate(getViewLayoutId(), container, false);
     }
 
     @Override
@@ -187,7 +188,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see android.app.Activity#onDestroy()
      */
     @Override
@@ -216,7 +217,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ヘッダー非表示処理
-     * 
+     *
      * @return タイトル非表示にしたか？
      */
     public boolean setNoHeader() {
@@ -228,7 +229,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ヘッダタイトル設定
-     * 
+     *
      * @param title
      *            タイトル
      * @return タイトル設定したか？
@@ -242,7 +243,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * フッタタイトル設定
-     * 
+     *
      * @param title
      *            タイトル
      * @return フッタタイトル設定したか？
@@ -260,7 +261,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * Fragmentが終了中・Viewが取れない等の状態を確認する。
-     * 
+     *
      * @return 削除中/Detach/Viewが取れない場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isFinishing() {
@@ -272,7 +273,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * Fragmentが生存状態かを確認する。
-     * 
+     *
      * @return 削除中/Detachの場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isAlive() {
@@ -284,14 +285,14 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * メンバ変数の自動保存処理を行う。
-     * 
+     *
      * 本メソッドは、端末がメモリ不足などの理由でアプリをメモリ上に常駐できなくなった場合に実行される。 本来の Activity
      * の仕様では各アクティビティごとにメンバ変数を保存する必要があるが、
      * これは非常な手間が掛かり、かつ修正時における不具合の原因となりうる。
-     * 
+     *
      * そこで本クラスはアクティビティに定義されているメンバ変数を自動的に保存する。<br>
      * 自動保存できるメンバ変数は、プリミティブ型とそのラッパーと配列など Bundleクラスへの追加をサポートしている型変数のみとなる。
-     * 
+     *
      * @param outState
      *            自動保存するメンバ変数の保存先 Bundle データ
      */
@@ -303,7 +304,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * キーダウンのコールバックリスナー登録<br>
-     * 
+     *
      * @param l
      *            リスナーを登録するとコールバックリスナーが走ります。
      */
@@ -313,7 +314,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * キーダウンのコールバックリスナーのインスタンス返却
-     * 
+     *
      * @return OnKeyDownListener
      */
     public final OnKeyDownListener getOnKeyDownListener() {
@@ -322,7 +323,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナー登録<br>
-     * 
+     *
      * @param l
      *            リスナーを登録するとコールバックリスナーが走ります。
      */
@@ -332,7 +333,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナーのインスタンス返却
-     * 
+     *
      * @return OnKeyDownListener
      */
     public final OnWindowFocusChangedListener getOnWindowFocusChangedListener() {
@@ -341,7 +342,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * getSupportFragmentManagerをそのまま呼べるメソッド
-     * 
+     *
      * @return FragmentManager(support v4)
      */
     public final FragmentManager getSupportFragmentManager() {

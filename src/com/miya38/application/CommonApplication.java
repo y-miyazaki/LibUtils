@@ -24,7 +24,7 @@ import com.miya38.utils.ZipUtils;
  * <p>
  * ユーティリティクラスの初期化処理を行う。
  * </p>
- * 
+ *
  * @author y-miyazaki
  */
 public abstract class CommonApplication extends Application {
@@ -36,7 +36,7 @@ public abstract class CommonApplication extends Application {
 
     /**
      * 証明書のハッシュ値を取得する。
-     * 
+     *
      * @return ハッシュ値
      */
     protected abstract String getSignatureHash();
