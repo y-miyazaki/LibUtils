@@ -135,8 +135,7 @@ public abstract class AbstractFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         LogUtils.d(TAG, "Fragment-onCreateView");
-        LayoutInflater layoutInflater = LayoutInflater.from(getActivity().getApplicationContext());
-        return layoutInflater.inflate(getViewLayoutId(), container, false);
+        return inflater.inflate(getViewLayoutId(), container, false);
     }
 
     @Override
