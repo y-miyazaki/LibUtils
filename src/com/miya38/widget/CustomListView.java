@@ -10,9 +10,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * <p>
  * PullToRefreshListViewを継承したクラス
  * </p>
- * 
+ *
  * @author y-miyazaki
- * 
+ *
  */
 public class CustomListView extends PullToRefreshListView {
     /** overScrollする値. */
@@ -20,7 +20,7 @@ public class CustomListView extends PullToRefreshListView {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context for this View
      */
@@ -30,7 +30,7 @@ public class CustomListView extends PullToRefreshListView {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context for this View
      * @param attrs
@@ -43,7 +43,7 @@ public class CustomListView extends PullToRefreshListView {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context for this View
      * @param mode
@@ -55,7 +55,7 @@ public class CustomListView extends PullToRefreshListView {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context for this View
      * @param mode
@@ -69,7 +69,7 @@ public class CustomListView extends PullToRefreshListView {
 
     /**
      * OverScrollする値を設定します。(外部クラスから変更可能にする)
-     * 
+     *
      * @param overScrollDistance
      *            OverScrollする値
      * @since 1.0.0

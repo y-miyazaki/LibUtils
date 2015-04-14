@@ -44,6 +44,9 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.miya38.widget.CustomListView;
+
 /**
  * ビューを利用する際のヘルパーを提供します。
  *
@@ -1026,6 +1029,54 @@ public final class ViewHelper {
                 }
                 imageView.setImageDrawable(null);
                 // } else if (view instanceof CustomTextView) {
+            }
+            // ---------------------------------------------------------------
+            // CustomListView(PullToRefreshListView)
+            // ---------------------------------------------------------------
+            else if (view instanceof CustomListView) {
+                final CustomListView customListView = (CustomListView) view;
+                customListView.setOnRefreshListener((OnRefreshListener2<ListView>) null);
+                customListView.setOnItemClickListener(null);
+                customListView.setOnLastItemVisibleListener(null);
+                customListView.setOnScrollListener(null);
+
+                ListView listView = customListView.getRefreshableView();
+                if (listView != null) {
+                    try {
+                        final Field field = ClassUtils.getField(
+                                listView.getClass(), "mHeaderViewInfos");
+                        final ArrayList<FixedViewInfo> mHeaderViewInfos = (ArrayList<FixedViewInfo>) field
+                                .get(listView);
+                        if (!CollectionUtils.isNullOrEmpty(mHeaderViewInfos)) {
+                            for (final FixedViewInfo mHeaderViewInfo : mHeaderViewInfos) {
+                                listView.removeHeaderView(mHeaderViewInfo.view);
+                                cleanView(context, object, mHeaderViewInfo.view);
+                            }
+                        }
+                    } catch (final Exception e) {
+                        // 握りつぶす
+                    }
+                    try {
+                        final Field field = ClassUtils.getField(
+                                listView.getClass(), "mFooterViewInfos");
+                        final ArrayList<FixedViewInfo> mFooterViewInfos = (ArrayList<FixedViewInfo>) field
+                                .get(listView);
+                        if (!CollectionUtils.isNullOrEmpty(mFooterViewInfos)) {
+                            for (final FixedViewInfo mFooterViewInfo : mFooterViewInfos) {
+                                listView.removeHeaderView(mFooterViewInfo.view);
+                                cleanView(context, object, mFooterViewInfo.view);
+                            }
+                        }
+                    } catch (final Exception e) {
+                        // 握りつぶす
+                    }
+                    final int count = listView.getCount();
+                    for (int i = 0; i < count; i++) {
+                        cleanView(context, object, listView.getChildAt(i));
+                    }
+                    listView.setOnScrollListener(null);
+                    listView.setAdapter(null);
+                }
             }
             // ---------------------------------------------------------------
             // ListView
