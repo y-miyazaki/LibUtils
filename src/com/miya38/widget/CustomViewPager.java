@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.HorizontalScrollView;
@@ -12,16 +13,18 @@ import android.widget.Scroller;
 
 /**
  * カスタムViewPagerクラス
- * 
+ *
  * @author y-miyazaki
  */
 public class CustomViewPager extends ViewPager {
     /** ScrollerCustomDuration */
     private ScrollerCustomDuration mScroller;
+    /** ページング許可状態 */
+    private boolean mIsPagingEnabled;
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context for this View
      */
@@ -32,7 +35,7 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
      *            Context for this View
      * @param attrs
@@ -50,8 +53,28 @@ public class CustomViewPager extends ViewPager {
     }
 
     /**
+     * フリックでのページングをさせないようにする。
+     *
+     * @param isEnabled
+     *            true:ページング許可/false:ページング不可
+     */
+    public void setPagingEnabled(boolean isEnabled) {
+        this.mIsPagingEnabled = isEnabled;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        return mIsPagingEnabled ? super.onInterceptTouchEvent(event) : false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mIsPagingEnabled ? super.onTouchEvent(event) : false;
+    }
+
+    /**
      * ViewPagerの中にあるHorizontalScrollViewを優先する設定
-     * 
+     *
      * @param v
      *            View
      * @return
@@ -88,7 +111,7 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * スクロールスピード設定
-     * 
+     *
      * @param scrollFactor
      *            1:Default、2:1/2のスピード(※数値が大きければスクロールが遅くなる)
      */
@@ -100,9 +123,9 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * カスタムスクロールスピード調整クラス
-     * 
+     *
      * @author y-miyazaki
-     * 
+     *
      */
     private class ScrollerCustomDuration extends Scroller {
         /** Scroll delay */
@@ -110,7 +133,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * コンストラクタ
-         * 
+         *
          * @param context
          *            Context
          */
@@ -120,7 +143,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * コンストラクタ
-         * 
+         *
          * @param context
          *            Context
          * @param interpolator
@@ -132,7 +155,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * コンストラクタ
-         * 
+         *
          * @param context
          *            Context
          * @param interpolator
@@ -146,7 +169,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * Set the factor by which the duration will change
-         * 
+         *
          * @param scrollFactor
          *            スクロールファクター
          */
