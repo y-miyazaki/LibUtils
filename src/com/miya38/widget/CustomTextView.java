@@ -9,12 +9,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.text.Editable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.text.style.ClickableSpan;
@@ -33,7 +31,7 @@ import com.miya38.utils.CollectionUtils;
  *
  * @author y-miyazaki
  */
-public class CustomTextView extends TextView implements TextWatcher {
+public class CustomTextView extends TextView {
     // ----------------------------------------------------------
     // デファイン
     // ----------------------------------------------------------
@@ -192,7 +190,6 @@ public class CustomTextView extends TextView implements TextWatcher {
                 }
             }
         }
-        addTextChangedListener(this);
     }
 
     @Override
@@ -212,31 +209,30 @@ public class CustomTextView extends TextView implements TextWatcher {
         fitTextSize();
     }
 
-    @Override
-    public void onTextChanged(final CharSequence charSequence, final int start, final int lengthBefore, final int lengthAfter) {
-        super.onTextChanged(charSequence, start, lengthBefore, lengthAfter);
-        // 1行を超える場合は、...を付与する
-        setEllipSize();
-        // 画面にフィットしたサイズにする
-        fitTextSize();
-    }
-
-    @Override
-    public void beforeTextChanged(final CharSequence paramCharSequence, final int paramInt1, final int paramInt2, final int paramInt3) {
-        // 何もしない。
-    }
-
-    @Override
-    public void afterTextChanged(final Editable paramEditable) {
-        // 何もしない。
-    }
+//    @Override
+//    public void onTextChanged(final CharSequence charSequence, final int start, final int lengthBefore, final int lengthAfter) {
+//        super.onTextChanged(charSequence, start, lengthBefore, lengthAfter);
+//        // 1行を超える場合は、...を付与する
+//        setEllipSize();
+//        // 画面にフィットしたサイズにする
+//        fitTextSize();
+//    }
+//
+//    @Override
+//    public void beforeTextChanged(final CharSequence paramCharSequence, final int paramInt1, final int paramInt2, final int paramInt3) {
+//        // 何もしない。
+//    }
+//
+//    @Override
+//    public void afterTextChanged(final Editable paramEditable) {
+//        // 何もしない。
+//    }
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onDetachedFromWindow() {
         setBackgroundDrawable(null);
         setOnClickListener(null);
-        removeTextChangedListener(this);
         mOnClickLinkListener = null;
         super.onDetachedFromWindow();
     }
