@@ -51,6 +51,8 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
     private static final String FACEBOOK_PACKAGE = "com.facebook.katana";
     /** Lineアプリパッケージ名 */
     private static final String LINE_PACKAGE = "jp.naver.line.android";
+    /** はてなブックマークアプリパッケージ名 */
+    private static final String HATENA_BOOKMARK_PACKAGE = "com.hatena.android.bookmark";
 
     // ----------------------------------------------------------
     // define
@@ -63,11 +65,14 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
     /** key:シェアしたいURL */
     private static final String KEY_FRAGMENT_CUSTOM_DIALOG_SHARE_URL = "url";
 
+    /** 機能:メール */
+    private static final int FUNCTION_CATEGORY_MAIL = 1;
     /** 機能:URLをコピーする */
-    private static final int FUNCTION_CATEGORY_URL_COPY = 1;
-
+    private static final int FUNCTION_CATEGORY_URL_COPY = 2;
     /** 機能:ブラウザで開く */
-    private static final int FUNCTION_CATEGORY_BROWSER = 2;
+    private static final int FUNCTION_CATEGORY_BROWSER = 3;
+    /** 機能:他の方法で共有する */
+    private static final int FUNCTION_CATEGORY_OTHER = 4;
 
     /** 対応するシェア先のパッケージ名 */
     private static final List<Package> PACKAGE_NAMES;
@@ -84,7 +89,7 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
         // Pocket
         PACKAGE_NAMES.add(new Package("com.ideashower.readitlater.pro", null, 0));
         // はてなブックマーク
-        PACKAGE_NAMES.add(new Package("com.hatena.android.bookmark", null, 0));
+        PACKAGE_NAMES.add(new Package(HATENA_BOOKMARK_PACKAGE, null, 0));
         // Evernote
         PACKAGE_NAMES.add(new Package("com.evernote", null, 0));
         // Tumblr
@@ -93,16 +98,18 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
         PACKAGE_NAMES.add(new Package("com.pinterest", null, 0));
         // skype
         PACKAGE_NAMES.add(new Package("com.skype.raider", null, 0));
-        // Gmail
-        PACKAGE_NAMES.add(new Package("com.google.android.gm", null, 0));
+        //        // Gmail
+        //        PACKAGE_NAMES.add(new Package("com.google.android.gm", null, 0));
     }
 
     /** その他機能 */
     private static final List<Function> FUNCTIONS;
     static {
         FUNCTIONS = new ArrayList<Function>();
+        FUNCTIONS.add(new Function("メール", FUNCTION_CATEGORY_MAIL));
         FUNCTIONS.add(new Function("URLをコピーする", FUNCTION_CATEGORY_URL_COPY));
         FUNCTIONS.add(new Function("ブラウザで開く", FUNCTION_CATEGORY_BROWSER));
+        FUNCTIONS.add(new Function("他の方法で共有する", FUNCTION_CATEGORY_OTHER));
     }
 
     // ----------------------------------------------------------
@@ -240,16 +247,29 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
         // アプリ名がない場合は機能毎に処理を変える。
         // ----------------------------------------------------------
         if (tsEtc004ApWebViewDialogListViewItem.appName == null) {
+            final Intent intent;
             switch (tsEtc004ApWebViewDialogListViewItem.functionCategory) {
+            case FUNCTION_CATEGORY_MAIL: // メール
+                intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
+                        .putExtra(Intent.EXTRA_TEXT, mMessage);
+                startActivity(intent);
+                break;
             case FUNCTION_CATEGORY_URL_COPY: // URLをコピー
                 ClipboardUtils.setText(mUrl);
                 break;
             case FUNCTION_CATEGORY_BROWSER: // ブラウザで開く
-                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));
+                startActivity(intent);
+                break;
+            case FUNCTION_CATEGORY_OTHER: // 他の方法で共有する
+                intent = new Intent(Intent.ACTION_SEND)
+                        .setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT, mMessage);
                 startActivity(intent);
                 break;
             }
         }
+
         // ----------------------------------------------------------
         // アプリ名がある場合はパッケージからIntentを起動する。
         // ----------------------------------------------------------
@@ -258,8 +278,9 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
             // メッセージ内容を一部修正する。
             // ----------------------------------------------------------
             String message;
-            // facebookはURLしかシェア出来ないためURLがあれば抜き出す。
-            if (StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, FACEBOOK_PACKAGE)) {
+            // 「facebook」「はてなブックマーク」はURLしかシェア出来ないためURLがあれば抜き出す。
+            if (StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, FACEBOOK_PACKAGE) ||
+                    StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, HATENA_BOOKMARK_PACKAGE)) {
                 message = mMessage.replaceAll(MATCH_URL, "$1$2");
             }
             // Lineはメッセージに改行があるとエラーが出るのでtrimする。
