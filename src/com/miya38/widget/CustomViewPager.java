@@ -13,18 +13,18 @@ import android.widget.Scroller;
 
 /**
  * カスタムViewPagerクラス
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomViewPager extends ViewPager {
     /** ScrollerCustomDuration */
     private ScrollerCustomDuration mScroller;
-    /** ページング許可状態 */
-    private boolean mIsPagingEnabled;
+    /** ページング制御状態 */
+    private boolean mIsPagingEnabled = true;
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      */
@@ -35,7 +35,7 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -53,8 +53,8 @@ public class CustomViewPager extends ViewPager {
     }
 
     /**
-     * フリックでのページングをさせないようにする。
-     *
+     * フリックでのページングを制御する
+     * 
      * @param isEnabled
      *            true:ページング許可/false:ページング不可
      */
@@ -74,7 +74,7 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * ViewPagerの中にあるHorizontalScrollViewを優先する設定
-     *
+     * 
      * @param v
      *            View
      * @return
@@ -111,7 +111,7 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * スクロールスピード設定
-     *
+     * 
      * @param scrollFactor
      *            1:Default、2:1/2のスピード(※数値が大きければスクロールが遅くなる)
      */
@@ -123,9 +123,9 @@ public class CustomViewPager extends ViewPager {
 
     /**
      * カスタムスクロールスピード調整クラス
-     *
+     * 
      * @author y-miyazaki
-     *
+     * 
      */
     private class ScrollerCustomDuration extends Scroller {
         /** Scroll delay */
@@ -133,7 +133,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * コンストラクタ
-         *
+         * 
          * @param context
          *            Context
          */
@@ -143,7 +143,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * コンストラクタ
-         *
+         * 
          * @param context
          *            Context
          * @param interpolator
@@ -155,7 +155,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * コンストラクタ
-         *
+         * 
          * @param context
          *            Context
          * @param interpolator
@@ -169,7 +169,7 @@ public class CustomViewPager extends ViewPager {
 
         /**
          * Set the factor by which the duration will change
-         *
+         * 
          * @param scrollFactor
          *            スクロールファクター
          */

@@ -97,7 +97,7 @@ public final class ResourceUtils {
      *            リソースID
      * @return 文字列
      */
-    public static TypedArray getObtaionTypedArray(final int arrayId) {
+    public static TypedArray getObtainTypedArray(final int arrayId) {
         return sContext.getResources().obtainTypedArray(arrayId);
     }
 
@@ -110,7 +110,7 @@ public final class ResourceUtils {
      *            添え字
      * @return 文字列
      */
-    public static int getObtaionTypedArray(final int arrayId, final int index) {
+    public static int getObtainTypedArray(final int arrayId, final int index) {
         final TypedArray names = sContext.getResources().obtainTypedArray(arrayId);
         try {
             return names.getResourceId(index, -1);

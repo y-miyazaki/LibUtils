@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.Display;
 import android.view.View;
@@ -22,7 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 
 /**
  * アプリケーションユーティリティ
- *
+ * 
  * @author y-miyazaki
  */
 public final class AplUtils {
@@ -41,7 +42,7 @@ public final class AplUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -51,7 +52,7 @@ public final class AplUtils {
 
     /**
      * ブランドを返却する 例：SHARP
-     *
+     * 
      * @return ブランド
      */
     public static String getBuildBrand() {
@@ -60,7 +61,7 @@ public final class AplUtils {
 
     /**
      * 製品名を返却する 例：JNDK01
-     *
+     * 
      * @return Product
      */
     public static String getBuildProduct() {
@@ -69,7 +70,7 @@ public final class AplUtils {
 
     /**
      * モデルを返却する 例：JN-DK01
-     *
+     * 
      * @return モデル
      */
     public static String getBuildModel() {
@@ -78,7 +79,7 @@ public final class AplUtils {
 
     /**
      * BuildVersionを返却する 例：8
-     *
+     * 
      * @return BuildVersion
      */
     public static int getBuildVersion() {
@@ -87,7 +88,7 @@ public final class AplUtils {
 
     /**
      * ReleaseVersionを返却する 例：2.2
-     *
+     * 
      * @return Release
      */
     public static String getBuildRelease() {
@@ -96,7 +97,7 @@ public final class AplUtils {
 
     /**
      * Eclair(5)以上のバージョンかチェック
-     *
+     * 
      * @return true:Eclair以上 false;Eclair未満
      */
     public static boolean hasEclair() {
@@ -105,7 +106,7 @@ public final class AplUtils {
 
     /**
      * Froyo(2.2/8)以上のバージョンかチェック
-     *
+     * 
      * @return true:Froyo以上 false;Froyo未満
      */
     public static boolean hasFroyo() {
@@ -114,7 +115,7 @@ public final class AplUtils {
 
     /**
      * Gingerbread(2.3/9)以上のバージョンかチェック
-     *
+     * 
      * @return true:Gingerbread以上 false;Gingerbread未満
      */
     public static boolean hasGingerbread() {
@@ -123,7 +124,7 @@ public final class AplUtils {
 
     /**
      * Gingerbread Mr1(2.3.3-2.3.7/10)以上のバージョンかチェック
-     *
+     * 
      * @return true:Gingerbread Mr1以上 false;Gingerbread Mr1未満
      */
     public static boolean hasGingerbreadMr1() {
@@ -132,7 +133,7 @@ public final class AplUtils {
 
     /**
      * Honeycomb(3.0/11)以上のバージョンかチェック
-     *
+     * 
      * @return true:Honeycomb以上 false;Honeycomb未満
      */
     public static boolean hasHoneycomb() {
@@ -141,7 +142,7 @@ public final class AplUtils {
 
     /**
      * Honeycomb Mr1(3.1/12)以上のバージョンかチェック
-     *
+     * 
      * @return true:Honeycomb Mr1以上 false;Honeycomb Mr1未満
      */
     public static boolean hasHoneycombMR1() {
@@ -150,7 +151,7 @@ public final class AplUtils {
 
     /**
      * Honeycomb Mr1(3.2/13)以上のバージョンかチェック
-     *
+     * 
      * @return true:Honeycomb Mr1以上 false;Honeycomb Mr1未満
      */
     public static boolean hasHoneycombMR2() {
@@ -159,7 +160,7 @@ public final class AplUtils {
 
     /**
      * Ice Cream Sandwich(4.0/14)以上のバージョンかチェック
-     *
+     * 
      * @return true:Ice Cream Sandwich以上 false;Ice Cream Sandwich未満
      */
     public static boolean hasIceCreamSandwich() {
@@ -168,7 +169,7 @@ public final class AplUtils {
 
     /**
      * Ice Cream Sandwich(4.0.03/15)以上のバージョンかチェック
-     *
+     * 
      * @return true:Ice Cream Sandwich Mr1以上 false;Ice Cream Sandwich Mr1未満
      */
     public static boolean hasIceCreamSandwichMR1() {
@@ -177,7 +178,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.1/16)以上のバージョンかチェック
-     *
+     * 
      * @return true:JellyBean以上 false;JellyBean未満
      */
     public static boolean hasJellyBean() {
@@ -186,7 +187,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.2/17)以上のバージョンかチェック
-     *
+     * 
      * @return true:JellyBean Mr1以上 false;JellyBean Mr1未満
      */
     public static boolean hasJellyBeanMR1() {
@@ -195,7 +196,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.3/18)以上のバージョンかチェック
-     *
+     * 
      * @return true:JellyBean Mr2以上 false;JellyBean Mr2未満
      */
     public static boolean hasJellyBeanMR2() {
@@ -204,7 +205,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.4/19)以上のバージョンかチェック
-     *
+     * 
      * @return true:Kitkat以上 false;Kitkat未満
      */
     public static boolean hasKitKat() {
@@ -213,7 +214,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(5.0/21)以上のバージョンかチェック
-     *
+     * 
      * @return true:Lollipop以上 false;Lollipop未満
      */
     public static boolean hasLollipop() {
@@ -222,7 +223,7 @@ public final class AplUtils {
 
     /**
      * アプリケーションバージョンを返却する
-     *
+     * 
      * @return アプリケーションバージョン文字列
      */
     public static String getAplVersion() {
@@ -235,7 +236,7 @@ public final class AplUtils {
 
     /**
      * アプリケーションバージョンコードを返却する
-     *
+     * 
      * @return アプリケーションバージョンコード文字列
      */
     public static int getAplVersionCode() {
@@ -248,7 +249,7 @@ public final class AplUtils {
 
     /**
      * アプリケーションパッケージ名を返却する
-     *
+     * 
      * @return アプリケーションパッケージ名
      */
     public static String getPackageName() {
@@ -257,7 +258,7 @@ public final class AplUtils {
 
     /**
      * 画面サイズの横幅を取得(px)
-     *
+     * 
      * @return 画面の横幅
      */
     @SuppressWarnings("deprecation")
@@ -275,7 +276,7 @@ public final class AplUtils {
 
     /**
      * 画面サイズの縦幅を取得(px)
-     *
+     * 
      * @return 画面の縦幅
      */
     @SuppressWarnings("deprecation")
@@ -293,7 +294,7 @@ public final class AplUtils {
 
     /**
      * キーボードを閉じる
-     *
+     * 
      * @param activity
      *            Activity
      */
@@ -304,7 +305,7 @@ public final class AplUtils {
 
     /**
      * キーボードを閉じる
-     *
+     * 
      * @param context
      *            Context
      * @param view
@@ -317,10 +318,10 @@ public final class AplUtils {
 
     /**
      * dp→px変換
-     *
+     * 
      * @param dp
      *            dp
-     *
+     * 
      * @return dpからpxに変換された値を返却する
      */
     public static int getDpToPx(final int dp) {
@@ -330,10 +331,10 @@ public final class AplUtils {
 
     /**
      * px→dp変換
-     *
+     * 
      * @param px
      *            px
-     *
+     * 
      * @return pxからdpに変換された値を返却する
      */
     public static int getPxToDp(final int px) {
@@ -343,10 +344,10 @@ public final class AplUtils {
 
     /**
      * sp→px変換
-     *
+     * 
      * @param sp
      *            sp
-     *
+     * 
      * @return spからpxに変換された値を返却する
      */
     public static int getSpToPx(final int sp) {
@@ -356,10 +357,10 @@ public final class AplUtils {
 
     /**
      * アプリが起動中か確認する
-     *
+     * 
      * @param appName
      *            アプリケーション名
-     *
+     * 
      * @return true:起動中<br>
      *         false:未起動
      */
@@ -387,7 +388,7 @@ public final class AplUtils {
 
     /**
      * 自分のアプリのアクティビティが起動しているか確認する
-     *
+     * 
      * @return true:起動中<br>
      *         false:未起動
      */
@@ -407,11 +408,11 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージに属するアクティビティが起動しているか確認する
-     *
+     * 
      * @param activityName
      *            パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
      *            HomeActivity)
-     *
+     * 
      * @return true:起動中<br>
      *         false:未起動
      */
@@ -430,10 +431,10 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージに属するアクティビティが起動しているか確認する
-     *
+     * 
      * @param activityName
      *            パッケージ名まで指定すること(ex...com.example)
-     *
+     * 
      * @return true:起動中<br>
      *         false:未起動
      */
@@ -451,12 +452,71 @@ public final class AplUtils {
     }
 
     /**
+     * 指定のパッケージが端末にインストールされているか確認する。
+     * 
+     * @param packageName
+     *            パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
+     *            HomeActivity)
+     * 
+     * @return true:起動中<br>
+     *         false:未起動
+     */
+    public static boolean hasApplication(final String packageName) {
+        try {
+            PackageManager pm = sContext.getPackageManager();
+            pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            return true;
+        } catch (NameNotFoundException e) {
+            // インストールされていない場合は例外が発生
+        }
+        return false;
+    }
+
+    /**
+     * 指定のパッケージのアプリケーションアイコンを取得する。
+     * 
+     * @param packageName
+     *            パッケージ名を指定する。
+     * 
+     * @return アプリケーションがインストールされていない場合はnullを返却する。
+     */
+    public static Drawable getApplicationIcon(final String packageName) {
+        PackageManager pm = sContext.getPackageManager();
+        Drawable icon = null;
+        try {
+            icon = pm.getApplicationIcon(packageName);
+        } catch (NameNotFoundException e) {
+            // インストールされていない場合は例外が発生
+        }
+        return icon;
+    }
+
+    /**
+     * 指定のパッケージのアプリケーション名を取得する。
+     * 
+     * @param packageName
+     *            パッケージ名を指定する。
+     * 
+     * @return アプリケーションがインストールされていない場合はnullを返却する。
+     */
+    public static String getApplicationName(final String packageName) {
+        try {
+            PackageManager pm = sContext.getPackageManager();
+            ApplicationInfo applicationInfo = pm.getApplicationInfo(packageName, 0);
+            return pm.getApplicationLabel(applicationInfo).toString();
+        } catch (NameNotFoundException e) {
+            // インストールされていない場合は例外が発生
+        }
+        return null;
+    }
+
+    /**
      * バージョンアップデートチェック
      * <p>
      * バージョンの複数桁構成のチェックを可能とする。<br>
      * ex)1.0.0
      * </p>
-     *
+     * 
      * @param serverAplVersion
      *            サーバ側のバージョン
      * @return true:バージョンアップ必要<br>
@@ -482,7 +542,7 @@ public final class AplUtils {
 
     /**
      * 証明書ハッシュ値取得
-     *
+     * 
      * @return 証明書ハッシュ値
      */
     public static String getSignatureHash() {
@@ -502,7 +562,7 @@ public final class AplUtils {
 
     /**
      * 証明書ハッシュ値チェック
-     *
+     * 
      * @param signatureHash
      *            証明書ハッシュ値
      * @return true:正しい署名のハッシュ値<br>
@@ -514,7 +574,7 @@ public final class AplUtils {
 
     /**
      * sha-256変換
-     *
+     * 
      * @param data
      *            変換元
      * @return sha-256変換後データ
@@ -529,7 +589,7 @@ public final class AplUtils {
 
     /**
      * byte→hex変換
-     *
+     * 
      * @param data
      *            変換元
      * @return HEXデータ
