@@ -32,16 +32,27 @@ public final class ClipboardUtils {
     }
 
     /**
-     * クリップボードへのコピー
+     * クリップボードへの文字列設定
      * 
      * @param text
      *            コピー文字列
      */
-    public static void copy(String text) {
+    public static void setText(String text) {
         if (AplUtils.hasHoneycomb()) {
             copyToClipboard(text);
         } else {
             copyToClipboardUnder11(text);
+        }
+    }
+
+    /**
+     * クリップボードから文字列取得
+     */
+    public static String getText(String text) {
+        if (AplUtils.hasHoneycomb()) {
+            return getToClipboard();
+        } else {
+            return getToClipboardUnder11();
         }
     }
 
@@ -72,5 +83,32 @@ public final class ClipboardUtils {
         };
         ClipData clip = new ClipData("data", mimeTypes, item);
         clipboardManager.setPrimaryClip(clip);
+    }
+
+    /**
+     * Api Level11未満で使用されるClipboard処理
+     * 
+     * @return クリップボードから取得した文字列
+     */
+    @SuppressWarnings("deprecation")
+    private static String getToClipboardUnder11() {
+        android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) sContext.getSystemService(Context.CLIPBOARD_SERVICE);
+        return clipboardManager.getText().toString();
+    }
+
+    /**
+     * Api Level11以上で使用されるClipboard処理
+     * 
+     * @return クリップボードから取得した文字列
+     */
+    @TargetApi(11)
+    private static String getToClipboard() {
+        android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) sContext.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = clipboardManager.getPrimaryClip();
+        if (clipData != null) {
+            ClipData.Item item = clipData.getItemAt(0);
+            return item.getText().toString();
+        }
+        return "";
     }
 }

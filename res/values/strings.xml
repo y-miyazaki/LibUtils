@@ -81,4 +81,12 @@
     <string name="activity_triming_button02">左へ回転</string>
     <string name="activity_triming_button03">右へ回転</string>
 
+    <!--
+    ***************************************************************
+    * シェア
+    ****************************************************************
+    -->
+    <!-- シェアタイトル -->
+    <string name="dialog_share_textview01">共有先を選択しましょう。</string>
+
 </resources>

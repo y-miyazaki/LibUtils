@@ -5,6 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.miya38.widget.CustomTextView
+        style="@style/CustomTextViewPrimaryLargeBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/dialog_share_textview01"
+        android:textColor="#03A9F4"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:background="#03A9F4"/>
+
     <com.miya38.widget.CustomListView
         android:id="@+id/CustomListView01"
         style="@style/CustomListViewBasic"

@@ -4,7 +4,7 @@
     <!--
     ***************************************************************
     * Dialog Animation Style
-    ***************************************************************
+    ***************************************************************
     -->
     <style name="Animation" parent="android:Animation"/>
 
@@ -21,7 +21,7 @@
     <!--
     ***************************************************************
     * Dialog
-    ***************************************************************
+    ***************************************************************
     -->
     <style name="Theme.CustomDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/Animation.CustomDialogUp</item>
@@ -96,48 +96,6 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-    </style>
-
-    <!--
-	***************************************************************
-    * ListView
-    ***************************************************************
-    -->
-    <!-- ListView スタイル(基本のListView) -->
-    <style name="CustomListViewBasic">
-        <item name="android:animationCache">false</item>
-        <item name="android:background">@null</item>
-        <item name="android:cacheColorHint">@android:color/transparent</item>
-        <item name="android:headerDividersEnabled">false</item>
-        <item name="android:footerDividersEnabled">false</item>
-<!--          <item name="android:divider">@xml/common_line_01</item> -->
-        <item name="android:dividerHeight">2dp</item>
-        <item name="android:fadingEdge">none</item>
-        <item name="android:fadingEdgeLength">10dp</item>
-        <item name="android:fastScrollEnabled">false</item>
-        <item name="android:scrollingCache">false</item>
-        <item name="android:choiceMode">singleChoice</item>
-        <item name="android:smoothScrollbar">true</item>
-        <item name="android:overScrollMode">always</item>
-    </style>
-
-    <!-- ListView スタイル(基本のListViewにラインなし版) -->
-    <style name="CustomListViewNoLine">
-        <item name="android:animationCache">false</item>
-        <item name="android:background">@null</item>
-        <item name="android:cacheColorHint">@android:color/transparent</item>
-        <item name="android:headerDividersEnabled">false</item>
-        <item name="android:footerDividersEnabled">false</item>
-        <item name="android:divider">@null</item>
-        <item name="android:dividerHeight">0dp</item>
-        <item name="android:listSelector">@android:color/transparent</item>
-        <item name="android:fadingEdge">none</item>
-        <item name="android:fadingEdgeLength">10dp</item>
-        <item name="android:fastScrollEnabled">false</item>
-        <item name="android:scrollingCache">false</item>
-        <item name="android:choiceMode">singleChoice</item>
-        <item name="android:smoothScrollbar">true</item>
-        <item name="android:overScrollMode">always</item>
     </style>
 
 </resources>
