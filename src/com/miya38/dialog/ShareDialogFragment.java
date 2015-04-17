@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -34,7 +35,10 @@ import com.miya38.widget.CustomImageView;
 import com.miya38.widget.CustomTextView;
 
 /**
- * SNS系シェアダイアログフラグメント
+ * シェアダイアログフラグメント
+ * <p>
+ * 各SNS・メール・URLコピー等の様々な方法で設定した内容をシェアする機能である。
+ * </p>
  * 
  * @author y-miyazaki
  * 
@@ -255,7 +259,9 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
                 startActivity(intent);
                 break;
             case FUNCTION_CATEGORY_URL_COPY: // URLをコピー
+                // クリップボードへコピーして、Toastで表示を行う。
                 ClipboardUtils.setText(mUrl);
+                Toast.makeText(getActivity().getApplicationContext(), getString(R.string.dialog_share_url_copy, mUrl), Toast.LENGTH_SHORT).show();
                 break;
             case FUNCTION_CATEGORY_BROWSER: // ブラウザで開く
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));

@@ -88,5 +88,7 @@
     -->
     <!-- シェアタイトル -->
     <string name="dialog_share_textview01">共有先を選択しましょう。</string>
+    <!-- URLをコピーした際にTOASTに表示される文言 -->
+    <string name="dialog_share_url_copy">URLをコピーしました。\n%1$s</string>
 
 </resources>
