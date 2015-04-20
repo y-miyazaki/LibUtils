@@ -7,7 +7,7 @@ import android.content.Context;
 
 /**
  * クリップボードユーティリティ
- * 
+ *
  * @author y-miyazaki
  */
 public final class ClipboardUtils {
@@ -23,7 +23,7 @@ public final class ClipboardUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
      *            {@link Context}
      */
@@ -33,7 +33,7 @@ public final class ClipboardUtils {
 
     /**
      * クリップボードへの文字列設定
-     * 
+     *
      * @param text
      *            コピー文字列
      */
@@ -48,7 +48,7 @@ public final class ClipboardUtils {
     /**
      * クリップボードから文字列取得
      */
-    public static String getText(String text) {
+    public static String getText() {
         if (AplUtils.hasHoneycomb()) {
             return getToClipboard();
         } else {
@@ -58,7 +58,7 @@ public final class ClipboardUtils {
 
     /**
      * Api Level11未満で使用されるClipboard処理
-     * 
+     *
      * @param text
      *            コピー文字列
      */
@@ -70,12 +70,12 @@ public final class ClipboardUtils {
 
     /**
      * Api Level11以上で使用されるClipboard処理
-     * 
+     *
      * @param text
      *            コピー文字列
      */
     @TargetApi(11)
-    private static void copyToClipboard(String text) {
+    private static void copyToClipboard(final String text) {
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) sContext.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData.Item item = new ClipData.Item(text);
         String[] mimeTypes = new String[] {
@@ -87,7 +87,7 @@ public final class ClipboardUtils {
 
     /**
      * Api Level11未満で使用されるClipboard処理
-     * 
+     *
      * @return クリップボードから取得した文字列
      */
     @SuppressWarnings("deprecation")
@@ -98,7 +98,7 @@ public final class ClipboardUtils {
 
     /**
      * Api Level11以上で使用されるClipboard処理
-     * 
+     *
      * @return クリップボードから取得した文字列
      */
     @TargetApi(11)
