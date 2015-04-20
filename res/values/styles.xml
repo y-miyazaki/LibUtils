@@ -4,22 +4,28 @@
     <!--
     ***************************************************************
     * 基本のテキスト・フォントサイズ
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomTextViewXXLarge">
         <item name="android:textSize">@dimen/xxlarge_text_size</item>
     </style>
+
     <style name="CustomTextViewXLarge">
         <item name="android:textSize">@dimen/xlarge_text_size</item>
     </style>
+
     <style name="CustomTextViewLarge">
         <item name="android:textSize">@dimen/large_text_size</item>
     </style>
+
     <style name="CustomTextViewNormal">
         <item name="android:textSize">@dimen/default_text_size</item>
     </style>
+
     <style name="CustomTextViewSmall">
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
+
     <style name="CustomTextViewXsmall">
         <item name="android:textSize">@dimen/xsmall_text_size</item>
     </style>
@@ -27,22 +33,28 @@
     <!--
     ***************************************************************
     * 基本のテキストカラー(Primary)
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomTextViewPrimaryXXLarge" parent="CustomTextViewXXLarge">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
     <style name="CustomTextViewPrimaryXLarge" parent="CustomTextViewXLarge">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
     <style name="CustomTextViewPrimaryLarge" parent="CustomTextViewLarge">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
     <style name="CustomTextViewPrimaryNormal" parent="CustomTextViewNormal">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
     <style name="CustomTextViewPrimarySmall" parent="CustomTextViewSmall">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
     <style name="CustomTextViewPrimaryXsmall" parent="CustomTextViewXsmall">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
@@ -50,40 +62,51 @@
     <style name="CustomTextViewPrimaryXXLargeBold" parent="CustomTextViewPrimaryXXLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewPrimaryXLargeBold" parent="CustomTextViewPrimaryXLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewPrimaryLargeBold" parent="CustomTextViewPrimaryLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewPrimaryNormalBold" parent="CustomTextViewPrimaryNormal">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewPrimarySmallBold" parent="CustomTextViewPrimarySmall">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewPrimaryXsmallBold" parent="CustomTextViewPrimaryXsmall">
         <item name="android:textStyle">bold</item>
     </style>
     <!--
     ***************************************************************
     * 基本のテキストカラー(Secondary)・フォントサイズ
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomTextViewSecondaryXXLarge" parent="CustomTextViewXXLarge">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
+
     <style name="CustomTextViewSecondaryXLarge" parent="CustomTextViewXLarge">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
+
     <style name="CustomTextViewSecondaryLarge" parent="CustomTextViewLarge">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
+
     <style name="CustomTextViewSecondaryNormal" parent="CustomTextViewNormal">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
+
     <style name="CustomTextViewSecondarySmall" parent="CustomTextViewSmall">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
+
     <style name="CustomTextViewSecondaryXsmall" parent="CustomTextViewXsmall">
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
@@ -91,18 +114,23 @@
     <style name="CustomTextViewSecondaryXXLargeBold" parent="CustomTextViewSecondaryXXLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewSecondaryXLargeBold" parent="CustomTextViewSecondaryXLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewSecondaryLargeBold" parent="CustomTextViewSecondaryLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewSecondaryNormalBold" parent="CustomTextViewSecondaryNormal">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewSecondarySmallBold" parent="CustomTextViewSecondarySmall">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewSecondaryXsmallBold" parent="CustomTextViewSecondaryXsmall">
         <item name="android:textStyle">bold</item>
     </style>
@@ -110,22 +138,28 @@
     <!--
     ***************************************************************
     * 基本のテキストカラー(Tertiary)・フォントサイズ
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomTextViewTertiaryXXlarge" parent="CustomTextViewXXLarge">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
+
     <style name="CustomTextViewTertiaryXlarge" parent="CustomTextViewXLarge">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
+
     <style name="CustomTextViewTertiaryLarge" parent="CustomTextViewLarge">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
+
     <style name="CustomTextViewTertiaryNormal" parent="CustomTextViewNormal">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
+
     <style name="CustomTextViewTertiarySmall" parent="CustomTextViewSmall">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
+
     <style name="CustomTextViewTertiaryXsmall" parent="CustomTextViewXsmall">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
     </style>
@@ -133,18 +167,23 @@
     <style name="CustomTextViewTertiaryXXlargeBold" parent="CustomTextViewTertiaryXXlarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewTertiaryXlargeBold" parent="CustomTextViewTertiaryXlarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewTertiaryLargeBold" parent="CustomTextViewTertiaryLarge">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewTertiaryNormalBold" parent="CustomTextViewTertiaryNormal">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewTertiarySmallBold" parent="CustomTextViewTertiarySmall">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="CustomTextViewTertiaryXsmallBold" parent="CustomTextViewTertiaryXsmall">
         <item name="android:textStyle">bold</item>
     </style>
@@ -152,37 +191,43 @@
     <!--
     ***************************************************************
     * 基本のテキストカラー・フォントサイズとシャドー付
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomTextViewPrimaryXXLargeShadow" parent="CustomTextViewPrimaryXXLarge">
         <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewPrimaryXLargeShadow" parent="CustomTextViewPrimaryXLarge">
         <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewPrimaryLargeShadow" parent="CustomTextViewPrimaryLarge">
         <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewPrimaryNormalShadow" parent="CustomTextViewPrimaryNormal">
         <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewPrimarySmallShadow" parent="CustomTextViewPrimarySmall">
         <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewPrimaryXsmallShadow" parent="CustomTextViewPrimaryXsmall">
         <item name="android:shadowColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:shadowDx">2.0</item>
@@ -193,37 +238,43 @@
     <!--
     ***************************************************************
     * セカンドダリーのテキストカラー・フォントサイズ・シャドー付
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomTextViewSecondaryXXLargeShadow" parent="CustomTextViewPrimaryXXLarge">
         <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewSecondaryXLargeShadow" parent="CustomTextViewPrimaryXLarge">
         <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewSecondaryLargeShadow" parent="CustomTextViewPrimaryLarge">
         <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewSecondaryNormalShadow" parent="CustomTextViewSecondaryNormal">
         <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewSecondarySmallShadow" parent="CustomTextViewSecondarySmall">
         <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
         <item name="android:shadowDx">2.0</item>
         <item name="android:shadowDy">2.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="CustomTextViewSecondaryXsmallShadow" parent="CustomTextViewSecondaryXsmall">
         <item name="android:shadowColor">?android:attr/textColorSecondaryInverse</item>
         <item name="android:shadowDx">2.0</item>
@@ -234,7 +285,8 @@
     <!--
     ***************************************************************
     * 背景・テキスト
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="BackgroundBasic">
         <item name="android:background">@null</item>
     </style>
@@ -264,7 +316,8 @@
     <!--
     ***************************************************************
     * Button
-    ***************************************************************    -->
+    ***************************************************************
+    -->
     <style name="CustomButtonBasic">
         <item name="android:textSize">@dimen/default_text_size</item>
         <item name="android:textStyle">bold</item>
@@ -374,8 +427,8 @@
     <!--
     ***************************************************************
     * EditText
-    ***************************************************************    -->
-
+    ***************************************************************
+    -->
     <!-- 背景白の基本のEditText(ただし、これ自体は使用せず継承している別のStyleを使用すること) -->
     <style name="CustomEditTextWhite">
         <item name="android:background">@xml/common_edittext_white</item>
@@ -469,6 +522,47 @@
     <!-- イメージボタンスタイル(CustomImageView版) -->
     <style name="CustomImageViewBasicButton" parent="CustomImageViewBasic">
         <item name="tint">@color/button_inverse</item>
+    </style>
+    <!--
+	***************************************************************
+    * CustomListView
+    ***************************************************************
+    -->
+    <!-- ListView スタイル(基本のListView) -->
+    <style name="CustomListViewBasic">
+        <item name="android:animationCache">false</item>
+        <item name="android:background">@null</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:headerDividersEnabled">false</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:divider">@android:color/darker_gray</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:fadingEdgeLength">10dp</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:choiceMode">singleChoice</item>
+        <item name="android:smoothScrollbar">true</item>
+        <item name="android:overScrollMode">always</item>
+    </style>
+
+    <!-- ListView スタイル(基本のListViewにラインなし版) -->
+    <style name="CustomListViewNoLine">
+        <item name="android:animationCache">false</item>
+        <item name="android:background">@null</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:headerDividersEnabled">false</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:fadingEdgeLength">10dp</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:choiceMode">singleChoice</item>
+        <item name="android:smoothScrollbar">true</item>
+        <item name="android:overScrollMode">always</item>
     </style>
 
 </resources>

@@ -7,6 +7,7 @@ import com.miya38.BuildConfig;
 import com.miya38.connection.AbstractVolleySetting;
 import com.miya38.list.SettingListView;
 import com.miya38.utils.AplUtils;
+import com.miya38.utils.ClipboardUtils;
 import com.miya38.utils.ConnectionUtils;
 import com.miya38.utils.ContextHelper;
 import com.miya38.utils.CookieUtils;
@@ -24,7 +25,7 @@ import com.miya38.utils.ZipUtils;
  * <p>
  * ユーティリティクラスの初期化処理を行う。
  * </p>
- *
+ * 
  * @author y-miyazaki
  */
 public abstract class CommonApplication extends Application {
@@ -36,7 +37,7 @@ public abstract class CommonApplication extends Application {
 
     /**
      * 証明書のハッシュ値を取得する。
-     *
+     * 
      * @return ハッシュ値
      */
     protected abstract String getSignatureHash();
@@ -51,6 +52,7 @@ public abstract class CommonApplication extends Application {
         AplUtils.configure(getApplicationContext());
         ConnectionUtils.configure(getApplicationContext());
         ContextHelper.configure(getApplicationContext());
+        ClipboardUtils.configure(getApplicationContext());
         CookieUtils.configure(getApplicationContext());
         FileSdCardUtils.configure(getApplicationContext());
         FileApplicationUtils.configure(getApplicationContext());

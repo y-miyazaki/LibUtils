@@ -34,6 +34,8 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
     private GestureDetector mGestureDetector;
     /** フリックリスナーインタフェース */
     private OnFlickListener mOnFlickListener;
+    /** スクロール変更リスナーインタフェース */
+    private OnScrollChangedListener mOnScrollChangedListener;
 
     /**
      * コンストラクタ
@@ -157,9 +159,18 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
     protected void onDetachedFromWindow() {
         mOnFlickListener = null;
         mGestureDetector = null;
+        mOnScrollChangedListener = null;
         setWebChromeClient(null);
         setWebViewClient(null);
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (mOnScrollChangedListener != null) {
+            mOnScrollChangedListener.onScrollChanged(l, t, oldl, oldt);
+        }
     }
 
     /**
@@ -184,6 +195,37 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
         // キャッシュ設定
         settings.setAppCacheEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+    }
 
+    /**
+     * スクロール変更リスナー設定
+     * 
+     * @param l
+     *            {@link OnScrollChangedListener}
+     */
+    public void setOnScrollChangedListener(OnScrollChangedListener l) {
+        mOnScrollChangedListener = l;
+    }
+
+    /**
+     * スクロール変更リスナーインタフェース
+     * X/Y座標を返却する。
+     * 
+     * @author y-miyazaki
+     */
+    public interface OnScrollChangedListener {
+        /**
+         * This is called in response to an internal scroll in this view (i.e., the view scrolled its own contents). This is typically as a result of scrollBy(int, int) or scrollTo(int, int) having been called.
+         * 
+         * @param l
+         *            Current horizontal scroll origin.
+         * @param t
+         *            Current vertical scroll origin.
+         * @param oldl
+         *            Previous horizontal scroll origin.
+         * @param oldt
+         *            Previous vertical scroll origin.
+         */
+        void onScrollChanged(int l, int t, int oldl, int oldt);
     }
 }

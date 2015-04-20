@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.HorizontalScrollView;
@@ -18,6 +19,8 @@ import android.widget.Scroller;
 public class CustomViewPager extends ViewPager {
     /** ScrollerCustomDuration */
     private ScrollerCustomDuration mScroller;
+    /** ページング制御状態 */
+    private boolean mIsPagingEnabled = true;
 
     /**
      * コンストラクタ
@@ -47,6 +50,26 @@ public class CustomViewPager extends ViewPager {
     @Override
     protected boolean canScroll(final View v, final boolean checkV, final int dx, final int x, final int y) {
         return super.canScroll(v, checkV, dx, x, y) || checkV && customCanScroll(v);
+    }
+
+    /**
+     * フリックでのページングを制御する
+     * 
+     * @param isEnabled
+     *            true:ページング許可/false:ページング不可
+     */
+    public void setPagingEnabled(boolean isEnabled) {
+        this.mIsPagingEnabled = isEnabled;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        return mIsPagingEnabled ? super.onInterceptTouchEvent(event) : false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mIsPagingEnabled ? super.onTouchEvent(event) : false;
     }
 
     /**
