@@ -72,3 +72,20 @@ task copyLibs(type : Copy) {
         }
     }
 }
+
+// findbugs setting
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low" // –‚Ç‚ÌƒŒƒxƒ‹‚Ì•ñ‚Ü‚Å‘Î‰‚·‚é‚©‚Å•ÏX–
+    excludeFilter = new File("${project.rootDir}/config/findbugs/android_findbugs_filter.xml")
+    classes = files("build/intermediates/classes/")
+    source 'src/main'
+    include '**/*.java'
+    reports {
+        xml {
+            destination "${project.rootDir}/build/reports/findbugs_report.xml"
+        }
+    }
+    classpath = files()
+}
