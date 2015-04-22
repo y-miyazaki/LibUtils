@@ -71,7 +71,6 @@ task copyLibs(type : Copy) {
             new File('libs', it.name).exists()
         }
     }
-	delete 
 }
 
 // findbugs setting
@@ -90,5 +89,3 @@ task findbugs(type: FindBugs) {
     }
     classpath = files()
 }
-
-/
