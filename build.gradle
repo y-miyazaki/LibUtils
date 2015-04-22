@@ -60,3 +60,14 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
+
+// library copy setting
+task copyLibs(type : Copy) {
+    configurations.compile.each {
+        from it.toString()
+        into 'libs'
+        exclude {
+            new File('libs', it.name).exists()
+        }
+    }
+}
