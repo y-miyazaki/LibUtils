@@ -35,7 +35,7 @@ import com.miya38.widget.callback.OnNetworkImageViewListener;
  * VolleyのNetwotkImageViewを継承しているクラス。<br>
  * それに加え、もしonClickListenerを指定している場合に選択時されたことをグレースケールでわかるようにしている。<br>
  * </p>
- *
+ * 
  * @author y-miyazaki
  */
 public class CustomNetworkImageView extends NetworkImageView implements OnTouchListener {
@@ -96,7 +96,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -110,7 +110,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context for this View
      * @param attrs
@@ -124,130 +124,47 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         init(context, attrs);
     }
 
-    /**
-     * init
-     *
-     * @param context
-     *            Context for this View
-     * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is
-     *            processed here
-     */
-    private void init(final Context context, final AttributeSet attrs) {
-        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView);
-        final int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
-        this.mIsCorner = ta.getBoolean(R.styleable.CustomImageView_corner, false);
-        this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, CORNER_RADIUS);
-        this.mIsAlphaAnimation = ta.getBoolean(R.styleable.CustomImageView_is_alpha_animation, false);
-        this.mTint = ta.getInt(R.styleable.CustomImageView_tint, -1);
-        if (mTint != -1) {
-            final String poterduffMode = ta.getString(R.styleable.CustomImageView_porterduff_mode);
-            if (poterduffMode == null) {
-                // デフォルトでSRC_ATOPとしている
-                mMode = PorterDuff.Mode.SRC_ATOP;
-            } else {
-                try {
-                    mMode = (PorterDuff.Mode.valueOf(poterduffMode) == null) ? PorterDuff.Mode.SRC_ATOP : PorterDuff.Mode.valueOf(poterduffMode);
-                } catch (final Exception e) {
-                    // 握りつぶす
-                }
-            }
-            setOnTouchListener(this);
-        }
-        ta.recycle();
-        // エディターモードの場合
-        if (isInEditMode()) {
-            if (editSrc != -1) {
-                setImageResource(editSrc);
-            }
-        }
-    }
-
-    /**
-     * tint設定を取得する。
-     *
-     * @return tint設定<br>
-     */
-    public int getTint() {
-        return this.mTint;
-    }
-
-    /**
-     * コーナー設定
-     *
-     * @param tint
-     *            colorFilter
-     */
-    public void setTint(final int tint) {
-        this.mTint = tint;
-
-        if (tint == -1) {
-            this.mMode = null;
-            setOnTouchListener(null);
-        } else {
-            // デフォルトでSRC_ATOPとしている
-            this.mMode = PorterDuff.Mode.SRC_ATOP;
-            setOnTouchListener(this);
-        }
-    }
-
-    /**
-     * 指定のカラーフィルターを掛ける<br>
-     * クリアする場合は、clearColorFilter()をすること。
-     */
-    private void setColorFilter() {
-        setColorFilter(new PorterDuffColorFilter(mTint, PorterDuff.Mode.SRC_ATOP));
-    }
-
-    /**
-     * グレースケールのカラーフィルターを掛ける<br>
-     * クリアする場合は、clearColorFilter()をすること。
-     */
-    public void setGrayScaleColorFilter() {
-        setColorFilter(new PorterDuffColorFilter(COLOR_GRAYSCALE, PorterDuff.Mode.SRC_ATOP));
-    }
-
     @Override
     public void setOnClickListener(final OnClickListener l) {
         super.setOnClickListener(l);
         this.mOnClickListener = l;
     }
 
-    /**
-     * 画像を消えるようなアルファアニメーションを行う。<br>
-     */
-    public void alphaOutAnimation() {
-        ViewHelper.setAlphaOutAnimation(this, mAnimationDuration);
+    @Override
+    public void setImageResource(int resId) {
+        try {
+            super.setImageResource(resId);
+        } catch (OutOfMemoryError e) {
+            LogUtils.e(TAG, "setImageResouce OutOfMemoryError(%d)", resId);
+        }
     }
 
-    /**
-     * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
-     */
-    public void alphaInAnimation() {
-        ViewHelper.setAlphaInAnimation(this, mAnimationDuration);
+    @Override
+    public void setImageBitmap(final Bitmap bm) {
+        setImageBitmap(bm, mIsAlphaAnimation);
     }
 
-    /**
-     * 画像がポップアップアニメーションを行う。<br>
-     *
-     * @return Animation
-     */
-    public Animation popUpAnimation() {
-        final ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scale.setDuration(mAnimationDuration);
-        startAnimation(scale);
-        return scale;
+    @Override
+    public void setImageUrl(final String url, final ImageLoader imageLoader) {
+        setImageUrl(url, imageLoader, 0, 0, true);
     }
 
-    /**
-     * アニメーション時間設定<br>
-     * アニメーションにかかる時間をmsecで指定する。
-     *
-     * @param animationDuration
-     *            msec
-     */
-    public void setAnimationDuration(final int animationDuration) {
-        this.mAnimationDuration = animationDuration;
+    @Override
+    public void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight) {
+        setImageUrl(url, imageLoader, maxWidth, maxHeight, true);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        mUrls = null;
+        mOnClickListener = null;
+        mOnNetworkImageViewListener = null;
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
+        super.setImageBitmap(null);
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -290,8 +207,128 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     }
 
     /**
+     * init
+     * 
+     * @param context
+     *            Context for this View
+     * @param attrs
+     *            AttributeSet for this View. The attribute 'preset_size' is
+     *            processed here
+     */
+    private void init(final Context context, final AttributeSet attrs) {
+        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView);
+        final int editSrc = ta.getResourceId(R.styleable.CustomImageView_edit_src, -1);
+        this.mIsCorner = ta.getBoolean(R.styleable.CustomImageView_corner, false);
+        this.mCornerRadius = ta.getDimension(R.styleable.CustomImageView_corner_radius, CORNER_RADIUS);
+        this.mIsAlphaAnimation = ta.getBoolean(R.styleable.CustomImageView_is_alpha_animation, false);
+        this.mTint = ta.getInt(R.styleable.CustomImageView_tint, -1);
+        if (mTint != -1) {
+            final String poterduffMode = ta.getString(R.styleable.CustomImageView_porterduff_mode);
+            if (poterduffMode == null) {
+                // デフォルトでSRC_ATOPとしている
+                mMode = PorterDuff.Mode.SRC_ATOP;
+            } else {
+                try {
+                    mMode = (PorterDuff.Mode.valueOf(poterduffMode) == null) ? PorterDuff.Mode.SRC_ATOP : PorterDuff.Mode.valueOf(poterduffMode);
+                } catch (final Exception e) {
+                    // 握りつぶす
+                }
+            }
+            setOnTouchListener(this);
+        }
+        ta.recycle();
+        // エディターモードの場合
+        if (isInEditMode()) {
+            if (editSrc != -1) {
+                setImageResource(editSrc);
+            }
+        }
+    }
+
+    /**
+     * tint設定を取得する。
+     * 
+     * @return tint設定<br>
+     */
+    public int getTint() {
+        return this.mTint;
+    }
+
+    /**
+     * コーナー設定
+     * 
+     * @param tint
+     *            colorFilter
+     */
+    public void setTint(final int tint) {
+        this.mTint = tint;
+
+        if (tint == -1) {
+            this.mMode = null;
+            setOnTouchListener(null);
+        } else {
+            // デフォルトでSRC_ATOPとしている
+            this.mMode = PorterDuff.Mode.SRC_ATOP;
+            setOnTouchListener(this);
+        }
+    }
+
+    /**
+     * 指定のカラーフィルターを掛ける<br>
+     * クリアする場合は、clearColorFilter()をすること。
+     */
+    private void setColorFilter() {
+        setColorFilter(new PorterDuffColorFilter(mTint, PorterDuff.Mode.SRC_ATOP));
+    }
+
+    /**
+     * グレースケールのカラーフィルターを掛ける<br>
+     * クリアする場合は、clearColorFilter()をすること。
+     */
+    public void setGrayScaleColorFilter() {
+        setColorFilter(new PorterDuffColorFilter(COLOR_GRAYSCALE, PorterDuff.Mode.SRC_ATOP));
+    }
+
+    /**
+     * 画像を消えるようなアルファアニメーションを行う。<br>
+     */
+    public void alphaOutAnimation() {
+        ViewHelper.setAlphaOutAnimation(this, mAnimationDuration);
+    }
+
+    /**
+     * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
+     */
+    public void alphaInAnimation() {
+        ViewHelper.setAlphaInAnimation(this, mAnimationDuration);
+    }
+
+    /**
+     * 画像がポップアップアニメーションを行う。<br>
+     * 
+     * @return Animation
+     */
+    public Animation popUpAnimation() {
+        final ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scale.setDuration(mAnimationDuration);
+        startAnimation(scale);
+        return scale;
+    }
+
+    /**
+     * アニメーション時間設定<br>
+     * アニメーションにかかる時間をmsecで指定する。
+     * 
+     * @param animationDuration
+     *            msec
+     */
+    public void setAnimationDuration(final int animationDuration) {
+        this.mAnimationDuration = animationDuration;
+    }
+
+    /**
      * コーナー設定を取得する。
-     *
+     * 
      * @return コーナー設定<br>
      *         true:有り false:無し
      */
@@ -301,7 +338,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * コーナー設定
-     *
+     * 
      * @param corner
      *            コーナを表示するか？<br>
      *            true:表示する。/false:表示しない。
@@ -312,7 +349,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * コーナー設定を取得する。
-     *
+     * 
      * @return コーナー設定
      */
     public float getCornerRadius() {
@@ -321,7 +358,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * コーナー設定
-     *
+     * 
      * @param cornerRadius
      *            コーナーの角丸のサイズ
      */
@@ -329,15 +366,13 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         this.mCornerRadius = cornerRadius;
     }
 
-    @Override
-    public void setImageBitmap(final Bitmap bm) {
-        setImageBitmap(bm, mIsAlphaAnimation);
-    }
-
     /**
-     *
+     * setImageBitmap＋アルファアニメーション&コーナー設定
+     * 
      * @param bm
+     *            Bitmap
      * @param isAlphaAnimation
+     *            true:アルファアニメーションON/false:アルファアニメーションOFF
      */
     public void setImageBitmap(final Bitmap bm, final boolean isAlphaAnimation) {
         try {
@@ -364,7 +399,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * イメージチェンジURL設定処理
-     *
+     * 
      * @param urls
      *            URLのリスト
      * @param period
@@ -401,18 +436,8 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }, 0, period);
     }
 
-    @Override
-    public void setImageUrl(final String url, final ImageLoader imageLoader) {
-        setImageUrl(url, imageLoader, 0, 0, true);
-    }
-
-    @Override
-    public void setImageUrl(final String url, final ImageLoader imageLoader, final int maxWidth, final int maxHeight) {
-        setImageUrl(url, imageLoader, maxWidth, maxHeight, true);
-    }
-
     /**
-     *
+     * 
      * @param url
      *            URL
      * @param imageLoader
@@ -533,22 +558,9 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        mUrls = null;
-        mOnClickListener = null;
-        mOnNetworkImageViewListener = null;
-        if (mTimer != null) {
-            mTimer.cancel();
-            mTimer = null;
-        }
-        super.setImageBitmap(null);
-        super.onDetachedFromWindow();
-    }
-
     /**
      * Creates a cache key for use with the L1 cache.
-     *
+     * 
      * @param url
      *            The URL of the request.
      * @param maxWidth
@@ -563,7 +575,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
 
     /**
      * OnNetworkImageViewListener設定
-     *
+     * 
      * @param l
      *            {@link OnNetworkImageViewListener}
      */
