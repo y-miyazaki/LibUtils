@@ -57,6 +57,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.2@jar'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.2@jar'
 }
+
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
