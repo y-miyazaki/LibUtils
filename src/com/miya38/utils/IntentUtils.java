@@ -121,7 +121,15 @@ public final class IntentUtils {
         if (intent != null) {
             final Bundle extras = intent.getExtras();
             if (extras != null && extras.containsKey(key)) {
-                return extras.getString(key, defaultValue);
+                // API 12 over
+                if (AplUtils.hasHoneycombMR1()) {
+                    return extras.getString(key, defaultValue);
+                } else {
+                    String value = extras.getString(key);
+                    if (value != null) {
+                        return value;
+                    }
+                }
             }
         }
         return defaultValue;

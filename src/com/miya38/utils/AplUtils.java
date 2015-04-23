@@ -265,7 +265,7 @@ public final class AplUtils {
     public static int getWindowWidth() {
         final WindowManager wm = (WindowManager) sContext.getSystemService(Context.WINDOW_SERVICE);
         final Display display = wm.getDefaultDisplay();
-        if (AplUtils.hasIceCreamSandwich()) {
+        if (AplUtils.hasHoneycombMR2()) {
             final Point size = new Point();
             display.getSize(size);
             return size.x;
@@ -283,7 +283,7 @@ public final class AplUtils {
     public static int getWindowHeight() {
         final WindowManager wm = (WindowManager) sContext.getSystemService(Context.WINDOW_SERVICE);
         final Display display = wm.getDefaultDisplay();
-        if (AplUtils.hasIceCreamSandwich()) {
+        if (AplUtils.hasHoneycombMR2()) {
             final Point size = new Point();
             display.getSize(size);
             return size.y;
