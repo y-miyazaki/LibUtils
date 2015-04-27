@@ -49,7 +49,7 @@ import com.miya38.widget.CustomListView;
 
 /**
  * ビューを利用する際のヘルパーを提供します。
- *
+ * 
  * @author y-miyazaki
  */
 @SuppressWarnings({ "unchecked", "deprecation" })
@@ -68,7 +68,7 @@ public final class ViewHelper {
 
     /**
      * アニメーションの種類
-     *
+     * 
      * @author y-miyazaki
      */
     public enum AnimationKind {
@@ -88,7 +88,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     *
+     * 
      * @param <V>
      *            View
      * @param activity
@@ -103,7 +103,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     *
+     * 
      * @param <V>
      *            View
      * @param view
@@ -118,7 +118,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     *
+     * 
      * @param <V>
      *            View
      * @param dialog
@@ -133,7 +133,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     *
+     * 
      * @param <V>
      *            View
      * @param window
@@ -148,7 +148,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する setOnClickListerner。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -162,7 +162,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する setOnClickListerner。
-     *
+     * 
      * @param view
      *            view
      * @param id
@@ -176,7 +176,7 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する setOnClickListerner。
-     *
+     * 
      * @param dialog
      *            dialog
      * @param id
@@ -190,7 +190,7 @@ public final class ViewHelper {
 
     /**
      * TextView に String リソースを設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -206,7 +206,7 @@ public final class ViewHelper {
 
     /**
      * CustomTextView にテキストを設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -220,7 +220,7 @@ public final class ViewHelper {
 
     /**
      * TextView に String リソースを設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -236,7 +236,7 @@ public final class ViewHelper {
 
     /**
      * CustomTextView にテキストを設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -250,7 +250,7 @@ public final class ViewHelper {
 
     /**
      * TextView に String リソースを設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -266,7 +266,7 @@ public final class ViewHelper {
 
     /**
      * CustomTextView にテキストを設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -280,7 +280,7 @@ public final class ViewHelper {
 
     /**
      * TextView にテキスト(HTML)を設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -295,7 +295,7 @@ public final class ViewHelper {
 
     /**
      * TextView にテキスト(HTML)を設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -309,7 +309,7 @@ public final class ViewHelper {
 
     /**
      * TextView にテキスト(HTML)を設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -324,7 +324,7 @@ public final class ViewHelper {
 
     /**
      * TextView からテキストを取得するヘルパー
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -337,7 +337,7 @@ public final class ViewHelper {
 
     /**
      * TextView からテキストを取得するヘルパー
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -350,7 +350,7 @@ public final class ViewHelper {
 
     /**
      * TextView からテキストを取得するヘルパー
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -363,7 +363,7 @@ public final class ViewHelper {
 
     /**
      * EditText からテキストを取得するヘルパー
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -376,7 +376,7 @@ public final class ViewHelper {
 
     /**
      * EditText からテキストを取得するヘルパー
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -389,7 +389,7 @@ public final class ViewHelper {
 
     /**
      * EditText からテキストを取得するヘルパー
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -402,7 +402,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable リソースを設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -416,7 +416,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable オブジェクトを設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -430,7 +430,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Bitmapを設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -444,7 +444,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable リソースを設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -458,7 +458,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable オブジェクトを設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -472,7 +472,7 @@ public final class ViewHelper {
 
     /**
      * ImageView Bitmapを設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -486,7 +486,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable リソースを設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -500,7 +500,7 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable オブジェクトを設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -514,7 +514,7 @@ public final class ViewHelper {
 
     /**
      * ImageView Bitmapを設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -528,7 +528,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -542,7 +542,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -556,7 +556,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -571,7 +571,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -585,7 +585,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -599,7 +599,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -613,7 +613,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -627,7 +627,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -641,7 +641,7 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -656,7 +656,7 @@ public final class ViewHelper {
 
     /**
      * ViewのVisibirityを設定するヘルパー
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -670,7 +670,7 @@ public final class ViewHelper {
 
     /**
      * ViewのVisibirityを設定するヘルパー
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -684,7 +684,7 @@ public final class ViewHelper {
 
     /**
      * ViewのVisibirityを設定するヘルパー
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -698,7 +698,7 @@ public final class ViewHelper {
 
     /**
      * ViewのVisibilityを設定するヘルパー
-     *
+     * 
      * @param activity
      *            アクティビティ
      * @param id
@@ -716,7 +716,7 @@ public final class ViewHelper {
 
     /**
      * ViewのVisibilityを設定するヘルパー
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -734,7 +734,7 @@ public final class ViewHelper {
 
     /**
      * ViewのVisibilityを設定するヘルパー
-     *
+     * 
      * @param dialog
      *            ダイアログ
      * @param id
@@ -752,7 +752,7 @@ public final class ViewHelper {
 
     /**
      * フェードイン・フェードアウトしながら表示設定をするヘルパー
-     *
+     * 
      * @param v
      *            View
      * @param visibility
@@ -818,7 +818,7 @@ public final class ViewHelper {
 
     /**
      * アルファアニメーションで表示する。
-     *
+     * 
      * @param v
      *            View
      * @param duration
@@ -834,7 +834,7 @@ public final class ViewHelper {
 
     /**
      * アルファアニメーションで非表示にする。
-     *
+     * 
      * @param v
      *            View
      * @param duration
@@ -850,7 +850,7 @@ public final class ViewHelper {
 
     /**
      * 文字を指定回数で点滅させる
-     *
+     * 
      * @param v
      *            View
      * @param duration
@@ -871,7 +871,7 @@ public final class ViewHelper {
 
     /**
      * 無限に文字を点滅させる
-     *
+     * 
      * @param v
      *            View
      * @param duration
@@ -891,7 +891,7 @@ public final class ViewHelper {
     /**
      * クリック・プレス・有効有無を設定するヘルパー<br>
      * 主にボタンに使用し、ボタンを有効無効を制御する。
-     *
+     * 
      * @param v
      *            View
      * @param id
@@ -914,7 +914,7 @@ public final class ViewHelper {
     /**
      * クリック・プレス・有効有無を設定するヘルパー<br>
      * 主にボタンに使用し、ボタンを有効無効を制御する。
-     *
+     * 
      * @param v
      *            View
      * @param b
@@ -934,10 +934,10 @@ public final class ViewHelper {
 
     /**
      * CustomTextViewをリンク可能にさせる
-     *
+     * 
      * @param <T>
      *            起動クラス
-     *
+     * 
      * @param textView
      *            TextView
      * @param linkString
@@ -976,7 +976,7 @@ public final class ViewHelper {
 
     /**
      * View配下の内容を全てクリアする
-     *
+     * 
      * @param context
      *            Context
      * @param object
@@ -1293,7 +1293,7 @@ public final class ViewHelper {
 
     /**
      * 3.0以前のバックグラウンドのrepeatが効かないのを対応する。
-     *
+     * 
      * @param view
      *            {@link View}
      */
@@ -1310,18 +1310,18 @@ public final class ViewHelper {
 
     /**
      * String型でリソースIDを取得する
-     *
+     * 
      * @param targetResourcesName
      *            指定したいリソースID<br>
      *            R.id.Button01ならば、Button01を指定する
-     *
+     * 
      * @param targetResources
      *            指定したいリソースID<br>
      *            R.id.Button01ならば、idを指定する
-     *
+     * 
      * @param context
      *            getApplicationContext()を設定する。
-     *
+     * 
      * @return リソースID
      */
     public static int getResourcesId(final String targetResourcesName, final String targetResources, final Context context) {
@@ -1331,7 +1331,7 @@ public final class ViewHelper {
 
     /**
      * ステータスバーの高さ取得
-     *
+     * 
      * @param context
      *            Context
      * @return ステータスバーの高さ
