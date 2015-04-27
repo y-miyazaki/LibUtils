@@ -110,10 +110,10 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
     private static final List<Function> FUNCTIONS;
     static {
         FUNCTIONS = new ArrayList<Function>();
-        FUNCTIONS.add(new Function("メール", FUNCTION_CATEGORY_MAIL, R.drawable.common_icon_mail));
-        FUNCTIONS.add(new Function("URLをコピーする", FUNCTION_CATEGORY_URL_COPY, R.drawable.common_icon_copy));
-        FUNCTIONS.add(new Function("ブラウザで開く", FUNCTION_CATEGORY_BROWSER, R.drawable.common_icon_browser));
-        FUNCTIONS.add(new Function("他の方法で共有する", FUNCTION_CATEGORY_OTHER, R.drawable.common_icon_other));
+        FUNCTIONS.add(new Function(R.string.dialog_share_function_category_mail, FUNCTION_CATEGORY_MAIL, R.drawable.common_icon_mail));
+        FUNCTIONS.add(new Function(R.string.dialog_share_function_category_url_copy, FUNCTION_CATEGORY_URL_COPY, R.drawable.common_icon_copy));
+        FUNCTIONS.add(new Function(R.string.dialog_share_function_category_browser, FUNCTION_CATEGORY_BROWSER, R.drawable.common_icon_browser));
+        FUNCTIONS.add(new Function(R.string.dialog_share_function_category_other, FUNCTION_CATEGORY_OTHER, R.drawable.common_icon_other));
     }
 
     // ----------------------------------------------------------
@@ -214,7 +214,7 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
         size = FUNCTIONS.size();
         for (int i = 0; i < size; i++) {
             final TsEtc004ApWebViewDialogListViewItem tsEtc004ApWebViewDialogListViewItem = new TsEtc004ApWebViewDialogListViewItem();
-            tsEtc004ApWebViewDialogListViewItem.function = FUNCTIONS.get(i).mFunction;
+            tsEtc004ApWebViewDialogListViewItem.function = getString(FUNCTIONS.get(i).mFunction);
             tsEtc004ApWebViewDialogListViewItem.functionCategory = FUNCTIONS.get(i).mFunctionCategory;
             if (FUNCTIONS.get(i).mIconResouceId != 0) {
                 tsEtc004ApWebViewDialogListViewItem.drawable = getResources().getDrawable(FUNCTIONS.get(i).mIconResouceId);
@@ -417,7 +417,7 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
      */
     private static class Function {
         /** 機能名 */
-        private final String mFunction;
+        private final int mFunction;
         /** カテゴリ(カテゴリにより起動する内容を変更する。) */
         private final int mFunctionCategory;
         /** アイコンリソースID */
@@ -427,13 +427,13 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
          * コンストラクタ
          * 
          * @param function
-         *            機能名
+         *            機能名リソースID
          * @param functionCategory
          *            カテゴリ(カテゴリにより起動する内容を変更する。)
          * @param iconResourceId
          *            アイコンリソースID
          */
-        public Function(final String function, final int functionCategory, int iconResourceId) {
+        public Function(final int function, final int functionCategory, int iconResourceId) {
             this.mFunction = function;
             this.mFunctionCategory = functionCategory;
             this.mIconResouceId = iconResourceId;

@@ -90,5 +90,9 @@
     <string name="dialog_share_textview01">共有先を選択しましょう。</string>
     <!-- URLをコピーした際にTOASTに表示される文言 -->
     <string name="dialog_share_url_copy">URLをコピーしました。\n%1$s</string>
+    <string name="dialog_share_function_category_mail">メール</string>
+    <string name="dialog_share_function_category_url_copy">URLをコピーする</string>
+    <string name="dialog_share_function_category_browser">ブラウザで開く</string>
+    <string name="dialog_share_function_category_other">他の方法で共有する</string>
 
 </resources>
