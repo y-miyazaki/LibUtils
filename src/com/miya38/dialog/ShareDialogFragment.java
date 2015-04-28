@@ -53,6 +53,13 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
     private static final String TWITTER_URL = "http://twitter.com/share";
     /** Facebookアプリパッケージ名 */
     private static final String FACEBOOK_PACKAGE = "com.facebook.katana";
+    /** Facebookアプリがない場合のブラウザ共有用URL */
+    private static final String FACEBOOK_URL = "https://www.facebook.com/sharer/sharer.php";
+    /** Google+アプリパッケージ名 */
+    private static final String GOOGLE_PLUS_PACKAGE = "com.google.android.apps.plus";
+    /** Google+アプリがない場合のブラウザ共有用URL */
+    private static final String GOOGLE_PLUS_URL = "https://plus.google.com/share";
+
     /** Lineアプリパッケージ名 */
     private static final String LINE_PACKAGE = "jp.naver.line.android";
     /** はてなブックマークアプリパッケージ名 */
@@ -85,9 +92,9 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
         // Twitter
         PACKAGE_NAMES.add(new Package(TWITTER_PACKAGE, "Twitter", R.drawable.common_icon_twitter));
         // Facebook
-        PACKAGE_NAMES.add(new Package(FACEBOOK_PACKAGE, null, 0));
+        PACKAGE_NAMES.add(new Package(FACEBOOK_PACKAGE, "Facebook", R.drawable.common_icon_facebook));
         // Google+
-        PACKAGE_NAMES.add(new Package("com.google.android.apps.plus", null, 0));
+        PACKAGE_NAMES.add(new Package(GOOGLE_PLUS_PACKAGE, "Google+", R.drawable.common_icon_google_plus));
         // Line
         PACKAGE_NAMES.add(new Package(LINE_PACKAGE, null, 0));
         // Pocket
@@ -190,6 +197,14 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
             }
             // Twitterは連携方法としてブラウザが可能なので対応できるようにする。
             else if (StringUtils.equals(TWITTER_PACKAGE, packageName)) {
+                mPackageName.add(PACKAGE_NAMES.get(i));
+            }
+            // Facebookは連携方法としてブラウザが可能なので対応できるようにする。
+            else if (StringUtils.equals(FACEBOOK_PACKAGE, packageName)) {
+                mPackageName.add(PACKAGE_NAMES.get(i));
+            }
+            // Google+は連携方法としてブラウザが可能なので対応できるようにする。
+            else if (StringUtils.equals(GOOGLE_PLUS_PACKAGE, packageName)) {
                 mPackageName.add(PACKAGE_NAMES.get(i));
             }
         }
@@ -306,6 +321,14 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
             if (StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, TWITTER_PACKAGE)) {
                 checkTwitter(message);
             }
+            // Facebookの場合
+            else if (StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, FACEBOOK_PACKAGE)) {
+                checkFacebook(message, mUrl);
+            }
+            // Google+の場合
+            else if (StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, GOOGLE_PLUS_PACKAGE)) {
+                checkGooglePlus(message, mUrl);
+            }
             // Lineの場合
             else if (StringUtils.equals(tsEtc004ApWebViewDialogListViewItem.packageName, LINE_PACKAGE)) {
                 checkLine(message);
@@ -346,6 +369,62 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
             final Map<String, String> query = new HashMap<String, String>();
             query.put("text", message);
             final Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(ConnectionUtils.getUrl(TWITTER_URL, query)));
+            startActivity(intent2);
+        }
+    }
+
+    /**
+     * Facebookアプリ判断用
+     * <p>
+     * Facebookはブラウザ連携も可能なため、アプリがない場合はブラウザでも連携できるようにしておく。
+     * </p>
+     * 
+     * @param message
+     *            送信メッセージ
+     * @param url
+     *            URL
+     */
+    private void checkFacebook(final String message, final String url) {
+        try {
+            // アプリをまずは起動する。
+            final Intent intent = new Intent(Intent.ACTION_SEND)
+                    .setType("text/plain")
+                    .putExtra(Intent.EXTRA_TEXT, message)
+                    .setPackage(FACEBOOK_PACKAGE); // パッケージをそのまま指定
+            startActivity(intent);
+        } catch (final ActivityNotFoundException e) {
+            // アプリがない場合はブラウザを起動する。
+            final Map<String, String> query = new HashMap<String, String>();
+            query.put("u", url);
+            final Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(ConnectionUtils.getUrl(FACEBOOK_URL, query)));
+            startActivity(intent2);
+        }
+    }
+
+    /**
+     * Google+アプリ判断用
+     * <p>
+     * Google+はブラウザ連携も可能なため、アプリがない場合はブラウザでも連携できるようにしておく。
+     * </p>
+     * 
+     * @param message
+     *            送信メッセージ
+     * @param url
+     *            URL
+     */
+    private void checkGooglePlus(final String message, final String url) {
+        try {
+            // アプリをまずは起動する。
+            final Intent intent = new Intent(Intent.ACTION_SEND)
+                    .setType("text/plain")
+                    .putExtra(Intent.EXTRA_TEXT, message)
+                    .setPackage(GOOGLE_PLUS_PACKAGE); // パッケージをそのまま指定
+            startActivity(intent);
+        } catch (final ActivityNotFoundException e) {
+            // アプリがない場合はブラウザを起動する。
+            final Map<String, String> query = new HashMap<String, String>();
+            query.put("url", url);
+            final Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(ConnectionUtils.getUrl(GOOGLE_PLUS_URL, query)));
             startActivity(intent2);
         }
     }

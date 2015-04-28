@@ -1,5 +1,9 @@
 package com.miya38.utils;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -12,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -26,7 +31,7 @@ import android.text.TextUtils;
 
 /**
  * コネクションユーティリティークラス
- *
+ * 
  * @author y-miyazaki
  */
 public final class ConnectionUtils {
@@ -44,7 +49,7 @@ public final class ConnectionUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -54,7 +59,7 @@ public final class ConnectionUtils {
 
     /**
      * ホスト名取得
-     *
+     * 
      * @param url
      *            URL
      * @return ホスト名
@@ -70,7 +75,7 @@ public final class ConnectionUtils {
 
     /**
      * パス名取得
-     *
+     * 
      * @param url
      *            URL
      * @return ホスト名
@@ -86,7 +91,7 @@ public final class ConnectionUtils {
 
     /**
      * クエリーを除いたURLを取得
-     *
+     * 
      * @param url
      *            URL
      * @return ホスト名
@@ -102,7 +107,7 @@ public final class ConnectionUtils {
 
     /**
      * URLからクエリーのMapを取得
-     *
+     * 
      * @param url
      *            URL
      * @return クエリーのMAP
@@ -122,7 +127,7 @@ public final class ConnectionUtils {
 
     /**
      * URL・クエリーの組み合わせを取得
-     *
+     * 
      * @param url
      *            URL
      * @param query
@@ -161,7 +166,7 @@ public final class ConnectionUtils {
 
     /**
      * クエリーパラメータ生成
-     *
+     * 
      * @param query
      * @return クエリーパラメータ<br>
      *         ex) name1=value1&name2=value2
@@ -198,7 +203,7 @@ public final class ConnectionUtils {
 
     /**
      * ボディー設定
-     *
+     * 
      * @param body
      *            ボディ
      * @return キーバリューのペア
@@ -221,7 +226,7 @@ public final class ConnectionUtils {
 
     /**
      * gzip判定
-     *
+     * 
      * @param response
      *            レスポンス
      * @return gzip有:true gzip無:false
@@ -236,8 +241,40 @@ public final class ConnectionUtils {
     }
 
     /**
+     * gzipを解凍する
+     * 
+     * @param data
+     *            gzipされたコンテンツ
+     * @return GZip解凍後のコンテンツ
+     *         解凍失敗時には、nullで返却する。
+     */
+    public byte[] getGZipToContents(final byte[] data) {
+        try {
+            // ContentTypeが、もしgzipなら解凍する
+            final GZIPInputStream zis = new GZIPInputStream(new BufferedInputStream(new ByteArrayInputStream(data)));
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                final byte[] buffer = new byte[1024];
+                int count;
+                while ((count = zis.read(buffer)) != -1) {
+                    baos.write(buffer, 0, count);
+                }
+                return baos.toByteArray();
+            } finally {
+                baos.close();
+                zis.close();
+            }
+        } catch (final UnsupportedEncodingException e) {
+            // 握りつぶす
+        } catch (final IOException e) {
+            // 握りつぶす
+        }
+        return null;
+    }
+
+    /**
      * ネットワークが使用可能かを返却する
-     *
+     * 
      * @return true:ネットワーク使用可能 false:ネットワーク使用不可
      */
     public static boolean isAvailableNetwork() {
