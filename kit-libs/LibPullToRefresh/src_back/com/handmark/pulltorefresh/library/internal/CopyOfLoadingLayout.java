@@ -41,7 +41,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.R;
 
 @SuppressLint("ViewConstructor")
-public abstract class LoadingLayout extends FrameLayout implements ILoadingLayout {
+public abstract class CopyOfLoadingLayout extends FrameLayout implements ILoadingLayout {
 
 	static final String LOG_TAG = "PullToRefresh-LoadingLayout";
 
@@ -64,7 +64,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	private CharSequence mRefreshingLabel;
 	private CharSequence mReleaseLabel;
 
-	public LoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
+	public CopyOfLoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
 		super(context);
 		mMode = mode;
 		mScrollDirection = scrollDirection;

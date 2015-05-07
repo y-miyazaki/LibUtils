@@ -2,3 +2,5 @@ include ':kit-libs:LibVolley'
 include ':kit-libs:LibPullToRefresh'
 include ':'
 include ':kit-libs:appcompat'
+//include ':LibPullToRefresh'
+//project (':LibPullToRefresh').projectDir = new File('libs/pulltorefresh')

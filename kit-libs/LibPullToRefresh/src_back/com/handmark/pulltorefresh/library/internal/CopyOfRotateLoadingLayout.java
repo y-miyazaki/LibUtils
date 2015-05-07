@@ -27,7 +27,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.R;
 
-public class RotateLoadingLayout extends LoadingLayout {
+public class CopyOfRotateLoadingLayout extends LoadingLayout {
 
 	static final int ROTATION_ANIMATION_DURATION = 1200;
 
@@ -38,7 +38,7 @@ public class RotateLoadingLayout extends LoadingLayout {
 
 	private final boolean mRotateDrawableWhilePulling;
 
-	public RotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
+	public CopyOfRotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
 		super(context, mode, scrollDirection, attrs);
 
 		mRotateDrawableWhilePulling = attrs.getBoolean(R.styleable.PullToRefresh_ptrRotateDrawableWhilePulling, true);

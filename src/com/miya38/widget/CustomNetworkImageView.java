@@ -28,6 +28,7 @@ import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
 import com.miya38.utils.ViewHelper;
 import com.miya38.widget.callback.OnNetworkImageViewListener;
+import com.miya38.widget.volley.NetworkImageView;
 
 /**
  * カスタムImageViewクラス
