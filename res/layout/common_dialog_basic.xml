@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Basic認証ダイアログレイアウト -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/LinearLayout01"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <com.miya38.widget.CustomEditText
         android:id="@+id/CustomEditText01"
         style="@style/CustomEditTextBasicUserName"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="@string/common_dialog_basic_username" />
+        android:hint="@string/common_dialog_basic_username"/>
 
     <com.miya38.widget.CustomEditText
         android:id="@+id/CustomEditText02"
         style="@style/CustomEditTextBasicPassword"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="@string/common_dialog_basic_password" />
+        android:hint="@string/common_dialog_basic_password"/>
 
 </LinearLayout>

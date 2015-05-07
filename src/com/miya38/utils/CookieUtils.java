@@ -10,9 +10,9 @@ import android.webkit.CookieSyncManager;
 
 /**
  * Cookieユーティリティクラス
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class CookieUtils {
     /** Context */
@@ -27,7 +27,7 @@ public final class CookieUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     *
+     * 
      * @param context
      *            {@link Context}
      */
@@ -37,11 +37,12 @@ public final class CookieUtils {
 
     /**
      * Cookie値全取得
-     *
+     * 
      * @param url
      *            URL
      * @return 指定したurlのCookie値を返却
      */
+    @SuppressWarnings("deprecation")
     public static String get(final String url) {
         if (!AplUtils.hasLollipop()) {
             CookieSyncManager.createInstance(sContext);
@@ -51,13 +52,14 @@ public final class CookieUtils {
 
     /**
      * Cookie値取得
-     *
+     * 
      * @param url
      *            URL
      * @param key
      *            Cookieキー
      * @return 指定したkeyのCookie値を返却
      */
+    @SuppressWarnings("deprecation")
     public static String getValue(final String url, final String key) {
         if (!AplUtils.hasLollipop()) {
             CookieSyncManager.createInstance(sContext);
@@ -85,7 +87,7 @@ public final class CookieUtils {
 
     /**
      * Cookie値設定
-     *
+     * 
      * @param url
      *            URL
      * @param value
@@ -107,10 +109,11 @@ public final class CookieUtils {
 
     /**
      * WebViewの指定したURLのCookieを全削除
-     *
+     * 
      * @param url
      *            URL
      */
+    @SuppressWarnings("deprecation")
     public static void removeAll(final String url) {
         if (!AplUtils.hasLollipop()) {
             CookieSyncManager.createInstance(sContext);
@@ -134,6 +137,7 @@ public final class CookieUtils {
     /**
      * WebViewのCookieを全削除
      */
+    @SuppressWarnings("deprecation")
     public static void removeAll() {
         if (!AplUtils.hasLollipop()) {
             CookieSyncManager.createInstance(sContext);

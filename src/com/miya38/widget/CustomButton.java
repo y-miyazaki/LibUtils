@@ -39,8 +39,6 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     // ----------------------------------------------------------
     // define
     // ----------------------------------------------------------
-    /** TAG */
-    private static final String TAG = CustomButton.class.getSimpleName();
     /** グレースケールカラー */
     private static final int COLOR_GRAYSCALE = 0x80000000;
     /** 最小の文字サイズ */

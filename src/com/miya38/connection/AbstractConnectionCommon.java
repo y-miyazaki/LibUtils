@@ -339,7 +339,7 @@ public abstract class AbstractConnectionCommon {
                     final ViewStub viewStub = ViewHelper.findView(mActivity, R.id.ViewStubProgressBarActivity);
                     if (viewStub != null) {
                         viewStub.setInflatedId(R.id.InfratedIdProgressBar);
-                        viewStub.setLayoutResource(R.layout.common_layout_progressbar_viewstub);
+                        viewStub.setLayoutResource(R.layout.common_progressbar_viewstub);
                         viewStub.inflate();
                     }
                     view = ViewHelper.findView(mActivity, R.id.InfratedIdProgressBar);
@@ -347,7 +347,7 @@ public abstract class AbstractConnectionCommon {
                     final ViewStub viewStub = ViewHelper.findView(mFragment.getView(), R.id.ViewStubProgressBarFragment);
                     if (viewStub != null) {
                         viewStub.setInflatedId(R.id.InfratedIdProgressBar);
-                        viewStub.setLayoutResource(R.layout.common_layout_progressbar_viewstub);
+                        viewStub.setLayoutResource(R.layout.common_progressbar_viewstub);
                         viewStub.inflate();
                     }
                     view = ViewHelper.findView(mFragment.getView(), R.id.InfratedIdProgressBar);
@@ -355,7 +355,7 @@ public abstract class AbstractConnectionCommon {
                     final ViewStub viewStub = ViewHelper.findView(mDialogFragment.getDialog(), R.id.ViewStubProgressBarFragment);
                     if (viewStub != null) {
                         viewStub.setInflatedId(R.id.InfratedIdProgressBar);
-                        viewStub.setLayoutResource(R.layout.common_layout_progressbar_viewstub);
+                        viewStub.setLayoutResource(R.layout.common_progressbar_viewstub);
                         viewStub.inflate();
                     }
                     view = ViewHelper.findView(mDialogFragment.getDialog(), R.id.InfratedIdProgressBar);

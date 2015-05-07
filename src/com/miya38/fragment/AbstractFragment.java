@@ -20,7 +20,6 @@ import com.miya38.exception.ApplicationException;
 import com.miya38.utils.ClassUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
-import com.miya38.widget.CustomTextView;
 
 /**
  * Fragment抽象化クラス
@@ -216,14 +215,11 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ヘッダー非表示処理
-     * 
-     * @return タイトル非表示にしたか？
      */
-    public boolean setNoHeader() {
+    public void setNoHeader() {
         if (mActivity != null) {
-            return mActivity.setNoHeader();
+            mActivity.setNoHeader();
         }
-        return false;
     }
 
     /**
@@ -231,31 +227,11 @@ public abstract class AbstractFragment extends Fragment {
      * 
      * @param title
      *            タイトル
-     * @return タイトル設定したか？
      */
-    public boolean setHeaderTitle(final String title) {
+    public void setHeaderTitle(final String title) {
         if (mActivity != null) {
-            return mActivity.setHeaderTitle(title);
+            mActivity.setHeaderTitle(title);
         }
-        return false;
-    }
-
-    /**
-     * フッタタイトル設定
-     * 
-     * @param title
-     *            タイトル
-     * @return フッタタイトル設定したか？
-     */
-    public boolean setFooterTitle(final String title) {
-        if (!isFinishing()) { // 削除中 or detachされているかチェック
-            final CustomTextView customTextViewFooter01 = ViewHelper.findView(getView(), R.id.CustomTextViewFooter);
-            if (customTextViewFooter01 != null) {
-                customTextViewFooter01.setText(title);
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

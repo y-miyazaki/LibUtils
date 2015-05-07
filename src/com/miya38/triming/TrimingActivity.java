@@ -78,12 +78,13 @@ public class TrimingActivity extends MonitoredActivity {
 
     /*
      * (非 Javadoc)
+     * 
      * @see jp.co.mote.aune.activity.common.MonitoredActivity#onCreate(android.os.Bundle)
      */
     @Override
     public void onCreate(final Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.activity_triming_layout);
+        setContentView(R.layout.common_activity_triming_layout);
         mContentResolver = getContentResolver();
 
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -176,6 +177,7 @@ public class TrimingActivity extends MonitoredActivity {
 
     /*
      * (非 Javadoc)
+     * 
      * @see android.app.Activity#onWindowFocusChanged(boolean)
      */
     @Override
@@ -468,6 +470,7 @@ public class TrimingActivity extends MonitoredActivity {
 
     /*
      * (非 Javadoc)
+     * 
      * @see jp.co.mote.aune.activity.AbstractActivity#onPause()
      */
     @Override
@@ -478,6 +481,7 @@ public class TrimingActivity extends MonitoredActivity {
 
     /*
      * (非 Javadoc)
+     * 
      * @see jp.co.mote.aune.activity.common.MonitoredActivity#onDestroy()
      */
     @Override

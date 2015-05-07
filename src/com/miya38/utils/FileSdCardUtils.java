@@ -36,8 +36,6 @@ import android.text.format.DateFormat;
  * @author y-miyazaki
  */
 public final class FileSdCardUtils {
-    /** TAG */
-    private static final String TAG = FileSdCardUtils.class.getSimpleName();
     /** Context */
     private static Context sContext;
     /** ギャラリーURI */

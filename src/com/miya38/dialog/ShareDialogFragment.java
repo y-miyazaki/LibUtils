@@ -254,12 +254,12 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
 
     @Override
     protected int getViewLayoutId() {
-        return R.layout.dialog_share_layout;
+        return R.layout.common_dialog_share;
     }
 
     @Override
     protected int getViewStubLayoutId() {
-        return R.layout.dialog_share_viewstub;
+        return R.layout.common_dialog_share_viewstub;
     }
 
     @Override
@@ -534,7 +534,7 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
          *            リストアイテム
          */
         public TsEtc004ApWebViewDialogListViewAdapter(final Context context, final List<TsEtc004ApWebViewDialogListViewItem> items) {
-            super(context, R.layout.dialog_share_listview_item, items);
+            super(context, R.layout.common_dialog_share_listview_item, items);
         }
 
         @Override

@@ -9,10 +9,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
-import android.widget.RelativeLayout;
 
 import com.miya38.BuildConfig;
 import com.miya38.R;
@@ -23,7 +21,6 @@ import com.miya38.utils.ClassUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
 import com.miya38.utils.ViewHelper;
-import com.miya38.widget.CustomTextView;
 
 /**
  * Activity抽象化クラス
@@ -231,19 +228,12 @@ public abstract class AbstractActivity extends ActionBarActivity {
     /**
      * ヘッダー非表示処理
      * 
-     * @return タイトル非表示にしたか？
      */
-    public boolean setNoHeader() {
-        final RelativeLayout relativeLayoutHeader = ViewHelper.findView(this, R.id.RelativeLayoutHeader);
-        if (relativeLayoutHeader == null) {
-            final ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null && actionBar.isShowing()) {
-                actionBar.hide();
-            }
-        } else {
-            relativeLayoutHeader.setVisibility(View.GONE);
+    public void setNoHeader() {
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null && actionBar.isShowing()) {
+            actionBar.hide();
         }
-        return true;
     }
 
     /**
@@ -251,38 +241,15 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * 
      * @param title
      *            タイトル
-     * @return タイトル設定したか？
      */
-    public boolean setHeaderTitle(final String title) {
-        final CustomTextView customTextViewHeader01 = ViewHelper.findView(this, R.id.CustomTextViewHeader);
-        if (customTextViewHeader01 == null) {
-            final ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                if (!actionBar.isShowing()) {
-                    actionBar.show();
-                }
-                actionBar.setTitle(title);
+    public void setHeaderTitle(final String title) {
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (!actionBar.isShowing()) {
+                actionBar.show();
             }
-        } else {
-            customTextViewHeader01.setText(title);
+            actionBar.setTitle(title);
         }
-        return true;
-    }
-
-    /**
-     * フッタタイトル設定
-     * 
-     * @param title
-     *            タイトル
-     * @return フッタ設定したか？
-     */
-    public boolean setFooterTitle(final String title) {
-        final CustomTextView customTextViewFooter01 = ViewHelper.findView(this, R.id.CustomTextViewFooter);
-        if (customTextViewFooter01 != null) {
-            customTextViewFooter01.setText(title);
-            return true;
-        }
-        return false;
     }
 
     /**

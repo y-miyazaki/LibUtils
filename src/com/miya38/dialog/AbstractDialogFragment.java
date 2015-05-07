@@ -37,9 +37,9 @@ public abstract class AbstractDialogFragment extends DialogFragment {
     // id define
     // --------------------------------------------------------------
     /** default layout */
-    public static final int LAYOUT_DEFAULT = R.layout.common_dialog_layout_01_default;
+    public static final int LAYOUT_DEFAULT = R.layout.common_dialog_scrollview;
     /** default layout viewstub */
-    public static final int LAYOUT_VIEWSTUB_DEFAULT = R.layout.common_dialog_viewstub_01_default;
+    public static final int LAYOUT_VIEWSTUB_DEFAULT = R.layout.common_dialog_viewstub;
 
     // ---------------------------------------------------------------
     // key

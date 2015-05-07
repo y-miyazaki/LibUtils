@@ -116,6 +116,8 @@ public final class ResourceUtils {
             return names.getResourceId(index, -1);
         } catch (final ArrayIndexOutOfBoundsException e) {
             throw new ApplicationException("ArrayIndexOutOfBoundsException", e);
+        } finally {
+            names.recycle();
         }
     }
 

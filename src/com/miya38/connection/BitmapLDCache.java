@@ -14,9 +14,9 @@ import com.miya38.utils.LogUtils;
  * このクラスは、返却する際にはメモリから優先的に返却し、存在しない場合はディスクから返却する。<br>
  * メモリから優先的に取ることにより速度を重視しつつ、メモリがクリアされた場合でもディスクから取り出すことで安易なキャッシュクリアをしない設計としている。
  * </p>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public final class BitmapLDCache implements ImageCache {
     /** メモリキャッシュサイズ(5M) */
@@ -30,12 +30,10 @@ public final class BitmapLDCache implements ImageCache {
     private final LruCache<String, Bitmap> mCache;
     /** DiskLruCache */
     private final DiskLruCache mDiskLruCache;
-    /** さむｎ */
-    private static final String DISK_CACHE_SUBDIR = "thumbnails";
 
     /**
      * コンストラクタ Bitmapのキャッシュサイズ指定、LruCacheの設定を行う。
-     *
+     * 
      * @param context
      *            {@link Context}
      * @param cacheSize
@@ -54,7 +52,7 @@ public final class BitmapLDCache implements ImageCache {
 
     /**
      * インスタンス取得
-     *
+     * 
      * @param context
      *            {@link Context}
      * @return {@link BitmapLDCache}
@@ -68,7 +66,7 @@ public final class BitmapLDCache implements ImageCache {
 
     /**
      * インスタンス取得
-     *
+     * 
      * @param context
      *            {@link Context}
      * @param cacheSize
