@@ -30,26 +30,12 @@ public abstract class AbstractConnectionFragment extends AbstractFragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.getRequestQueue().cancelAll(getActivity().getApplicationContext());
             mAbstractConnectionCommon.clear();
         }
         mAbstractConnectionCommon = null;
-    }
-
-    /**
-     * エラー表示用メソッド
-     * 
-     * @param title
-     *            タイトル
-     * @param message
-     *            メッセージ
-     */
-    public void setError(final String title, final String message) {
-        if (mAbstractConnectionCommon != null) {
-            mAbstractConnectionCommon.setError(title, message);
-        }
+        super.onDestroy();
     }
 
     /**

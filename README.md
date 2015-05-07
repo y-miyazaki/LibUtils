@@ -43,6 +43,20 @@ nothing...
 ## Requirement
 
 ## Usage
+以下の内容はほぼ必須です。必ず作成しましょう。  
+* CommonApplicationクラスを継承したApplicationクラスを作成する。  
+* ネットワーク通信があるアプリの場合は、AbstractVolleySettingクラスを継承したクラスを作成する。  
+このクラスはシングルトンクラスで作成すること。
+* ネットワーク通信があるアプリの場合は、AbstractConnectionCommonを継承したクラスを作成する。  
+主にネットワーク回りのエラーハンドリング、RequestQueue等の取得先などを設定する。    
+
+以下の内容はここの画面を作成する場合に必須です。  
+* Activityを作成する。  
+継承元として、必ずAbstractActivityもしくはAbstractConnectionActivityを継承しましょう。
+* Fragmentを作成する。  
+継承元として、必ずAbstractFragmentもしくはAbstractConnectionFragmentを継承しましょう。
+* DialogFragmentを作成する。  
+継承元として、必ずAbstractDialogFragmentもしくはAbstractConnectionDialogFragmentを継承しましょう。
 
 ## Install
 

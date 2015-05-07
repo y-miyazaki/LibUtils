@@ -90,19 +90,6 @@ public abstract class AbstractConnectionCommon {
      * 通信周りでエラーが発生した場合に本メソッドでエラーを表示する。
      * </p>
      * 
-     * @param title
-     *            タイトル
-     * @param message
-     *            メッセージ
-     */
-    public abstract void setError(String title, String message);
-
-    /**
-     * エラー表示用メソッド
-     * <p>
-     * 通信周りでエラーが発生した場合に本メソッドでエラーを表示する。
-     * </p>
-     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse

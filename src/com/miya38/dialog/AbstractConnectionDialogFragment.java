@@ -45,20 +45,6 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
     /**
      * エラー表示用メソッド
      * 
-     * @param title
-     *            タイトル
-     * @param message
-     *            メッセージ
-     */
-    public void setError(final String title, final String message) {
-        if (mAbstractConnectionCommon != null) {
-            mAbstractConnectionCommon.setError(title, message);
-        }
-    }
-
-    /**
-     * エラー表示用メソッド
-     * 
      * @param networkRequest
      *            {@link NetworkRequest}
      * @param networkResponse
