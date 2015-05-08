@@ -70,7 +70,7 @@ dependencies {
 
 	// support library
 //	compile 'com.android.support:support-v4:22.1.0'
-	compile 'com.android.support:appcompat-v7:22.1.0'
+//	compile 'com.android.support:appcompat-v7:22.1.0'
 }
 
 tasks.withType(JavaCompile) {
