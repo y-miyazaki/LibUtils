@@ -19,7 +19,7 @@ import com.miya38.exception.AccountNotFoundException;
  */
 public final class ContextHelper {
     /** {@link TelephonyContext} */
-    private static TelephonyContext sContext;
+    private static TelephonyContext sTelephonyContext;
 
     /**
      * コンストラクタを隠蔽し、インスタンス化を禁止します。
@@ -34,7 +34,7 @@ public final class ContextHelper {
      *            コンテキスト。
      */
     public static void configure(final Context context) {
-        sContext = new TelephonyContext(context);
+        sTelephonyContext = new TelephonyContext(context);
     }
 
     /**
@@ -43,7 +43,7 @@ public final class ContextHelper {
      * @param telephonyContext
      */
     public static void configure(final TelephonyContext telephonyContext) {
-        sContext = telephonyContext;
+        sTelephonyContext = telephonyContext;
     }
 
     /**
@@ -52,7 +52,7 @@ public final class ContextHelper {
      * @return Android ID。
      */
     public static String getAndroidId() {
-        return sContext.getAndroidId();
+        return sTelephonyContext.getAndroidId();
     }
 
     /**
@@ -61,7 +61,7 @@ public final class ContextHelper {
      * @return ICCID。
      */
     public static String getICCID() {
-        return sContext.getICCID();
+        return sTelephonyContext.getICCID();
     }
 
     /**
@@ -70,7 +70,7 @@ public final class ContextHelper {
      * @return デバイスモデル名
      */
     public static String getModelName() {
-        return sContext.getModelName();
+        return sTelephonyContext.getModelName();
     }
 
     /**
@@ -79,7 +79,7 @@ public final class ContextHelper {
      * @return IMEI
      */
     public static String getIMEI() {
-        return sContext.getIMEI();
+        return sTelephonyContext.getIMEI();
     }
 
     /**
@@ -88,7 +88,7 @@ public final class ContextHelper {
      * @return IMSI
      */
     public static String getIMSI() {
-        return sContext.getIMSI();
+        return sTelephonyContext.getIMSI();
     }
 
     /**
@@ -99,7 +99,7 @@ public final class ContextHelper {
      *             アカウントが登録されていない場合にスローします。
      */
     public static Account getGoogleAccount() throws AccountNotFoundException {
-        final Account account = sContext.getGoogleAccount();
+        final Account account = sTelephonyContext.getGoogleAccount();
         if (null == account) {
             throw new AccountNotFoundException("google account not found.");
         }
@@ -114,7 +114,7 @@ public final class ContextHelper {
      * @throws AccountNotFoundException
      */
     public static String getGoogleAuthToken(final String service) throws AccountNotFoundException {
-        return sContext.getGoogleAuthToken(service);
+        return sTelephonyContext.getGoogleAuthToken(service);
     }
 
     /**

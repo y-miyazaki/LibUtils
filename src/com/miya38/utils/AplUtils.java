@@ -541,6 +541,24 @@ public final class AplUtils {
     }
 
     /**
+     * GooglePlayStore用のIntent URLを取得する。
+     * 
+     * @return Intentで開くようのURL
+     */
+    public static String getGooglePlayAplUrl(String packageName) {
+        return "market://details?id=" + packageName;
+    }
+
+    /**
+     * ブラウザ用のGooglePlayのURLを取得する。
+     * 
+     * @return Google Play URL
+     */
+    public static String getGooglePlayUrl(String packageName) {
+        return "http://play.google.com/store/apps/details?id=" + packageName;
+    }
+
+    /**
      * 証明書ハッシュ値取得
      * 
      * @return 証明書ハッシュ値

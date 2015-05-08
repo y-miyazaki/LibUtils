@@ -25,9 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.miya38.BuildConfig;
 import com.miya38.utils.CookieUtils;
-import com.miya38.utils.HttpHeaderParser;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
+import com.miya38.utils.volley.HttpHeaderParser;
 
 /**
  * APIリクエストクラス

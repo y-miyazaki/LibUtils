@@ -7,8 +7,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 
 import com.miya38.utils.CollectionUtils;
@@ -23,7 +21,7 @@ import com.miya38.utils.CollectionUtils;
  * {@link CustomArrayAdapter#getLastPosition}</li>
  * </ul>
  * </p>
- *
+ * 
  * @author y-miyazaki
  * @param <T>
  *            item
@@ -40,17 +38,6 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
     // ---------------------------------------------------------------
     /** アイテムリソースID */
     private final int mItemResourceId;
-
-    /** ListView */
-    private AbsListView mView;
-    /** スクロール状態 */
-    private int mScrollState;
-    /** view */
-    private int mFirstVisibleItem;
-    /** 見えているアイテム数 */
-    private int mVisibleItemCount;
-    /** 全アイテム数 */
-    private int mTotalItemCount;
     /** 一番最後に見たポジション */
     private int mSeeLastPosition;
 
@@ -62,7 +49,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
      * <p>
      * GridViewが0ポジションを連打するのを防ぐための対応
      * </p>
-     *
+     * 
      * @param position
      *            ポジション
      * @param convertView
@@ -75,7 +62,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param context
      *            Context
      * @param itemResourceId
@@ -90,7 +77,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテムリソースID取得
-     *
+     * 
      * @return アイテムリソースID
      */
     public int getItemResourceId() {
@@ -99,7 +86,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * レイアウトインフレータ取得
-     *
+     * 
      * @return レイアウトインフレータ
      */
     public LayoutInflater getLayoutInflater() {
@@ -108,7 +95,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * レイアウトViewを取得
-     *
+     * 
      * @return レイアウトView
      */
     public View getLayoutView() {
@@ -117,7 +104,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * 最後のポジションを返却する
-     *
+     * 
      * @return last position
      */
     public int getSeeLastPosition() {
@@ -126,7 +113,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテム全取得
-     *
+     * 
      * @return アイテムリスト
      */
     public List<T> getItems() {
@@ -140,7 +127,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテム設定
-     *
+     * 
      * @param position
      *            ポジション
      * @param item
@@ -156,7 +143,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテムリスト設定
-     *
+     * 
      * @param items
      *            アイテムリスト
      */
@@ -195,7 +182,6 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     @Override
     public void notifyDataSetChanged() {
-        mSeeLastPosition = -1;
         super.notifyDataSetChanged();
     }
 
@@ -206,108 +192,6 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
             mSeeLastPosition = position;
         }
         // 0ポジションで見えないポジションが最初のポジションの場合は捨てる
-        return position == 0 && getFirstVisibleItem() > 0 ? convertView : getViewCustom(position, convertView, parent);
-    }
-
-    /**
-     * 最初に見えているアイテム
-     *
-     * @return firstVisibleItem
-     */
-    public int getFirstVisibleItem() {
-        return mFirstVisibleItem;
-    }
-
-    /**
-     * 見えているアイテム数
-     *
-     * @return visibleItemCount
-     */
-    public int getVisibleItemCount() {
-        return mVisibleItemCount;
-    }
-
-    /**
-     * 全アイテム数
-     *
-     * @return totalItemCount
-     */
-    public int getTotalItemCount() {
-        return mTotalItemCount;
-    }
-
-    /**
-     * ListViewインスタンスを取得
-     *
-     * @return AbsListView
-     */
-    public AbsListView getAbsListView() {
-        return mView;
-    }
-
-    /**
-     * スクロール状態を取得
-     *
-     * @return 以下のものをリターンする<br>
-     *         {@link OnScrollListener#SCROLL_STATE_FLING}<br>
-     *         {@link OnScrollListener#SCROLL_STATE_IDLE}<br>
-     *         {@link OnScrollListener#SCROLL_STATE_TOUCH_SCROLL}<br>
-     */
-    public int getScrollState() {
-        return mScrollState;
-    }
-
-    /**
-     * スクロール位置を取得
-     *
-     * @param view
-     *            View
-     * @param firstVisibleItem
-     *            開始アイテム
-     * @param visibleItemCount
-     *            見えるアイテム数
-     * @param totalItemCount
-     *            全アイテム数
-     */
-    public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
-        this.mView = view;
-        this.mFirstVisibleItem = firstVisibleItem;
-        this.mVisibleItemCount = visibleItemCount;
-        this.mTotalItemCount = totalItemCount;
-    }
-
-    /**
-     * スクロール状態を設定
-     *
-     * @param view
-     *            View
-     * @param scrollState
-     *            スクロール状態<br>
-     *            {@link OnScrollListener#SCROLL_STATE_FLING}<br>
-     *            {@link OnScrollListener#SCROLL_STATE_IDLE}<br>
-     *            {@link OnScrollListener#SCROLL_STATE_TOUCH_SCROLL}<br>
-     */
-    public void onScrollStateChanged(final AbsListView view, final int scrollState) {
-        this.mView = view;
-        this.mScrollState = scrollState;
-        // if (scrollState <= OnScrollListener.SCROLL_STATE_IDLE) {
-        // displayCache(view);
-        // }
-    }
-
-    /**
-     * スクロール状態を設定
-     *
-     * @param scrollState
-     *            スクロール状態<br>
-     *            {@link OnScrollListener#SCROLL_STATE_FLING}<br>
-     *            {@link OnScrollListener#SCROLL_STATE_IDLE}<br>
-     *            {@link OnScrollListener#SCROLL_STATE_TOUCH_SCROLL}<br>
-     */
-    public void onScrollStateChanged(final int scrollState) {
-        this.mScrollState = scrollState;
-        // if (scrollState <= OnScrollListener.SCROLL_STATE_IDLE) {
-        // displayCache(mView);
-        // }
+        return getViewCustom(position, convertView, parent);
     }
 }

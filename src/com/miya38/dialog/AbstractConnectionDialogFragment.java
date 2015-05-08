@@ -34,12 +34,12 @@ public abstract class AbstractConnectionDialogFragment extends AbstractDialogFra
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.getRequestQueue().cancelAll(TAG);
             mAbstractConnectionCommon.clear();
         }
         mAbstractConnectionCommon = null;
+        super.onDestroy();
     }
 
     /**

@@ -277,7 +277,7 @@ public final class ConnectionUtils {
      * 
      * @return true:ネットワーク使用可能 false:ネットワーク使用不可
      */
-    public static boolean isAvailableNetwork() {
+    public static boolean hasAvailableNetwork() {
         // システムから接続情報をとってくる
         final ConnectivityManager conMan = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = conMan.getActiveNetworkInfo();

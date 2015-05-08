@@ -6,7 +6,7 @@ import android.content.res.TypedArray;
 import com.miya38.exception.ApplicationException;
 
 /**
- * アプリケーションユーティリティ
+ * リソースユーティリティ
  * 
  * @author y-miyazaki
  * 
