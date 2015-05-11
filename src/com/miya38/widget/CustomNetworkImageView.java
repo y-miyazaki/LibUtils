@@ -293,14 +293,14 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     /**
      * 画像を消えるようなアルファアニメーションを行う。<br>
      */
-    public void alphaOutAnimation() {
+    public void setAnimationAlphaOut() {
         ViewHelper.setAlphaOutAnimation(this, mAnimationDuration);
     }
 
     /**
      * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
      */
-    public void alphaInAnimation() {
+    public void setAnimationAlphaIn() {
         ViewHelper.setAlphaInAnimation(this, mAnimationDuration);
     }
 
@@ -309,11 +309,23 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * 
      * @return Animation
      */
-    public Animation popUpAnimation() {
+    public Animation setAnimationPopUp() {
         final ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scale.setDuration(mAnimationDuration);
         startAnimation(scale);
         return scale;
+    }
+
+    /**
+     * 画像を角丸にする。
+     * 
+     * @param bm
+     *            bitmap
+     * @param cornerRadius
+     *            コーナーのサイズ
+     */
+    public void setImageCorner(Bitmap bm, int cornerRadius) {
+        super.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bm, cornerRadius));
     }
 
     /**
@@ -484,65 +496,6 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
         }
     }
 
-    // TODO 非同期しないと結局非効率
-    // /**
-    // *
-    // * @param url
-    // * URL
-    // * @param imageLoader
-    // * {@link ImageLoader}
-    // * @param maxWidth
-    // * 最大横幅(アスペクト比考慮した最大長)<br>
-    // * 0以下を指定した場合は、そのままの画像サイズを設定
-    // * @param maxHeight
-    // * 最大縦幅(アスペクト比考慮した最大長)<br>
-    // * 0以下を指定した場合は、そのままの画像サイズを設定
-    // * @param isTimerCancel
-    // * true:タイマーをキャンセルする。<br>
-    // * false:タイマーをキャンセルしない。
-    // */
-    // private void setImageUrl(final String url, final ImageLoader imageLoader,
-    // final int maxWidth, final int maxHeight, final boolean isTimerCancel) {
-    // if (StringUtils.isEmpty(url)) {
-    // return;
-    // }
-    // if (isTimerCancel && mTimer != null) {
-    // mTimer.cancel();
-    // }
-    //
-    // try {
-    // final ImageCache imageCache = (ImageCache) FIELD_MCACHE.get(imageLoader);
-    // final Bitmap cacheBitmap = imageCache.getBitmap(getCacheKey(url,
-    // maxWidth, maxHeight));
-    //
-    // if (ImageUtils.isDataUriScheme(url)) {
-    // if (cacheBitmap == null) {
-    // final Bitmap bitmap = ImageUtils.getBitmap(url, maxWidth, maxHeight);
-    // imageCache.putBitmap(url, bitmap);
-    // setImageBitmap(bitmap, false);
-    // } else {
-    // setImageBitmap(cacheBitmap, false);
-    // }
-    // } else {
-    // if (cacheBitmap == null) {
-    // LogUtils.d(TAG, "cache no hit url = %s", url);
-    // setImageBitmap(null);
-    // super.setImageUrl(url, imageLoader, maxWidth, maxHeight);
-    // } else {
-    // LogUtils.d(TAG, "cache hit url = %s", url);
-    // setImageBitmap(cacheBitmap, false);
-    // }
-    // }
-    // } catch (final OutOfMemoryError e) {
-    // LogUtils.e(TAG, "setImageUrl bitmap OutOfMemoryError", e);
-    // setImageBitmap(null);
-    // } catch (final IllegalAccessException e) {
-    // // 何もしない。
-    // } catch (final IllegalArgumentException e) {
-    // // 何もしない。
-    // }
-    // }
-
     /**
      * リクエストをキャンセルする。
      */
@@ -560,6 +513,16 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     }
 
     /**
+     * OnNetworkImageViewListener設定
+     * 
+     * @param l
+     *            {@link OnNetworkImageViewListener}
+     */
+    public void setOnNetworkImageViewListener(OnNetworkImageViewListener l) {
+        this.mOnNetworkImageViewListener = l;
+    }
+
+    /**
      * Creates a cache key for use with the L1 cache.
      * 
      * @param url
@@ -572,15 +535,5 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     public static String getCacheKey(final String url, final int maxWidth, final int maxHeight) {
         return new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
                 .append("#H").append(maxHeight).append(url).toString();
-    }
-
-    /**
-     * OnNetworkImageViewListener設定
-     * 
-     * @param l
-     *            {@link OnNetworkImageViewListener}
-     */
-    public void setOnNetworkImageViewListener(OnNetworkImageViewListener l) {
-        this.mOnNetworkImageViewListener = l;
     }
 }

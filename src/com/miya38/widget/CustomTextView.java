@@ -207,25 +207,6 @@ public class CustomTextView extends TextView {
         fitTextSize();
     }
 
-    //    @Override
-    //    public void onTextChanged(final CharSequence charSequence, final int start, final int lengthBefore, final int lengthAfter) {
-    //        super.onTextChanged(charSequence, start, lengthBefore, lengthAfter);
-    //        // 1行を超える場合は、...を付与する
-    //        setEllipSize();
-    //        // 画面にフィットしたサイズにする
-    //        fitTextSize();
-    //    }
-    //
-    //    @Override
-    //    public void beforeTextChanged(final CharSequence paramCharSequence, final int paramInt1, final int paramInt2, final int paramInt3) {
-    //        // 何もしない。
-    //    }
-    //
-    //    @Override
-    //    public void afterTextChanged(final Editable paramEditable) {
-    //        // 何もしない。
-    //    }
-
     @SuppressWarnings("deprecation")
     @Override
     protected void onDetachedFromWindow() {
