@@ -1,0 +1,92 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.ksoichiro.eclipse.aar'
+apply plugin: 'eclipse'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+    // lint Options false
+    lintOptions {
+        abortOnError false
+    }
+}
+
+// 依存関係設定
+dependencies {
+    // library project
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    // LibUtils custom libraries
+    compile project('kit-libs:LibPullToRefresh')
+    compile project('kit-libs:LibVolley')
+    //    compile project('kit-libs:appcompat')
+    // jackson dependencies
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.3@jar'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3@jar'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.3@jar'
+    // support library
+    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.1.1'
+}
+
+// gradle-eclipse-aarプラグインの設定
+// gradlew generateEclipseDependenciesでaar系依存関係解決
+eclipseAar {
+    // 自動的にlibs以下を全て削除しない。(trueは、手動で追加したものも消えるので注意。)
+    cleanLibsDirectoryEnabled = false
+    // ビルドに使うAPIレベル (project.propertiesの出力に使われます)
+    androidTarget = 'android-21'
+    // 展開したAARをライブラリプロジェクトとして格納するディレクトリ
+    aarDependenciesDir = 'aarDependencies'
+    // (その他の設定はGitHubをご確認ください)
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// findbugs setting
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low" // ＊どのレベルの報告まで対応するかで変更＊
+    excludeFilter = new File("${project.rootDir}/config/findbugs/android_findbugs_filter.xml")
+    classes = files("build/intermediates/classes/")
+    source 'src/main'
+    include '**/*.java'
+    reports {
+        xml {
+            destination "${project.rootDir}/build/reports/findbugs_report.xml"
+        }
+    }
+    classpath = files()
+}
+
+// 依存関係のJarダウンロード設定
+task copyDependencies(type: Copy) {
+    from configurations.compile
+    into 'libs'
+}
