@@ -1183,6 +1183,7 @@ public final class ViewHelper {
                     final WebView webView = (WebView) view;
                     webView.setWebChromeClient(null);
                     webView.setWebViewClient(null);
+                    webView.destroy();
                 } catch (final Exception e) {
                     // 何もしない。
                 }

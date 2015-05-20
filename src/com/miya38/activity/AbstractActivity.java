@@ -394,4 +394,5 @@ public abstract class AbstractActivity extends ActionBarActivity {
     public final OnWindowFocusChangedListener getOnWindowFocusChangedListener() {
         return this.mOnWindowFocusChangedListener;
     }
+
 }

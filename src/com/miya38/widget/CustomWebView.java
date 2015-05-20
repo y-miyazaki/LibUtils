@@ -160,8 +160,6 @@ public class CustomWebView extends WebView implements GestureDetector.OnGestureL
         mOnFlickListener = null;
         mGestureDetector = null;
         mOnScrollChangedListener = null;
-        setWebChromeClient(null);
-        setWebViewClient(null);
         super.onDetachedFromWindow();
     }
 

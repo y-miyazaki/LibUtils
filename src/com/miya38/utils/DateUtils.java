@@ -246,6 +246,7 @@ public final class DateUtils {
      */
     public static Date date(final int year, final int month, final int date) {
         final Calendar c = Calendar.getInstance();
+
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month - 1);
         c.set(Calendar.DATE, date);
@@ -272,6 +273,7 @@ public final class DateUtils {
      */
     public static Date date(final int year, final int month, final int date, final int hour, final int min, final int sec) {
         final Calendar c = Calendar.getInstance();
+
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month - 1);
         c.set(Calendar.DATE, date);
@@ -454,9 +456,11 @@ public final class DateUtils {
      */
     public static Date getFirstDateOfMonth(final Date date) {
         final Calendar c = Calendar.getInstance();
+
         c.setTime(date);
         setZero(c);
         c.set(Calendar.DATE, 1);
+
         return c.getTime();
     }
 
@@ -469,6 +473,7 @@ public final class DateUtils {
      */
     public static Date getLastDateOfMonth(final Date date) {
         final Calendar c = Calendar.getInstance();
+
         c.setTime(date);
         setZero(c);
 
@@ -634,8 +639,9 @@ public final class DateUtils {
      */
     public static List<Integer> getYears(final int minYear, final boolean isAsc) {
         final List<Integer> years = new ArrayList<Integer>();
-        final Calendar calendar = Calendar.getInstance();
-        final int nowYear = calendar.get(Calendar.YEAR);
+        final Calendar c = Calendar.getInstance();
+
+        final int nowYear = c.get(Calendar.YEAR);
         if (minYear <= nowYear) {
             if (isAsc) {
                 for (int i = minYear; i <= nowYear; i++) {
@@ -661,8 +667,9 @@ public final class DateUtils {
      */
     public static List<String> getYearsToString(final int minYear, final boolean isAsc) {
         final List<String> years = new ArrayList<String>();
-        final Calendar calendar = Calendar.getInstance();
-        final int nowYear = calendar.get(Calendar.YEAR);
+        final Calendar c = Calendar.getInstance();
+
+        final int nowYear = c.get(Calendar.YEAR);
         if (minYear <= nowYear) {
             if (isAsc) {
                 for (int i = minYear; i <= nowYear; i++) {
@@ -772,12 +779,13 @@ public final class DateUtils {
      * @return 曜日文字列
      */
     public static String getWeek(final Date date, final boolean englishFlg) {
-        final Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        final Calendar c = Calendar.getInstance();
+
+        c.setTime(date);
         if (englishFlg) {
-            return WEEK_EU[cal.get(Calendar.DAY_OF_WEEK) - 1];
+            return WEEK_EU[c.get(Calendar.DAY_OF_WEEK) - 1];
         } else {
-            return WEEK_JP[cal.get(Calendar.DAY_OF_WEEK) - 1];
+            return WEEK_JP[c.get(Calendar.DAY_OF_WEEK) - 1];
         }
     }
 
@@ -814,12 +822,13 @@ public final class DateUtils {
      * @return 曜日文字列
      */
     public static String getWeek(final int year, final int month, final int day, final boolean englishFlg) {
-        final Calendar cal = Calendar.getInstance();
-        cal.set(year, month - 1, day);
+        final Calendar c = Calendar.getInstance();
+
+        c.set(year, month - 1, day);
         if (englishFlg) {
-            return WEEK_EU[cal.get(Calendar.DAY_OF_WEEK) - 1];
+            return WEEK_EU[c.get(Calendar.DAY_OF_WEEK) - 1];
         } else {
-            return WEEK_JP[cal.get(Calendar.DAY_OF_WEEK) - 1];
+            return WEEK_JP[c.get(Calendar.DAY_OF_WEEK) - 1];
         }
     }
 
