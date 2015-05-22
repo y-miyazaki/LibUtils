@@ -13,6 +13,8 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.http.Header;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -32,11 +34,11 @@ import com.miya38.utils.volley.HttpHeaderParser;
 /**
  * APIリクエストクラス
  * <p>
- * VolleyのStringRequestを継承し、ログ出力・エラーハンドリング・ポリシー・リクエストパラメータの設定などを行うクラス。
+ * VolleyのStringRequestを継承し、ログ出力・エラーハンドリング・ポリシー・リクエストパラメータの設定などを行うクラス。 ログ出力は、JSONの自動整形を行う。
  * </p>
- *
+ * 
  * @author y-miyazaki
- *
+ * 
  */
 public class ApiRequest extends StringRequest {
     // ---------------------------------------------------------------
@@ -44,8 +46,13 @@ public class ApiRequest extends StringRequest {
     // ---------------------------------------------------------------
     /** ログに付与するタグ */
     private static final String TAG = ApiRequest.class.getSimpleName();
-    /** gzip contents type */
-    private static final String CONTENT_ENCODING = "gzip";
+    /** Content-Enccoding: gzip */
+    private static final String CONTENT_ENCODING_GZIP = "gzip";
+    /** Content-Type: application/json */
+    private static final String CONTENT_TYPE = "Content-Type";
+    /** Content-Type: application/json */
+    private static final String CONTENT_TYPE_JSON = "application/json";
+
     // -------------------------------------------------------
     // 通信周り
     // -------------------------------------------------------
@@ -74,14 +81,14 @@ public class ApiRequest extends StringRequest {
 
     /**
      * Callback interface for delivering parsed responses.
-     *
+     * 
      * @author y-miyazaki
-     *
+     * 
      */
     public abstract static class ApiListener implements Listener<String> {
         /**
          * レスポンスを受信したときにコールする
-         *
+         * 
          * @param networkResponse
          *            受信データ(statusCode/header/data/notmodified)
          * @param id
@@ -99,14 +106,14 @@ public class ApiRequest extends StringRequest {
 
     /**
      * Callback interface for delivering parsed responses.
-     *
+     * 
      * @author y-miyazaki
-     *
+     * 
      */
     public abstract static class ApiErrorListener implements ErrorListener {
         /**
          * エラーレスポンスを受信したときにコールする
-         *
+         * 
          * @param networkResponse
          *            受信データ(statusCode/header/data/notmodified)
          * @param id
@@ -122,7 +129,7 @@ public class ApiRequest extends StringRequest {
 
     /**
      * コンストラクタ
-     *
+     * 
      * @param method
      *            {@link Method#GET},{@link Method#POST},{@link Method#DELETE}, {@link Method#PUT}
      * @param url
@@ -149,7 +156,7 @@ public class ApiRequest extends StringRequest {
 
     /**
      * コンストラクタ このコンストラクタは、自動的にsetParams/setHeadersを行う。
-     *
+     * 
      * @param networkRequest
      *            {@link NetworkResponse}
      * @param apiListener
@@ -179,7 +186,8 @@ public class ApiRequest extends StringRequest {
         // ---------------------------------------------------------------
         // SetCookie
         // ---------------------------------------------------------------
-        setCookie(volleyError.networkResponse);
+        NetworkResponse networkResponse = volleyError.networkResponse;
+        setCookie(networkResponse);
 
         // ---------------------------------------------------------------
         // ログ出力
@@ -204,22 +212,11 @@ public class ApiRequest extends StringRequest {
             }
             StringUtils.appendBufferFormat(log, "request body = %s\n", mNetworkRequest.mBody);
             StringUtils.appendBufferFormat(log, "request id = %s\n", mNetworkRequest.mId);
-            if (volleyError.networkResponse != null) {
+            if (networkResponse != null) {
                 // ステータスコード出力
-                StringUtils.appendBufferFormat(log, "response status code = %s\n", volleyError.networkResponse.statusCode);
+                StringUtils.appendBufferFormat(log, "response status code = %s\n", networkResponse.statusCode);
 
-                // レスポンスヘッダ出力
-                // final Map<String, String> headers = volleyError.networkResponse.headers;
-                // if (headers != null) {
-                // final Set<String> keySet = headers.keySet();
-                // final Iterator<String> keyIte = keySet.iterator();
-                // while (keyIte.hasNext()) {
-                // final String key = keyIte.next();
-                // final String value = headers.get(key);
-                // StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
-                // }
-                // }
-                final Header[] apacheHeaders = volleyError.networkResponse.apacheHeaders;
+                final Header[] apacheHeaders = networkResponse.apacheHeaders;
                 if (apacheHeaders != null) {
                     final int length = apacheHeaders.length;
                     for (int i = 0; i < length; i++) {
@@ -230,19 +227,30 @@ public class ApiRequest extends StringRequest {
                 }
             }
             try {
-                StringUtils.appendBuffer(log, "response body = ");
-                StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                StringUtils.appendBuffer(log, "response body = \n");
+                if (StringUtils.contains(networkResponse.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
+                    try {
+                        JSONObject json = new JSONObject(new String(networkResponse.data));
+                        StringUtils.appendBuffer(log, json.toString(4));
+                    } catch (JSONException e) {
+                        StringUtils.appendBuffer(log, new String(networkResponse.data));
+                    }
+                } else {
+                    StringUtils.appendBuffer(log, new String(networkResponse.data));
+                }
+
+                final StringWriter sw = new StringWriter();
+                final PrintWriter pw = new PrintWriter(sw);
+                volleyError.printStackTrace(pw);
+                pw.flush();
+
+                StringUtils.appendBuffer(log, "---------- volley stackTrace(start) ----------\n", sw.toString(), "---------- volley stackTrace(end) ----------\n");
+                StringUtils.appendBufferFormat(log, "---------------------------------------- end(error) ----------------------------------------\n");
+
+                LogUtils.d(TAG, log.toString());
             } catch (final Exception e) {
                 // 無視する。bodyがでか過ぎて無理なため。
             }
-            final StringWriter sw = new StringWriter();
-            final PrintWriter pw = new PrintWriter(sw);
-            volleyError.printStackTrace(pw);
-            pw.flush();
-            StringUtils.appendBuffer(log, "---------- volley stackTrace(start) ----------\n", sw.toString(), "---------- volley stackTrace(end) ----------\n");
-
-            StringUtils.appendBufferFormat(log, "---------------------------------------- end(error) ----------------------------------------\n");
-            LogUtils.d(TAG, log.toString());
         }
         return super.parseNetworkError(volleyError);
     }
@@ -255,7 +263,7 @@ public class ApiRequest extends StringRequest {
         // ---------------------------------------------------------------
         try {
             // ContentTypeが、もしgzipなら解凍する
-            if (!mNetworkResponse.notModified && CONTENT_ENCODING.equalsIgnoreCase(response.headers.get(HTTP.CONTENT_ENCODING))) {
+            if (!mNetworkResponse.notModified && CONTENT_ENCODING_GZIP.equalsIgnoreCase(response.headers.get(HTTP.CONTENT_ENCODING))) {
                 final GZIPInputStream zis = new GZIPInputStream(new BufferedInputStream(new ByteArrayInputStream(response.data)));
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 try {
@@ -264,7 +272,7 @@ public class ApiRequest extends StringRequest {
                     while ((count = zis.read(buffer)) != -1) {
                         baos.write(buffer, 0, count);
                     }
-                    mNetworkResponse = new NetworkResponse(response.statusCode, baos.toByteArray(), response.headers, response.notModified, response.apacheHeaders);
+                    mNetworkResponse = new NetworkResponse(response.statusCode, baos.toByteArray(), response.headers, response.notModified, response.networkTimeMs, response.apacheHeaders);
                 } finally {
                     baos.close();
                     zis.close();
@@ -299,6 +307,9 @@ public class ApiRequest extends StringRequest {
         // コンパイラ考慮のため、BuildConfig.DEBUGでここは判定する
         // ---------------------------------------------------------------
         if (BuildConfig.DEBUG) {
+            long xAndroidReceivedMillis = 0;
+            long xAndroidSentMillis = 0;
+
             final StringBuffer log = new StringBuffer();
             StringUtils.appendBufferFormat(log, "----------------------------------------start----------------------------------------\n");
             StringUtils.appendBufferFormat(log, "request url = %s\n", mNetworkRequest.mUrl);
@@ -327,16 +338,39 @@ public class ApiRequest extends StringRequest {
                     final String key = apacheHeaders[i].getName();
                     final String value = apacheHeaders[i].getValue();
                     StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
+
+                    // 送信開始時間を取得
+                    if (StringUtils.equals(key, "X-Android-Sent-Millis")) {
+                        xAndroidSentMillis = Long.valueOf(value);
+                    }
+                    // 受信完了時間を取得
+                    if (StringUtils.equals(key, "X-Android-Received-Millis")) {
+                        xAndroidReceivedMillis = Long.valueOf(value);
+                    }
+                }
+                if (xAndroidSentMillis != 0 && xAndroidReceivedMillis != 0) {
+                    StringUtils.appendBufferFormat(log, "response time(msec) = %d msec\n", xAndroidReceivedMillis - xAndroidSentMillis);
                 }
             }
 
             try {
-                StringUtils.appendBuffer(log, "response body = ");
-                StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                StringUtils.appendBuffer(log, "response body = \n");
+                if (StringUtils.contains(response.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
+                    try {
+                        JSONObject json = new JSONObject(new String(mNetworkResponse.data));
+                        StringUtils.appendBuffer(log, json.toString(4));
+                    } catch (JSONException e) {
+                        StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                    }
+                } else {
+                    StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                }
                 StringUtils.appendBufferFormat(log, "\n---------------------------------------- end ----------------------------------------\n");
                 LogUtils.d(TAG, log.toString());
             } catch (final OutOfMemoryError e) {
                 // 無視する。bodyがでか過ぎて無理なため。
+            } finally {
+
             }
         }
         String parsed;
@@ -350,7 +384,7 @@ public class ApiRequest extends StringRequest {
 
     /**
      * set-Cookie設定処理
-     *
+     * 
      * @param response
      *            {@link NetworkResponse}
      */
@@ -408,11 +442,11 @@ public class ApiRequest extends StringRequest {
      * このメソッドをオーバーライドし、Map型のKEY-VALUEで取得する形式からStringで取得する形式に変更する。<br>
      * 本アプリではJSONをそのまま投げる形式のため。
      * </p>
-     *
+     * 
      * @return bodyのバイト配列
      * @throws AuthFailureError
      *             in the event of auth failure
-     *
+     * 
      */
     @Override
     public byte[] getBody() throws AuthFailureError {
@@ -426,7 +460,7 @@ public class ApiRequest extends StringRequest {
 
     /**
      * リクエストパラメータ設定
-     *
+     * 
      * @param body
      *            リクエストパラメータ
      */
@@ -436,7 +470,7 @@ public class ApiRequest extends StringRequest {
 
     /**
      * リクエストヘッダ設定
-     *
+     * 
      * @param headers
      *            リクエストヘッダ
      */

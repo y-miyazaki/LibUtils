@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -65,7 +65,8 @@ public class BasicNetwork implements Network {
     protected final ByteArrayPool mPool;
 
     /**
-     * @param httpStack HTTP stack to be used
+     * @param httpStack
+     *            HTTP stack to be used
      */
     public BasicNetwork(HttpStack httpStack) {
         // If a pool isn't passed in, then build a small default pool that will give us a lot of
@@ -74,8 +75,10 @@ public class BasicNetwork implements Network {
     }
 
     /**
-     * @param httpStack HTTP stack to be used
-     * @param pool a buffer pool that improves GC performance in copy operations
+     * @param httpStack
+     *            HTTP stack to be used
+     * @param pool
+     *            a buffer pool that improves GC performance in copy operations
      */
     public BasicNetwork(HttpStack httpStack, ByteArrayPool pool) {
         mHttpStack = httpStack;
@@ -103,9 +106,11 @@ public class BasicNetwork implements Network {
 
                     Entry entry = request.getCacheEntry();
                     if (entry == null) {
-                        // bug fix y-miyazaki
+                        // y-miyazaki bugfix start
                         return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, null,
-                                responseHeaders, true, httpResponse.getAllHeaders());
+                                responseHeaders, true,
+                                SystemClock.elapsedRealtime() - requestStart, httpResponse.getAllHeaders());
+                        // y-miyazaki bugfix end
                     }
 
                     // A HTTP 304 response does not have all header fields. We
@@ -113,17 +118,20 @@ public class BasicNetwork implements Network {
                     // the new ones from the response.
                     // http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5
                     entry.responseHeaders.putAll(responseHeaders);
+                    // y-miyazaki bugfix start
                     return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED, entry.data,
-                            entry.responseHeaders, true, httpResponse.getAllHeaders());
+                            entry.responseHeaders, true,
+                            SystemClock.elapsedRealtime() - requestStart, httpResponse.getAllHeaders());
+                    // y-miyazaki bugfix end
                 }
 
                 // Some responses such as 204s do not have content.  We must check.
                 if (httpResponse.getEntity() != null) {
-                  responseContents = entityToBytes(httpResponse.getEntity());
+                    responseContents = entityToBytes(httpResponse.getEntity());
                 } else {
-                  // Add 0 byte response as a way of honestly representing a
-                  // no-content request.
-                  responseContents = new byte[0];
+                    // Add 0 byte response as a way of honestly representing a
+                    // no-content request.
+                    responseContents = new byte[0];
                 }
 
                 // if the request is slow, log it.
@@ -133,8 +141,10 @@ public class BasicNetwork implements Network {
                 if (statusCode < 200 || statusCode > 299) {
                     throw new IOException();
                 }
-                // bug fix y-miyazaki
-                return new NetworkResponse(statusCode, responseContents, responseHeaders, false, httpResponse.getAllHeaders());
+                // y-miyazaki bugfix start
+                return new NetworkResponse(statusCode, responseContents, responseHeaders, false,
+                        SystemClock.elapsedRealtime() - requestStart, httpResponse.getAllHeaders());
+                // y-miyazaki bugfix end
             } catch (SocketTimeoutException e) {
                 attemptRetryOnException("socket", request, new TimeoutError());
             } catch (ConnectTimeoutException e) {
@@ -151,8 +161,10 @@ public class BasicNetwork implements Network {
                 }
                 VolleyLog.e("Unexpected response code %d for %s", statusCode, request.getUrl());
                 if (responseContents != null) {
+                    // y-miyazaki bugfix start
                     networkResponse = new NetworkResponse(statusCode, responseContents,
-                            responseHeaders, false, httpResponse.getAllHeaders());
+                            responseHeaders, false, SystemClock.elapsedRealtime() - requestStart, httpResponse.getAllHeaders());
+                    // y-miyazaki bugfix end
                     if (statusCode == HttpStatus.SC_UNAUTHORIZED ||
                             statusCode == HttpStatus.SC_FORBIDDEN) {
                         attemptRetryOnException("auth",
@@ -184,7 +196,9 @@ public class BasicNetwork implements Network {
     /**
      * Attempts to prepare the request for a retry. If there are no more attempts remaining in the
      * request's retry policy, a timeout exception is thrown.
-     * @param request The request to use.
+     * 
+     * @param request
+     *            The request to use.
      */
     private static void attemptRetryOnException(String logPrefix, Request<?> request,
             VolleyError exception) throws VolleyError {
@@ -211,8 +225,8 @@ public class BasicNetwork implements Network {
             headers.put("If-None-Match", entry.etag);
         }
 
-        if (entry.serverDate > 0) {
-            Date refTime = new Date(entry.serverDate);
+        if (entry.lastModified > 0) {
+            Date refTime = new Date(entry.lastModified);
             headers.put("If-Modified-Since", DateUtils.formatDate(refTime));
         }
     }
