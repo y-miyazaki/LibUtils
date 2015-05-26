@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 
+import android.text.Html;
 import android.text.TextUtils;
 
 /**
@@ -474,5 +475,33 @@ public final class StringUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * HTMLで使用されるタグをエスケープ処理します。
+     * 
+     * @param html
+     *            HTML文字列
+     * @return HTMLエスケープ後の文字列
+     */
+    public static String htmlEscape(String html) {
+        if (AplUtils.hasJellyBean()) {
+            return Html.escapeHtml(html);
+        }
+        return Html.fromHtml(html).toString();
+    }
+
+    /**
+     * HTMLタグを全て除去します。
+     * 
+     * @param html
+     *            HTML文字列
+     * @return HTML除去後の文字列
+     */
+    public static String htmlStrip(String html) {
+        if (html != null) {
+            return html.replaceAll("<.+?>", "");
+        }
+        return html;
     }
 }

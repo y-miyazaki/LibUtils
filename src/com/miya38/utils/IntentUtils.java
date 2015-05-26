@@ -242,7 +242,7 @@ public final class IntentUtils {
     // Intent暗黙
     // ---------------------------------------------------------------
     /**
-     * ブラウザを起動します
+     * 暗黙的インテントによりACTION_VIEWカテゴリ(一般的にブラウザ)を起動します
      * 
      * @param context
      *            Context
@@ -251,5 +251,21 @@ public final class IntentUtils {
      */
     public static void startBrowser(final Context context, final Uri uri) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+    }
+
+    /**
+     * 暗黙的インテントによりACTION_SENDカテゴリのアプリを起動する。
+     * 
+     * @param context
+     *            Context
+     * @param extraText
+     *            送信内容
+     */
+    public static void startSend(Context context, String extraText) {
+        Intent intent = new Intent(Intent.ACTION_SEND)
+                .setType("text/plain")
+                .putExtra(Intent.EXTRA_TEXT, extraText);
+        context.startActivity(intent);
+
     }
 }
