@@ -134,13 +134,6 @@ public abstract class AbstractActivity extends ActionBarActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        // ---------------------------------------------------------------
-        // デバッグ状態の場合は、デバッグ情報をアプリに保存する。
-        // ---------------------------------------------------------------
-        if (BuildConfig.DEBUG) {
-            Thread.setDefaultUncaughtExceptionHandler(new CustomUncaughtExceptionHandler());
-        }
-
         setContentView(getViewLayoutId());
 
         if (getViewStubLayoutId() != LAYOUT_NO_SETTING) {

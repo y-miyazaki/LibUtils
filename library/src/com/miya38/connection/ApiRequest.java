@@ -1,5 +1,24 @@
 package com.miya38.connection;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.miya38.utils.CookieUtils;
+import com.miya38.utils.LogUtils;
+import com.miya38.utils.StringUtils;
+import com.miya38.utils.volley.HttpHeaderParser;
+
+import org.apache.http.Header;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,34 +30,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.http.Header;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
-import com.android.volley.Response;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.miya38.BuildConfig;
-import com.miya38.utils.CookieUtils;
-import com.miya38.utils.LogUtils;
-import com.miya38.utils.StringUtils;
-import com.miya38.utils.volley.HttpHeaderParser;
-
 /**
  * APIリクエストクラス
  * <p>
  * VolleyのStringRequestを継承し、ログ出力・エラーハンドリング・ポリシー・リクエストパラメータの設定などを行うクラス。 ログ出力は、JSONの自動整形を行う。
  * </p>
- * 
+ *
  * @author y-miyazaki
- * 
  */
 public class ApiRequest extends StringRequest {
     // ---------------------------------------------------------------
@@ -53,6 +51,8 @@ public class ApiRequest extends StringRequest {
     /** Content-Type: application/json */
     private static final String CONTENT_TYPE_JSON = "application/json";
 
+    /** デバッグ設定 */
+    private static boolean sIsDebugable;
     // -------------------------------------------------------
     // 通信周り
     // -------------------------------------------------------
@@ -81,20 +81,19 @@ public class ApiRequest extends StringRequest {
 
     /**
      * Callback interface for delivering parsed responses.
-     * 
+     *
      * @author y-miyazaki
-     * 
      */
     public abstract static class ApiListener implements Listener<String> {
         /**
          * レスポンスを受信したときにコールする
-         * 
+         *
          * @param networkResponse
-         *            受信データ(statusCode/header/data/notmodified)
+         *         受信データ(statusCode/header/data/notmodified)
          * @param id
-         *            送信データ判別ID
+         *         送信データ判別ID
          * @param response
-         *            受信データ
+         *         受信データ
          */
         public abstract void onResponse(NetworkResponse networkResponse, int id, String response);
 
@@ -106,18 +105,17 @@ public class ApiRequest extends StringRequest {
 
     /**
      * Callback interface for delivering parsed responses.
-     * 
+     *
      * @author y-miyazaki
-     * 
      */
     public abstract static class ApiErrorListener implements ErrorListener {
         /**
          * エラーレスポンスを受信したときにコールする
-         * 
+         *
          * @param networkResponse
-         *            受信データ(statusCode/header/data/notmodified)
+         *         受信データ(statusCode/header/data/notmodified)
          * @param id
-         *            送信データ判別ID
+         *         送信データ判別ID
          */
         public abstract void onErrorResponse(NetworkResponse networkResponse, int id);
 
@@ -129,17 +127,17 @@ public class ApiRequest extends StringRequest {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param method
-     *            {@link Method#GET},{@link Method#POST},{@link Method#DELETE}, {@link Method#PUT}
+     *         {@link Method#GET},{@link Method#POST},{@link Method#DELETE}, {@link Method#PUT}
      * @param url
-     *            URL
+     *         URL
      * @param id
-     *            リクエストID
+     *         リクエストID
      * @param apiListener
-     *            {@link ApiListener}
+     *         {@link ApiListener}
      * @param apiErrorListener
-     *            {@link ApiErrorListener}
+     *         {@link ApiErrorListener}
      */
     public ApiRequest(final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(method, url, apiListener, apiErrorListener);
@@ -156,13 +154,13 @@ public class ApiRequest extends StringRequest {
 
     /**
      * コンストラクタ このコンストラクタは、自動的にsetParams/setHeadersを行う。
-     * 
+     *
      * @param networkRequest
-     *            {@link NetworkResponse}
+     *         {@link NetworkResponse}
      * @param apiListener
-     *            {@link ApiListener}
+     *         {@link ApiListener}
      * @param apiErrorListener
-     *            {@link ApiErrorListener}
+     *         {@link ApiErrorListener}
      */
     public ApiRequest(final NetworkRequest networkRequest, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(networkRequest.mMethod, networkRequest.mUrl, apiListener, apiErrorListener);
@@ -181,6 +179,16 @@ public class ApiRequest extends StringRequest {
         }
     }
 
+    /**
+     * デバッグ設定
+     *
+     * @param isDebugable
+     *         true:デバッグ情報出力/false:デバッグ情報未出力
+     */
+    public static void setDebugable(boolean isDebugable) {
+        sIsDebugable = isDebugable;
+    }
+
     @Override
     protected VolleyError parseNetworkError(final VolleyError volleyError) {
         // ---------------------------------------------------------------
@@ -191,9 +199,8 @@ public class ApiRequest extends StringRequest {
 
         // ---------------------------------------------------------------
         // ログ出力
-        // コンパイラ考慮のため、BuildConfig.DEBUGでここは判定する
         // ---------------------------------------------------------------
-        if (BuildConfig.DEBUG) {
+        if (sIsDebugable) {
             final StringBuffer log = new StringBuffer();
             StringUtils.appendBufferFormat(log, "----------------------------------------start(error)----------------------------------------\n");
             StringUtils.appendBufferFormat(log, "request url = %s\n", mNetworkRequest.mUrl);
@@ -306,7 +313,7 @@ public class ApiRequest extends StringRequest {
         // ログ出力
         // コンパイラ考慮のため、BuildConfig.DEBUGでここは判定する
         // ---------------------------------------------------------------
-        if (BuildConfig.DEBUG) {
+        if (sIsDebugable) {
             long xAndroidReceivedMillis = 0;
             long xAndroidSentMillis = 0;
 
@@ -384,9 +391,9 @@ public class ApiRequest extends StringRequest {
 
     /**
      * set-Cookie設定処理
-     * 
+     *
      * @param response
-     *            {@link NetworkResponse}
+     *         {@link NetworkResponse}
      */
     private void setCookie(final NetworkResponse response) {
         // ---------------------------------------------------------------
@@ -442,11 +449,10 @@ public class ApiRequest extends StringRequest {
      * このメソッドをオーバーライドし、Map型のKEY-VALUEで取得する形式からStringで取得する形式に変更する。<br>
      * 本アプリではJSONをそのまま投げる形式のため。
      * </p>
-     * 
+     *
      * @return bodyのバイト配列
      * @throws AuthFailureError
-     *             in the event of auth failure
-     * 
+     *         in the event of auth failure
      */
     @Override
     public byte[] getBody() throws AuthFailureError {
@@ -460,9 +466,9 @@ public class ApiRequest extends StringRequest {
 
     /**
      * リクエストパラメータ設定
-     * 
+     *
      * @param body
-     *            リクエストパラメータ
+     *         リクエストパラメータ
      */
     public void setParams(final String body) {
         this.mBody = body;
@@ -470,9 +476,9 @@ public class ApiRequest extends StringRequest {
 
     /**
      * リクエストヘッダ設定
-     * 
+     *
      * @param headers
-     *            リクエストヘッダ
+     *         リクエストヘッダ
      */
     public void setHeaders(final Map<String, String> headers) {
         mHeaders = headers;

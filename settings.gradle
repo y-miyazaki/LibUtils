@@ -1,3 +1,4 @@
-include ':kit-libs:LibVolley'
-include ':kit-libs:LibPullToRefresh'
-include ':kit-libs:appcompat'
+include ':library'
+include ':library:kit-libs:LibVolley'
+include ':library:kit-libs:LibPullToRefresh'
+//include ':library:kit-libs:appcompat'

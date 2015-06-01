@@ -1,7 +1,9 @@
 package com.miya38.application;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.miya38.BuildConfig;
 import com.miya38.connection.AbstractVolleySetting;
@@ -23,12 +25,12 @@ import com.miya38.utils.ZipUtils;
 /**
  * 共通アプリケーションクラス
  * <p>
- * ユーティリティクラスの初期化処理を行う。
+ * ユーティリティクラスの初期化処理を行う。 CommonMultiDexApplicationクラスは、メソッド数65535を超えてしまう場合の対応として CommonApplicationクラスを継承する代わりに、CommonMultiDexApplicationクラスを継承する。
  * </p>
  * 
  * @author y-miyazaki
  */
-public abstract class CommonApplication extends Application {
+public abstract class CommonMultiDexApplication extends MultiDexApplication {
     // ---------------------------------------------------------------
     // define
     // ---------------------------------------------------------------
@@ -41,6 +43,12 @@ public abstract class CommonApplication extends Application {
      * @return ハッシュ値
      */
     protected abstract String getSignatureHash();
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
@@ -58,7 +66,6 @@ public abstract class CommonApplication extends Application {
         FileApplicationUtils.configure(getApplicationContext());
         FileAssetsUtils.configure(getApplicationContext());
         ImageUtils.configure(getApplicationContext());
-        LogUtils.configure(BuildConfig.DEBUG);
         SettingListView.configure(getApplicationContext());
         SettingListView.configure(getApplicationContext());
         SharedPreferencesUtils.configure(getApplicationContext());
