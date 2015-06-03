@@ -1,5 +1,20 @@
 package com.miya38.connection;
 
+import android.content.Context;
+import android.net.http.AndroidHttpClient;
+import android.util.AndroidRuntimeException;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.HttpClientStack;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageCache;
+import com.android.volley.toolbox.Volley;
+import com.miya38.utils.AplUtils;
+
+import org.apache.http.HttpResponse;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,21 +32,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.apache.http.HttpResponse;
-
-import android.content.Context;
-import android.net.http.AndroidHttpClient;
-import android.util.AndroidRuntimeException;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.HttpClientStack;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageLoader.ImageCache;
-import com.android.volley.toolbox.Volley;
-import com.miya38.utils.AplUtils;
-
 /**
  * Volleyのシングルトンクラス
  * 
@@ -48,7 +48,7 @@ public abstract class AbstractVolleySetting {
     /**
      * リクエストヘッダ設定
      * <p>
-     * リクエストヘッダに追加で乗せたいものがある場合は、このメソッドの引数{@link headers}のaddしたものリターンすること。
+     * リクエストヘッダに追加で乗せたいものがある場合は、このメソッドの引数headersのaddしたものリターンすること。
      * </p>
      * 
      * @param headers
@@ -84,7 +84,7 @@ public abstract class AbstractVolleySetting {
      * @param imageCache
      *            イメージキャッシュ指定(BitmapLruCach/BitmapDiskLruCache)
      */
-    public AbstractVolleySetting(final ImageCache imageCache) {
+    protected AbstractVolleySetting(final ImageCache imageCache) {
         // ---------------------------------------------------------------
         // Volleyのqueue設定を行う
         // ---------------------------------------------------------------

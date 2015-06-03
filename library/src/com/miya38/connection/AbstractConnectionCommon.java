@@ -126,7 +126,7 @@ public abstract class AbstractConnectionCommon {
         if (activity instanceof OnDeleteLoaderFinishListerner) {
             mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) activity;
         }
-        mDisplayProgress = new SparseArray<View>();
+        mDisplayProgress = new SparseArray<>();
     }
 
     /**
@@ -149,7 +149,7 @@ public abstract class AbstractConnectionCommon {
         if (fragment instanceof OnDeleteLoaderFinishListerner) {
             mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) fragment;
         }
-        mDisplayProgress = new SparseArray<View>();
+        mDisplayProgress = new SparseArray<>();
     }
 
     /**
@@ -172,7 +172,7 @@ public abstract class AbstractConnectionCommon {
         if (dialogFragment instanceof OnDeleteLoaderFinishListerner) {
             mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) dialogFragment;
         }
-        mDisplayProgress = new SparseArray<View>();
+        mDisplayProgress = new SparseArray<>();
     }
 
     /**
@@ -285,7 +285,6 @@ public abstract class AbstractConnectionCommon {
      *
      * @param networkRequest
      *         {@link NetworkRequest}
-     * @throws IllegalAccessException
      */
     public final void requestAPI(final NetworkRequest networkRequest) {
         Preconditions.checkNotNull(networkRequest, "networkRequest should not be null.");

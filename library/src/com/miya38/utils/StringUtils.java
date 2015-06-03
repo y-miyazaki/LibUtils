@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
 
 /**
@@ -417,10 +418,7 @@ public final class StringUtils {
         if (!StringUtils.isEmpty(text)) {
             if (StringUtils.contains(text, split)) {
                 final String[] splitString = text.split(split);
-                // 配列をListに変換
-                for (final String data : splitString) {
-                    results.add(data);
-                }
+                Collections.addAll(results, splitString);
             } else {
                 results.add(text);
             }

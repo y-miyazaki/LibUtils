@@ -1,8 +1,5 @@
 package com.miya38.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -26,6 +23,9 @@ import android.widget.Button;
 import com.miya38.R;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * カスタムボタンクラス
@@ -61,8 +61,6 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
     // ----------------------------------------------------------
     /** 文字サイズの初期値 */
     private float mDefaultTextSize = 0.0f;
-    /** 調整後の文字サイズ */
-    private float mResizeTextSize = 0.0f;
     /** 文字列のリサイズをするか？ */
     private boolean mIsResize;
     /** 最後を省略するか？ */
@@ -505,8 +503,8 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
             return;
         }
         // 設定された文字サイズで初期化する
-        mResizeTextSize = mDefaultTextSize;
-        mPaintForMeasure.setTextSize(mResizeTextSize);
+        float resizeTextSize = mDefaultTextSize;
+        mPaintForMeasure.setTextSize(resizeTextSize);
 
         // 適切なサイズになるまで小さくしていきます。(paddingも考慮します。)
         final int targetWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
@@ -524,15 +522,15 @@ public class CustomButton extends Button implements OnClickListener, OnTouchList
 
         // 幅に合うように文字列を縮小する
         while (targetWidth < mPaintForMeasure.measureText(string)) {
-            mPaintForMeasure.setTextSize(--mResizeTextSize);
+            mPaintForMeasure.setTextSize(--resizeTextSize);
 
             // 最小文字サイズより小さくなった場合は、文字サイズをセットして終了する
-            if (mResizeTextSize <= MIN_TEXT_SIZE) {
-                mResizeTextSize = MIN_TEXT_SIZE;
+            if (resizeTextSize <= MIN_TEXT_SIZE) {
+                resizeTextSize = MIN_TEXT_SIZE;
                 break;
             }
         }
-        super.setTextSize(mResizeTextSize);
+        super.setTextSize(resizeTextSize);
     }
 
     /**

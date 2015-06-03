@@ -59,7 +59,7 @@ public final class NumberUtils {
      */
     public static String addCanma(final String num, final String defaultValue, final boolean isDecimalOne) {
         String text = "";
-        String tmpNum = new String(num);
+        String tmpNum = num;
 
         if (!StringUtils.isEmpty(tmpNum)) {
             try {

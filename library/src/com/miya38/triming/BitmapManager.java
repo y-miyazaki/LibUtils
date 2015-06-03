@@ -13,14 +13,14 @@
 
 package com.miya38.triming;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import java.io.FileDescriptor;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 
 /**
  * This class provides several utilities to cancel bitmap decoding.
@@ -144,8 +144,7 @@ public class BitmapManager {
             return true;
         }
 
-        final boolean result = (status.mState != State.CANCEL);
-        return result;
+        return status.mState != State.CANCEL;
     }
 
     public synchronized void allowThreadDecoding(final Thread t) {

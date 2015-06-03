@@ -12,10 +12,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
-import com.miya38.BuildConfig;
 import com.miya38.R;
 import com.miya38.common.CommonInterface.OnWindowFocusChangedListener;
-import com.miya38.exception.CustomUncaughtExceptionHandler;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.ClassUtils;
 import com.miya38.utils.LogUtils;

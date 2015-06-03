@@ -1,7 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'findbugs'
 buildscript {
     repositories {
-	    jcenter()
+        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -11,7 +12,7 @@ buildscript {
 }
 allprojects {
     repositories {
-	    jcenter()
+        jcenter()
         mavenCentral()
     }
     tasks.withType(JavaCompile) {
@@ -20,4 +21,36 @@ allprojects {
 }
 task wrapper(type: Wrapper) {
     gradleVersion = '1.12'
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low" // ＊どのレベルの報告まで対応するかで変更＊
+    excludeFilter = new File("${project.rootDir}/config/android_findbugs_filter.xml")
+    classes = files("${project.rootDir}/library/build/intermediates/classes/")
+    source 'library/src'
+    include '**/*.java'
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html {
+            destination "${project.rootDir}/library/build/reports/findbugs_report.html"
+        }
+//        xml {
+//            destination "${project.rootDir}/library/build/reports/findbugs_report.xml"
+//        }
+    }
+    classpath = files()
+}
+
+task findbugsConvertUtf8 << {
+    def filename = "${project.rootDir}/library/build/reports/findbugs_report.html"
+    def file = new File(filename)
+    def text = file.getText()
+    text = text.replaceAll(/<head>/, "<head>\n<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>")
+
+    def fw = new File(filename).newWriter()
+    fw.writeLine(text)
+    fw.close()
 }

@@ -1,5 +1,7 @@
 package com.miya38.utils;
 
+import android.annotation.SuppressLint;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -10,8 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
-
-import android.annotation.SuppressLint;
 
 /**
  * Date に関するユーティリティメソッドを提供します。
@@ -934,7 +934,7 @@ public final class DateUtils {
     public static String addZero(final String num) {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        final int number = Integer.valueOf(num);
+        final int number = Integer.parseInt(num);
         if (0 <= number && number <= 9) {
             stringBuilder.append(0);
             stringBuilder.append(number);

@@ -219,38 +219,37 @@ public class ApiRequest extends StringRequest {
             }
             StringUtils.appendBufferFormat(log, "request body = %s\n", mNetworkRequest.mBody);
             StringUtils.appendBufferFormat(log, "request id = %s\n", mNetworkRequest.mId);
-            if (networkResponse != null) {
-                // ステータスコード出力
-                StringUtils.appendBufferFormat(log, "response status code = %s\n", networkResponse.statusCode);
-
-                final Header[] apacheHeaders = networkResponse.apacheHeaders;
-                if (apacheHeaders != null) {
-                    final int length = apacheHeaders.length;
-                    for (int i = 0; i < length; i++) {
-                        final String key = apacheHeaders[i].getName();
-                        final String value = apacheHeaders[i].getValue();
-                        StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
-                    }
-                }
-            }
             try {
-                StringUtils.appendBuffer(log, "response body = \n");
-                if (StringUtils.contains(networkResponse.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
-                    try {
-                        JSONObject json = new JSONObject(new String(networkResponse.data));
-                        StringUtils.appendBuffer(log, json.toString(4));
-                    } catch (JSONException e) {
+                if (networkResponse != null) {
+                    // ステータスコード出力
+                    StringUtils.appendBufferFormat(log, "response status code = %s\n", networkResponse.statusCode);
+
+                    final Header[] apacheHeaders = networkResponse.apacheHeaders;
+                    if (apacheHeaders != null) {
+                        final int length = apacheHeaders.length;
+                        for (final Header apacheHeader : apacheHeaders) {
+                            final String key = apacheHeader.getName();
+                            final String value = apacheHeader.getValue();
+                            StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
+                        }
+                    }
+                    StringUtils.appendBuffer(log, "response body = \n");
+                    if (StringUtils.contains(networkResponse.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
+                        try {
+                            JSONObject json = new JSONObject(new String(networkResponse.data));
+                            StringUtils.appendBuffer(log, json.toString(4));
+                        } catch (JSONException e) {
+                            StringUtils.appendBuffer(log, new String(networkResponse.data));
+                        }
+                    } else {
                         StringUtils.appendBuffer(log, new String(networkResponse.data));
                     }
-                } else {
-                    StringUtils.appendBuffer(log, new String(networkResponse.data));
                 }
-
+                // stacktrace関連
                 final StringWriter sw = new StringWriter();
                 final PrintWriter pw = new PrintWriter(sw);
                 volleyError.printStackTrace(pw);
                 pw.flush();
-
                 StringUtils.appendBuffer(log, "---------- volley stackTrace(start) ----------\n", sw.toString(), "---------- volley stackTrace(end) ----------\n");
                 StringUtils.appendBufferFormat(log, "---------------------------------------- end(error) ----------------------------------------\n");
 
@@ -341,14 +340,14 @@ public class ApiRequest extends StringRequest {
             final Header[] apacheHeaders = mNetworkResponse.apacheHeaders;
             if (apacheHeaders != null) {
                 final int length = apacheHeaders.length;
-                for (int i = 0; i < length; i++) {
-                    final String key = apacheHeaders[i].getName();
-                    final String value = apacheHeaders[i].getValue();
+                for (final Header apacheHeader : apacheHeaders) {
+                    final String key = apacheHeader.getName();
+                    final String value = apacheHeader.getValue();
                     StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
 
                     // 送信開始時間を取得
                     if (StringUtils.equals(key, "X-Android-Sent-Millis")) {
-                        xAndroidSentMillis = Long.valueOf(value);
+                        xAndroidSentMillis = Long.parseLong(value);
                     }
                     // 受信完了時間を取得
                     if (StringUtils.equals(key, "X-Android-Received-Millis")) {
@@ -376,8 +375,6 @@ public class ApiRequest extends StringRequest {
                 LogUtils.d(TAG, log.toString());
             } catch (final OutOfMemoryError e) {
                 // 無視する。bodyがでか過ぎて無理なため。
-            } finally {
-
             }
         }
         String parsed;
@@ -403,9 +400,9 @@ public class ApiRequest extends StringRequest {
             final Header[] apacheHeaders = response.apacheHeaders;
             if (apacheHeaders != null) {
                 final int length = apacheHeaders.length;
-                for (int i = 0; i < length; i++) {
-                    final String key = apacheHeaders[i].getName();
-                    final String value = apacheHeaders[i].getValue();
+                for (final Header apacheHeader : apacheHeaders) {
+                    final String key = apacheHeader.getName();
+                    final String value = apacheHeader.getValue();
                     if (StringUtils.equals("Set-Cookie", key)) {
                         CookieUtils.setValue(mNetworkRequest.mUrl, value);
                     }

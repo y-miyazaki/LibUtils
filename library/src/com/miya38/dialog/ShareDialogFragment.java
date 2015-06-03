@@ -1,11 +1,5 @@
 package com.miya38.dialog;
 
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -33,6 +27,12 @@ import com.miya38.utils.StringUtils;
 import com.miya38.utils.ViewHelper;
 import com.miya38.widget.CustomImageView;
 import com.miya38.widget.CustomTextView;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * シェアダイアログフラグメント
@@ -124,12 +124,6 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
     }
 
     // ----------------------------------------------------------
-    // View定義
-    // ----------------------------------------------------------
-    /** Dialog */
-    private Dialog mDialog;
-
-    // ----------------------------------------------------------
     // ListView
     // ----------------------------------------------------------
     /** SettingListView */
@@ -158,8 +152,8 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
     /**
      * Use this method as a constructor!!
      * 
-     * @param fragment
-     *            Fragment
+     * @param listenerId
+     *            リスナーID
      * @param message
      *            シェアしたい文字列
      * @param url
@@ -182,7 +176,7 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
 
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
-        mDialog = super.onCreateDialog(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         mMessage = FragmentUtils.getString(this, KEY_FRAGMENT_CUSTOM_DIALOG_SHARE_MESSAGE);
         mUrl = FragmentUtils.getString(this, KEY_FRAGMENT_CUSTOM_DIALOG_SHARE_URL);
 
@@ -239,12 +233,12 @@ public class ShareDialogFragment extends AbstractDialogFragment implements OnIte
 
         // 指定されたカテゴリのものだけを出力する。
         final TsEtc004ApWebViewDialogListViewAdapter tsEtc004ApWebViewDialogListViewAdapter = new TsEtc004ApWebViewDialogListViewAdapter(getActivity(), tsEtc004ApWebViewDialogListViewItems);
-        mSettingListViewCustom = new SettingListView<TsEtc004ApWebViewDialogListViewAdapter, TsEtc004ApWebViewDialogListViewItem>(tsEtc004ApWebViewDialogListViewAdapter, mDialog, null);
+        mSettingListViewCustom = new SettingListView<TsEtc004ApWebViewDialogListViewAdapter, TsEtc004ApWebViewDialogListViewItem>(tsEtc004ApWebViewDialogListViewAdapter, dialog, null);
 
         // 初期はEND PULLしか認めない。コンテンツ更新有無が返却されたことを検知した場合に双方許可する。(ダブルでリクエストされないように制御)
         mSettingListViewCustom.setView(R.id.CustomListView01, this, (OnRefreshListener<ListView>) null, Mode.DISABLED);
 
-        return mDialog;
+        return dialog;
     }
 
     @Override

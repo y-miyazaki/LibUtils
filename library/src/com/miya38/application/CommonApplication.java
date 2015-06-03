@@ -3,7 +3,6 @@ package com.miya38.application;
 import android.app.Application;
 import android.content.res.Configuration;
 
-import com.miya38.BuildConfig;
 import com.miya38.connection.AbstractVolleySetting;
 import com.miya38.list.SettingListView;
 import com.miya38.utils.AplUtils;
