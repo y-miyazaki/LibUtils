@@ -1,10 +1,6 @@
 package com.miya38.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -19,7 +15,13 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 import android.util.DisplayMetrics;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 画像ユーティリティクラス
@@ -60,9 +62,9 @@ public final class ImageUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
-     *            {@link Context}
+     *         {@link Context}
      */
     public static void configure(final Context context) {
         sContext = context;
@@ -97,13 +99,13 @@ public final class ImageUtils {
     /**
      * イメージリサイズ処理(Bitmap→Bitmap)<br>
      * ※縮尺比を考慮し、幅に合わせ画像をリサイズする処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param w
-     *            横幅
+     *         横幅
      * @param h
-     *            縦幅
+     *         縦幅
      * @return ビットマップ
      */
     public static Bitmap imageResize(final Bitmap bitmap, final int w, final int h) {
@@ -136,15 +138,16 @@ public final class ImageUtils {
     /**
      * イメージリサイズ処理<br>
      * ※縮尺比を考慮し、幅に合わせ画像をリサイズする処理
-     * 
+     *
      * @param filename
-     *            ビットマップ
+     *         ビットマップ
      * @param w
-     *            変更後の横幅
+     *         変更後の横幅
      * @param h
-     *            変更後の縦幅
+     *         変更後の縦幅
      * @return ビットマップ
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static Bitmap imageResize(final String filename, final int w, final int h) {
         // ----------------------------------------------------
         // チェック
@@ -189,15 +192,16 @@ public final class ImageUtils {
     /**
      * イメージリサイズ処理(byte→Bitmap)<br>
      * ※縮尺比を考慮し、幅に合わせ画像をリサイズする処理
-     * 
+     *
      * @param byteData
-     *            画像バイトデータ
+     *         画像バイトデータ
      * @param w
-     *            横幅
+     *         横幅
      * @param h
-     *            縦幅
+     *         縦幅
      * @return ビットマップ
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static Bitmap imageResize(final byte[] byteData, final int w, final int h) {
         // ----------------------------------------------------
         // チェック
@@ -229,8 +233,8 @@ public final class ImageUtils {
         options.inPurgeable = true;
 
         Bitmap tmpBitmap = BitmapFactory.decodeByteArray(byteData, 0, byteData.length, options); // 画像を縮小
-                                                                                                 // or
-                                                                                                 // 拡大して読み込み
+        // or
+        // 拡大して読み込み
         final Bitmap resizeBitmap = imageResize(tmpBitmap, w, h);
         if (tmpBitmap != null && !tmpBitmap.equals(resizeBitmap)) {
             tmpBitmap.recycle();
@@ -242,11 +246,11 @@ public final class ImageUtils {
 
     /**
      * 画像をリサイズする処理(Bitmap→Bitmap)
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param size
-     *            サイズ圧縮(1,2,4,8,16,32...etc...)
+     *         サイズ圧縮(1,2,4,8,16,32...etc...)
      * @return ビットマップ
      */
     public static Bitmap imageResize(final Bitmap bitmap, final int size) {
@@ -274,11 +278,11 @@ public final class ImageUtils {
 
     /**
      * 縮尺比を変えずに画像を縮小する処理(リソース版)
-     * 
+     *
      * @param resource
-     *            リソース
+     *         リソース
      * @param size
-     *            サイズ圧縮(1,2,4,8,16,32...etc...)
+     *         サイズ圧縮(1,2,4,8,16,32...etc...)
      * @return ビットマップ
      */
     public static Bitmap imageResize(final int resource, final int size) {
@@ -305,11 +309,11 @@ public final class ImageUtils {
 
     /**
      * 縮尺比を変えずに画像を縮小する処理(ファイル版)
-     * 
+     *
      * @param file
-     *            画像ファイル
+     *         画像ファイル
      * @param size
-     *            サイズ圧縮(1,2,4,8,16,32...etc...)
+     *         サイズ圧縮(1,2,4,8,16,32...etc...)
      * @return ビットマップ
      */
     public static Bitmap imageResize(final File file, final int size) {
@@ -334,9 +338,9 @@ public final class ImageUtils {
 
     /**
      * モザイク変換処理 画面全体に対してモザイクをかける
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @return 変換後のビットマップ
      */
     public static Bitmap setMosaic(final Bitmap bitmap) {
@@ -400,17 +404,17 @@ public final class ImageUtils {
 
     /**
      * モザイク変換処理 指定した領域に対してモザイクをかける
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param left
-     *            モザイクをかける開始X座標
+     *         モザイクをかける開始X座標
      * @param top
-     *            モザイクをかける開始Y座標
+     *         モザイクをかける開始Y座標
      * @param right
-     *            モザイクをかける終了X座標
+     *         モザイクをかける終了X座標
      * @param bottom
-     *            モザイクをかける終了Y座標
+     *         モザイクをかける終了Y座標
      * @return 変換後のビットマップ
      */
     public static Bitmap setMosaic(final Bitmap bitmap, float left, float top, final float right, final float bottom) {
@@ -511,17 +515,17 @@ public final class ImageUtils {
 
     /**
      * モザイク変換処理 指定した領域に対してモザイクをかける
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @param left
-     *            モザイクをかける開始X座標
+     *         モザイクをかける開始X座標
      * @param top
-     *            モザイクをかける開始Y座標
+     *         モザイクをかける開始Y座標
      * @param right
-     *            モザイクをかける終了X座標
+     *         モザイクをかける終了X座標
      * @param bottom
-     *            モザイクをかける終了Y座標
+     *         モザイクをかける終了Y座標
      * @return 変換後のビットマップ
      */
     public static Bitmap setMosaic(final String filename, float left, float top, final float right, final float bottom) {
@@ -632,9 +636,9 @@ public final class ImageUtils {
 
     /**
      * グレースケール変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @return 変換後のビットマップ
      */
     public static Bitmap setGrayscale(final Bitmap bitmap) {
@@ -675,9 +679,9 @@ public final class ImageUtils {
 
     /**
      * グレースケール変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @return 変換後のファイル名
      */
     public static Bitmap setGrayscale(final String filename) {
@@ -729,9 +733,9 @@ public final class ImageUtils {
 
     /**
      * ネガティブ変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @return 変換後のビットマップ
      */
     public static Bitmap setNegative(final Bitmap bitmap) {
@@ -772,9 +776,9 @@ public final class ImageUtils {
 
     /**
      * ネガティブ変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @return 変換後のビットマップ
      */
     public static Bitmap setNegative(final String filename) {
@@ -825,11 +829,11 @@ public final class ImageUtils {
 
     /**
      * 明るさ変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param setting
-     *            0%～50%～100%までコントラストを変更することができる。
+     *         0%～50%～100%までコントラストを変更することができる。
      * @return 変換後のビットマップ
      */
     public static Bitmap setBrightness(final Bitmap bitmap, final int setting) {
@@ -882,11 +886,11 @@ public final class ImageUtils {
 
     /**
      * 明るさ変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @param setting
-     *            0%～50%～100%まで明るさを変更することができる。
+     *         0%～50%～100%まで明るさを変更することができる。
      * @return 変換後のビットマップ
      */
     public static Bitmap setBrightness(final String filename, final int setting) {
@@ -948,11 +952,11 @@ public final class ImageUtils {
 
     /**
      * コントラスト変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param setting
-     *            0～50%～100%までコントラストを変更することができる。
+     *         0～50%～100%までコントラストを変更することができる。
      * @return 変換後のビットマップ
      */
     public static Bitmap setContrast(final Bitmap bitmap, final int setting) {
@@ -1009,11 +1013,11 @@ public final class ImageUtils {
 
     /**
      * コントラスト変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @param setting
-     *            0～50%～100%までコントラストを変更することができる。
+     *         0～50%～100%までコントラストを変更することができる。
      * @return 変換後のビットマップ
      */
     public static Bitmap setContrast(final String filename, final int setting) {
@@ -1079,11 +1083,11 @@ public final class ImageUtils {
 
     /**
      * 彩度変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param setting
-     *            0%～50%～100%まで彩度を変更することができる。
+     *         0%～50%～100%まで彩度を変更することができる。
      * @return 変換後のビットマップ
      */
     public static Bitmap setSaturation(final Bitmap bitmap, final int setting) {
@@ -1141,11 +1145,11 @@ public final class ImageUtils {
 
     /**
      * 彩度変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @param setting
-     *            0%～50%～100%まで彩度を変更することができる。
+     *         0%～50%～100%まで彩度を変更することができる。
      * @return 変換後のビットマップ
      */
     public static Bitmap setSaturation(final String filename, final int setting) {
@@ -1212,9 +1216,9 @@ public final class ImageUtils {
 
     /**
      * セピア変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @return 変換後のビットマップ
      */
     public static Bitmap setSepia(final Bitmap bitmap) {
@@ -1279,9 +1283,9 @@ public final class ImageUtils {
 
     /**
      * セピア変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @return 変換後のビットマップ
      */
     public static Bitmap setSepia(final String filename) {
@@ -1356,11 +1360,11 @@ public final class ImageUtils {
 
     /**
      * 回転変換処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param rotate
-     *            0～360度まで指定可能
+     *         0～360度まで指定可能
      * @return 変換後のビットマップ
      */
     public static Bitmap setRotate(final Bitmap bitmap, final int rotate) {
@@ -1382,11 +1386,11 @@ public final class ImageUtils {
 
     /**
      * 回転変換処理 本メソッドはBitmap実体を持つとheap memoryが少なくなるため、ファイルシステムに移行している。
-     * 
+     *
      * @param filename
-     *            ファイル名
+     *         ファイル名
      * @param rotate
-     *            0～360度まで指定可能
+     *         0～360度まで指定可能
      * @return 変換後のビットマップ
      */
     public static Bitmap setRotate(final String filename, final int rotate) {
@@ -1419,11 +1423,11 @@ public final class ImageUtils {
 
     /**
      * コーナー処理
-     * 
+     *
      * @param bitmap
-     *            ビットマップ
+     *         ビットマップ
      * @param pixels
-     *            コーナーのピクセルサイズ
+     *         コーナーのピクセルサイズ
      * @return bitmap
      */
     public static Bitmap getRoundedCornerBitmap(final Bitmap bitmap, final int pixels) {
@@ -1450,13 +1454,13 @@ public final class ImageUtils {
 
     /**
      * 3色の最大値を取得する
-     * 
+     *
      * @param red
-     *            赤
+     *         赤
      * @param green
-     *            緑
+     *         緑
      * @param blue
-     *            青
+     *         青
      * @return 3色の最大数値
      */
     public static int getRGBMax(final int red, final int green, final int blue) {
@@ -1466,13 +1470,13 @@ public final class ImageUtils {
 
     /**
      * 3色の最小値を取得する
-     * 
+     *
      * @param red
-     *            赤
+     *         赤
      * @param green
-     *            緑
+     *         緑
      * @param blue
-     *            青
+     *         青
      * @return 3色の最小数値
      */
     public static int getRGBMin(final int red, final int green, final int blue) {
@@ -1482,7 +1486,7 @@ public final class ImageUtils {
 
     /**
      * MIMEタイプを取得する(画像)
-     * 
+     *
      * @param filepath
      * @return MIMEタイプを取得する
      */
@@ -1512,11 +1516,10 @@ public final class ImageUtils {
 
     /**
      * Data URI scheme形式チェック
-     * 
+     *
      * @param data
-     *            data:image/*;base64,～形式のデータ<br>
-     *            ex:data:image/jpeg;base64,～
-     * @return true:Data URI scheme形式<br>
+     *         data:image/*;base64,～形式のデータ<br>
+     *         ex:data:image/jpeg;base64,～
      * @return false:Data URI scheme形式以外<br>
      */
     public static boolean isDataUriScheme(final String data) {
@@ -1535,14 +1538,14 @@ public final class ImageUtils {
 
     /**
      * Data URI schemeをBitmapに変換する。
-     * 
+     *
      * @param data
-     *            data:image/*;base64,～形式のデータ<br>
-     *            ex:data:image/jpeg;base64,～
+     *         data:image/*;base64,～形式のデータ<br>
+     *         ex:data:image/jpeg;base64,～
      * @param w
-     *            最大横幅
+     *         最大横幅
      * @param h
-     *            最大縦幅
+     *         最大縦幅
      * @return Bitmap
      */
     public static Bitmap getBitmap(final String data, final int w, final int h) {
@@ -1559,12 +1562,13 @@ public final class ImageUtils {
 
     /**
      * Data URI schemeをBitmapに変換する。
-     * 
+     *
      * @param data
-     *            data:image/*;base64,～形式のデータ<br>
-     *            ex:data:image/jpeg;base64,～
+     *         data:image/*;base64,～形式のデータ<br>
+     *         ex:data:image/jpeg;base64,～
      * @return Bitmap
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static Bitmap getBitmap(final String data) {
         if (!isDataUriScheme(data)) {
             return null;
@@ -1583,11 +1587,12 @@ public final class ImageUtils {
 
     /**
      * ビットマップから指定の画像形式のバイトデータに変換して返却する。
-     * 
+     *
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      * @return バイト型配列
      */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static byte[] getByte(final Bitmap bitmap, final IMAGE image) {
         ByteArrayOutputStream out = null;
 
@@ -1596,7 +1601,9 @@ public final class ImageUtils {
             if (image == IMAGE.PNG) {
                 bitmap.compress(CompressFormat.JPEG, IMAGE_QUALITY, out);
             } else if (image == IMAGE.WEBP) {
-                bitmap.compress(CompressFormat.WEBP, IMAGE_QUALITY, out);
+                if (AplUtils.hasIceCreamSandwich()) {
+                    bitmap.compress(CompressFormat.WEBP, IMAGE_QUALITY, out);
+                }
             } else if (image == IMAGE.PNG) {
                 bitmap.compress(CompressFormat.PNG, IMAGE_QUALITY, out);
             }
@@ -1608,15 +1615,15 @@ public final class ImageUtils {
 
     /**
      * Mutableを変更したコピーされたBitmapを返却する。<br>
-     * 
+     *
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      * @param isMutable
-     *            true:mutableにする。<br>
-     *            false:imutableにする。
+     *         true:mutableにする。<br>
+     *         false:imutableにする。
      * @param isRecycle
-     *            true:引数のBitmapをrecylceする。<br>
-     *            false:引数のBitmapをrecycleしない。
+     *         true:引数のBitmapをrecylceする。<br>
+     *         false:引数のBitmapをrecycleしない。
      * @return コピーされたBitmap
      */
     public static Bitmap getBitmapCopy(Bitmap bitmap, final boolean isMutable, final boolean isRecycle) {

@@ -3,12 +3,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'eclipse'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
 
 	defaultConfig {
         minSdkVersion 9
-	    targetSdkVersion 21
+	    targetSdkVersion 22
         sourceCompatibility = JavaVersion.VERSION_1_6
         targetCompatibility = JavaVersion.VERSION_1_6
 	}
@@ -72,7 +72,7 @@ tasks.withType(JavaCompile) {
 task findbugs(type: FindBugs) {
     ignoreFailures = true
     effort = "max"
-    reportLevel = "low" // –‚Ç‚ÌƒŒƒxƒ‹‚Ì•ñ‚Ü‚Å‘Î‰‚·‚é‚©‚Å•ÏX–
+    reportLevel = "low" // ï¿½ï¿½ï¿½Ç‚Ìƒï¿½ï¿½xï¿½ï¿½ï¿½Ì•ñ‚Ü‚Å‘Î‰ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Å•ÏXï¿½ï¿½
     excludeFilter = new File("${project.rootDir}/config/findbugs/android_findbugs_filter.xml")
     classes = files("build/intermediates/classes/")
     source 'src/main'
@@ -85,7 +85,7 @@ task findbugs(type: FindBugs) {
     classpath = files()
 }
 
-// ˆË‘¶ŠÖŒW‚ÌJarƒ_ƒEƒ“ƒ[ƒhİ’è
+// ï¿½Ë‘ï¿½ï¿½ÖŒWï¿½ï¿½Jarï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hï¿½İ’ï¿½
 task copyDependencies(type: Copy) {
     from configurations.compile
     into 'libs'

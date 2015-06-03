@@ -1,8 +1,7 @@
 package com.miya38.utils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,11 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Fragmentユーティリティ
- * 
+ *
  * @author y-miyazaki
- * 
  */
 public final class FragmentUtils {
     /** スライドin */
@@ -35,15 +36,15 @@ public final class FragmentUtils {
 
     /**
      * カスタムアニメーション設定
-     * 
+     *
      * @param slideInRight
-     *            画面遷移アニメーションID(右)
+     *         画面遷移アニメーションID(右)
      * @param slideOutLeft
-     *            画面戻りアニメーションID(左)
+     *         画面戻りアニメーションID(左)
      * @param slideInLeft
-     *            画面遷移アニメーションID(左)
+     *         画面遷移アニメーションID(左)
      * @param slideOutRight
-     *            画面戻りアニメーションID(右)
+     *         画面戻りアニメーションID(右)
      */
     public static void setCustomAnimations(final int slideInRight, final int slideOutLeft, final int slideInLeft, final int slideOutRight) {
         sInRight = slideInRight;
@@ -52,11 +53,11 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値
      */
     public static Integer getInt(final Fragment fragment, final String key) {
@@ -71,13 +72,13 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @param defaultValue
-     *            未設定の場合に返却される値
+     *         未設定の場合に返却される値
      * @return 引き渡された値
      */
     public static Integer getInt(final Fragment fragment, final String key, final int defaultValue) {
@@ -89,11 +90,11 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値
      */
     public static Long getLong(final Fragment fragment, final String key) {
@@ -108,13 +109,13 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @param defaultValue
-     *            未設定の場合に返却される値
+     *         未設定の場合に返却される値
      * @return 引き渡された値
      */
     public static Long getLong(final Fragment fragment, final String key, final long defaultValue) {
@@ -126,11 +127,11 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値(未設定の場合はnullを返却する。)
      */
     public static String getString(final Fragment fragment, final String key) {
@@ -142,29 +143,33 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @param defaultValue
-     *            未設定の場合に返却される値
+     *         未設定の場合に返却される値
      * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static String getString(final Fragment fragment, final String key, final String defaultValue) {
         if (fragment.getArguments() != null) {
-            return fragment.getArguments().getString(key, defaultValue);
+            if (AplUtils.hasHoneycombMR1()) {
+                return fragment.getArguments().getString(key, defaultValue);
+            }
+            return fragment.getArguments().getString(key);
         }
         return defaultValue;
     }
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値(未設定の場合はnullを返却する。)
      */
     public static String[] getStringArray(final Fragment fragment, final String key) {
@@ -176,11 +181,11 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値(未設定の場合はnullを返却する。)
      */
     public static ArrayList<Integer> getIntArrayList(final Fragment fragment, final String key) {
@@ -192,13 +197,13 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @param defaultValue
-     *            未設定の場合に返却される値
+     *         未設定の場合に返却される値
      * @return 引き渡された値(未設定の場合はdefaultValueを返却する。)
      */
     public static Boolean getBoolean(final Fragment fragment, final String key, final boolean defaultValue) {
@@ -210,13 +215,13 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param <V>
-     *            Serializable
+     *         Serializable
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値
      */
     @SuppressWarnings("unchecked")
@@ -229,13 +234,13 @@ public final class FragmentUtils {
 
     /**
      * 前画面からデータを取得する
-     * 
+     *
      * @param <V>
-     *            Parcelable
+     *         Parcelable
      * @param fragment
-     *            フラグメントのインスタンス
+     *         フラグメントのインスタンス
      * @param key
-     *            取得対象のキー
+     *         取得対象のキー
      * @return 引き渡された値
      */
     @SuppressWarnings("unchecked")
@@ -253,20 +258,19 @@ public final class FragmentUtils {
      * 第1引数には画面遷移をしたいFragmentを指定してください。 <br>
      * 第2引数には、画面遷移する際にバックスタックから全てのフラグメントをポップするかを指定してください。<br>
      * </p>
-     * 
+     *
      * @param activity
-     *            FragmentActivity
+     *         FragmentActivity
      * @param viewId
-     *            Fragmentを設定するviewのR.id.????
-     * 
+     *         Fragmentを設定するviewのR.id.????
      * @param fragment
-     *            Fragment
+     *         Fragment
      * @param isAddToBackStack
-     *            バックスタックを積むか？
+     *         バックスタックを積むか？
      * @param isAllPopBackStack
-     *            フラグメントバックスタックを全てポップするか？<br>
-     *            true:全てバックスタックからポップする<br>
-     *            false:そのままバックスタックを残す。<br>
+     *         フラグメントバックスタックを全てポップするか？<br>
+     *         true:全てバックスタックからポップする<br>
+     *         false:そのままバックスタックを残す。<br>
      */
     public static void startFragment(final FragmentActivity activity, final int viewId, final Fragment fragment, final boolean isAddToBackStack, final boolean isAllPopBackStack) {
         // Insert the fragment by replacing any existing fragment
@@ -304,15 +308,15 @@ public final class FragmentUtils {
      * Fragmentの画面遷移を行うメソッドです。<br>
      * 第1引数には画面遷移をしたいFragmentを指定してください。 <br>
      * </p>
-     * 
+     *
      * @param activity
-     *            FragmentActivity
+     *         FragmentActivity
      * @param viewId
-     *            Fragmentを設定するviewのR.id.????
+     *         Fragmentを設定するviewのR.id.????
      * @param fragment
-     *            Fragment
+     *         Fragment
      * @param isAddToBackStack
-     *            バックスタックを積むか？
+     *         バックスタックを積むか？
      */
     public static void startFragment(final FragmentActivity activity, final int viewId, final Fragment fragment, final boolean isAddToBackStack) {
         // Insert the fragment by replacing any existing fragment
@@ -342,9 +346,9 @@ public final class FragmentUtils {
      * <p>
      * Fragmentスタック全削除を行うメソッドです。<br>
      * </p>
-     * 
+     *
      * @param activity
-     *            FragmentActivity
+     *         FragmentActivity
      */
     public static void finishAllFragment(final FragmentActivity activity) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
@@ -367,11 +371,11 @@ public final class FragmentUtils {
      * <p>
      * Fragmentスタック削除を行うメソッドです。<br>
      * </p>
-     * 
+     *
      * @param activity
-     *            FragmentActivity
+     *         FragmentActivity
      * @param viewId
-     *            View ID
+     *         View ID
      */
     public static void finishFragment(final FragmentActivity activity, final int viewId) {
         final FragmentManager fragmentManager = activity.getSupportFragmentManager();
@@ -382,9 +386,9 @@ public final class FragmentUtils {
 
     /**
      * 現在のFragement取得
-     * 
+     *
      * @param activity
-     *            {@link FragmentActivity}
+     *         {@link FragmentActivity}
      * @return 表示されているFragment
      */
     public static Fragment getVisibleFragment(final FragmentActivity activity) {

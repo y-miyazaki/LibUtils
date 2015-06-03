@@ -1,13 +1,15 @@
 package com.miya38.utils;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.text.Html;
+import android.text.TextUtils;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
-
-import android.text.Html;
-import android.text.TextUtils;
 
 /**
  * 文字列操作ユーティリティ
@@ -484,6 +486,7 @@ public final class StringUtils {
      *            HTML文字列
      * @return HTMLエスケープ後の文字列
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static String htmlEscape(String html) {
         if (AplUtils.hasJellyBean()) {
             return Html.escapeHtml(html);

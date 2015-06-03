@@ -1,10 +1,5 @@
 package com.miya38.widget;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -30,6 +25,11 @@ import com.miya38.utils.ViewHelper;
 import com.miya38.widget.callback.OnNetworkImageViewListener;
 import com.miya38.widget.volley.NetworkImageView;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * カスタムImageViewクラス
  * <p>
@@ -54,7 +54,7 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
     private static final Field FIELD_MCACHE = ClassUtils.getField(ImageLoader.class, "mCache");
 
     /** アニメーション時間(ms) */
-    private static final int ANIMATION_DURATION = 500;
+    private static final int ANIMATION_DURATION = 250;
     /** グレースケールカラー */
     private static final int COLOR_GRAYSCALE = 0x80000000;
     /** 角丸サイズ */
@@ -400,11 +400,11 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
                 mOnNetworkImageViewListener.onSetImageBitmap(bm);
             }
 
-            if (bm != null) {
-                // if (isAlphaAnimation) {
-                // alphaInAnimation();
-                // }
-            }
+//            if (bm != null) {
+//                 if (isAlphaAnimation) {
+//                     setAnimationAlphaIn();
+//                 }
+//            }
         } catch (final OutOfMemoryError e) {
             LogUtils.e(TAG, "setImageBitmap bitmap OutOfMemoryError", e);
         }

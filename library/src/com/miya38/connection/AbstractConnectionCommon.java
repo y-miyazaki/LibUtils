@@ -3,6 +3,7 @@ package com.miya38.connection;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -25,8 +26,6 @@ import com.miya38.utils.ViewHelper;
 import com.miya38.utils.guava.Preconditions;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * コネクション共通処理
@@ -35,7 +34,6 @@ import java.util.Map;
  * </p>
  *
  * @author y-miyazaki
- *
  */
 public abstract class AbstractConnectionCommon {
     // ---------------------------------------------------------------
@@ -70,17 +68,17 @@ public abstract class AbstractConnectionCommon {
     // connection
     // ----------------------------------------------------------
     /** 画面にプログレスバーを表示するフラグ(ListView等で独自にフッダープログレスを表示する場合はfalseにする。) */
-    private final Map<Integer, View> mDisplayProgress;
+    private final SparseArray<View> mDisplayProgress;
 
     /**
      * Jsonエラー表示用メソッド
      *
      * @param networkRequest
-     *            {@link NetworkRequest}
+     *         {@link NetworkRequest}
      * @param networkResponse
-     *            {@link NetworkResponse}
+     *         {@link NetworkResponse}
      * @param data
-     *            受信データ
+     *         受信データ
      */
     public abstract void setJsonError(NetworkRequest networkRequest, NetworkResponse networkResponse, String data);
 
@@ -91,13 +89,13 @@ public abstract class AbstractConnectionCommon {
      * </p>
      *
      * @param networkRequest
-     *            {@link NetworkRequest}
+     *         {@link NetworkRequest}
      * @param networkResponse
-     *            {@link NetworkResponse}
+     *         {@link NetworkResponse}
      * @param object
-     *            受信データ
+     *         受信データ
      * @return true:エラー表示あり<br>
-     *         false:エラー表示なし
+     * false:エラー表示なし
      */
     public abstract boolean setError(NetworkRequest networkRequest, NetworkResponse networkResponse, Object object);
 
@@ -112,7 +110,7 @@ public abstract class AbstractConnectionCommon {
      * コンストラクタ
      *
      * @param activity
-     *            {@link FragmentActivity}
+     *         {@link FragmentActivity}
      */
     public AbstractConnectionCommon(final FragmentActivity activity) {
         mActivity = activity;
@@ -128,14 +126,14 @@ public abstract class AbstractConnectionCommon {
         if (activity instanceof OnDeleteLoaderFinishListerner) {
             mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) activity;
         }
-        mDisplayProgress = new HashMap<Integer, View>();
+        mDisplayProgress = new SparseArray<View>();
     }
 
     /**
      * コンストラクタ
      *
      * @param fragment
-     *            {@link Fragment}
+     *         {@link Fragment}
      */
     public AbstractConnectionCommon(final Fragment fragment) {
         mFragment = fragment;
@@ -151,14 +149,14 @@ public abstract class AbstractConnectionCommon {
         if (fragment instanceof OnDeleteLoaderFinishListerner) {
             mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) fragment;
         }
-        mDisplayProgress = new HashMap<Integer, View>();
+        mDisplayProgress = new SparseArray<View>();
     }
 
     /**
      * コンストラクタ
      *
      * @param dialogFragment
-     *            {@link DialogFragment}
+     *         {@link DialogFragment}
      */
     public AbstractConnectionCommon(final DialogFragment dialogFragment) {
         mDialogFragment = dialogFragment;
@@ -174,20 +172,20 @@ public abstract class AbstractConnectionCommon {
         if (dialogFragment instanceof OnDeleteLoaderFinishListerner) {
             mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) dialogFragment;
         }
-        mDisplayProgress = new HashMap<Integer, View>();
+        mDisplayProgress = new SparseArray<View>();
     }
 
     /**
      * ロード完了
      *
      * @param networkRequest
-     *            リクエストパラメータ<br>
-     *            リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
+     *         リクエストパラメータ<br>
+     *         リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
      * @param networkResponse
-     *            受信データ(statusCode/header/data/notmodified)<br>
-     *            ※タイムアウト等の場合はnullが設定される。
+     *         受信データ(statusCode/header/data/notmodified)<br>
+     *         ※タイムアウト等の場合はnullが設定される。
      * @param data
-     *            受信データ
+     *         受信データ
      */
     public void onLoadFinished(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final String data) {
         LogUtils.d(TAG, "onLoadFinished");
@@ -211,14 +209,14 @@ public abstract class AbstractConnectionCommon {
      * 各メソッド毎にコールバックメソッドを呼びだす。
      *
      * @param networkRequest
-     *            リクエストパラメータ
-     *            <p>
-     *            リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
-     *            </p>
+     *         リクエストパラメータ
+     *         <p>
+     *         リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
+     *         </p>
      * @param networkResponse
-     *            受信データ(statusCode/header/data/notmodified)
+     *         受信データ(statusCode/header/data/notmodified)
      * @param data
-     *            受信データ
+     *         受信データ
      */
     public void onMethodLoaderFinished(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final String data) {
         // ---------------------------------------------------------------
@@ -232,40 +230,40 @@ public abstract class AbstractConnectionCommon {
         boolean isJsonException = false;
         try {
             switch (networkRequest.mMethod) {
-            case Method.GET:
-                if (mOnGetLoaderFinishListerner != null) {
-                    mOnGetLoaderFinishListerner.onGetLoaderFinished(networkRequest, networkResponse, data);
-                    if (!isFinishing()) {
-                        mOnGetLoaderFinishListerner.onGetLoadView(networkRequest, networkResponse, data);
+                case Method.GET:
+                    if (mOnGetLoaderFinishListerner != null) {
+                        mOnGetLoaderFinishListerner.onGetLoaderFinished(networkRequest, networkResponse, data);
+                        if (!isFinishing()) {
+                            mOnGetLoaderFinishListerner.onGetLoadView(networkRequest, networkResponse, data);
+                        }
                     }
-                }
-                break;
-            case Method.POST:
-                if (mOnPostLoaderFinishListerner != null) {
-                    mOnPostLoaderFinishListerner.onPostLoaderFinished(networkRequest, networkResponse, data);
-                    if (!isFinishing()) {
-                        mOnPostLoaderFinishListerner.onPostLoadView(networkRequest, networkResponse, data);
+                    break;
+                case Method.POST:
+                    if (mOnPostLoaderFinishListerner != null) {
+                        mOnPostLoaderFinishListerner.onPostLoaderFinished(networkRequest, networkResponse, data);
+                        if (!isFinishing()) {
+                            mOnPostLoaderFinishListerner.onPostLoadView(networkRequest, networkResponse, data);
+                        }
                     }
-                }
-                break;
-            case Method.PUT:
-                if (mOnPutLoaderFinishListerner != null) {
-                    mOnPutLoaderFinishListerner.onPutLoaderFinished(networkRequest, networkResponse, data);
-                    if (!isFinishing()) {
-                        mOnPutLoaderFinishListerner.onPutLoadView(networkRequest, networkResponse, data);
+                    break;
+                case Method.PUT:
+                    if (mOnPutLoaderFinishListerner != null) {
+                        mOnPutLoaderFinishListerner.onPutLoaderFinished(networkRequest, networkResponse, data);
+                        if (!isFinishing()) {
+                            mOnPutLoaderFinishListerner.onPutLoadView(networkRequest, networkResponse, data);
+                        }
                     }
-                }
-                break;
-            case Method.DELETE:
-                if (mOnDeleteLoaderFinishListerner != null) {
-                    mOnDeleteLoaderFinishListerner.onDeleteLoaderFinished(networkRequest, networkResponse, data);
-                    if (!isFinishing()) {
-                        mOnDeleteLoaderFinishListerner.onDeleteLoadView(networkRequest, networkResponse, data);
+                    break;
+                case Method.DELETE:
+                    if (mOnDeleteLoaderFinishListerner != null) {
+                        mOnDeleteLoaderFinishListerner.onDeleteLoaderFinished(networkRequest, networkResponse, data);
+                        if (!isFinishing()) {
+                            mOnDeleteLoaderFinishListerner.onDeleteLoadView(networkRequest, networkResponse, data);
+                        }
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
             }
         } catch (final JsonParseException e) {
             isJsonException = true;
@@ -286,7 +284,7 @@ public abstract class AbstractConnectionCommon {
      * リクエストAPI
      *
      * @param networkRequest
-     *            {@link NetworkRequest}
+     *         {@link NetworkRequest}
      * @throws IllegalAccessException
      */
     public final void requestAPI(final NetworkRequest networkRequest) {
@@ -312,11 +310,11 @@ public abstract class AbstractConnectionCommon {
      * 画面にプログレスバーを表示するか
      *
      * @param display
-     *            true:表示する/false:表示しない
+     *         true:表示する/false:表示しない
      * @param id
-     *            送信データ判別ID
+     *         送信データ判別ID
      * @param isSpecialDisplay
-     *            true:表示する/false:表示しない pullリクエスト等の特別にプログレスバーを表示したくない場合に使用する
+     *         true:表示する/false:表示しない pullリクエスト等の特別にプログレスバーを表示したくない場合に使用する
      */
     private synchronized void loadingDisplayProgress(final boolean display, final int id, final boolean isSpecialDisplay) {
         if (isSpecialDisplay) {
@@ -362,7 +360,7 @@ public abstract class AbstractConnectionCommon {
             } else {
                 final View view = mDisplayProgress.get(id);
                 mDisplayProgress.remove(id);
-                if (mDisplayProgress.isEmpty() && view != null) {
+                if (mDisplayProgress.size() == 0 && view != null) {
                     view.setVisibility(View.GONE);
                     view.setOnTouchListener(null);
                 }
@@ -374,7 +372,7 @@ public abstract class AbstractConnectionCommon {
      * リソースから文字列取得
      *
      * @param resId
-     *            リソースID
+     *         リソースID
      * @return リソースから取得した文字列
      */
     public String getString(final int resId) {
@@ -394,9 +392,9 @@ public abstract class AbstractConnectionCommon {
      * リソースから文字列取得
      *
      * @param resId
-     *            リソースID
+     *         リソースID
      * @param args
-     *            引数
+     *         引数
      * @return リソースから取得した文字列
      */
     public String getString(final int resId, final Object... args) {

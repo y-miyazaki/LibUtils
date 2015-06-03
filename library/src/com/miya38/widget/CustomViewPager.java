@@ -1,8 +1,8 @@
 package com.miya38.widget;
 
-import java.lang.reflect.Field;
-
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.HorizontalScrollView;
 import android.widget.Scroller;
+
+import java.lang.reflect.Field;
 
 /**
  * カスタムViewPagerクラス
@@ -163,6 +165,7 @@ public class CustomViewPager extends ViewPager {
          * @param flywheel
          *            flywheel
          */
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         public ScrollerCustomDuration(final Context context, final Interpolator interpolator, final boolean flywheel) {
             super(context, interpolator, flywheel);
         }

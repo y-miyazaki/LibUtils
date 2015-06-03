@@ -1,9 +1,6 @@
 package com.miya38.utils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
@@ -20,6 +17,10 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * アプリケーションユーティリティ
@@ -261,7 +262,7 @@ public final class AplUtils {
      * 
      * @return 画面の横幅
      */
-    @SuppressWarnings("deprecation")
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public static int getWindowWidth() {
         final WindowManager wm = (WindowManager) sContext.getSystemService(Context.WINDOW_SERVICE);
         final Display display = wm.getDefaultDisplay();
@@ -279,7 +280,7 @@ public final class AplUtils {
      * 
      * @return 画面の縦幅
      */
-    @SuppressWarnings("deprecation")
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public static int getWindowHeight() {
         final WindowManager wm = (WindowManager) sContext.getSystemService(Context.WINDOW_SERVICE);
         final Display display = wm.getDefaultDisplay();

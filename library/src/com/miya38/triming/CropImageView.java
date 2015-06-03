@@ -1,16 +1,18 @@
 package com.miya38.triming;
 
-import java.util.ArrayList;
-
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.LogUtils;
+
+import java.util.ArrayList;
 
 /**
  * トリミング用ImageView
@@ -53,6 +55,7 @@ public class CropImageView extends ImageViewTouchBase {
      * @param context
      * @param attrs
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public CropImageView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         this.mContext = context;

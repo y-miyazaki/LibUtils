@@ -1,10 +1,10 @@
 package com.miya38.list;
 
-import java.util.List;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,6 +19,8 @@ import com.miya38.utils.AplUtils;
 import com.miya38.utils.CollectionUtils;
 import com.miya38.utils.ViewHelper;
 import com.miya38.widget.CustomListView;
+
+import java.util.List;
 
 /**
  * CustomListView設定クラス
@@ -386,6 +388,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
         onRefreshComplete();
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void addAll(final List<U> items) {
         if (!CollectionUtils.isNullOrEmpty(items)) {

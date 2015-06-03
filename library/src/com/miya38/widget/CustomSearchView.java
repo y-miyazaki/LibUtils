@@ -1,6 +1,8 @@
 package com.miya38.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.SearchView;
 
@@ -9,6 +11,7 @@ import android.widget.SearchView;
  * 
  * @author y-miyazaki
  */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CustomSearchView extends SearchView {
 
     /**

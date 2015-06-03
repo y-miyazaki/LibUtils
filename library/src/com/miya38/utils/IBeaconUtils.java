@@ -1,13 +1,14 @@
 package com.miya38.utils;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * iBeaconユーティリティ
  * <p>
  * アップル社で発売されているiBeacon用の受信用のユーティリティクラスである。
  * </p>
- * 
+ *
  * @author y-miyazaki
  */
 public final class IBeaconUtils {
@@ -35,7 +36,7 @@ public final class IBeaconUtils {
 
     /**
      * IBeacon距離を4段階で取得するためのENUM
-     * 
+     *
      * @author y-miyazaki
      */
     public enum IBeaconDistance {
@@ -56,11 +57,10 @@ public final class IBeaconUtils {
     }
 
     /**
-     * 
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote
-     *            device.
-     * @return
+     *         The content of the advertisement record offered by the remote
+     *         device.
+     * @return Advertisment
      */
     public static String getAdvertisment(final byte[] scanRecord) {
         return intToHex2(scanRecord[5] & 0xff) + intToHex2(scanRecord[6] & 0xff);
@@ -68,10 +68,10 @@ public final class IBeaconUtils {
 
     /**
      * iBeacon用UUIDを取得する
-     * 
+     *
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote
-     *            device.
+     *         The content of the advertisement record offered by the remote
+     *         device.
      * @return UUID
      */
     public static String getUUID(final byte[] scanRecord) {
@@ -98,10 +98,10 @@ public final class IBeaconUtils {
 
     /**
      * iBeacon用Majorを取得する
-     * 
+     *
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote
-     *            device.
+     *         The content of the advertisement record offered by the remote
+     *         device.
      * @return Major
      */
     public static String getMajor(final byte[] scanRecord) {
@@ -110,10 +110,10 @@ public final class IBeaconUtils {
 
     /**
      * iBeacon用Minorを取得する
-     * 
+     *
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote
-     *            device.
+     *         The content of the advertisement record offered by the remote
+     *         device.
      * @return Minor
      */
     public static String getMinor(final byte[] scanRecord) {
@@ -122,30 +122,30 @@ public final class IBeaconUtils {
 
     /**
      * iBeacon用データであるかチェックをする
-     * 
+     *
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote
-     *            device.
-     * @param UUID
-     *            UUID
+     *         The content of the advertisement record offered by the remote
+     *         device.
+     * @param uUID
+     *         UUID
      * @return true: UUIDが一致する。<br>
-     *         false: UUIDが一致しない、もしくはiBeacon用データではない。<br>
+     * false: UUIDが一致しない、もしくはiBeacon用データではない。<br>
      */
     public static boolean equalUUID(final byte[] scanRecord, final String uUID) {
         if (isIBeacon(scanRecord) && !StringUtils.isEmpty(uUID)) {
-            return StringUtils.equals(getUUID(scanRecord), uUID.toUpperCase());
+            return StringUtils.equals(getUUID(scanRecord), uUID.toUpperCase(Locale.ENGLISH));
         }
         return false;
     }
 
     /**
      * iBeacon用データであるかチェックをする
-     * 
+     *
      * @param scanRecord
-     *            The content of the advertisement record offered by the remote
-     *            device.
+     *         The content of the advertisement record offered by the remote
+     *         device.
      * @return true: iBeaconデータである<br>
-     *         false:iBeaconデータではない
+     * false:iBeaconデータではない
      */
     public static boolean isIBeacon(final byte[] scanRecord) {
         if (scanRecord.length > IBEACON_DATA_LENGTH) {
@@ -159,15 +159,14 @@ public final class IBeaconUtils {
 
     /**
      * Calculates the accuracy of an RSSI reading.
-     * 
-     * The code was taken from {@link http
-     * ://stackoverflow.com/questions/20416218/understanding-ibeacon-distancing}
-     * 
+     * <p>
+     * The code was taken from @see http://stackoverflow.com/questions/20416218/understanding-ibeacon-distancing
+     * </p>
      * @param txPower
-     *            the calibrated TX power of an iBeacon
+     *         the calibrated TX power of an iBeacon
      * @param rssi
-     *            the RSSI value of the iBeacon
-     * @return
+     *         the RSSI value of the iBeacon
+     * @return accuracy
      */
     public static double getAccuracy(final int txPower, final double rssi) {
         if (rssi == 0) {
@@ -176,20 +175,18 @@ public final class IBeaconUtils {
         final double ratio = rssi * 1.0 / txPower;
         if (ratio < 1.0) {
             return Math.pow(ratio, 10);
-        }
-        else {
-            final double accuracy = (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
-            return accuracy;
+        } else {
+            return  (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
         }
     }
 
     /**
      * 距離を4段階で取得する。
-     * 
+     *
      * @param txPower
-     *            the calibrated TX power of an iBeacon
+     *         the calibrated TX power of an iBeacon
      * @param rssi
-     *            the RSSI value of the iBeacon
+     *         the RSSI value of the iBeacon
      * @return {@link IBeaconDistance}
      */
     public static IBeaconDistance getDistance(final int txPower, final double rssi) {
@@ -198,9 +195,9 @@ public final class IBeaconUtils {
 
     /**
      * 距離を4段階で取得する。
-     * 
+     *
      * @param accuracy
-     *            距離(m)
+     *         距離(m)
      * @return {@link IBeaconDistance}
      */
     public static IBeaconDistance getDistance(final double accuracy) {
@@ -216,13 +213,13 @@ public final class IBeaconUtils {
 
     /**
      * intデータを 2桁16進数に変換するメソッド
-     * 
+     *
      * @param i
-     *            intデータ
+     *         intデータ
      * @return 16進数
      */
     private static String intToHex2(final int i) {
-        final char hex_2[] = { Character.forDigit((i >> 4) & 0x0f, 16), Character.forDigit(i & 0x0f, 16) };
-        return new String(hex_2).toUpperCase();
+        final char hex_2[] = {Character.forDigit((i >> 4) & 0x0f, 16), Character.forDigit(i & 0x0f, 16)};
+        return new String(hex_2).toUpperCase(Locale.ENGLISH);
     }
 }
