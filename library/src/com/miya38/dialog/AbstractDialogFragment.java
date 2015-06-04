@@ -3,6 +3,7 @@ package com.miya38.dialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,9 @@ import com.miya38.R;
 import com.miya38.utils.ClassUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * カスタムダイアログクラス レイアウトを自由に設定可能なクラス<br>
@@ -59,9 +63,21 @@ public abstract class AbstractDialogFragment extends DialogFragment {
     private Dialog mDialog;
     /** クローズフラグ */
     private boolean mIsDismissFlg;
-
     /** リスナーID */
     private int mListenerId;
+
+    // ---------------------------------------------------------------
+    // annotation
+    // ---------------------------------------------------------------
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({OnDialogFragmentListener.DIALOG_NEGATIVE,
+            OnDialogFragmentListener.DIALOG_NEUTRAL,
+            OnDialogFragmentListener.DIALOG_POSITIVE,
+            OnDialogFragmentListener.DIALOG_CLOSE,
+            OnDialogFragmentListener.DIALOG_DISMISS,
+            OnDialogFragmentListener.DIALOG_CANCEL})
+    public @interface OnDialogFragmentListenerDef {
+    }
 
     /**
      * テーマを取得します。
@@ -124,7 +140,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
          * @param bundle
          *         Bundleに乗せて返却する。
          */
-        void onDialogEvent(int listenerId, int event, Bundle bundle);
+        void onDialogEvent(int listenerId, @OnDialogFragmentListenerDef int event, Bundle bundle);
     }
 
     @Override
@@ -300,7 +316,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      * @param bundle
      *         Bundleに乗せて返却する。
      */
-    private void onEvent(final int event, final Bundle bundle) {
+    private void onEvent(@OnDialogFragmentListenerDef final int event, final Bundle bundle) {
         if (getTargetFragment() instanceof OnDialogFragmentListener) {
             ((OnDialogFragmentListener) getTargetFragment()).onDialogEvent(mListenerId, event, bundle);
         } else if (getActivity() instanceof OnDialogFragmentListener) {

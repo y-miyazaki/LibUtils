@@ -1,5 +1,6 @@
 package com.miya38.activity;
 
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +14,19 @@ import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
 import com.miya38.R;
+import com.miya38.application.CommonApplication;
+import com.miya38.application.CommonMultiDexApplication;
 import com.miya38.common.CommonInterface.OnWindowFocusChangedListener;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.ClassUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
 import com.miya38.utils.ViewHelper;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Activity抽象化クラス
- * 
+ *
  * @author y-miyazaki
  */
 public abstract class AbstractActivity extends ActionBarActivity {
@@ -49,33 +53,34 @@ public abstract class AbstractActivity extends ActionBarActivity {
     // ---------------------------------------------------------------
     // abstract method
     // ---------------------------------------------------------------
+
     /**
      * ヘッダ初期化処理
-     * 
+     *
      * @param savedInstanceState
-     *            {@link Bundle}
+     *         {@link Bundle}
      */
     protected abstract void initHeader(Bundle savedInstanceState);
 
     /**
      * フッタ初期化処理
-     * 
+     *
      * @param savedInstanceState
-     *            {@link Bundle}
+     *         {@link Bundle}
      */
     protected abstract void initFooter(Bundle savedInstanceState);
 
     /**
      * ビュー初期化処理
-     * 
+     *
      * @param savedInstanceState
-     *            {@link Bundle}
+     *         {@link Bundle}
      */
     protected abstract void initView(Bundle savedInstanceState);
 
     /**
      * ビューレイアウトのリソースIDを取得します。
-     * 
+     *
      * @return リソースID。
      */
     protected abstract int getViewLayoutId();
@@ -86,7 +91,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、<br>
      * {@link AbstractActivity#LAYOUT_NO_SETTING}を指定してください。
      * </p>
-     * 
+     *
      * @return ビュースタブID
      */
     protected abstract int getViewStubLayoutId();
@@ -96,7 +101,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
      * <p>
      * アクティビティに全てセットすることで全画面を一気にfinishすることが可能なブロードキャストレシーバー
      * </p>
-     * 
+     *
      * @author y-miyazaki
      */
     private class LogoutBroadcastReceiver extends BroadcastReceiver {
@@ -200,6 +205,20 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
         // オブジェクトのnull初期化
         ClassUtils.setAsyncObjectNull(this, getClass(), AbstractActivity.class);
+
+        // leak canary
+        Application application = getApplication();
+        if (application instanceof CommonMultiDexApplication) {
+            RefWatcher refWatcher = CommonMultiDexApplication.getRefWatcher(this);
+            if (refWatcher != null) {
+                refWatcher.watch(this);
+            }
+        } else if (application instanceof CommonApplication) {
+            RefWatcher refWatcher = CommonApplication.getRefWatcher(this);
+            if (refWatcher != null) {
+                refWatcher.watch(this);
+            }
+        }
     }
 
     @Override
@@ -218,7 +237,6 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ヘッダー非表示処理
-     * 
      */
     public void setNoHeader() {
         final ActionBar actionBar = getSupportActionBar();
@@ -229,9 +247,9 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ヘッダタイトル設定
-     * 
+     *
      * @param title
-     *            タイトル
+     *         タイトル
      */
     public void setHeaderTitle(final String title) {
         final ActionBar actionBar = getSupportActionBar();
@@ -246,9 +264,9 @@ public abstract class AbstractActivity extends ActionBarActivity {
     /**
      * 指定されたアクティビティクラス以外を全て殺す<br>
      * 指定された引数のクラス以外を全てfinish()する。
-     * 
+     *
      * @param clazz
-     *            finishしないClass
+     *         finishしないClass
      */
     public final void finishAll(final Class<?> clazz) {
         final Intent intent = new Intent();
@@ -347,9 +365,9 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * 端末向き変更によるActivity再生成防止対策
-     * 
+     *
      * @param newConfig
-     *            {@link Configuration}
+     *         {@link Configuration}
      */
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
@@ -359,9 +377,9 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * Stop状態であるかを返却する
-     * 
+     *
      * @return true:ライフサイクルがstop状態<br>
-     *         false:ライフサイクルがstop状態以外<br>
+     * false:ライフサイクルがstop状態以外<br>
      */
     public final boolean isStop() {
         return mIsStop;
@@ -369,9 +387,9 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナー登録<br>
-     * 
+     *
      * @param l
-     *            リスナーを登録するとコールバックリスナーが走ります。
+     *         リスナーを登録するとコールバックリスナーが走ります。
      */
     public final void setOnWindowFocusChangedListener(final OnWindowFocusChangedListener l) {
         this.mOnWindowFocusChangedListener = l;
@@ -379,7 +397,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナーのインスタンス返却
-     * 
+     *
      * @return OnKeyDownListener
      */
     public final OnWindowFocusChangedListener getOnWindowFocusChangedListener() {

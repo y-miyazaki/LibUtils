@@ -22,7 +22,7 @@ public final class CopyUtils implements Cloneable {
      * 
      * @param o
      *            オブジェクト
-     * @return このオブジェクトのColne(DeepCopy)
+     * @return このオブジェクトのClone(DeepCopy)
      * @throws CloneNotSupportedException
      *             Cloneを作成出来なかった
      */

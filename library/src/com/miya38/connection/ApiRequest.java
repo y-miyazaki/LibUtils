@@ -1,5 +1,7 @@
 package com.miya38.connection;
 
+import android.support.annotation.IntDef;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -26,6 +28,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
@@ -78,6 +82,14 @@ public class ApiRequest extends StringRequest {
     private String mBody;
     /** 通信完了後の受信データ */
     protected NetworkResponse mNetworkResponse;
+
+    // ---------------------------------------------------------------
+    // annotation
+    // ---------------------------------------------------------------
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Method.GET,Method.POST,Method.DELETE,Method.PUT})
+    private @interface MethodDef {
+    }
 
     /**
      * Callback interface for delivering parsed responses.
@@ -139,7 +151,7 @@ public class ApiRequest extends StringRequest {
      * @param apiErrorListener
      *         {@link ApiErrorListener}
      */
-    public ApiRequest(final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
+    public ApiRequest(@MethodDef final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(method, url, apiListener, apiErrorListener);
         mApiListener = apiListener;
         mApiErrorListener = apiErrorListener;
@@ -226,7 +238,6 @@ public class ApiRequest extends StringRequest {
 
                     final Header[] apacheHeaders = networkResponse.apacheHeaders;
                     if (apacheHeaders != null) {
-                        final int length = apacheHeaders.length;
                         for (final Header apacheHeader : apacheHeaders) {
                             final String key = apacheHeader.getName();
                             final String value = apacheHeader.getValue();
@@ -339,7 +350,6 @@ public class ApiRequest extends StringRequest {
 
             final Header[] apacheHeaders = mNetworkResponse.apacheHeaders;
             if (apacheHeaders != null) {
-                final int length = apacheHeaders.length;
                 for (final Header apacheHeader : apacheHeaders) {
                     final String key = apacheHeader.getName();
                     final String value = apacheHeader.getValue();
@@ -399,7 +409,6 @@ public class ApiRequest extends StringRequest {
         if (response != null) {
             final Header[] apacheHeaders = response.apacheHeaders;
             if (apacheHeaders != null) {
-                final int length = apacheHeaders.length;
                 for (final Header apacheHeader : apacheHeaders) {
                     final String key = apacheHeader.getName();
                     final String value = apacheHeader.getValue();

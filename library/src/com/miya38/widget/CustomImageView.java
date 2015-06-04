@@ -166,7 +166,6 @@ public class CustomImageView extends ImageView implements OnTouchListener {
             LogUtils.e(TAG, "bitmap OutOfMemoryError", e);
             if (bm != null) {
                 bm.recycle();
-                bm = null;
             }
         }
     }

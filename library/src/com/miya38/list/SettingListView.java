@@ -3,7 +3,6 @@ package com.miya38.list;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +38,6 @@ import java.util.List;
  * @author y-miyazaki
  */
 public class SettingListView<T extends CustomArrayAdapter<U>, U> extends AbstractSettingListView<T, U> {
-    /** Context */
-    protected static Context sContext;
     /** Adapter */
     protected T mAdapter;
     /** Acitivity */
@@ -57,17 +54,6 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     protected int mListViewEmptyId;
     /** ヘッダーView */
     protected View mHeaderView;
-
-    /**
-     * 初期化します。<br>
-     * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
-     * @param context
-     *            {@link Context}
-     */
-    public static void configure(final Context context) {
-        sContext = context;
-    }
 
     /**
      * コンストラクタ

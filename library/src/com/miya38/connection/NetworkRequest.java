@@ -1,11 +1,15 @@
 package com.miya38.connection;
 
-import java.util.HashMap;
-import java.util.Map;
+import android.support.annotation.IntDef;
 
 import com.android.volley.Request.Method;
 import com.miya38.exception.ApplicationException;
 import com.miya38.utils.ConnectionUtils;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ネットワークパラメータクラス
@@ -60,6 +64,21 @@ public class NetworkRequest {
     public NetworkRequest() {
         // 何も初期化しない。
     }
+    // ---------------------------------------------------------------
+    // annotation
+    // ---------------------------------------------------------------
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Method.GET,Method.DELETE})
+    private @interface MethodGetDef {
+    }
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Method.POST,Method.PUT})
+    private @interface MethodPostDef {
+    }
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Method.GET,Method.POST,Method.DELETE,Method.PUT})
+    private @interface MethodDef {
+    }
 
     /**
      * GET/DELETEリクエストコンストラクタ
@@ -77,10 +96,7 @@ public class NetworkRequest {
      *            リクエストID<br>
      *            このパラメータでデータを受信した際に何をリクエストした結果であるかを判定することが出来る。
      */
-    public NetworkRequest(final int method, final String url, final Map<String, String> query, final int id) {
-        if (method != Method.GET && method != Method.DELETE) {
-            throw new ApplicationException("method should set Method.GET or Method.DELETE.");
-        }
+    public NetworkRequest(@MethodGetDef final int method, final String url, final Map<String, String> query, final int id) {
         this.mMethod = method;
         this.mUrl = ConnectionUtils.getUrl(url, query);
         this.mQuery = query;
@@ -108,10 +124,7 @@ public class NetworkRequest {
      * @param headers
      *            リクエストヘッダー
      */
-    public NetworkRequest(final int method, final String url, final Map<String, String> query, final int id, final Map<String, String> headers) {
-        if (method != Method.GET && method != Method.DELETE) {
-            throw new ApplicationException("method should set Method.GET or Method.DELETE.");
-        }
+    public NetworkRequest(@MethodGetDef final int method, final String url, final Map<String, String> query, final int id, final Map<String, String> headers) {
         this.mMethod = method;
         this.mUrl = ConnectionUtils.getUrl(url, query);
         this.mQuery = query;
@@ -135,10 +148,7 @@ public class NetworkRequest {
      *            リクエストID<br>
      *            このパラメータでデータを受信した際に何をリクエストした結果であるかを判定することが出来る。
      */
-    public NetworkRequest(final int method, final String url, final String body, final int id) {
-        if (method != Method.POST && method != Method.PUT) {
-            throw new ApplicationException("method should set Method.POST or Method.PUT.");
-        }
+    public NetworkRequest(@MethodPostDef final int method, final String url, final String body, final int id) {
         this.mMethod = method;
         this.mUrl = url;
         this.mBody = body;
@@ -166,7 +176,7 @@ public class NetworkRequest {
      * @param headers
      *            リクエストヘッダー
      */
-    public NetworkRequest(final int method, final String url, final String body, final int id, final Map<String, String> headers) {
+    public NetworkRequest(@MethodPostDef final int method, final String url, final String body, final int id, final Map<String, String> headers) {
         if (method != Method.POST && method != Method.PUT) {
             throw new ApplicationException("method should set Method.POST or Method.PUT.");
         }
@@ -188,7 +198,7 @@ public class NetworkRequest {
      * @param method
      *            セットする mMethod
      */
-    public final void setMethod(final int method) {
+    public final void setMethod(@MethodDef final int method) {
         this.mMethod = method;
     }
 

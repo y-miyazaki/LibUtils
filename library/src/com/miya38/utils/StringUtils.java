@@ -255,7 +255,7 @@ public final class StringUtils {
      * @param index
      *            The index of the character in the source
      * @return An integer
-     * @throws DecoderException
+     * @throws IllegalArgumentException
      *             Thrown if ch is an illegal hex character
      */
     public static int toDigit(final char ch, final int index) {

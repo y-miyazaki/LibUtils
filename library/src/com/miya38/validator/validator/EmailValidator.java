@@ -1,11 +1,11 @@
 package com.miya38.validator.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 
 import com.miya38.validator.AbstractValidator;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EmailValidator extends AbstractValidator {
 
@@ -26,7 +26,7 @@ public class EmailValidator extends AbstractValidator {
     @Override
     public boolean isValid(final String charseq) {
         if (charseq.length() > 0) {
-            boolean matchFound = false;
+            boolean matchFound;
 
             // Input the string for validation
             final String email = charseq;

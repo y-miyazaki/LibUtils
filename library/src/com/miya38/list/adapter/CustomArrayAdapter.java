@@ -1,8 +1,5 @@
 package com.miya38.list.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +8,23 @@ import android.widget.ArrayAdapter;
 
 import com.miya38.utils.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * カスタムアダプタークラス
  * <p>
  * 本クラスは以下に機能を有する。
  * <ul>
- * <li>setItem/getItems/setItemsgetItemResourceId等のArrayAdapterにはない機能を有する。</li>
+ * <li>setItem/getItems/setItems/getItemResourceId等のArrayAdapterにはない機能を有する。</li>
  * <li>最後に表示されたポジションを保持する<br>
- * {@link CustomArrayAdapter#getLastPosition}</li>
+ * {@link CustomArrayAdapter#getSeeLastPosition()}</li>
  * </ul>
  * </p>
- * 
- * @author y-miyazaki
+ *
  * @param <T>
- *            item
+ *         item
+ * @author y-miyazaki
  */
 public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
     // ---------------------------------------------------------------
@@ -44,31 +44,32 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
     // ---------------------------------------------------------------
     // abstract method
     // ---------------------------------------------------------------
+
     /**
      * getViewのカスタムメソッド
      * <p>
      * GridViewが0ポジションを連打するのを防ぐための対応
      * </p>
-     * 
+     *
      * @param position
-     *            ポジション
+     *         ポジション
      * @param convertView
-     *            View
+     *         View
      * @param parent
-     *            ViewGroup
+     *         ViewGroup
      * @return View
      */
     protected abstract View getViewCustom(int position, View convertView, ViewGroup parent);
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
-     *            Context
+     *         Context
      * @param itemResourceId
-     *            アイテムリソースID
+     *         アイテムリソースID
      * @param items
-     *            リストアイテム
+     *         リストアイテム
      */
     public CustomArrayAdapter(final Context context, final int itemResourceId, final List<T> items) {
         super(context, itemResourceId, items == null ? new ArrayList<T>() : items);
@@ -77,7 +78,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテムリソースID取得
-     * 
+     *
      * @return アイテムリソースID
      */
     public int getItemResourceId() {
@@ -86,7 +87,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * レイアウトインフレータ取得
-     * 
+     *
      * @return レイアウトインフレータ
      */
     public LayoutInflater getLayoutInflater() {
@@ -95,7 +96,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * レイアウトViewを取得
-     * 
+     *
      * @return レイアウトView
      */
     public View getLayoutView() {
@@ -104,7 +105,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * 最後のポジションを返却する
-     * 
+     *
      * @return last position
      */
     public int getSeeLastPosition() {
@@ -113,7 +114,7 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテム全取得
-     * 
+     *
      * @return アイテムリスト
      */
     public List<T> getItems() {
@@ -127,11 +128,11 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテム設定
-     * 
+     *
      * @param position
-     *            ポジション
+     *         ポジション
      * @param item
-     *            アイテム
+     *         アイテム
      */
     public void setItem(final int position, final T item) {
         final T object = getItem(position);
@@ -143,9 +144,9 @@ public abstract class CustomArrayAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * アイテムリスト設定
-     * 
+     *
      * @param items
-     *            アイテムリスト
+     *         アイテムリスト
      */
     public void setItems(final List<T> items) {
         setNotifyOnChange(false);

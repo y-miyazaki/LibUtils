@@ -7,9 +7,8 @@ import android.text.Html.ImageGetter;
 
 /**
  * htmlタグを解析してイメージを返せるようにする
- * 
+ *
  * @author y-miyazaki
- * 
  */
 public class ImageGetterImpl implements ImageGetter {
     /** Context */
@@ -17,9 +16,9 @@ public class ImageGetterImpl implements ImageGetter {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
-     *            {@link Context}
+     *         {@link Context}
      */
     public ImageGetterImpl(final Context context) {
         mContext = context;
@@ -27,14 +26,13 @@ public class ImageGetterImpl implements ImageGetter {
 
     @Override
     public Drawable getDrawable(final String source) {
-        Drawable drawable = null;
         final Resources resources = mContext.getResources();
         // リソースIDから Drawable のインスタンスを取得
         final int id = resources.getIdentifier(source, "drawable", mContext.getPackageName());
         if (id == 0) {
             return null;
         }
-        drawable = resources.getDrawable(id);
+        Drawable drawable = resources.getDrawable(id);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         return drawable;
     }

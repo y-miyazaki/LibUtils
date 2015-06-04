@@ -1,5 +1,7 @@
 package com.miya38.utils;
 
+import android.database.Cursor;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -9,11 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import android.database.Cursor;
-
 /**
  * 入出力に関するユーティリティクラス。
- * 
+ *
  * @author y-miyazaki
  */
 public final class IOUtils {
@@ -28,7 +28,7 @@ public final class IOUtils {
 
     /**
      * 指定した出力ストリームに、入力ストリームが尽きるまで書き込みます。
-     * 
+     *
      * @param inputStream
      * @param outputStream
      * @throws IOException
@@ -42,9 +42,9 @@ public final class IOUtils {
 
     /**
      * 指定した出力ストリームに、入力ストリームから bufferSize 分読み込んで書き込みます。<br>
-     * 
+     * <p>
      * 入力ストリームが尽きたら false を返します。
-     * 
+     *
      * @param inputStream
      * @param outputStream
      * @param bufferSize
@@ -64,7 +64,7 @@ public final class IOUtils {
 
     /**
      * 指定したパスにファイルをストリームを書き込みます。
-     * 
+     *
      * @param inputStream
      * @param filePath
      * @throws IOException
@@ -75,7 +75,7 @@ public final class IOUtils {
 
     /**
      * 指定したファイルにストリームを書き込みます。
-     * 
+     *
      * @param inputStream
      * @param file
      * @throws IOException
@@ -92,20 +92,22 @@ public final class IOUtils {
 
     /**
      * 指定したファイルを削除します。
-     * 
+     *
      * @param filePath
+     * @return true:ファイル削除成功/false:ファイル削除失敗
      * @throws IOException
      */
-    public static void deleteFile(final String filePath) throws IOException {
+    public static boolean deleteFile(final String filePath) throws IOException {
         final File file = new File(filePath);
         if (file.exists() && file.isFile() && file.canWrite()) {
-            file.delete();
+            return file.delete();
         }
+        return false;
     }
 
     /**
      * 安全にディレクトリを作成するユーティリティメソッド。
-     * 
+     *
      * @param dir
      * @return 指定したディレクトリを作成した結果を返す
      */
@@ -129,9 +131,9 @@ public final class IOUtils {
 
     /**
      * <code>{@link Cursor}</code>をクローズします。 クローズ時に例外が発生しても無視します。
-     * 
+     *
      * @param c
-     *            {@link Cursor}
+     *         {@link Cursor}
      */
     public static void closeQuietly(final Cursor c) {
         try {
@@ -145,9 +147,9 @@ public final class IOUtils {
 
     /**
      * <code>{@link Closeable}</code>をクローズします。 クローズ時に例外が発生しても無視します。
-     * 
+     *
      * @param closeable
-     *            {@link Closeable}
+     *         {@link Closeable}
      */
     public static void closeQuietly(final Closeable closeable) {
         try {
@@ -161,13 +163,11 @@ public final class IOUtils {
 
     /**
      * ストリームの内容をコピーします。
-     * 
+     *
      * @param in
-     *            {@link InputStream}
+     *         {@link InputStream}
      * @param out
-     *            {@link OutputStream}
-     * @throws EzaException
-     *             {@link EzaException}
+     *         {@link OutputStream}
      */
     public static void copy(final InputStream in, final OutputStream out) {
         BufferedOutputStream bos = null;
@@ -190,9 +190,9 @@ public final class IOUtils {
 
     /**
      * ストリームの内容をバイト列として取得します。
-     * 
+     *
      * @param in
-     *            {@link InputStream}
+     *         {@link InputStream}
      * @return byte[]
      */
     public static byte[] getBytes(final InputStream in) {
@@ -211,11 +211,11 @@ public final class IOUtils {
 
     /**
      * ストリームの内容を文字列として取得します。
-     * 
+     *
      * @param in
-     *            {@link InputStream}
+     *         {@link InputStream}
      * @param charset
-     *            エンコード
+     *         エンコード
      * @return エンコード後の文字列
      */
     public static String getString(final InputStream in, final String charset) {

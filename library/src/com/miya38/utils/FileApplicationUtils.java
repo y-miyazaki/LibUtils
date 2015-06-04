@@ -1,15 +1,15 @@
 package com.miya38.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StatFs;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * ファイル処理クラス<br>
@@ -212,7 +212,7 @@ public final class FileApplicationUtils {
         FileInputStream fileInputStream = null; // FileInputStreamインスタンス
         FileOutputStream fileOutputStream = null; // FileOutputStreamインスタンス
         final byte[] w = new byte[1024]; // バッファ
-        int size = 0; // サイズ
+        int size; // サイズ
         final File file1 = new File(srcFilePath); // Fileインスタンス(コピーファイル元)
         final File file2 = new File(dstFilePath); // Fileインスタンス(コピーファイル先)
 

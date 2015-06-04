@@ -1,6 +1,7 @@
 package com.miya38.fragment;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -14,16 +15,19 @@ import android.view.WindowManager.LayoutParams;
 
 import com.miya38.R;
 import com.miya38.activity.AbstractActivity;
+import com.miya38.application.CommonApplication;
+import com.miya38.application.CommonMultiDexApplication;
 import com.miya38.common.CommonInterface.OnKeyDownListener;
 import com.miya38.common.CommonInterface.OnWindowFocusChangedListener;
 import com.miya38.exception.ApplicationException;
 import com.miya38.utils.ClassUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Fragment抽象化クラス
- * 
+ *
  * @author y-miyazaki
  */
 public abstract class AbstractFragment extends Fragment {
@@ -46,14 +50,15 @@ public abstract class AbstractFragment extends Fragment {
     // ---------------------------------------------------------------
     // abstract method
     // ---------------------------------------------------------------
+
     /**
      * ヘッダ初期化処理
      * <p>
      * ここでは、ヘッダに表示すべきViewの初期化処理を記載します。
      * </p>
-     * 
+     *
      * @param savedInstanceState
-     *            {@link Bundle}
+     *         {@link Bundle}
      */
     protected abstract void initHeader(Bundle savedInstanceState);
 
@@ -62,9 +67,9 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * ここでは、フッタに表示すべきViewの初期化処理を記載します。
      * </p>
-     * 
+     *
      * @param savedInstanceState
-     *            {@link Bundle}
+     *         {@link Bundle}
      */
     protected abstract void initFooter(Bundle savedInstanceState);
 
@@ -73,15 +78,15 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * ここでは、通信が走る前に記述すべきViewの初期化処理を記載します。
      * </p>
-     * 
+     *
      * @param savedInstanceState
-     *            {@link Bundle}
+     *         {@link Bundle}
      */
     protected abstract void initView(Bundle savedInstanceState);
 
     /**
      * ビューレイアウトのリソースIDを取得します。
-     * 
+     *
      * @return リソースID。
      */
     protected abstract int getViewLayoutId();
@@ -91,7 +96,7 @@ public abstract class AbstractFragment extends Fragment {
      * <p>
      * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、0を指定してください。
      * </p>
-     * 
+     *
      * @return ビュースタブID
      */
     protected abstract int getViewStubLayoutId();
@@ -199,6 +204,20 @@ public abstract class AbstractFragment extends Fragment {
 
         // オブジェクトの非同期クリア
         ClassUtils.setAsyncObjectNull(this, getClass(), AbstractFragment.class);
+
+        // leak canary
+        Application application = getActivity().getApplication();
+        if (application instanceof CommonMultiDexApplication) {
+            RefWatcher refWatcher = CommonMultiDexApplication.getRefWatcher(getActivity());
+            if (refWatcher != null) {
+                refWatcher.watch(this);
+            }
+        } else if (application instanceof CommonApplication) {
+            RefWatcher refWatcher = CommonApplication.getRefWatcher(getActivity());
+            if (refWatcher != null) {
+                refWatcher.watch(this);
+            }
+        }
     }
 
     @Override
@@ -224,9 +243,9 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ヘッダタイトル設定
-     * 
+     *
      * @param title
-     *            タイトル
+     *         タイトル
      */
     public void setHeaderTitle(final String title) {
         if (mActivity != null) {
@@ -236,7 +255,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * Fragmentが終了中・Viewが取れない等の状態を確認する。
-     * 
+     *
      * @return 削除中/Detach/Viewが取れない場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isFinishing() {
@@ -248,7 +267,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * Fragmentが生存状態かを確認する。
-     * 
+     *
      * @return 削除中/Detachの場合は、falseを返す 通常時はtrueを返す
      */
     public final boolean isAlive() {
@@ -260,16 +279,16 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * メンバ変数の自動保存処理を行う。
-     * 
+     * <p/>
      * 本メソッドは、端末がメモリ不足などの理由でアプリをメモリ上に常駐できなくなった場合に実行される。 本来の Activity
      * の仕様では各アクティビティごとにメンバ変数を保存する必要があるが、
      * これは非常な手間が掛かり、かつ修正時における不具合の原因となりうる。
-     * 
+     * <p/>
      * そこで本クラスはアクティビティに定義されているメンバ変数を自動的に保存する。<br>
      * 自動保存できるメンバ変数は、プリミティブ型とそのラッパーと配列など Bundleクラスへの追加をサポートしている型変数のみとなる。
-     * 
+     *
      * @param outState
-     *            自動保存するメンバ変数の保存先 Bundle データ
+     *         自動保存するメンバ変数の保存先 Bundle データ
      */
     @Override
     public void onSaveInstanceState(final Bundle outState) {
@@ -279,9 +298,9 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * キーダウンのコールバックリスナー登録<br>
-     * 
+     *
      * @param l
-     *            リスナーを登録するとコールバックリスナーが走ります。
+     *         リスナーを登録するとコールバックリスナーが走ります。
      */
     public final void setOnKeyDownListener(final OnKeyDownListener l) {
         this.mOnKeyDownListener = l;
@@ -289,7 +308,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * キーダウンのコールバックリスナーのインスタンス返却
-     * 
+     *
      * @return OnKeyDownListener
      */
     public final OnKeyDownListener getOnKeyDownListener() {
@@ -298,9 +317,9 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナー登録<br>
-     * 
+     *
      * @param l
-     *            リスナーを登録するとコールバックリスナーが走ります。
+     *         リスナーを登録するとコールバックリスナーが走ります。
      */
     public final void setOnWindowFocusChangedListener(final OnWindowFocusChangedListener l) {
         mActivity.setOnWindowFocusChangedListener(l);
@@ -308,7 +327,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * ウィンドウフォーカスチェンジのコールバックリスナーのインスタンス返却
-     * 
+     *
      * @return OnKeyDownListener
      */
     public final OnWindowFocusChangedListener getOnWindowFocusChangedListener() {
@@ -317,7 +336,7 @@ public abstract class AbstractFragment extends Fragment {
 
     /**
      * getSupportFragmentManagerをそのまま呼べるメソッド
-     * 
+     *
      * @return FragmentManager(support v4)
      */
     public final FragmentManager getSupportFragmentManager() {

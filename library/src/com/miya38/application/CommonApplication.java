@@ -1,10 +1,10 @@
 package com.miya38.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 
 import com.miya38.connection.AbstractVolleySetting;
-import com.miya38.list.SettingListView;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.ClipboardUtils;
 import com.miya38.utils.ConnectionUtils;
@@ -18,6 +18,9 @@ import com.miya38.utils.LogUtils;
 import com.miya38.utils.ResourceUtils;
 import com.miya38.utils.SharedPreferencesUtils;
 import com.miya38.utils.ZipUtils;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
 /**
  * 共通アプリケーションクラス
  * <p>
@@ -26,7 +29,7 @@ import com.miya38.utils.ZipUtils;
  *
  * @author y-miyazaki
  */
-    public abstract class CommonApplication extends Application {
+public abstract class CommonApplication extends Application {
     // ---------------------------------------------------------------
     // define
     // ---------------------------------------------------------------
@@ -39,6 +42,11 @@ import com.miya38.utils.ZipUtils;
      * @return ハッシュ値
      */
     protected abstract String getSignatureHash();
+
+    // ---------------------------------------------------------------
+    // other
+    // ---------------------------------------------------------------
+    private RefWatcher mRefWatcher;
 
     @Override
     public void onCreate() {
@@ -56,14 +64,18 @@ import com.miya38.utils.ZipUtils;
         FileApplicationUtils.configure(getApplicationContext());
         FileAssetsUtils.configure(getApplicationContext());
         ImageUtils.configure(getApplicationContext());
-        SettingListView.configure(getApplicationContext());
-        SettingListView.configure(getApplicationContext());
         SharedPreferencesUtils.configure(getApplicationContext());
         ResourceUtils.configure(getApplicationContext());
         ZipUtils.configure(getApplicationContext());
         if (!AplUtils.isSignatureHash(getSignatureHash())) {
             // throw new ApplicationException("");
         }
+
+        // ---------------------------------------------------------------
+        // Memory Leak Check
+        // ---------------------------------------------------------------
+        LeakCanary.install(this);
+
         // Connection pooling/Keep-alive bug対応
         // libcore.io.Streams.readAsciiLine対応
         System.setProperty("http.keepAlive", "false");
@@ -82,5 +94,17 @@ import com.miya38.utils.ZipUtils;
     @Override
     public void onLowMemory() {
         LogUtils.d(TAG, "onLowMemory");
+    }
+
+    /**
+     * RefWatcher取得
+     *
+     * @param context
+     *         {@link Context}
+     * @return {@link RefWatcher}
+     */
+    public static RefWatcher getRefWatcher(Context context) {
+        CommonApplication application = (CommonApplication) context.getApplicationContext();
+        return application.mRefWatcher;
     }
 }

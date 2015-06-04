@@ -21,7 +21,7 @@ import android.view.View;
 public final class CustomSpace extends View {
     /**
      * Constructor
-     * 
+     *
      * @param context
      * @param attrs
      * @param defStyle
@@ -35,7 +35,7 @@ public final class CustomSpace extends View {
 
     /**
      * Constructor
-     * 
+     *
      * @param context
      * @param attrs
      */
@@ -45,7 +45,7 @@ public final class CustomSpace extends View {
 
     /**
      * Constructor
-     * 
+     *
      * @param context
      */
     public CustomSpace(final Context context) {
@@ -55,9 +55,9 @@ public final class CustomSpace extends View {
 
     /**
      * Draw nothing.
-     * 
+     *
      * @param canvas
-     *            an unused parameter.
+     *         an unused parameter.
      */
     @Override
     public void draw(final Canvas canvas) {
@@ -74,14 +74,14 @@ public final class CustomSpace extends View {
         final int specSize = MeasureSpec.getSize(measureSpec);
 
         switch (specMode) {
-        case MeasureSpec.UNSPECIFIED:
-            return size;
-        case MeasureSpec.AT_MOST:
-            return Math.min(size, specSize);
-        case MeasureSpec.EXACTLY:
-            return specSize;
-        default:
-            break;
+            case MeasureSpec.UNSPECIFIED:
+                return size;
+            case MeasureSpec.AT_MOST:
+                return Math.min(size, specSize);
+            case MeasureSpec.EXACTLY:
+                return specSize;
+            default:
+                break;
         }
         return size;
     }

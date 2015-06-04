@@ -1,10 +1,5 @@
 package com.miya38.utils;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,6 +9,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.IntDef;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.SpannableString;
@@ -47,12 +43,19 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.miya38.widget.CustomListView;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * ビューを利用する際のヘルパーを提供します。
- * 
+ *
  * @author y-miyazaki
  */
-@SuppressWarnings({ "unchecked", "deprecation" })
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class ViewHelper {
     // ----------------------------------------------------------
     // define
@@ -66,9 +69,17 @@ public final class ViewHelper {
     /** ステータスバーの高さ(xhigh) */
     private static final int XHIGH_DPI_STATUS_BAR_HEIGHT = 50;
 
+    // ---------------------------------------------------------------
+    // annotation
+    // ---------------------------------------------------------------
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({View.VISIBLE, View.INVISIBLE, View.GONE})
+    public @interface ViewVisibilityDef {
+    }
+
     /**
      * アニメーションの種類
-     * 
+     *
      * @author y-miyazaki
      */
     public enum AnimationKind {
@@ -88,13 +99,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     * 
+     *
      * @param <V>
-     *            View
+     *         View
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @return View
      */
     public static <V extends View> V findView(final Activity activity, final int id) {
@@ -103,13 +114,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     * 
+     *
      * @param <V>
-     *            View
+     *         View
      * @param view
-     *            view
+     *         view
      * @param id
-     *            id
+     *         id
      * @return View
      */
     public static <V extends View> V findView(final View view, final int id) {
@@ -118,13 +129,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     * 
+     *
      * @param <V>
-     *            View
+     *         View
      * @param dialog
-     *            dialog
+     *         dialog
      * @param id
-     *            id
+     *         id
      * @return View
      */
     public static <V extends View> V findView(final Dialog dialog, final int id) {
@@ -133,13 +144,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する findViewById。
-     * 
+     *
      * @param <V>
-     *            View
+     *         View
      * @param window
-     *            ウィンドウ
+     *         ウィンドウ
      * @param id
-     *            id
+     *         id
      * @return View
      */
     public static <V extends View> V findView(final Window window, final int id) {
@@ -148,13 +159,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する setOnClickListerner。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param l
-     *            {@link OnClickListener}
+     *         {@link OnClickListener}
      */
     public static void setOnClickListener(final Activity activity, final int id, final OnClickListener l) {
         activity.findViewById(id).setOnClickListener(l);
@@ -162,13 +173,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する setOnClickListerner。
-     * 
+     *
      * @param view
-     *            view
+     *         view
      * @param id
-     *            id
+     *         id
      * @param l
-     *            {@link OnClickListener}
+     *         {@link OnClickListener}
      */
     public static void setOnClickListener(final View view, final int id, final OnClickListener l) {
         view.findViewById(id).setOnClickListener(l);
@@ -176,13 +187,13 @@ public final class ViewHelper {
 
     /**
      * 自動型変換する setOnClickListerner。
-     * 
+     *
      * @param dialog
-     *            dialog
+     *         dialog
      * @param id
-     *            id
+     *         id
      * @param l
-     *            {@link OnClickListener}
+     *         {@link OnClickListener}
      */
     public static void setOnClickListener(final Dialog dialog, final int id, final OnClickListener l) {
         dialog.findViewById(id).setOnClickListener(l);
@@ -190,13 +201,13 @@ public final class ViewHelper {
 
     /**
      * TextView に String リソースを設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param stringId
-     *            文字列リソースID
+     *         文字列リソースID
      */
     public static void setText(final View v, final int id, final int stringId) {
         if (stringId != 0) {
@@ -206,13 +217,13 @@ public final class ViewHelper {
 
     /**
      * CustomTextView にテキストを設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param text
-     *            テキスト
+     *         テキスト
      */
     public static void setText(final Activity activity, final int id, final CharSequence text) {
         ((TextView) activity.findViewById(id)).setText(text);
@@ -220,13 +231,13 @@ public final class ViewHelper {
 
     /**
      * TextView に String リソースを設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param stringId
-     *            文字列リソースID
+     *         文字列リソースID
      */
     public static void setText(final Activity activity, final int id, final int stringId) {
         if (stringId != 0) {
@@ -236,13 +247,13 @@ public final class ViewHelper {
 
     /**
      * CustomTextView にテキストを設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param text
-     *            テキスト
+     *         テキスト
      */
     public static void setText(final View v, final int id, final CharSequence text) {
         ((TextView) v.findViewById(id)).setText(text);
@@ -250,13 +261,13 @@ public final class ViewHelper {
 
     /**
      * TextView に String リソースを設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param stringId
-     *            文字列リソースID
+     *         文字列リソースID
      */
     public static void setText(final Dialog dialog, final int id, final int stringId) {
         if (stringId != 0) {
@@ -266,13 +277,13 @@ public final class ViewHelper {
 
     /**
      * CustomTextView にテキストを設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param text
-     *            テキスト
+     *         テキスト
      */
     public static void setText(final Dialog dialog, final int id, final CharSequence text) {
         ((TextView) dialog.findViewById(id)).setText(text);
@@ -280,28 +291,27 @@ public final class ViewHelper {
 
     /**
      * TextView にテキスト(HTML)を設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param text
-     *            テキスト
+     *         テキスト
      */
     public static void setHtml(final Activity activity, final int id, final CharSequence text) {
-        ((TextView) activity.findViewById(id)).setText(Html.fromHtml(text
-                .toString()));
+        ((TextView) activity.findViewById(id)).setText(Html.fromHtml(text.toString()));
     }
 
     /**
      * TextView にテキスト(HTML)を設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param text
-     *            テキスト
+     *         テキスト
      */
     public static void setHtml(final View v, final int id, final CharSequence text) {
         ((TextView) v.findViewById(id)).setText(Html.fromHtml(text.toString()));
@@ -309,26 +319,25 @@ public final class ViewHelper {
 
     /**
      * TextView にテキスト(HTML)を設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param text
-     *            テキスト
+     *         テキスト
      */
     public static void setHtml(final Dialog dialog, final int id, final CharSequence text) {
-        ((TextView) dialog.findViewById(id)).setText(Html.fromHtml(text
-                .toString()));
+        ((TextView) dialog.findViewById(id)).setText(Html.fromHtml(text.toString()));
     }
 
     /**
      * TextView からテキストを取得するヘルパー
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @return 文字列
      */
     public static String getText(final Activity activity, final int id) {
@@ -337,11 +346,11 @@ public final class ViewHelper {
 
     /**
      * TextView からテキストを取得するヘルパー
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @return 文字列
      */
     public static String getText(final View v, final int id) {
@@ -350,11 +359,11 @@ public final class ViewHelper {
 
     /**
      * TextView からテキストを取得するヘルパー
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @return 文字列
      */
     public static String getText(final Dialog dialog, final int id) {
@@ -363,11 +372,11 @@ public final class ViewHelper {
 
     /**
      * EditText からテキストを取得するヘルパー
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @return 文字列
      */
     public static String getEditText(final Activity activity, final int id) {
@@ -376,11 +385,11 @@ public final class ViewHelper {
 
     /**
      * EditText からテキストを取得するヘルパー
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @return 文字列
      */
     public static String getEditText(final View v, final int id) {
@@ -389,11 +398,11 @@ public final class ViewHelper {
 
     /**
      * EditText からテキストを取得するヘルパー
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @return 文字列
      */
     public static String getEditText(final Dialog dialog, final int id) {
@@ -402,13 +411,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable リソースを設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param resourceId
-     *            リソースID
+     *         リソースID
      */
     public static void setImage(final Activity activity, final int id, final int resourceId) {
         ((ImageView) activity.findViewById(id)).setImageResource(resourceId);
@@ -416,13 +425,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable オブジェクトを設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param drawable
-     *            Drawable
+     *         Drawable
      */
     public static void setImage(final Activity activity, final int id, final Drawable drawable) {
         ((ImageView) activity.findViewById(id)).setImageDrawable(drawable);
@@ -430,13 +439,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Bitmapを設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      */
     public static void setImage(final Activity activity, final int id, final Bitmap bitmap) {
         ((ImageView) activity.findViewById(id)).setImageBitmap(bitmap);
@@ -444,13 +453,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable リソースを設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param resourceId
-     *            リソースID
+     *         リソースID
      */
     public static void setImage(final View v, final int id, final int resourceId) {
         ((ImageView) v.findViewById(id)).setImageResource(resourceId);
@@ -458,13 +467,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable オブジェクトを設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param drawable
-     *            Drawable
+     *         Drawable
      */
     public static void setImage(final View v, final int id, final Drawable drawable) {
         ((ImageView) v.findViewById(id)).setImageDrawable(drawable);
@@ -472,13 +481,13 @@ public final class ViewHelper {
 
     /**
      * ImageView Bitmapを設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      */
     public static void setImage(final View v, final int id, final Bitmap bitmap) {
         ((ImageView) v.findViewById(id)).setImageBitmap(bitmap);
@@ -486,13 +495,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable リソースを設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param resourceId
-     *            リソースID
+     *         リソースID
      */
     public static void setImage(final Dialog dialog, final int id, final int resourceId) {
         ((ImageView) dialog.findViewById(id)).setImageResource(resourceId);
@@ -500,13 +509,13 @@ public final class ViewHelper {
 
     /**
      * ImageView に Drawable オブジェクトを設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param drawable
-     *            Drawable
+     *         Drawable
      */
     public static void setImage(final Dialog dialog, final int id, final Drawable drawable) {
         ((ImageView) dialog.findViewById(id)).setImageDrawable(drawable);
@@ -514,13 +523,13 @@ public final class ViewHelper {
 
     /**
      * ImageView Bitmapを設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      */
     public static void setImage(final Dialog dialog, final int id, final Bitmap bitmap) {
         ((ImageView) dialog.findViewById(id)).setImageBitmap(bitmap);
@@ -528,13 +537,13 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param resourceId
-     *            リソースID
+     *         リソースID
      */
     public static void setBackground(final Activity activity, final int id, final int resourceId) {
         activity.findViewById(id).setBackgroundResource(resourceId);
@@ -542,13 +551,13 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param drawable
-     *            Drawable
+     *         Drawable
      */
     public static void setBackground(final Activity activity, final int id, final Drawable drawable) {
         activity.findViewById(id).setBackgroundDrawable(drawable);
@@ -556,28 +565,27 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      */
     public static void setBackground(final Activity activity, final int id, final Bitmap bitmap) {
-        activity.findViewById(id).setBackgroundDrawable(
-                new BitmapDrawable(bitmap));
+        activity.findViewById(id).setBackgroundDrawable(new BitmapDrawable(bitmap));
     }
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param resourceId
-     *            リソースID
+     *         リソースID
      */
     public static void setBackground(final View v, final int id, final int resourceId) {
         v.findViewById(id).setBackgroundResource(resourceId);
@@ -585,13 +593,13 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param drawable
-     *            Drawable
+     *         Drawable
      */
     public static void setBackground(final View v, final int id, final Drawable drawable) {
         v.findViewById(id).setBackgroundDrawable(drawable);
@@ -599,13 +607,13 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      */
     public static void setBackground(final View v, final int id, final Bitmap bitmap) {
         v.findViewById(id).setBackgroundDrawable(new BitmapDrawable(bitmap));
@@ -613,13 +621,13 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param resourceId
-     *            リソースID
+     *         リソースID
      */
     public static void setBackground(final Dialog dialog, final int id, final int resourceId) {
         dialog.findViewById(id).setBackgroundResource(resourceId);
@@ -627,13 +635,13 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param drawable
-     *            Drawable
+     *         Drawable
      */
     public static void setBackground(final Dialog dialog, final int id, final Drawable drawable) {
         dialog.findViewById(id).setBackgroundDrawable(drawable);
@@ -641,128 +649,127 @@ public final class ViewHelper {
 
     /**
      * 背景を設定するヘルパー。
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param bitmap
-     *            Bitmap
+     *         Bitmap
      */
     public static void setBackground(final Dialog dialog, final int id, final Bitmap bitmap) {
-        dialog.findViewById(id).setBackgroundDrawable(
-                new BitmapDrawable(bitmap));
+        dialog.findViewById(id).setBackgroundDrawable(new BitmapDrawable(bitmap));
     }
 
     /**
-     * ViewのVisibirityを設定するヘルパー
-     * 
+     * ViewのVisibilityを設定するヘルパー
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      */
-    public static void setVisibility(final Activity activity, final int id, final int visibility) {
+    public static void setVisibility(final Activity activity, final int id, @ViewVisibilityDef final int visibility) {
         activity.findViewById(id).setVisibility(visibility);
     }
 
     /**
-     * ViewのVisibirityを設定するヘルパー
-     * 
+     * ViewのVisibilityを設定するヘルパー
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      */
-    public static void setVisibility(final View v, final int id, final int visibility) {
+    public static void setVisibility(final View v, final int id, @ViewVisibilityDef final int visibility) {
         v.findViewById(id).setVisibility(visibility);
     }
 
     /**
-     * ViewのVisibirityを設定するヘルパー
-     * 
+     * ViewのVisibilityを設定するヘルパー
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      */
-    public static void setVisibility(final Dialog dialog, final int id, final int visibility) {
+    public static void setVisibility(final Dialog dialog, final int id, @ViewVisibilityDef final int visibility) {
         dialog.findViewById(id).setVisibility(visibility);
     }
 
     /**
      * ViewのVisibilityを設定するヘルパー
-     * 
+     *
      * @param activity
-     *            アクティビティ
+     *         アクティビティ
      * @param id
-     *            id
+     *         id
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      * @param animationKind
-     *            アニメーション種類
+     *         アニメーション種類
      * @param duration
-     *            アニメーション時間
+     *         アニメーション時間
      */
-    public static void setVisibility(final Activity activity, final int id, final int visibility, final AnimationKind animationKind, final int duration) {
+    public static void setVisibility(final Activity activity, final int id, @ViewVisibilityDef final int visibility, final AnimationKind animationKind, final int duration) {
         setVisibility(activity.findViewById(id), visibility, animationKind, duration);
     }
 
     /**
      * ViewのVisibilityを設定するヘルパー
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      * @param animationKind
-     *            アニメーション種類
+     *         アニメーション種類
      * @param duration
-     *            アニメーション時間
+     *         アニメーション時間
      */
-    public static void setVisibility(final View v, final int id, final int visibility, final AnimationKind animationKind, final int duration) {
+    public static void setVisibility(final View v, final int id, @ViewVisibilityDef final int visibility, final AnimationKind animationKind, final int duration) {
         setVisibility(v.findViewById(id), visibility, animationKind, duration);
     }
 
     /**
      * ViewのVisibilityを設定するヘルパー
-     * 
+     *
      * @param dialog
-     *            ダイアログ
+     *         ダイアログ
      * @param id
-     *            id
+     *         id
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      * @param animationKind
-     *            アニメーション種類
+     *         アニメーション種類
      * @param duration
-     *            アニメーション時間
+     *         アニメーション時間
      */
-    public static void setVisibility(final Dialog dialog, final int id, final int visibility, final AnimationKind animationKind, final int duration) {
+    public static void setVisibility(final Dialog dialog, final int id, @ViewVisibilityDef final int visibility, final AnimationKind animationKind, final int duration) {
         setVisibility(dialog.findViewById(id), visibility, animationKind, duration);
     }
 
     /**
      * フェードイン・フェードアウトしながら表示設定をするヘルパー
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param visibility
-     *            {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
+     *         {@link View#VISIBLE}、{@link View#INVISIBLE}、{@link View#GONE}
      * @param animationKind
-     *            {@link AnimationKind}
+     *         {@link AnimationKind}
      * @param duration
-     *            アニメーション時間
+     *         アニメーション時間
      */
-    public static void setVisibility(final View v, final int visibility, final AnimationKind animationKind, final int duration) {
+    public static void setVisibility(final View v, final @ViewVisibilityDef int visibility, final AnimationKind animationKind, final int duration) {
         // 同一の場合は何もしない。
         if (v.getVisibility() == visibility) {
             return;
@@ -818,15 +825,14 @@ public final class ViewHelper {
 
     /**
      * アルファアニメーションで表示する。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param duration
-     *            アニメーション時間
+     *         アニメーション時間
      */
     public static void setAlphaInAnimation(final View v, final int duration) {
-        Animation animation = null;
-        animation = new AlphaAnimation(0, 1);
+        Animation animation = new AlphaAnimation(0, 1);
         animation.setDuration(duration);
         animation.setRepeatCount(0);
         v.startAnimation(animation);
@@ -834,15 +840,14 @@ public final class ViewHelper {
 
     /**
      * アルファアニメーションで非表示にする。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param duration
-     *            アニメーション時間
+     *         アニメーション時間
      */
     public static void setAlphaOutAnimation(final View v, final int duration) {
-        Animation animation = null;
-        animation = new AlphaAnimation(1, 0);
+        Animation animation = new AlphaAnimation(1, 0);
         animation.setDuration(duration);
         animation.setRepeatCount(0);
         v.startAnimation(animation);
@@ -850,13 +855,13 @@ public final class ViewHelper {
 
     /**
      * 文字を指定回数で点滅させる
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param duration
-     *            点滅間隔
+     *         点滅間隔
      * @param blinkCount
-     *            点滅回数
+     *         点滅回数
      */
     public static void setBlink(final View v, final int duration, final int blinkCount) {
         final AlphaAnimation alpha = new AlphaAnimation(0, 1);
@@ -871,11 +876,11 @@ public final class ViewHelper {
 
     /**
      * 無限に文字を点滅させる
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param duration
-     *            点滅間隔
+     *         点滅間隔
      */
     public static void setBlink(final View v, final int duration) {
         final AlphaAnimation alpha = new AlphaAnimation(0, 1);
@@ -891,13 +896,13 @@ public final class ViewHelper {
     /**
      * クリック・プレス・有効有無を設定するヘルパー<br>
      * 主にボタンに使用し、ボタンを有効無効を制御する。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param id
-     *            id
+     *         id
      * @param b
-     *            true:クリック許容/false:クリック不可
+     *         true:クリック許容/false:クリック不可
      */
     public static void setClickable(final View v, final int id, final boolean b) {
         if (b) {
@@ -914,11 +919,11 @@ public final class ViewHelper {
     /**
      * クリック・プレス・有効有無を設定するヘルパー<br>
      * 主にボタンに使用し、ボタンを有効無効を制御する。
-     * 
+     *
      * @param v
-     *            View
+     *         View
      * @param b
-     *            true:クリック許容/false:クリック不可
+     *         true:クリック許容/false:クリック不可
      */
     public static void setClickable(final View v, final boolean b) {
         if (b) {
@@ -934,16 +939,15 @@ public final class ViewHelper {
 
     /**
      * CustomTextViewをリンク可能にさせる
-     * 
+     *
      * @param <T>
-     *            起動クラス
-     * 
+     *         起動クラス
      * @param textView
-     *            TextView
+     *         TextView
      * @param linkString
-     *            リンク文字列
+     *         リンク文字列
      * @param clazz
-     *            クラス
+     *         クラス
      */
     public static <T> void addLinks(final TextView textView, final String linkString, final Class<T> clazz) {
         final Pattern pattern = Pattern.compile(linkString);
@@ -976,13 +980,13 @@ public final class ViewHelper {
 
     /**
      * View配下の内容を全てクリアする
-     * 
+     *
      * @param context
-     *            Context
+     *         Context
      * @param object
-     *            対象のActivity/Fragment等
+     *         対象のActivity/Fragment等
      * @param view
-     *            View
+     *         View
      */
     public static void cleanView(final Context context, final Object object, final View view) {
         if (view != null) {
@@ -1043,28 +1047,28 @@ public final class ViewHelper {
                 ListView listView = customListView.getRefreshableView();
                 if (listView != null) {
                     try {
-                        final Field field = ClassUtils.getField(
-                                listView.getClass(), "mHeaderViewInfos");
-                        final ArrayList<FixedViewInfo> mHeaderViewInfos = (ArrayList<FixedViewInfo>) field
-                                .get(listView);
-                        if (!CollectionUtils.isNullOrEmpty(mHeaderViewInfos)) {
-                            for (final FixedViewInfo mHeaderViewInfo : mHeaderViewInfos) {
-                                listView.removeHeaderView(mHeaderViewInfo.view);
-                                cleanView(context, object, mHeaderViewInfo.view);
+                        final Field field = ClassUtils.getField(listView.getClass(), "mHeaderViewInfos");
+                        if (field != null) {
+                            final ArrayList<FixedViewInfo> mHeaderViewInfos = (ArrayList<FixedViewInfo>) field.get(listView);
+                            if (!CollectionUtils.isNullOrEmpty(mHeaderViewInfos)) {
+                                for (final FixedViewInfo mHeaderViewInfo : mHeaderViewInfos) {
+                                    listView.removeHeaderView(mHeaderViewInfo.view);
+                                    cleanView(context, object, mHeaderViewInfo.view);
+                                }
                             }
                         }
                     } catch (final Exception e) {
                         // 握りつぶす
                     }
                     try {
-                        final Field field = ClassUtils.getField(
-                                listView.getClass(), "mFooterViewInfos");
-                        final ArrayList<FixedViewInfo> mFooterViewInfos = (ArrayList<FixedViewInfo>) field
-                                .get(listView);
-                        if (!CollectionUtils.isNullOrEmpty(mFooterViewInfos)) {
-                            for (final FixedViewInfo mFooterViewInfo : mFooterViewInfos) {
-                                listView.removeHeaderView(mFooterViewInfo.view);
-                                cleanView(context, object, mFooterViewInfo.view);
+                        final Field field = ClassUtils.getField(listView.getClass(), "mFooterViewInfos");
+                        if (field != null) {
+                            final ArrayList<FixedViewInfo> mFooterViewInfos = (ArrayList<FixedViewInfo>) field.get(listView);
+                            if (!CollectionUtils.isNullOrEmpty(mFooterViewInfos)) {
+                                for (final FixedViewInfo mFooterViewInfo : mFooterViewInfos) {
+                                    listView.removeHeaderView(mFooterViewInfo.view);
+                                    cleanView(context, object, mFooterViewInfo.view);
+                                }
                             }
                         }
                     } catch (final Exception e) {
@@ -1084,28 +1088,28 @@ public final class ViewHelper {
             else if (view instanceof ListView) {
                 final ListView listView = (ListView) view;
                 try {
-                    final Field field = ClassUtils.getField(
-                            listView.getClass(), "mHeaderViewInfos");
-                    final ArrayList<FixedViewInfo> mHeaderViewInfos = (ArrayList<FixedViewInfo>) field
-                            .get(listView);
-                    if (!CollectionUtils.isNullOrEmpty(mHeaderViewInfos)) {
-                        for (final FixedViewInfo mHeaderViewInfo : mHeaderViewInfos) {
-                            listView.removeHeaderView(mHeaderViewInfo.view);
-                            cleanView(context, object, mHeaderViewInfo.view);
+                    final Field field = ClassUtils.getField(listView.getClass(), "mHeaderViewInfos");
+                    if (field != null) {
+                        final ArrayList<FixedViewInfo> mHeaderViewInfos = (ArrayList<FixedViewInfo>) field.get(listView);
+                        if (!CollectionUtils.isNullOrEmpty(mHeaderViewInfos)) {
+                            for (final FixedViewInfo mHeaderViewInfo : mHeaderViewInfos) {
+                                listView.removeHeaderView(mHeaderViewInfo.view);
+                                cleanView(context, object, mHeaderViewInfo.view);
+                            }
                         }
                     }
                 } catch (final Exception e) {
                     // 握りつぶす
                 }
                 try {
-                    final Field field = ClassUtils.getField(
-                            listView.getClass(), "mFooterViewInfos");
-                    final ArrayList<FixedViewInfo> mFooterViewInfos = (ArrayList<FixedViewInfo>) field
-                            .get(listView);
-                    if (!CollectionUtils.isNullOrEmpty(mFooterViewInfos)) {
-                        for (final FixedViewInfo mFooterViewInfo : mFooterViewInfos) {
-                            listView.removeHeaderView(mFooterViewInfo.view);
-                            cleanView(context, object, mFooterViewInfo.view);
+                    final Field field = ClassUtils.getField(listView.getClass(), "mFooterViewInfos");
+                    if (field != null) {
+                        final ArrayList<FixedViewInfo> mFooterViewInfos = (ArrayList<FixedViewInfo>) field.get(listView);
+                        if (!CollectionUtils.isNullOrEmpty(mFooterViewInfos)) {
+                            for (final FixedViewInfo mFooterViewInfo : mFooterViewInfos) {
+                                listView.removeHeaderView(mFooterViewInfo.view);
+                                cleanView(context, object, mFooterViewInfo.view);
+                            }
                         }
                     }
                 } catch (final Exception e) {
@@ -1294,9 +1298,9 @@ public final class ViewHelper {
 
     /**
      * 3.0以前のバックグラウンドのrepeatが効かないのを対応する。
-     * 
+     *
      * @param view
-     *            {@link View}
+     *         {@link View}
      */
     public static void fixBackgroundRepeat(final View view) {
         if (view != null) {
@@ -1311,18 +1315,15 @@ public final class ViewHelper {
 
     /**
      * String型でリソースIDを取得する
-     * 
+     *
      * @param targetResourcesName
-     *            指定したいリソースID<br>
-     *            R.id.Button01ならば、Button01を指定する
-     * 
+     *         指定したいリソースID<br>
+     *         R.id.Button01ならば、Button01を指定する
      * @param targetResources
-     *            指定したいリソースID<br>
-     *            R.id.Button01ならば、idを指定する
-     * 
+     *         指定したいリソースID<br>
+     *         R.id.Button01ならば、idを指定する
      * @param context
-     *            getApplicationContext()を設定する。
-     * 
+     *         getApplicationContext()を設定する。
      * @return リソースID
      */
     public static int getResourcesId(final String targetResourcesName, final String targetResources, final Context context) {
@@ -1332,9 +1333,9 @@ public final class ViewHelper {
 
     /**
      * ステータスバーの高さ取得
-     * 
+     *
      * @param context
-     *            Context
+     *         Context
      * @return ステータスバーの高さ
      */
     public static int getStatusBarHeight(final Context context) {
@@ -1350,20 +1351,20 @@ public final class ViewHelper {
             ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
                     .getDefaultDisplay().getMetrics(displayMetrics);
             switch (displayMetrics.densityDpi) {
-            case DisplayMetrics.DENSITY_HIGH:
-                statusBarHeight = HIGH_DPI_STATUS_BAR_HEIGHT;
-                break;
-            case DisplayMetrics.DENSITY_MEDIUM:
-                statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
-                break;
-            case DisplayMetrics.DENSITY_LOW:
-                statusBarHeight = LOW_DPI_STATUS_BAR_HEIGHT;
-                break;
-            case DisplayMetrics.DENSITY_XHIGH: // XHIGH
-                statusBarHeight = XHIGH_DPI_STATUS_BAR_HEIGHT;
-                break;
-            default:
-                statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
+                case DisplayMetrics.DENSITY_HIGH:
+                    statusBarHeight = HIGH_DPI_STATUS_BAR_HEIGHT;
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
+                    break;
+                case DisplayMetrics.DENSITY_LOW:
+                    statusBarHeight = LOW_DPI_STATUS_BAR_HEIGHT;
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH: // XHIGH
+                    statusBarHeight = XHIGH_DPI_STATUS_BAR_HEIGHT;
+                    break;
+                default:
+                    statusBarHeight = MEDIUM_DPI_STATUS_BAR_HEIGHT;
             }
         }
         return statusBarHeight;

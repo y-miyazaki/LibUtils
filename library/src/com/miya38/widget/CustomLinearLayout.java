@@ -116,8 +116,8 @@ public class CustomLinearLayout extends LinearLayout {
     }
 
     @Override
-    public void setBackgroundResource(final int resid) {
-        super.setBackgroundResource(resid);
+    public void setBackgroundResource(final int resId) {
+        super.setBackgroundResource(resId);
         if (mIsRepeat) {
             ViewHelper.fixBackgroundRepeat(this);
         }
