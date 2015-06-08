@@ -2,14 +2,15 @@ package com.miya38.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.ColorRes;
 
 import com.miya38.exception.ApplicationException;
 
 /**
  * リソースユーティリティ
- * 
+ *
  * @author y-miyazaki
- * 
  */
 public final class ResourceUtils {
     /** Context */
@@ -24,9 +25,9 @@ public final class ResourceUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
-     *            {@link Context}
+     *         {@link Context}
      */
     public static void configure(final Context context) {
         sContext = context;
@@ -34,25 +35,25 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのString配列データを取得する
-     * 
+     *
      * @param arrayId
-     *            リソースID
+     *         リソースID
      * @return 文字列
      */
-    public static int[] getIntArray(final int arrayId) {
+    public static int[] getIntArray(@ArrayRes final int arrayId) {
         return sContext.getResources().getIntArray(arrayId);
     }
 
     /**
      * array.xmlのString配列データを取得する
-     * 
+     *
      * @param arrayId
-     *            リソースID
+     *         リソースID
      * @param index
-     *            インデックス配列
+     *         インデックス配列
      * @return 文字列
      */
-    public static int getIntArray(final int arrayId, final int index) {
+    public static int getIntArray(@ArrayRes final int arrayId, final int index) {
         final int[] names = sContext.getResources().getIntArray(arrayId);
         try {
             return names[index];
@@ -63,25 +64,25 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのString配列データを取得する
-     * 
+     *
      * @param arrayId
-     *            リソースID
+     *         リソースID
      * @return 文字列
      */
-    public static String[] getStringArray(final int arrayId) {
+    public static String[] getStringArray(@ArrayRes final int arrayId) {
         return sContext.getResources().getStringArray(arrayId);
     }
 
     /**
      * array.xmlのString配列データから文字列を取得する
-     * 
+     *
      * @param arrayId
-     *            リソースID
+     *         配列リソースID
      * @param index
-     *            添え字
+     *         添え字
      * @return 文字列
      */
-    public static String getStringArray(final int arrayId, final int index) {
+    public static String getStringArray(@ArrayRes final int arrayId, final int index) {
         final String[] names = sContext.getResources().getStringArray(arrayId);
         try {
             return names[index];
@@ -92,26 +93,26 @@ public final class ResourceUtils {
 
     /**
      * array.xmlのTypedArray配列データを取得する
-     * 
+     *
      * @param arrayId
-     *            リソースID
+     *         配列リソースID
      * @return 文字列
      */
-    public static TypedArray getObtainTypedArray(final int arrayId) {
+    public static TypedArray getObtainTypedArray(@ArrayRes final int arrayId) {
         return sContext.getResources().obtainTypedArray(arrayId);
     }
 
     /**
      * array.xmlのTypedArray配列データからresourceIdを取得する
-     * 
+     *
      * @param arrayId
-     *            リソースID
+     *         配列リソースID
      * @param index
-     *            添え字
+     *         添え字
      * @return 文字列
      */
-    public static int getObtainTypedArray(final int arrayId, final int index) {
-        final TypedArray names = sContext.getResources().obtainTypedArray(arrayId);
+    public static int getObtainTypedArray(@ArrayRes final int arrayId, final int index) {
+        final TypedArray names = getObtainTypedArray(arrayId);
         try {
             return names.getResourceId(index, -1);
         } catch (final ArrayIndexOutOfBoundsException e) {
@@ -123,9 +124,9 @@ public final class ResourceUtils {
 
     /**
      * drawableIdを文字列取得する。
-     * 
+     *
      * @param drawable
-     *            画像名
+     *         画像名
      * @return R.drwable.{引数で設定したdrawable名}のID
      */
     public static int getDrawableId(final String drawable) {
@@ -134,12 +135,12 @@ public final class ResourceUtils {
 
     /**
      * カラーコード取得
-     * 
+     *
      * @param id
-     *            R.color.???
+     *         カラーリソースID
      * @return カラーコード
      */
-    public static int getColor(final int id) {
+    public static int getColor(@ColorRes final int id) {
         return sContext.getResources().getColor(id);
     }
 }

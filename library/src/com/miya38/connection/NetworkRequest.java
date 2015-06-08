@@ -69,15 +69,15 @@ public class NetworkRequest {
     // ---------------------------------------------------------------
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({Method.GET,Method.DELETE})
-    private @interface MethodGetDef {
+    public @interface MethodGetDef {
     }
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({Method.POST,Method.PUT})
-    private @interface MethodPostDef {
+    public @interface MethodPostDef {
     }
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({Method.GET,Method.POST,Method.DELETE,Method.PUT})
-    private @interface MethodDef {
+    public @interface MethodDef {
     }
 
     /**

@@ -87,8 +87,8 @@ public class ApiRequest extends StringRequest {
     // annotation
     // ---------------------------------------------------------------
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({Method.GET,Method.POST,Method.DELETE,Method.PUT})
-    private @interface MethodDef {
+    @IntDef({Method.GET, Method.POST, Method.DELETE, Method.PUT})
+    public @interface MethodDef {
     }
 
     /**
