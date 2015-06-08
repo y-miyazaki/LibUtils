@@ -1,7 +1,7 @@
 LibUtils
 ====
 
-�{���C�u�����́AAndroid�ŃA�v��������ł̃��[�e�B���e�B��񋟂��܂��B
+本ライブラリは、Androidでアプリを作る上でのユーティリティを提供します。
 * Activity
 * Application
 * Fragment
@@ -12,27 +12,76 @@ LibUtils
 * Widget  
 etc...
 
+Leak Canaryによりメモリリークを自動的にチェックする機能も盛り込まれています。
+
 ## Description
 
 * com.miya38.activity  
-AbstractActivity�EAbstractConnectionActivity������܂��B  
-���̃N���X���p�����邱�ƂŎ����I�ȃ������N���[���E�R�l�N�V�������̋��ʉ��E���C�t�T�C�N���̃��O�������I�ɃA�E�g�v�b�g���܂��B  
+AbstractActivity・AbstractConnectionActivityがあります。  
+このクラスを継承することで自動的なメモリクリーン・コネクション回りの共通化・ライフサイクルのログを自動的にアウトプットします。  
 
 * com.miya38.application  
-*�{���C�u�������g�p����ۂɂ́AApplication�N���X�̌p�����Ƃ��ĕK��CommonApplication�N���X��extends���Ă��������B*  
-���C�t�T�C�N���̃��O�̎����I�ɃA�E�g�v�b�g�A���[�e�B���e�B�̐ݒ莩�����Ȃǂ��s���Ă��܂��B  
+*本ライブラリを使用する際には、Applicationクラスの継承元として必ずCommonApplicationクラスをextendsしてください。*  
+ライフサイクルのログの自動的にアウトプット、ユーティリティの設定自動化などを行っています。  
 
 * com.miya38.connection  
-�{���C�u�����ł�Volley���g�����R�l�N�V�������������Ă��܂��B  
-���̃��b�p�[�N���X�ł���ApiRequest�N���X�ł̓l�b�g���[�N�ʐM���O�̎����f���o���A�N�b�L�[�ێ��@�\�Agzip�𓀁A304�X�e�[�^�X�̎����w�b�_�ݒ���s���܂��B  
-�悭�g�p�����Bitmap�L���b�V���@�\�Ƃ��Ă̓f�B�X�N�L���b�V���E�������L���b�V���E�f�B�X�N���������p�L���b�V���E��L���b�V����������܂��B  
+本ライブラリではVolleyを使ったコネクションを実装しています。  
+そのラッパークラスであるApiRequestクラスではネットワーク通信ログの自動吐き出し、クッキー保持機能、gzip解凍、304ステータスの自動ヘッダ設定を行います。  
+よく使用されるBitmapキャッシュ機能としてはディスクキャッシュ・メモリキャッシュ・ディスクメモリ共用キャッシュ・非キャッシュ等があります。  
 
 * com.miya38.dialog  
-DialogFragment���p������AbstractDialogFragment�EAbstractConnectionDialogFragment������܂��B  
-���̃N���X���g�p���邱�Ƃ�DialogFragment�ł��Ȃ���΂����Ȃ����������炩���ߎ�������Ă��܂��B  
-�܂��AShareDialogFragment��SNS���ւ̋��L�@�\��L���Ă��܂��B
+DialogFragmentを継承したAbstractDialogFragment・AbstractConnectionDialogFragmentがあります。  
+このクラスを使用することでDialogFragmentでしなければいけない処理があらかじめ実装されています。  
+また、ShareDialogFragmentはSNS等への共有機能を有しています。
 
-��͏��X�ɐ�����ǉ����Ă����܂��B
+後は徐々に説明を追加していきます。
+
+## Getting Started(Gradle)
+Gradle設定は以下のものをぶち込んでください。
+※後でMavenにアップすることを検討します。
+
+    dependencies {
+        debugCompile project(path: ':LibUtils:library', configuration: 'debug')
+        releaseCompile project(path: ':LibUtils:library', configuration: 'release')
+    }
+
+## Getting Started(Application Class)
+
+基本的に本ライブラリを使う場合は、ライブラリのApplicationクラスを継承することが必須です。
+Applicationクラスは通常であればCommonApplicationクラスを継承すればOKです。
+
+    public class MyApplication extends CommonApplication {
+    ･･･
+
+もしライブラリを入れすぎてMethod数が65535を超えてしまう場合はCommonMultiDexApplicationクラスを継承しましょう。
+
+    public class MyApplication extends CommonMultiDexApplication {
+    ･･･
+
+## Getting Started(Activity Class)
+
+基本的に本ライブラリを使う場合は、AbstractActivityクラスを継承することが必須です。
+
+    public class MyActivity extends AbstractActivity {
+    ･･･
+
+通信を行うクラスを作りたい場合は、AbstractConnectionActivityクラスを継承しましょう。
+
+    public class MyActivity extends AbstractConnecttionActivity {
+    ･･･
+
+## Getting Started(Fragment Class)
+
+基本的に本ライブラリを使う場合は、AbstractFragmentクラスを継承することが必須です。
+
+    public class MyFragment extends AbstractFragment {
+    ･･･
+
+通信を行うクラスを作りたい場合は、AbstractConnectionFragmentクラスを継承しましょう。
+
+    public class MyFragment extends AbstractConnecttionFragment {
+    ･･･
+
 
 ## Demo
 
@@ -43,26 +92,22 @@ nothing...
 ## Requirement
 
 ## Usage
-�ȉ��̓��e�͂قڕK�{�ł��B�K���쐬���܂��傤�B  
-* CommonApplication�N���X���p������Application�N���X���쐬����B  
-* �l�b�g���[�N�ʐM������A�v���̏ꍇ�́AAbstractVolleySetting�N���X���p�������N���X���쐬����B  
-���̃N���X�̓V���O���g���N���X�ō쐬���邱�ƁB
-* �l�b�g���[�N�ʐM������A�v���̏ꍇ�́AAbstractConnectionCommon���p�������N���X���쐬����B  
-��Ƀl�b�g���[�N���̃G���[�n���h�����O�ARequestQueue���̎擾��Ȃǂ�ݒ肷��B    
+以下の内容はほぼ必須です。必ず作成しましょう。  
+* CommonApplicationクラスもしくはCommonMultiDexApplicationクラスを継承したApplicationクラスを作成する。  
+* ネットワーク通信があるアプリの場合は、AbstractVolleySettingクラスを継承したクラスを作成する。  
+このクラスはシングルトンクラスで作成すること。
+* ネットワーク通信があるアプリの場合は、AbstractConnectionCommonを継承したクラスを作成する。  
+主にネットワーク回りのエラーハンドリング、RequestQueue等の取得先などを設定する。    
 
-�ȉ��̓��e�͂����̉�ʂ��쐬����ꍇ�ɕK�{�ł��B  
-* Activity���쐬����B  
-�p�����Ƃ��āA�K��AbstractActivity��������AbstractConnectionActivity���p�����܂��傤�B
-* Fragment���쐬����B  
-�p�����Ƃ��āA�K��AbstractFragment��������AbstractConnectionFragment���p�����܂��傤�B
-* DialogFragment���쐬����B  
-�p�����Ƃ��āA�K��AbstractDialogFragment��������AbstractConnectionDialogFragment���p�����܂��傤�B
+以下の内容はここの画面を作成する場合に必須です。  
+* Activityを作成する。  
+継承元として、必ずAbstractActivityもしくはAbstractConnectionActivityを継承しましょう。
+* Fragmentを作成する。  
+継承元として、必ずAbstractFragmentもしくはAbstractConnectionFragmentを継承しましょう。
+* DialogFragmentを作成する。  
+継承元として、必ずAbstractDialogFragmentもしくはAbstractConnectionDialogFragmentを継承しましょう。
 
 ## Install
-
-���C�u�����̈ˑ��֌W�́Agradle�ɋL�ڂ��Ă��܂��̂ňȉ��̃R�}���h�����s����K�v������܂��B
-
-gradlew copyLibs
 
 ## Contribution
 
