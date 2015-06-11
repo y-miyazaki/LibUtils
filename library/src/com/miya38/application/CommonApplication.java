@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import com.miya38.BuildConfig;
 import com.miya38.connection.AbstractVolleySetting;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.ClipboardUtils;
@@ -74,7 +75,9 @@ public abstract class CommonApplication extends Application {
         // ---------------------------------------------------------------
         // Memory Leak Check
         // ---------------------------------------------------------------
-        LeakCanary.install(this);
+        if (BuildConfig.DEBUG) {
+            LeakCanary.install(this);
+        }
 
         // Connection pooling/Keep-alive bug対応
         // libcore.io.Streams.readAsciiLine対応

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
+import com.miya38.BuildConfig;
 import com.miya38.R;
 import com.miya38.activity.AbstractActivity;
 import com.miya38.application.CommonApplication;
@@ -205,17 +206,19 @@ public abstract class AbstractFragment extends Fragment {
         // オブジェクトの非同期クリア
         ClassUtils.setAsyncObjectNull(this, getClass(), AbstractFragment.class);
 
-        // leak canary
-        Application application = getActivity().getApplication();
-        if (application instanceof CommonMultiDexApplication) {
-            RefWatcher refWatcher = CommonMultiDexApplication.getRefWatcher(getActivity());
-            if (refWatcher != null) {
-                refWatcher.watch(this);
-            }
-        } else if (application instanceof CommonApplication) {
-            RefWatcher refWatcher = CommonApplication.getRefWatcher(getActivity());
-            if (refWatcher != null) {
-                refWatcher.watch(this);
+        if (BuildConfig.DEBUG) {
+            // leak canary
+            Application application = getActivity().getApplication();
+            if (application instanceof CommonMultiDexApplication) {
+                RefWatcher refWatcher = CommonMultiDexApplication.getRefWatcher(getActivity());
+                if (refWatcher != null) {
+                    refWatcher.watch(this);
+                }
+            } else if (application instanceof CommonApplication) {
+                RefWatcher refWatcher = CommonApplication.getRefWatcher(getActivity());
+                if (refWatcher != null) {
+                    refWatcher.watch(this);
+                }
             }
         }
     }

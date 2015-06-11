@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
+import com.miya38.BuildConfig;
 import com.miya38.R;
 import com.miya38.application.CommonApplication;
 import com.miya38.application.CommonMultiDexApplication;
@@ -205,18 +206,19 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
         // オブジェクトのnull初期化
         ClassUtils.setAsyncObjectNull(this, getClass(), AbstractActivity.class);
-
-        // leak canary
-        Application application = getApplication();
-        if (application instanceof CommonMultiDexApplication) {
-            RefWatcher refWatcher = CommonMultiDexApplication.getRefWatcher(this);
-            if (refWatcher != null) {
-                refWatcher.watch(this);
-            }
-        } else if (application instanceof CommonApplication) {
-            RefWatcher refWatcher = CommonApplication.getRefWatcher(this);
-            if (refWatcher != null) {
-                refWatcher.watch(this);
+        if (BuildConfig.DEBUG) {
+            // leak canary
+            Application application = getApplication();
+            if (application instanceof CommonMultiDexApplication) {
+                RefWatcher refWatcher = CommonMultiDexApplication.getRefWatcher(this);
+                if (refWatcher != null) {
+                    refWatcher.watch(this);
+                }
+            } else if (application instanceof CommonApplication) {
+                RefWatcher refWatcher = CommonApplication.getRefWatcher(this);
+                if (refWatcher != null) {
+                    refWatcher.watch(this);
+                }
             }
         }
     }

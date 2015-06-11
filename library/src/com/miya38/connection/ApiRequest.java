@@ -11,6 +11,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.miya38.BuildConfig;
 import com.miya38.utils.CookieUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.StringUtils;
@@ -323,68 +324,71 @@ public class ApiRequest extends StringRequest {
         // ログ出力
         // コンパイラ考慮のため、BuildConfig.DEBUGでここは判定する
         // ---------------------------------------------------------------
-        if (sIsDebugable) {
-            long xAndroidReceivedMillis = 0;
-            long xAndroidSentMillis = 0;
+        if (BuildConfig.DEBUG) {
 
-            final StringBuffer log = new StringBuffer();
-            StringUtils.appendBufferFormat(log, "----------------------------------------start----------------------------------------\n");
-            StringUtils.appendBufferFormat(log, "request url = %s\n", mNetworkRequest.mUrl);
-            // リクエストヘッダー出力
-            for (final Entry<String, String> e : mNetworkRequest.mHeaders.entrySet()) {
-                StringUtils.appendBufferFormat(log, "request header: %s:%s\n", e.getKey(), e.getValue());
-            }
-            if (mNetworkRequest.mMethod == Method.GET) {
-                StringUtils.appendBufferFormat(log, "request method: GET\n");
-            } else if (mNetworkRequest.mMethod == Method.POST) {
-                StringUtils.appendBufferFormat(log, "request method: POST\n");
-            } else if (mNetworkRequest.mMethod == Method.PUT) {
-                StringUtils.appendBufferFormat(log, "request method: PUT\n");
-            } else if (mNetworkRequest.mMethod == Method.DELETE) {
-                StringUtils.appendBufferFormat(log, "request method: DELETE\n");
-            }
-            StringUtils.appendBufferFormat(log, "request body = %s\n", mNetworkRequest.mBody);
-            StringUtils.appendBufferFormat(log, "request id = %s\n", mNetworkRequest.mId);
-            // ステータスコード出力
-            StringUtils.appendBufferFormat(log, "response status code = %s\n", mNetworkResponse.statusCode);
+            if (sIsDebugable) {
+                long xAndroidReceivedMillis = 0;
+                long xAndroidSentMillis = 0;
 
-            final Header[] apacheHeaders = mNetworkResponse.apacheHeaders;
-            if (apacheHeaders != null) {
-                for (final Header apacheHeader : apacheHeaders) {
-                    final String key = apacheHeader.getName();
-                    final String value = apacheHeader.getValue();
-                    StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
+                final StringBuffer log = new StringBuffer();
+                StringUtils.appendBufferFormat(log, "----------------------------------------start----------------------------------------\n");
+                StringUtils.appendBufferFormat(log, "request url = %s\n", mNetworkRequest.mUrl);
+                // リクエストヘッダー出力
+                for (final Entry<String, String> e : mNetworkRequest.mHeaders.entrySet()) {
+                    StringUtils.appendBufferFormat(log, "request header: %s:%s\n", e.getKey(), e.getValue());
+                }
+                if (mNetworkRequest.mMethod == Method.GET) {
+                    StringUtils.appendBufferFormat(log, "request method: GET\n");
+                } else if (mNetworkRequest.mMethod == Method.POST) {
+                    StringUtils.appendBufferFormat(log, "request method: POST\n");
+                } else if (mNetworkRequest.mMethod == Method.PUT) {
+                    StringUtils.appendBufferFormat(log, "request method: PUT\n");
+                } else if (mNetworkRequest.mMethod == Method.DELETE) {
+                    StringUtils.appendBufferFormat(log, "request method: DELETE\n");
+                }
+                StringUtils.appendBufferFormat(log, "request body = %s\n", mNetworkRequest.mBody);
+                StringUtils.appendBufferFormat(log, "request id = %s\n", mNetworkRequest.mId);
+                // ステータスコード出力
+                StringUtils.appendBufferFormat(log, "response status code = %s\n", mNetworkResponse.statusCode);
 
-                    // 送信開始時間を取得
-                    if (StringUtils.equals(key, "X-Android-Sent-Millis")) {
-                        xAndroidSentMillis = Long.parseLong(value);
+                final Header[] apacheHeaders = mNetworkResponse.apacheHeaders;
+                if (apacheHeaders != null) {
+                    for (final Header apacheHeader : apacheHeaders) {
+                        final String key = apacheHeader.getName();
+                        final String value = apacheHeader.getValue();
+                        StringUtils.appendBufferFormat(log, "response header %-16s = %s\n", key, value);
+
+                        // 送信開始時間を取得
+                        if (StringUtils.equals(key, "X-Android-Sent-Millis")) {
+                            xAndroidSentMillis = Long.parseLong(value);
+                        }
+                        // 受信完了時間を取得
+                        if (StringUtils.equals(key, "X-Android-Received-Millis")) {
+                            xAndroidReceivedMillis = Long.valueOf(value);
+                        }
                     }
-                    // 受信完了時間を取得
-                    if (StringUtils.equals(key, "X-Android-Received-Millis")) {
-                        xAndroidReceivedMillis = Long.valueOf(value);
+                    if (xAndroidSentMillis != 0 && xAndroidReceivedMillis != 0) {
+                        StringUtils.appendBufferFormat(log, "response time(msec) = %d msec\n", xAndroidReceivedMillis - xAndroidSentMillis);
                     }
                 }
-                if (xAndroidSentMillis != 0 && xAndroidReceivedMillis != 0) {
-                    StringUtils.appendBufferFormat(log, "response time(msec) = %d msec\n", xAndroidReceivedMillis - xAndroidSentMillis);
-                }
-            }
 
-            try {
-                StringUtils.appendBuffer(log, "response body = \n");
-                if (StringUtils.contains(response.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
-                    try {
-                        JSONObject json = new JSONObject(new String(mNetworkResponse.data));
-                        StringUtils.appendBuffer(log, json.toString(4));
-                    } catch (JSONException e) {
+                try {
+                    StringUtils.appendBuffer(log, "response body = \n");
+                    if (StringUtils.contains(response.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
+                        try {
+                            JSONObject json = new JSONObject(new String(mNetworkResponse.data));
+                            StringUtils.appendBuffer(log, json.toString(4));
+                        } catch (JSONException e) {
+                            StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                        }
+                    } else {
                         StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
                     }
-                } else {
-                    StringUtils.appendBuffer(log, new String(mNetworkResponse.data));
+                    StringUtils.appendBufferFormat(log, "\n---------------------------------------- end ----------------------------------------\n");
+                    LogUtils.d(TAG, log.toString());
+                } catch (final OutOfMemoryError e) {
+                    // 無視する。bodyがでか過ぎて無理なため。
                 }
-                StringUtils.appendBufferFormat(log, "\n---------------------------------------- end ----------------------------------------\n");
-                LogUtils.d(TAG, log.toString());
-            } catch (final OutOfMemoryError e) {
-                // 無視する。bodyがでか過ぎて無理なため。
             }
         }
         String parsed;
