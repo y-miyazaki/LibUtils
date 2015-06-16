@@ -107,6 +107,18 @@ nothing...
 * DialogFragmentを作成する。  
 継承元として、必ずAbstractDialogFragmentもしくはAbstractConnectionDialogFragmentを継承しましょう。
 
+## Proguard
+
+    ########## Support Library ##########
+    -keep class android.support.v4.** { *; }
+    -keep class android.support.v7.** { *; }
+    ########## jackson ##########
+    -keep class com.fasterxml.** {*; }
+    ########## LibUtils ##########
+    -keepnames class com.miya38.widget.**
+    -keepclasseswithmembers class com.miya38.widget.NetworkImageView {*;}
+    -keepclasseswithmembers class com.android.volley.toolbox.ImageLoader { *;}
+
 ## Install
 
 ## Contribution
