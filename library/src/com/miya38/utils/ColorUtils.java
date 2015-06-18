@@ -1,6 +1,7 @@
 package com.miya38.utils;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 
 /**
  * カラーユーティリティ
@@ -22,7 +23,7 @@ public final class ColorUtils {
      *            RGBA値
      * @return ARGB値を返却する
      */
-    public static int setRGBAToARGB(final String color) {
+    public static int setRGBAToARGB(@NonNull final String color) {
         final int red = Integer.parseInt(color.substring(0, 2), 16);
         final int green = Integer.parseInt(color.substring(2, 4), 16);
         final int blue = Integer.parseInt(color.substring(4, 6), 16);

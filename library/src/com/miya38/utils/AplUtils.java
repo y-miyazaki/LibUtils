@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * アプリケーションユーティリティ
- * 
+ *
  * @author y-miyazaki
  */
 public final class AplUtils {
@@ -43,9 +43,9 @@ public final class AplUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
-     *            {@link Context}
+     *         {@link Context}
      */
     public static void configure(final Context context) {
         sContext = context;
@@ -53,7 +53,7 @@ public final class AplUtils {
 
     /**
      * ブランドを返却する 例：SHARP
-     * 
+     *
      * @return ブランド
      */
     public static String getBuildBrand() {
@@ -62,7 +62,7 @@ public final class AplUtils {
 
     /**
      * 製品名を返却する 例：JNDK01
-     * 
+     *
      * @return Product
      */
     public static String getBuildProduct() {
@@ -71,7 +71,7 @@ public final class AplUtils {
 
     /**
      * モデルを返却する 例：JN-DK01
-     * 
+     *
      * @return モデル
      */
     public static String getBuildModel() {
@@ -80,7 +80,7 @@ public final class AplUtils {
 
     /**
      * BuildVersionを返却する 例：8
-     * 
+     *
      * @return BuildVersion
      */
     public static int getBuildVersion() {
@@ -89,7 +89,7 @@ public final class AplUtils {
 
     /**
      * ReleaseVersionを返却する 例：2.2
-     * 
+     *
      * @return Release
      */
     public static String getBuildRelease() {
@@ -98,7 +98,7 @@ public final class AplUtils {
 
     /**
      * Eclair(5)以上のバージョンかチェック
-     * 
+     *
      * @return true:Eclair以上 false;Eclair未満
      */
     public static boolean hasEclair() {
@@ -107,7 +107,7 @@ public final class AplUtils {
 
     /**
      * Froyo(2.2/8)以上のバージョンかチェック
-     * 
+     *
      * @return true:Froyo以上 false;Froyo未満
      */
     public static boolean hasFroyo() {
@@ -116,7 +116,7 @@ public final class AplUtils {
 
     /**
      * Gingerbread(2.3/9)以上のバージョンかチェック
-     * 
+     *
      * @return true:Gingerbread以上 false;Gingerbread未満
      */
     public static boolean hasGingerbread() {
@@ -125,7 +125,7 @@ public final class AplUtils {
 
     /**
      * Gingerbread Mr1(2.3.3-2.3.7/10)以上のバージョンかチェック
-     * 
+     *
      * @return true:Gingerbread Mr1以上 false;Gingerbread Mr1未満
      */
     public static boolean hasGingerbreadMr1() {
@@ -134,7 +134,7 @@ public final class AplUtils {
 
     /**
      * Honeycomb(3.0/11)以上のバージョンかチェック
-     * 
+     *
      * @return true:Honeycomb以上 false;Honeycomb未満
      */
     public static boolean hasHoneycomb() {
@@ -143,7 +143,7 @@ public final class AplUtils {
 
     /**
      * Honeycomb Mr1(3.1/12)以上のバージョンかチェック
-     * 
+     *
      * @return true:Honeycomb Mr1以上 false;Honeycomb Mr1未満
      */
     public static boolean hasHoneycombMR1() {
@@ -152,7 +152,7 @@ public final class AplUtils {
 
     /**
      * Honeycomb Mr1(3.2/13)以上のバージョンかチェック
-     * 
+     *
      * @return true:Honeycomb Mr1以上 false;Honeycomb Mr1未満
      */
     public static boolean hasHoneycombMR2() {
@@ -161,7 +161,7 @@ public final class AplUtils {
 
     /**
      * Ice Cream Sandwich(4.0/14)以上のバージョンかチェック
-     * 
+     *
      * @return true:Ice Cream Sandwich以上 false;Ice Cream Sandwich未満
      */
     public static boolean hasIceCreamSandwich() {
@@ -170,7 +170,7 @@ public final class AplUtils {
 
     /**
      * Ice Cream Sandwich(4.0.03/15)以上のバージョンかチェック
-     * 
+     *
      * @return true:Ice Cream Sandwich Mr1以上 false;Ice Cream Sandwich Mr1未満
      */
     public static boolean hasIceCreamSandwichMR1() {
@@ -179,7 +179,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.1/16)以上のバージョンかチェック
-     * 
+     *
      * @return true:JellyBean以上 false;JellyBean未満
      */
     public static boolean hasJellyBean() {
@@ -188,7 +188,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.2/17)以上のバージョンかチェック
-     * 
+     *
      * @return true:JellyBean Mr1以上 false;JellyBean Mr1未満
      */
     public static boolean hasJellyBeanMR1() {
@@ -197,7 +197,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.3/18)以上のバージョンかチェック
-     * 
+     *
      * @return true:JellyBean Mr2以上 false;JellyBean Mr2未満
      */
     public static boolean hasJellyBeanMR2() {
@@ -206,7 +206,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(4.4/19)以上のバージョンかチェック
-     * 
+     *
      * @return true:Kitkat以上 false;Kitkat未満
      */
     public static boolean hasKitKat() {
@@ -215,7 +215,7 @@ public final class AplUtils {
 
     /**
      * JellyBean(5.0/21)以上のバージョンかチェック
-     * 
+     *
      * @return true:Lollipop以上 false;Lollipop未満
      */
     public static boolean hasLollipop() {
@@ -224,7 +224,7 @@ public final class AplUtils {
 
     /**
      * アプリケーションバージョンを返却する
-     * 
+     *
      * @return アプリケーションバージョン文字列
      */
     public static String getAplVersion() {
@@ -237,7 +237,7 @@ public final class AplUtils {
 
     /**
      * アプリケーションバージョンコードを返却する
-     * 
+     *
      * @return アプリケーションバージョンコード文字列
      */
     public static int getAplVersionCode() {
@@ -250,7 +250,7 @@ public final class AplUtils {
 
     /**
      * アプリケーションパッケージ名を返却する
-     * 
+     *
      * @return アプリケーションパッケージ名
      */
     public static String getPackageName() {
@@ -259,7 +259,7 @@ public final class AplUtils {
 
     /**
      * 画面サイズの横幅を取得(px)
-     * 
+     *
      * @return 画面の横幅
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -277,7 +277,7 @@ public final class AplUtils {
 
     /**
      * 画面サイズの縦幅を取得(px)
-     * 
+     *
      * @return 画面の縦幅
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -295,22 +295,25 @@ public final class AplUtils {
 
     /**
      * キーボードを閉じる
-     * 
+     *
      * @param activity
-     *            Activity
+     *         Activity
      */
     public static void closeKeyboard(final Activity activity) {
-        final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        final View currentFocus = activity.getCurrentFocus();
+        if (currentFocus != null) {
+            final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 
     /**
      * キーボードを閉じる
-     * 
+     *
      * @param context
-     *            Context
+     *         Context
      * @param view
-     *            View
+     *         View
      */
     public static void closeKeyboard(final Context context, final View view) {
         final InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -319,10 +322,9 @@ public final class AplUtils {
 
     /**
      * dp→px変換
-     * 
+     *
      * @param dp
-     *            dp
-     * 
+     *         dp
      * @return dpからpxに変換された値を返却する
      */
     public static int getDpToPx(final int dp) {
@@ -332,10 +334,9 @@ public final class AplUtils {
 
     /**
      * px→dp変換
-     * 
+     *
      * @param px
-     *            px
-     * 
+     *         px
      * @return pxからdpに変換された値を返却する
      */
     public static int getPxToDp(final int px) {
@@ -345,10 +346,9 @@ public final class AplUtils {
 
     /**
      * sp→px変換
-     * 
+     *
      * @param sp
-     *            sp
-     * 
+     *         sp
      * @return spからpxに変換された値を返却する
      */
     public static int getSpToPx(final int sp) {
@@ -358,12 +358,11 @@ public final class AplUtils {
 
     /**
      * アプリが起動中か確認する
-     * 
+     *
      * @param appName
-     *            アプリケーション名
-     * 
+     *         アプリケーション名
      * @return true:起動中<br>
-     *         false:未起動
+     * false:未起動
      */
     public static boolean hasRunningApplication(final String appName) {
         final ActivityManager activityManager = (ActivityManager) sContext.getSystemService(Context.ACTIVITY_SERVICE);
@@ -389,9 +388,9 @@ public final class AplUtils {
 
     /**
      * 自分のアプリのアクティビティが起動しているか確認する
-     * 
+     *
      * @return true:起動中<br>
-     *         false:未起動
+     * false:未起動
      */
     public static boolean hasApplicationActivityRunning() {
         final String packageName = getPackageName();
@@ -409,13 +408,12 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージに属するアクティビティが起動しているか確認する
-     * 
+     *
      * @param activityName
-     *            パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
-     *            HomeActivity)
-     * 
+     *         パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
+     *         HomeActivity)
      * @return true:起動中<br>
-     *         false:未起動
+     * false:未起動
      */
     public static boolean hasApplicationActivityRunning(final String activityName) {
         final ActivityManager activityManager = (ActivityManager) sContext.getSystemService(Context.ACTIVITY_SERVICE);
@@ -432,12 +430,11 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージに属するアクティビティが起動しているか確認する
-     * 
+     *
      * @param activityName
-     *            パッケージ名まで指定すること(ex...com.example)
-     * 
+     *         パッケージ名まで指定すること(ex...com.example)
      * @return true:起動中<br>
-     *         false:未起動
+     * false:未起動
      */
     public static boolean hasApplicationActivityRunningByPackageName(final String activityName) {
         final ActivityManager activityManager = (ActivityManager) sContext.getSystemService(Context.ACTIVITY_SERVICE);
@@ -454,13 +451,12 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージが端末にインストールされているか確認する。
-     * 
+     *
      * @param packageName
-     *            パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
-     *            HomeActivity)
-     * 
+     *         パッケージ名を含めたアクティビティ名を指定すること(ex...com.example.activity.
+     *         HomeActivity)
      * @return true:起動中<br>
-     *         false:未起動
+     * false:未起動
      */
     public static boolean hasApplication(final String packageName) {
         try {
@@ -475,10 +471,9 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージのアプリケーションアイコンを取得する。
-     * 
+     *
      * @param packageName
-     *            パッケージ名を指定する。
-     * 
+     *         パッケージ名を指定する。
      * @return アプリケーションがインストールされていない場合はnullを返却する。
      */
     public static Drawable getApplicationIcon(final String packageName) {
@@ -494,10 +489,9 @@ public final class AplUtils {
 
     /**
      * 指定のパッケージのアプリケーション名を取得する。
-     * 
+     *
      * @param packageName
-     *            パッケージ名を指定する。
-     * 
+     *         パッケージ名を指定する。
      * @return アプリケーションがインストールされていない場合はnullを返却する。
      */
     public static String getApplicationName(final String packageName) {
@@ -517,22 +511,25 @@ public final class AplUtils {
      * バージョンの複数桁構成のチェックを可能とする。<br>
      * ex)1.0.0
      * </p>
-     * 
+     *
      * @param serverAplVersion
-     *            サーバ側のバージョン
+     *         サーバ側のバージョン
      * @return true:バージョンアップ必要<br>
-     *         false:バージョンアップ不必要
+     * false:バージョンアップ不必要
      */
     public static boolean isUpdate(final String serverAplVersion) {
         try {
             // サーバ側バージョン
             final String[] serverAplVersions = serverAplVersion.split("\\.");
             // アプリ側バージョン
-            final String[] aplVersions = AplUtils.getAplVersion().split("\\.");
-            final int length = aplVersions.length;
-            for (int i = 0; i < length; i++) {
-                if (Integer.parseInt(serverAplVersions[i]) > Integer.parseInt(aplVersions[i])) {
-                    return true;
+            String aplVersion = AplUtils.getAplVersion();
+            if (!StringUtils.isEmpty(aplVersion)) {
+                final String[] aplVersions = aplVersion.split("\\.");
+                final int length = aplVersions.length;
+                for (int i = 0; i < length; i++) {
+                    if (Integer.parseInt(serverAplVersions[i]) > Integer.parseInt(aplVersions[i])) {
+                        return true;
+                    }
                 }
             }
         } catch (final Exception e) {
@@ -543,7 +540,7 @@ public final class AplUtils {
 
     /**
      * GooglePlayStore用のIntent URLを取得する。
-     * 
+     *
      * @return Intentで開くようのURL
      */
     public static String getGooglePlayAplUrl(String packageName) {
@@ -552,7 +549,7 @@ public final class AplUtils {
 
     /**
      * ブラウザ用のGooglePlayのURLを取得する。
-     * 
+     *
      * @return Google Play URL
      */
     public static String getGooglePlayUrl(String packageName) {
@@ -561,7 +558,7 @@ public final class AplUtils {
 
     /**
      * 証明書ハッシュ値取得
-     * 
+     *
      * @return 証明書ハッシュ値
      */
     public static String getSignatureHash() {
@@ -581,11 +578,11 @@ public final class AplUtils {
 
     /**
      * 証明書ハッシュ値チェック
-     * 
+     *
      * @param signatureHash
-     *            証明書ハッシュ値
+     *         証明書ハッシュ値
      * @return true:正しい署名のハッシュ値<br>
-     *         false:正しくない署名のハッシュ値
+     * false:正しくない署名のハッシュ値
      */
     public static boolean isSignatureHash(final String signatureHash) {
         return StringUtils.equals(signatureHash, getSignatureHash());
@@ -593,9 +590,9 @@ public final class AplUtils {
 
     /**
      * sha-256変換
-     * 
+     *
      * @param data
-     *            変換元
+     *         変換元
      * @return sha-256変換後データ
      */
     private static byte[] computeSha256(final byte[] data) {
@@ -608,9 +605,9 @@ public final class AplUtils {
 
     /**
      * byte→hex変換
-     * 
+     *
      * @param data
-     *            変換元
+     *         変換元
      * @return HEXデータ
      */
     private static String byte2hex(final byte[] data) {

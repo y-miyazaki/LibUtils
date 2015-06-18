@@ -1,5 +1,19 @@
 package com.miya38.utils;
 
+import android.Manifest;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
+import android.text.TextUtils;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,20 +32,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.text.TextUtils;
-
 /**
  * コネクションユーティリティークラス
- * 
+ *
  * @author y-miyazaki
  */
 public final class ConnectionUtils {
@@ -49,9 +52,9 @@ public final class ConnectionUtils {
     /**
      * 初期化します。<br>
      * アプリケーションの開始時点で一度呼び出して下さい。
-     * 
+     *
      * @param context
-     *            {@link Context}
+     *         {@link Context}
      */
     public static void configure(final Context context) {
         sContext = context;
@@ -59,9 +62,9 @@ public final class ConnectionUtils {
 
     /**
      * ホスト名取得
-     * 
+     *
      * @param url
-     *            URL
+     *         URL
      * @return ホスト名
      */
     public static String getHost(final String url) {
@@ -75,9 +78,9 @@ public final class ConnectionUtils {
 
     /**
      * パス名取得
-     * 
+     *
      * @param url
-     *            URL
+     *         URL
      * @return ホスト名
      */
     public static String getPath(final String url) {
@@ -91,12 +94,12 @@ public final class ConnectionUtils {
 
     /**
      * クエリーを除いたURLを取得
-     * 
+     *
      * @param url
-     *            URL
-     * @return ホスト名
+     *         URL
+     * @return クエリーを除いたURL
      */
-    public static String getDeleteQuery(final String url) {
+    public static String getDeleteQuery(@NonNull final String url) {
         try {
             return url.split("\\?")[0];
         } catch (final Exception e) {
@@ -107,12 +110,12 @@ public final class ConnectionUtils {
 
     /**
      * URLからクエリーのMapを取得
-     * 
+     *
      * @param url
-     *            URL
+     *         URL
      * @return クエリーのMAP
      */
-    public static Map<String, String> getQuery(final String url) {
+    public static Map<String, String> getQuery(@NonNull final String url) {
         final HashMap<String, String> map = new HashMap<String, String>();
         try {
             final List<NameValuePair> parameters = URLEncodedUtils.parse(new URI(url), DEFAULT_CHARSET);
@@ -127,14 +130,14 @@ public final class ConnectionUtils {
 
     /**
      * URL・クエリーの組み合わせを取得
-     * 
+     *
      * @param url
-     *            URL
+     *         URL
      * @param query
-     *            クエリーmap
+     *         クエリーmap
      * @return URL
      */
-    public static String getUrl(final String url, final Map<String, String> query) {
+    public static String getUrl(@NonNull final String url, final Map<String, String> query) {
         // URL設定
         final StringBuilder stringBuilderUrl = new StringBuilder();
 
@@ -166,10 +169,11 @@ public final class ConnectionUtils {
 
     /**
      * クエリーパラメータ生成
-     * 
+     *
      * @param query
+     *         クエリーMap
      * @return クエリーパラメータ<br>
-     *         ex) name1=value1&name2=value2
+     * ex) name1=value1&name2=value2
      */
     public static String getQuery(final Map<String, String> query) {
         try {
@@ -203,9 +207,9 @@ public final class ConnectionUtils {
 
     /**
      * ボディー設定
-     * 
+     *
      * @param body
-     *            ボディ
+     *         ボディ
      * @return キーバリューのペア
      */
     public static List<NameValuePair> getParams(final Map<String, String> body) {
@@ -226,9 +230,9 @@ public final class ConnectionUtils {
 
     /**
      * gzip判定
-     * 
+     *
      * @param response
-     *            レスポンス
+     *         レスポンス
      * @return gzip有:true gzip無:false
      */
     public static boolean isGZipHttpResponse(final HttpResponse response) {
@@ -242,11 +246,11 @@ public final class ConnectionUtils {
 
     /**
      * gzipを解凍する
-     * 
+     *
      * @param data
-     *            gzipされたコンテンツ
+     *         gzipされたコンテンツ
      * @return GZip解凍後のコンテンツ
-     *         解凍失敗時には、nullで返却する。
+     * 解凍失敗時には、nullで返却する。
      */
     public byte[] getGZipToContents(final byte[] data) {
         try {
@@ -274,9 +278,10 @@ public final class ConnectionUtils {
 
     /**
      * ネットワークが使用可能かを返却する
-     * 
+     *
      * @return true:ネットワーク使用可能 false:ネットワーク使用不可
      */
+    @RequiresPermission(allOf = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE})
     public static boolean hasAvailableNetwork() {
         // システムから接続情報をとってくる
         final ConnectivityManager conMan = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);

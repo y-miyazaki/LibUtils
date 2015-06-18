@@ -1,6 +1,8 @@
 package com.miya38.activity;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.RequiresPermission;
 
 import com.android.volley.NetworkResponse;
 import com.miya38.connection.AbstractConnectionCommon;
@@ -62,6 +64,7 @@ public abstract class AbstractConnectionActivity extends AbstractActivity {
      * @param networkRequest
      *            {@link NetworkRequest}
      */
+    @RequiresPermission(Manifest.permission.INTERNET)
     public void requestAPI(final NetworkRequest networkRequest) {
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.requestAPI(networkRequest);
