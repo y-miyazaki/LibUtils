@@ -43,18 +43,24 @@ import java.util.zip.GZIPInputStream;
  *
  * @author y-miyazaki
  */
-public class ApiRequest extends StringRequest {
+public class ApiRequestVolley extends StringRequest {
     // ---------------------------------------------------------------
     // define
     // ---------------------------------------------------------------
     /** ログに付与するタグ */
-    private static final String TAG = ApiRequest.class.getSimpleName();
+    private static final String TAG = ApiRequestVolley.class.getSimpleName();
+    /** Content-Type: application/json */
+    private static final String HEADER_CONTENT_TYPE = "Content-Type";
+    /** Content-Type: application/json */
+    private static final String HEADER_CONTENT_TYPE_APPLICATION_JSON = "application/json";
+
+    /** Content-Encoding */
+    private static final String HEADER_CONTENT_ENCODING = "Content-Encoding";
     /** Content-Enccoding: gzip */
-    private static final String CONTENT_ENCODING_GZIP = "gzip";
-    /** Content-Type: application/json */
-    private static final String CONTENT_TYPE = "Content-Type";
-    /** Content-Type: application/json */
-    private static final String CONTENT_TYPE_JSON = "application/json";
+    private static final String HEADER_CONTENT_ENCODING_GZIP = "gzip";
+
+    /** Set-Cookie */
+    private static final String HEADER_SET_COOKIE = "Set-Cookie";
 
     /** デバッグ設定 */
     private static boolean sIsDebugable;
@@ -152,7 +158,7 @@ public class ApiRequest extends StringRequest {
      * @param apiErrorListener
      *         {@link ApiErrorListener}
      */
-    public ApiRequest(@MethodDef final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
+    public ApiRequestVolley(@MethodDef final int method, final String url, final int id, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(method, url, apiListener, apiErrorListener);
         mApiListener = apiListener;
         mApiErrorListener = apiErrorListener;
@@ -175,7 +181,7 @@ public class ApiRequest extends StringRequest {
      * @param apiErrorListener
      *         {@link ApiErrorListener}
      */
-    public ApiRequest(final NetworkRequest networkRequest, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
+    public ApiRequestVolley(final NetworkRequest networkRequest, final ApiListener apiListener, final ApiErrorListener apiErrorListener) {
         super(networkRequest.mMethod, networkRequest.mUrl, apiListener, apiErrorListener);
         mApiListener = apiListener;
         mNetworkRequest = networkRequest;
@@ -246,7 +252,7 @@ public class ApiRequest extends StringRequest {
                         }
                     }
                     StringUtils.appendBuffer(log, "response body = \n");
-                    if (StringUtils.contains(networkResponse.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
+                    if (StringUtils.contains(networkResponse.headers.get(HEADER_CONTENT_TYPE), HEADER_CONTENT_TYPE_APPLICATION_JSON)) {
                         try {
                             JSONObject json = new JSONObject(new String(networkResponse.data));
                             StringUtils.appendBuffer(log, json.toString(4));
@@ -281,7 +287,7 @@ public class ApiRequest extends StringRequest {
         // ---------------------------------------------------------------
         try {
             // ContentTypeが、もしgzipなら解凍する
-            if (!mNetworkResponse.notModified && CONTENT_ENCODING_GZIP.equalsIgnoreCase(response.headers.get(HTTP.CONTENT_ENCODING))) {
+            if (!mNetworkResponse.notModified && HEADER_CONTENT_ENCODING_GZIP.equalsIgnoreCase(response.headers.get(HEADER_CONTENT_ENCODING))) {
                 final GZIPInputStream zis = new GZIPInputStream(new BufferedInputStream(new ByteArrayInputStream(response.data)));
                 final ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 try {
@@ -304,6 +310,7 @@ public class ApiRequest extends StringRequest {
 
         // ---------------------------------------------------------------
         // SetCookie
+        // 自動的にWebViewのCookieに書き込みを行う。
         // ---------------------------------------------------------------
         setCookie(mNetworkResponse);
 
@@ -374,7 +381,7 @@ public class ApiRequest extends StringRequest {
 
                 try {
                     StringUtils.appendBuffer(log, "response body = \n");
-                    if (StringUtils.contains(response.headers.get(CONTENT_TYPE), CONTENT_TYPE_JSON)) {
+                    if (StringUtils.contains(response.headers.get(HEADER_CONTENT_TYPE), HEADER_CONTENT_TYPE_APPLICATION_JSON)) {
                         try {
                             JSONObject json = new JSONObject(new String(mNetworkResponse.data));
                             StringUtils.appendBuffer(log, json.toString(4));
@@ -416,7 +423,7 @@ public class ApiRequest extends StringRequest {
                 for (final Header apacheHeader : apacheHeaders) {
                     final String key = apacheHeader.getName();
                     final String value = apacheHeader.getValue();
-                    if (StringUtils.equals("Set-Cookie", key)) {
+                    if (StringUtils.equals(HEADER_SET_COOKIE, key)) {
                         CookieUtils.setValue(mNetworkRequest.mUrl, value);
                     }
                 }

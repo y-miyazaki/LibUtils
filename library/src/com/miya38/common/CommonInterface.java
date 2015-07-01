@@ -1,14 +1,16 @@
 package com.miya38.common;
 
-import java.io.IOException;
-import java.util.Date;
-
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 
 import com.android.volley.NetworkResponse;
 import com.miya38.connection.NetworkRequest;
+import com.miya38.connection.okhttp.NetworkRequestOkHttp;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * 共通インタフェース
@@ -17,6 +19,32 @@ import com.miya38.connection.NetworkRequest;
  * 
  */
 public class CommonInterface {
+    /**
+     * Loaderインタフェース
+     *
+     * @author y-miyazaki
+     */
+    public interface OnLoaderFinishListerner {
+        /**
+         * <b>ロードフィニッシュイベントメソッド</b>
+         * <p>
+         * このイベントメソッドは、リクエストをコールした際に、非同期でコールバックイベントしてコールされる。 <br>
+         * 200以外の場合はAbstractConnectionFragment /AbstractConnectionActivityで自動的にエラーダイアログを表示する。<br>
+         * ※本メソッド内ではView側の処理を記載しないこと。あくまで、ステータスコード判定・データのパースをメインとするメソッドとする。<br>
+         * </p>
+         *
+         * @param networkRequestOkHttp
+         *            {@link NetworkRequestOkHttp}
+         * @param networkResponse
+         *            {@link NetworkResponse}
+         * @param data
+         *            受信データ
+         * @throws IOException
+         *             IOException
+         */
+        void onLoaderFinished(NetworkRequestOkHttp networkRequestOkHttp, Response networkResponse, String data) throws IOException;
+    }
+
     /**
      * GetLoaderインタフェース
      * 

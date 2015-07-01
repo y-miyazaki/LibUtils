@@ -1,0 +1,23 @@
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 最初は非表示にして、alphaは0にセットします -->
+    <objectAnimator
+        android:valueFrom="1.0"
+        android:valueTo="0.0"
+        android:propertyName="alpha"
+        android:duration="1"/>
+
+    <!-- フリップするメインアニメーション -->
+    <objectAnimator
+        android:valueFrom="-90"
+        android:valueTo="0"
+        android:propertyName="rotationY"
+        android:duration="@integer/flip_animation"
+        android:startOffset="@integer/flip_animation"/>
+
+    <objectAnimator
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:propertyName="alpha"
+        android:startOffset="@integer/flip_animation"
+        android:duration="1"/>
+</set>

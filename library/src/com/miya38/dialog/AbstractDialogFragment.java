@@ -92,17 +92,18 @@ public abstract class AbstractDialogFragment extends DialogFragment {
     /**
      * ビューレイアウトのリソースIDを取得します。
      *
-     * @return リソースID。
+     * @return リソースIDを指定して下さい。
      */
     protected abstract int getViewLayoutId();
 
     /**
      * ビュースタブを取得します。
      * <p>
-     * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、0を指定してください。
+     * もしViewStubがgetViewLayoutIdで指定されたレイアウト上に存在しない場合は、{@link AbstractDialogFragment#LAYOUT_NO_SETTING}を指定してください。
      * </p>
      *
      * @return ビュースタブID
+     * もしViewStubを使用しない場合は、{@link AbstractDialogFragment#LAYOUT_NO_SETTING}を使用してください。
      */
     protected abstract int getViewStubLayoutId();
 

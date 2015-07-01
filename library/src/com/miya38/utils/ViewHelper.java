@@ -9,6 +9,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.support.annotation.IntDef;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -1000,41 +1001,6 @@ public final class ViewHelper {
                 compoundButton.setCompoundDrawables(null, null, null, null);
             }
             // ---------------------------------------------------------------
-            // ImageView
-            // ---------------------------------------------------------------
-            else if (view instanceof ImageView) {
-                final ImageView imageView = (ImageView) view;
-
-                if (imageView.getDrawable() instanceof AnimationDrawable) {
-                    final AnimationDrawable animationDrawable = (AnimationDrawable) imageView
-                            .getDrawable();
-                    final int frames = animationDrawable
-                            .getNumberOfFrames();
-                    for (int i = 0; i < frames; ++i) {
-                        final Drawable frame = animationDrawable.getFrame(i);
-                        frame.setCallback(null);
-                    }
-                }
-
-                if (imageView.getBackground() instanceof AnimationDrawable) {
-                    final AnimationDrawable animationDrawable = (AnimationDrawable) imageView
-                            .getBackground();
-                    final int frames = animationDrawable
-                            .getNumberOfFrames();
-                    for (int i = 0; i < frames; ++i) {
-                        final Drawable frame = animationDrawable
-                                .getFrame(i);
-                        frame.setCallback(null);
-                    }
-                }
-
-                if (imageView.getDrawable() != null) {
-                    imageView.getDrawable().setCallback(null);
-                }
-                imageView.setImageDrawable(null);
-                // } else if (view instanceof CustomTextView) {
-            }
-            // ---------------------------------------------------------------
             // CustomListView(PullToRefreshListView)
             // ---------------------------------------------------------------
             else if (view instanceof CustomListView) {
@@ -1083,6 +1049,64 @@ public final class ViewHelper {
                 }
             }
             // ---------------------------------------------------------------
+            // ImageView
+            // ---------------------------------------------------------------
+            else if (view instanceof ImageView) {
+                final ImageView imageView = (ImageView) view;
+
+                if (imageView.getDrawable() instanceof AnimationDrawable) {
+                    final AnimationDrawable animationDrawable = (AnimationDrawable) imageView
+                            .getDrawable();
+                    final int frames = animationDrawable
+                            .getNumberOfFrames();
+                    for (int i = 0; i < frames; ++i) {
+                        final Drawable frame = animationDrawable.getFrame(i);
+                        frame.setCallback(null);
+                    }
+                }
+
+                if (imageView.getBackground() instanceof AnimationDrawable) {
+                    final AnimationDrawable animationDrawable = (AnimationDrawable) imageView
+                            .getBackground();
+                    final int frames = animationDrawable
+                            .getNumberOfFrames();
+                    for (int i = 0; i < frames; ++i) {
+                        final Drawable frame = animationDrawable
+                                .getFrame(i);
+                        frame.setCallback(null);
+                    }
+                }
+
+                if (imageView.getDrawable() != null) {
+                    imageView.getDrawable().setCallback(null);
+                }
+                imageView.setImageDrawable(null);
+                // } else if (view instanceof CustomTextView) {
+            }
+            // ---------------------------------------------------------------
+            // Gallery
+            // ---------------------------------------------------------------
+            else if (view instanceof Gallery) {
+                final Gallery gallery = (Gallery) view;
+                final int count = gallery.getCount();
+                for (int i = 0; i < count; i++) {
+                    cleanView(context, object, gallery.getChildAt(i));
+                }
+                gallery.setAdapter(null);
+            }
+            // ---------------------------------------------------------------
+            // GridView
+            // ---------------------------------------------------------------
+            else if (view instanceof GridView) {
+                final GridView gridView = (GridView) view;
+                final int count = gridView.getCount();
+                for (int i = 0; i < count; i++) {
+                    cleanView(context, object, gridView.getChildAt(i));
+                }
+                gridView.setOnItemClickListener(null);
+                gridView.setAdapter(null);
+            }
+            // ---------------------------------------------------------------
             // ListView
             // ---------------------------------------------------------------
             else if (view instanceof ListView) {
@@ -1122,29 +1146,6 @@ public final class ViewHelper {
                 listView.setOnScrollListener(null);
                 listView.setOnItemClickListener(null);
                 listView.setAdapter(null);
-            }
-            // ---------------------------------------------------------------
-            // GridView
-            // ---------------------------------------------------------------
-            else if (view instanceof GridView) {
-                final GridView gridView = (GridView) view;
-                final int count = gridView.getCount();
-                for (int i = 0; i < count; i++) {
-                    cleanView(context, object, gridView.getChildAt(i));
-                }
-                gridView.setOnItemClickListener(null);
-                gridView.setAdapter(null);
-            }
-            // ---------------------------------------------------------------
-            // Gallery
-            // ---------------------------------------------------------------
-            else if (view instanceof Gallery) {
-                final Gallery gallery = (Gallery) view;
-                final int count = gallery.getCount();
-                for (int i = 0; i < count; i++) {
-                    cleanView(context, object, gallery.getChildAt(i));
-                }
-                gallery.setAdapter(null);
             }
             // ---------------------------------------------------------------
             // RadioGroup
@@ -1302,6 +1303,7 @@ public final class ViewHelper {
      * @param view
      *         {@link View}
      */
+
     public static void fixBackgroundRepeat(final View view) {
         if (view != null) {
             final Drawable bg = view.getBackground();

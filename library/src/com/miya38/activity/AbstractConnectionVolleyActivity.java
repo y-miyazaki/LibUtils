@@ -13,7 +13,7 @@ import com.miya38.connection.NetworkRequest;
  * 
  * @author y-miyazaki
  */
-public abstract class AbstractConnectionActivity extends AbstractActivity {
+public abstract class AbstractConnectionVolleyActivity extends AbstractActivity {
     /** AbstractConnectionCommon */
     private AbstractConnectionCommon mAbstractConnectionCommon;
 

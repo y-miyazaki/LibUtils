@@ -187,7 +187,7 @@ public final class AplUtils {
     }
 
     /**
-     * JellyBean(4.2/17)以上のバージョンかチェック
+     * JellyBean Mr1以上(4.2/17)以上のバージョンかチェック
      *
      * @return true:JellyBean Mr1以上 false;JellyBean Mr1未満
      */
@@ -196,7 +196,7 @@ public final class AplUtils {
     }
 
     /**
-     * JellyBean(4.3/18)以上のバージョンかチェック
+     * JellyBean Mr2(4.3/18)以上のバージョンかチェック
      *
      * @return true:JellyBean Mr2以上 false;JellyBean Mr2未満
      */
@@ -205,7 +205,7 @@ public final class AplUtils {
     }
 
     /**
-     * JellyBean(4.4/19)以上のバージョンかチェック
+     * Kitkat(4.4/19)以上のバージョンかチェック
      *
      * @return true:Kitkat以上 false;Kitkat未満
      */
@@ -214,12 +214,21 @@ public final class AplUtils {
     }
 
     /**
-     * JellyBean(5.0/21)以上のバージョンかチェック
+     * Lollipop(5.0/21)以上のバージョンかチェック
      *
      * @return true:Lollipop以上 false;Lollipop未満
      */
     public static boolean hasLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
+    /**
+     * Lollipop Mr1(5.1/22)以上のバージョンかチェック
+     *
+     * @return true:Lollipop Mr1以上 false;Lollipop Mr1未満
+     */
+    public static boolean hasLollipopMR1() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
     }
 
     /**

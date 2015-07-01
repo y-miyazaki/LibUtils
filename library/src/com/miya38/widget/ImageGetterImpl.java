@@ -33,7 +33,10 @@ public class ImageGetterImpl implements ImageGetter {
             return null;
         }
         Drawable drawable = resources.getDrawable(id);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        }
+
         return drawable;
     }
 }
