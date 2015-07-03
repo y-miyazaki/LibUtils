@@ -20,13 +20,14 @@ import com.miya38.utils.ImageUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
 
+
 /**
  * カスタムImageViewクラス
  * <p>
  * ImageViewを継承しているクラス。<br>
  * それに加え、もしonClickListenerを指定している場合に選択時されたことをグレースケールでわかるようにしている。<br>
  * </p>
- * 
+ *
  * @author y-miyazaki
  */
 public class CustomImageView extends ImageView implements OnTouchListener {
@@ -66,12 +67,12 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
-     *            Context for this View
+     *         Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is
-     *            processed here
+     *         AttributeSet for this View. The attribute 'preset_size' is
+     *         processed here
      */
     public CustomImageView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -80,14 +81,14 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param context
-     *            Context for this View
+     *         Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is
-     *            processed here
+     *         AttributeSet for this View. The attribute 'preset_size' is
+     *         processed here
      * @param defStyle
-     *            Default style for this View
+     *         Default style for this View
      */
     public CustomImageView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
@@ -104,36 +105,36 @@ public class CustomImageView extends ImageView implements OnTouchListener {
     public boolean onTouch(final View v, final MotionEvent event) {
         if (mMode != null) {
             switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // 押した時に指定した色とモードでフィルターをかける
-                if (mOnClickListener != null) {
-                    mIsClick = true;
-                    setColorFilter();
-                }
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                // 元の画像に戻す
-                clearColorFilter();
-                mIsClick = false;
-                return false;
-            case MotionEvent.ACTION_UP:
-                setClickable(false);
-                // 元の画像に戻す
-                clearColorFilter();
-                if (mOnClickListener != null) {
-                    if (mIsClick) {
-                        mOnClickListener.onClick(v);
+                case MotionEvent.ACTION_DOWN:
+                    // 押した時に指定した色とモードでフィルターをかける
+                    if (mOnClickListener != null) {
+                        mIsClick = true;
+                        setColorFilter();
                     }
-                }
-                setClickable(true);
-                return false;
-            case MotionEvent.ACTION_OUTSIDE:
-                // 元の画像に戻す
-                clearColorFilter();
-                mIsClick = false;
-                return false;
-            default:
-                break;
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    // 元の画像に戻す
+                    clearColorFilter();
+                    mIsClick = false;
+                    return false;
+                case MotionEvent.ACTION_UP:
+                    setClickable(false);
+                    // 元の画像に戻す
+                    clearColorFilter();
+                    if (mOnClickListener != null) {
+                        if (mIsClick) {
+                            mOnClickListener.onClick(v);
+                        }
+                    }
+                    setClickable(true);
+                    return false;
+                case MotionEvent.ACTION_OUTSIDE:
+                    // 元の画像に戻す
+                    clearColorFilter();
+                    mIsClick = false;
+                    return false;
+                default:
+                    break;
             }
         }
         return true;
@@ -179,12 +180,12 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * init
-     * 
+     *
      * @param context
-     *            Context for this View
+     *         Context for this View
      * @param attrs
-     *            AttributeSet for this View. The attribute 'preset_size' is
-     *            processed here
+     *         AttributeSet for this View. The attribute 'preset_size' is
+     *         processed here
      */
     private void init(final Context context, final AttributeSet attrs) {
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomImageView);
@@ -222,7 +223,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * tint設定を取得する。
-     * 
+     *
      * @return tint設定<br>
      */
     public int getTint() {
@@ -231,9 +232,9 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定
-     * 
+     *
      * @param tint
-     *            tint attribute
+     *         tint attribute
      */
     public void setTint(final int tint) {
         this.mTint = tint;
@@ -282,7 +283,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * 画像がポップアップアニメーションを行う。<br>
-     * 
+     *
      * @return Animation
      */
     public Animation setAnimationPopUp() {
@@ -294,11 +295,11 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * 画像を角丸にする。
-     * 
+     *
      * @param bm
-     *            bitmap
+     *         bitmap
      * @param cornerRadius
-     *            コーナーのサイズ
+     *         コーナーのサイズ
      */
     public void setImageCorner(Bitmap bm, int cornerRadius) {
         super.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bm, cornerRadius));
@@ -307,9 +308,9 @@ public class CustomImageView extends ImageView implements OnTouchListener {
     /**
      * アニメーション時間設定<br>
      * アニメーションにかかる時間をmsecで指定する。
-     * 
+     *
      * @param animationDuration
-     *            msec
+     *         msec
      */
     public void setAnimationDuration(final int animationDuration) {
         this.mAnimationDuration = animationDuration;
@@ -317,9 +318,9 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定を取得する。
-     * 
+     *
      * @return コーナー設定<br>
-     *         true:有り false:無し
+     * true:有り false:無し
      */
     public boolean isCorner() {
         return mIsCorner;
@@ -327,10 +328,10 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定
-     * 
+     *
      * @param corner
-     *            コーナを表示するか？<br>
-     *            true:表示する。/false:表示しない。
+     *         コーナを表示するか？<br>
+     *         true:表示する。/false:表示しない。
      */
     public void setCorner(final boolean corner) {
         this.mIsCorner = corner;
@@ -338,7 +339,7 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定を取得する。
-     * 
+     *
      * @return コーナー設定
      */
     public float getCornerRadius() {
@@ -347,9 +348,9 @@ public class CustomImageView extends ImageView implements OnTouchListener {
 
     /**
      * コーナー設定
-     * 
+     *
      * @param cornerRadius
-     *            コーナーの角丸のサイズ
+     *         コーナーの角丸のサイズ
      */
     public void setCornerRadius(final int cornerRadius) {
         this.mCornerRadius = cornerRadius;
