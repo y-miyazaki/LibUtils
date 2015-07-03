@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,9 @@ public class CustomWebViewClient extends WebViewClient {
     // other
     // ----------------------------------------------------------
     /** Activity */
-    private final Activity mActivity;
+    private Activity mActivity;
+    /** Fragment */
+    private Fragment mFragment;
     /** ホワイトホスト名 */
     private List<String> mWhiteHosts;
 
@@ -52,14 +56,28 @@ public class CustomWebViewClient extends WebViewClient {
      * コンストラクタ
      *
      * @param activity
-     *         Activity
+     *         {@link Activity}
      */
-    public CustomWebViewClient(final Activity activity) {
+    public CustomWebViewClient(@NonNull final Activity activity) {
         super();
         if (activity == null) {
             throw new IllegalArgumentException("must be set activity.");
         }
         mActivity = activity;
+    }
+
+    /**
+     * コンストラクタ
+     *
+     * @param fragment
+     *         {@link Fragment}
+     */
+    public CustomWebViewClient(@NonNull final Fragment fragment) {
+        super();
+        if (fragment == null) {
+            throw new IllegalArgumentException("must be set activity.");
+        }
+        mFragment = fragment;
     }
 
     @Override
@@ -302,11 +320,17 @@ public class CustomWebViewClient extends WebViewClient {
      */
     @SuppressLint("NewApi")
     private boolean isCallback(final WebView view) {
-        if (mActivity.isFinishing()) {
-            return false;
-        }
-        if (AplUtils.hasJellyBeanMR1()) {
-            if (mActivity.isDestroyed()) {
+        if (mActivity != null) {
+            if (mActivity.isFinishing()) {
+                return false;
+            }
+            if (AplUtils.hasJellyBeanMR1()) {
+                if (mActivity.isDestroyed()) {
+                    return false;
+                }
+            }
+        } else if (mFragment != null) {
+            if (mFragment.getView() == null || mFragment.isDetached() || mFragment.isRemoving()) {
                 return false;
             }
         }

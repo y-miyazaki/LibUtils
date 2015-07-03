@@ -65,7 +65,7 @@ public abstract class AbstractConnectionOkHttpActivity extends AbstractActivity 
      *            {@link NetworkRequestOkHttp}
      */
     @RequiresPermission(Manifest.permission.INTERNET)
-    public void request(final NetworkRequestOkHttp networkRequestOkHttp) {
+    public void requestAPI(final NetworkRequestOkHttp networkRequestOkHttp) {
         if (mAbstractConnectionCommon != null) {
             mAbstractConnectionCommon.requestAPI(networkRequestOkHttp);
         }

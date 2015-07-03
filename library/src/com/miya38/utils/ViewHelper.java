@@ -9,7 +9,6 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.support.annotation.IntDef;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -1186,51 +1185,50 @@ public final class ViewHelper {
             else if (view instanceof WebView) {
                 try {
                     final WebView webView = (WebView) view;
+                    webView.stopLoading();
                     webView.setWebChromeClient(null);
                     webView.setWebViewClient(null);
                     webView.destroy();
                 } catch (final Exception e) {
                     // 何もしない。
                 }
-                try {
-
-                    Field field = WebView.class.getDeclaredField("mWebViewCore");
-                    field = field.getType().getDeclaredField("mBrowserFrame");
-                    field = field.getType().getDeclaredField("sConfigCallback");
-                    field.setAccessible(true);
-                    final Object configCallback = field.get(null);
-
-                    if (configCallback != null) {
-                        field = field.getType().getDeclaredField("mWindowManager");
-                        field.setAccessible(true);
-                        if (context instanceof Activity) {
-                            field.set(configCallback, ((Activity) context).getWindowManager());
-                        }
-                    }
-
-                } catch (final Exception e) {
-                    // 何もしない。
-                }
-
-                try {
-                    Field field = WebView.class.getDeclaredField("mWebView");
-                    field = field.getType().getDeclaredField("mBrowserFrame");
-                    field = field.getType().getDeclaredField("sConfigCallback");
-                    field.setAccessible(true);
-                    field.get(null);
-                    final Object configCallback = field.get(null);
-                    field = field.getType().getDeclaredField("mWindowManager");
-                    field.setAccessible(true);
-                    if (configCallback != null) {
-                        field = field.getType().getDeclaredField("mWindowManager");
-                        field.setAccessible(true);
-                        if (context instanceof Activity) {
-                            field.set(configCallback, ((Activity) context).getWindowManager());
-                        }
-                    }
-                } catch (final Exception e) {
-                    // 何もしない。
-                }
+//                try {
+//                    Field field = WebView.class.getDeclaredField("mWebViewCore");
+//                    field = field.getType().getDeclaredField("mBrowserFrame");
+//                    field = field.getType().getDeclaredField("sConfigCallback");
+//                    field.setAccessible(true);
+//                    final Object configCallback = field.get(null);
+//
+//                    if (configCallback != null) {
+//                        field = field.getType().getDeclaredField("mWindowManager");
+//                        field.setAccessible(true);
+//                        if (context instanceof Activity) {
+//                            field.set(configCallback, ((Activity) context).getWindowManager());
+//                        }
+//                    }
+//                } catch (final Exception e) {
+//                    // 何もしない。
+//                }
+//
+//                try {
+//                    Field field = WebView.class.getDeclaredField("mWebView");
+//                    field = field.getType().getDeclaredField("mBrowserFrame");
+//                    field = field.getType().getDeclaredField("sConfigCallback");
+//                    field.setAccessible(true);
+//                    field.get(null);
+//                    final Object configCallback = field.get(null);
+//                    field = field.getType().getDeclaredField("mWindowManager");
+//                    field.setAccessible(true);
+//                    if (configCallback != null) {
+//                        field = field.getType().getDeclaredField("mWindowManager");
+//                        field.setAccessible(true);
+//                        if (context instanceof Activity) {
+//                            field.set(configCallback, ((Activity) context).getWindowManager());
+//                        }
+//                    }
+//                } catch (final Exception e) {
+//                    // 何もしない。
+//                }
             }
         }
         // ---------------------------------------------------------------

@@ -2,6 +2,8 @@ package com.miya38.webkit;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
@@ -10,26 +12,44 @@ import com.miya38.utils.LogUtils;
 
 /**
  * カスタムWebViewClient
- * 
+ *
  * @author y-miyazaki
- * 
  */
 public class CustomWebChromeClient extends WebChromeClient {
     /** TAG */
     private static final String TAG = CustomWebChromeClient.class.getSimpleName();
 
     /** Activity */
-    private final Activity mActivity;
+    private Activity mActivity;
+    /** Fragment */
+    private Fragment mFragment;
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param activity
-     *            Activity
+     *         {@link Activity}
      */
-    public CustomWebChromeClient(final Activity activity) {
+    public CustomWebChromeClient(@NonNull final Activity activity) {
         super();
+        if (activity == null) {
+            throw new IllegalArgumentException("must be set activity.");
+        }
         mActivity = activity;
+    }
+
+    /**
+     * コンストラクタ
+     *
+     * @param fragment
+     *         {@link Fragment}
+     */
+    public CustomWebChromeClient(@NonNull final Fragment fragment) {
+        super();
+        if (fragment == null) {
+            throw new IllegalArgumentException("must be set activity.");
+        }
+        mFragment = fragment;
     }
 
     @Override
@@ -42,29 +62,35 @@ public class CustomWebChromeClient extends WebChromeClient {
 
     /**
      * カスタマイズされたonReceivedTitle
-     * 
+     *
      * @param view
-     *            {@link WebView}
+     *         {@link WebView}
      * @param title
-     *            タイトル
+     *         タイトル
      */
     public void onReceivedTitleCustom(final WebView view, final String title) {
     }
 
     /**
      * コールバックするかをチェックする。
-     * 
+     *
      * @param view
-     *            {@link WebView}
+     *         {@link WebView}
      * @return true:コールバックする/false:コールバックしない
      */
     @SuppressLint("NewApi")
     private boolean isCallback(final WebView view) {
-        if (mActivity.isFinishing()) {
-            return false;
-        }
-        if (AplUtils.hasJellyBeanMR1()) {
-            if (mActivity.isDestroyed()) {
+        if (mActivity != null) {
+            if (mActivity.isFinishing()) {
+                return false;
+            }
+            if (AplUtils.hasJellyBeanMR1()) {
+                if (mActivity.isDestroyed()) {
+                    return false;
+                }
+            }
+        } else if (mFragment != null) {
+            if (mFragment.getView() == null || mFragment.isDetached() || mFragment.isRemoving()) {
                 return false;
             }
         }
