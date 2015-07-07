@@ -1,8 +1,8 @@
 package com.miya38.list;
 
-import java.util.List;
-
 import com.miya38.widget.CustomViewPager;
+
+import java.util.List;
 
 /**
  * ViewPager抽象化クラス
@@ -134,5 +134,5 @@ public abstract class AbstractSettingViewPager<T, U> {
     /**
      * 本クラス内データを全てクリアする。
      */
-    public abstract void destory();
+    public abstract void destroy();
 }

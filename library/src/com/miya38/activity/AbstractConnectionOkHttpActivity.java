@@ -4,7 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.RequiresPermission;
 
-import com.miya38.connection.AbstractConnectionCommonOkHttp;
+import com.miya38.connection.okhttp.AbstractConnectionCommonOkHttp;
 import com.miya38.connection.okhttp.NetworkRequestOkHttp;
 import com.squareup.okhttp.Response;
 

@@ -1,4 +1,4 @@
-package com.miya38.connection;
+package com.miya38.connection.volley;
 
 import android.support.annotation.IntDef;
 

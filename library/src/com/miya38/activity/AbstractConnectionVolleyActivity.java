@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.RequiresPermission;
 
 import com.android.volley.NetworkResponse;
-import com.miya38.connection.AbstractConnectionCommon;
-import com.miya38.connection.NetworkRequest;
+import com.miya38.connection.volley.AbstractConnectionCommonVolley;
+import com.miya38.connection.volley.NetworkRequest;
 
 /**
  * Activity コネクション用抽象化クラス
@@ -14,29 +14,29 @@ import com.miya38.connection.NetworkRequest;
  * @author y-miyazaki
  */
 public abstract class AbstractConnectionVolleyActivity extends AbstractActivity {
-    /** AbstractConnectionCommon */
-    private AbstractConnectionCommon mAbstractConnectionCommon;
+    /** AbstractConnectionCommonVolley */
+    private AbstractConnectionCommonVolley mAbstractConnectionCommonVolley;
 
     /**
      * コネクション共通処理取得
      * 
-     * @return {@link AbstractConnectionCommon}
+     * @return {@link AbstractConnectionCommonVolley}
      */
-    protected abstract AbstractConnectionCommon getConnectionCommon();
+    protected abstract AbstractConnectionCommonVolley getConnectionCommon();
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
-        mAbstractConnectionCommon = getConnectionCommon();
+        mAbstractConnectionCommonVolley = getConnectionCommon();
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
-        if (mAbstractConnectionCommon != null) {
-            mAbstractConnectionCommon.getRequestQueue().cancelAll(getApplicationContext());
-            mAbstractConnectionCommon.clear();
+        if (mAbstractConnectionCommonVolley != null) {
+            mAbstractConnectionCommonVolley.getRequestQueue().cancelAll(getApplicationContext());
+            mAbstractConnectionCommonVolley.clear();
         }
-        mAbstractConnectionCommon = null;
+        mAbstractConnectionCommonVolley = null;
         super.onDestroy();
     }
 
@@ -52,8 +52,8 @@ public abstract class AbstractConnectionVolleyActivity extends AbstractActivity 
      * @return {@code true} エラーである。/{@code false} エラーではない。
      */
     public boolean setError(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final Object object) {
-        if (mAbstractConnectionCommon != null) {
-            return mAbstractConnectionCommon.setError(networkRequest, networkResponse, object);
+        if (mAbstractConnectionCommonVolley != null) {
+            return mAbstractConnectionCommonVolley.setError(networkRequest, networkResponse, object);
         }
         return false;
     }
@@ -66,8 +66,8 @@ public abstract class AbstractConnectionVolleyActivity extends AbstractActivity 
      */
     @RequiresPermission(Manifest.permission.INTERNET)
     public void requestAPI(final NetworkRequest networkRequest) {
-        if (mAbstractConnectionCommon != null) {
-            mAbstractConnectionCommon.requestAPI(networkRequest);
+        if (mAbstractConnectionCommonVolley != null) {
+            mAbstractConnectionCommonVolley.requestAPI(networkRequest);
         }
     }
 }

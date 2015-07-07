@@ -304,7 +304,7 @@ public class SettingViewPager<T extends CustomPagerAdapter<U>, U> extends Abstra
     }
 
     @Override
-    public void destory() {
+    public void destroy() {
         mAdapter.clear();
         mAdapter = null;
         mActivity = null;

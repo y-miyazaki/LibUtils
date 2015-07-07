@@ -5,7 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.android.volley.NetworkResponse;
-import com.miya38.connection.NetworkRequest;
+import com.miya38.connection.volley.NetworkRequest;
 import com.miya38.connection.okhttp.NetworkRequestOkHttp;
 import com.squareup.okhttp.Response;
 
@@ -24,7 +24,7 @@ public class CommonInterface {
      *
      * @author y-miyazaki
      */
-    public interface OnLoaderFinishListerner {
+    public interface OnLoaderFinishListener {
         /**
          * <b>ロードフィニッシュイベントメソッド</b>
          * <p>
@@ -93,7 +93,7 @@ public class CommonInterface {
      * @author y-miyazaki
      * 
      */
-    public interface OnPostLoaderFinishListerner {
+    public interface OnPostLoaderFinishListener {
         /**
          * <b>POST用ロードフィニッシュイベントメソッド</b>
          * <p>
@@ -135,7 +135,7 @@ public class CommonInterface {
      * 
      * @author y-miyazaki
      */
-    public interface OnPutLoaderFinishListerner {
+    public interface OnPutLoaderFinishListener {
         /**
          * <b>PUT用ロードフィニッシュイベントメソッド</b>
          * <p>
@@ -177,7 +177,7 @@ public class CommonInterface {
      * 
      * @author y-miyazaki
      */
-    public interface OnDeleteLoaderFinishListerner {
+    public interface OnDeleteLoaderFinishListener {
         /**
          * <b>DELETE用ロードフィニッシュイベントメソッド</b>
          * <p>

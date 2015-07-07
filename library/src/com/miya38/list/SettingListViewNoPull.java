@@ -264,8 +264,8 @@ public class SettingListViewNoPull<T extends CustomArrayAdapter<U>, U> extends S
     }
 
     @Override
-    public void destory() {
-        super.destory();
+    public void destroy() {
+        super.destroy();
         mOnRefreshListener = null;
         mOnRefreshListener2 = null;
     }

@@ -7,6 +7,7 @@ import android.view.View;
  * ActionBarに関するユーティリティクラス
  * <p>
  * support v7に対応ですのでご注意ください。<br>
+ * デフォルトでアニメーションでのhide/showを外したものとなります。
  * 本クラス内のshow/hideを使用した場合はActionBar.sShowingが正常に返らなくなりますので必ず本ユーティリティを使用することとしてください。
  * </p>
  *

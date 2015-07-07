@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import com.miya38.BuildConfig;
-import com.miya38.connection.AbstractVolleySetting;
+import com.miya38.connection.volley.AbstractVolleySetting;
 import com.miya38.utils.AplUtils;
 import com.miya38.utils.ClipboardUtils;
 import com.miya38.utils.ConnectionUtils;

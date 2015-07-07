@@ -326,7 +326,7 @@ public class SettingGallery<T extends CustomArrayAdapter<U>, U> extends Abstract
     }
 
     @Override
-    public void destory() {
+    public void destroy() {
         mAdapter.clear();
         mAdapter = null;
         mActivity = null;

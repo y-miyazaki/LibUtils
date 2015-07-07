@@ -1,5 +1,6 @@
-package com.miya38.connection;
+package com.miya38.connection.okhttp;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,22 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.miya38.R;
-import com.miya38.activity.AbstractActivity;
-import com.miya38.common.CommonInterface.OnDeleteLoaderFinishListerner;
-import com.miya38.common.CommonInterface.OnGetLoaderFinishListerner;
-import com.miya38.common.CommonInterface.OnPostLoaderFinishListerner;
-import com.miya38.common.CommonInterface.OnPutLoaderFinishListerner;
-import com.miya38.connection.ApiRequestVolley.ApiErrorListener;
-import com.miya38.connection.ApiRequestVolley.ApiListener;
+import com.miya38.common.CommonInterface;
+import com.miya38.utils.AplUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
 import com.miya38.utils.guava.Preconditions;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
@@ -35,12 +30,12 @@ import java.io.IOException;
  *
  * @author y-miyazaki
  */
-public abstract class AbstractConnectionCommon {
+public abstract class AbstractConnectionCommonOkHttp {
     // ---------------------------------------------------------------
     // define
     // ---------------------------------------------------------------
     /** TAG */
-    private static final String TAG = AbstractConnectionCommon.class.getSimpleName();
+    private static final String TAG = AbstractConnectionCommonOkHttp.class.getSimpleName();
 
     // ----------------------------------------------------------
     // View
@@ -55,14 +50,8 @@ public abstract class AbstractConnectionCommon {
     // ----------------------------------------------------------
     // callback listener
     // ----------------------------------------------------------
-    /** OnGetLoaderFinishListerner */
-    private OnGetLoaderFinishListerner mOnGetLoaderFinishListerner;
-    /** OnPostLoaderFinishListerner */
-    private OnPostLoaderFinishListerner mOnPostLoaderFinishListerner;
-    /** OnPutLoaderFinishListerner */
-    private OnPutLoaderFinishListerner mOnPutLoaderFinishListerner;
-    /** OnDeleteLoaderFinishListerner */
-    private OnDeleteLoaderFinishListerner mOnDeleteLoaderFinishListerner;
+    /** OnLoaderFinishListener */
+    private CommonInterface.OnLoaderFinishListener mOnLoaderFinishListener;
 
     // ----------------------------------------------------------
     // connection
@@ -73,14 +62,14 @@ public abstract class AbstractConnectionCommon {
     /**
      * Jsonエラー表示用メソッド
      *
-     * @param networkRequest
-     *         {@link NetworkRequest}
-     * @param networkResponse
-     *         {@link NetworkResponse}
+     * @param networkRequestOkHttp
+     *         {@link NetworkRequestOkHttp}
+     * @param response
+     *         {@link Response}
      * @param data
      *         受信データ
      */
-    public abstract void setJsonError(NetworkRequest networkRequest, NetworkResponse networkResponse, String data);
+    public abstract void setJsonError(NetworkRequestOkHttp networkRequestOkHttp, Response response, String data);
 
     /**
      * エラー表示用メソッド
@@ -88,16 +77,16 @@ public abstract class AbstractConnectionCommon {
      * 通信周りでエラーが発生した場合に本メソッドでエラーを表示する。
      * </p>
      *
-     * @param networkRequest
-     *         {@link NetworkRequest}
-     * @param networkResponse
-     *         {@link NetworkResponse}
+     * @param networkRequestOkHttp
+     *         {@link NetworkRequestOkHttp}
+     * @param response
+     *         {@link Response}
      * @param object
      *         受信データ
      * @return true:エラー表示あり<br>
      * false:エラー表示なし
      */
-    public abstract boolean setError(NetworkRequest networkRequest, NetworkResponse networkResponse, Object object);
+    public abstract boolean setError(NetworkRequestOkHttp networkRequestOkHttp, Response response, Object object);
 
     /**
      * Volley用のリクエストキューを取得します。
@@ -112,19 +101,10 @@ public abstract class AbstractConnectionCommon {
      * @param activity
      *         {@link FragmentActivity}
      */
-    public AbstractConnectionCommon(final FragmentActivity activity) {
+    public AbstractConnectionCommonOkHttp(final FragmentActivity activity) {
         mActivity = activity;
-        if (activity instanceof OnGetLoaderFinishListerner) {
-            mOnGetLoaderFinishListerner = (OnGetLoaderFinishListerner) activity;
-        }
-        if (activity instanceof OnPostLoaderFinishListerner) {
-            mOnPostLoaderFinishListerner = (OnPostLoaderFinishListerner) activity;
-        }
-        if (activity instanceof OnPutLoaderFinishListerner) {
-            mOnPutLoaderFinishListerner = (OnPutLoaderFinishListerner) activity;
-        }
-        if (activity instanceof OnDeleteLoaderFinishListerner) {
-            mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) activity;
+        if (activity instanceof CommonInterface.OnLoaderFinishListener) {
+            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) activity;
         }
         mDisplayProgress = new SparseArray<>();
     }
@@ -135,19 +115,10 @@ public abstract class AbstractConnectionCommon {
      * @param fragment
      *         {@link Fragment}
      */
-    public AbstractConnectionCommon(final Fragment fragment) {
+    public AbstractConnectionCommonOkHttp(final Fragment fragment) {
         mFragment = fragment;
-        if (fragment instanceof OnGetLoaderFinishListerner) {
-            mOnGetLoaderFinishListerner = (OnGetLoaderFinishListerner) fragment;
-        }
-        if (fragment instanceof OnPostLoaderFinishListerner) {
-            mOnPostLoaderFinishListerner = (OnPostLoaderFinishListerner) fragment;
-        }
-        if (fragment instanceof OnPutLoaderFinishListerner) {
-            mOnPutLoaderFinishListerner = (OnPutLoaderFinishListerner) fragment;
-        }
-        if (fragment instanceof OnDeleteLoaderFinishListerner) {
-            mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) fragment;
+        if (fragment instanceof CommonInterface.OnLoaderFinishListener) {
+            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) fragment;
         }
         mDisplayProgress = new SparseArray<>();
     }
@@ -158,19 +129,10 @@ public abstract class AbstractConnectionCommon {
      * @param dialogFragment
      *         {@link DialogFragment}
      */
-    public AbstractConnectionCommon(final DialogFragment dialogFragment) {
+    public AbstractConnectionCommonOkHttp(final DialogFragment dialogFragment) {
         mDialogFragment = dialogFragment;
-        if (dialogFragment instanceof OnGetLoaderFinishListerner) {
-            mOnGetLoaderFinishListerner = (OnGetLoaderFinishListerner) dialogFragment;
-        }
-        if (dialogFragment instanceof OnPostLoaderFinishListerner) {
-            mOnPostLoaderFinishListerner = (OnPostLoaderFinishListerner) dialogFragment;
-        }
-        if (dialogFragment instanceof OnPutLoaderFinishListerner) {
-            mOnPutLoaderFinishListerner = (OnPutLoaderFinishListerner) dialogFragment;
-        }
-        if (dialogFragment instanceof OnDeleteLoaderFinishListerner) {
-            mOnDeleteLoaderFinishListerner = (OnDeleteLoaderFinishListerner) dialogFragment;
+        if (dialogFragment instanceof CommonInterface.OnLoaderFinishListener) {
+            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) dialogFragment;
         }
         mDisplayProgress = new SparseArray<>();
     }
@@ -178,18 +140,17 @@ public abstract class AbstractConnectionCommon {
     /**
      * ロード完了
      *
-     * @param networkRequest
+     * @param networkRequestOkHttp
      *         リクエストパラメータ<br>
      *         リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
-     * @param networkResponse
+     * @param response
      *         受信データ(statusCode/header/data/notmodified)<br>
      *         ※タイムアウト等の場合はnullが設定される。
      * @param data
      *         受信データ
      */
-    public void onLoadFinished(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final String data) {
+    public void onLoadFinished(final NetworkRequestOkHttp networkRequestOkHttp, final Response response, final String data) {
         LogUtils.d(TAG, "onLoadFinished");
-
         // ---------------------------------------------------------------
         // 通信中にアクティビティが終了するような状況になった場合は、通信イベントの通知を行わない。
         // ---------------------------------------------------------------
@@ -197,28 +158,28 @@ public abstract class AbstractConnectionCommon {
             return;
         }
 
-        onMethodLoaderFinished(networkRequest, networkResponse, data);
+        onMethodLoaderFinished(networkRequestOkHttp, response, data);
         // エラー表示
-        if (networkRequest.mIsErrorCheck) {
-            setError(networkRequest, networkResponse, data);
+        if (networkRequestOkHttp.isErrorCheck()) {
+            setError(networkRequestOkHttp, response, data);
         }
-        loadingDisplayProgress(false, networkRequest.mId, networkRequest.mIsDisplayProgress); // ローディング表示をオフにする
+        loadingDisplayProgress(false, networkRequestOkHttp.getId(), networkRequestOkHttp.isDisplayProgress()); // ローディング表示をオフにする
     }
 
     /**
      * 各メソッド毎にコールバックメソッドを呼びだす。
      *
-     * @param networkRequest
+     * @param networkRequestOkHttp
      *         リクエストパラメータ
      *         <p>
      *         リクエスト時に送信したURL、メソッド、ヘッダ、パラメータを保持している
      *         </p>
-     * @param networkResponse
+     * @param response
      *         受信データ(statusCode/header/data/notmodified)
      * @param data
      *         受信データ
      */
-    public void onMethodLoaderFinished(final NetworkRequest networkRequest, final NetworkResponse networkResponse, final String data) {
+    public void onMethodLoaderFinished(final NetworkRequestOkHttp networkRequestOkHttp, final Response response, final String data) {
         // ---------------------------------------------------------------
         // 通信中にアクティビティが終了するような状況になった場合は、通信イベントの通知を行わない。
         // ---------------------------------------------------------------
@@ -229,41 +190,8 @@ public abstract class AbstractConnectionCommon {
         // Jsonエラーチェック
         boolean isJsonException = false;
         try {
-            switch (networkRequest.mMethod) {
-                case Method.GET:
-                    if (mOnGetLoaderFinishListerner != null) {
-                        mOnGetLoaderFinishListerner.onGetLoaderFinished(networkRequest, networkResponse, data);
-                        if (!isFinishing()) {
-                            mOnGetLoaderFinishListerner.onGetLoadView(networkRequest, networkResponse, data);
-                        }
-                    }
-                    break;
-                case Method.POST:
-                    if (mOnPostLoaderFinishListerner != null) {
-                        mOnPostLoaderFinishListerner.onPostLoaderFinished(networkRequest, networkResponse, data);
-                        if (!isFinishing()) {
-                            mOnPostLoaderFinishListerner.onPostLoadView(networkRequest, networkResponse, data);
-                        }
-                    }
-                    break;
-                case Method.PUT:
-                    if (mOnPutLoaderFinishListerner != null) {
-                        mOnPutLoaderFinishListerner.onPutLoaderFinished(networkRequest, networkResponse, data);
-                        if (!isFinishing()) {
-                            mOnPutLoaderFinishListerner.onPutLoadView(networkRequest, networkResponse, data);
-                        }
-                    }
-                    break;
-                case Method.DELETE:
-                    if (mOnDeleteLoaderFinishListerner != null) {
-                        mOnDeleteLoaderFinishListerner.onDeleteLoaderFinished(networkRequest, networkResponse, data);
-                        if (!isFinishing()) {
-                            mOnDeleteLoaderFinishListerner.onDeleteLoadView(networkRequest, networkResponse, data);
-                        }
-                    }
-                    break;
-                default:
-                    break;
+            if (mOnLoaderFinishListener != null) {
+                mOnLoaderFinishListener.onLoaderFinished(networkRequestOkHttp, response, data);
             }
         } catch (final JsonParseException e) {
             isJsonException = true;
@@ -275,34 +203,31 @@ public abstract class AbstractConnectionCommon {
         // ---------------------------------------------------------------
         // Jsonパースエラー
         // ---------------------------------------------------------------
-        if (isJsonException && networkRequest.mIsErrorCheck) {
-            setJsonError(networkRequest, networkResponse, data);
+        if (isJsonException && networkRequestOkHttp.isErrorCheck()) {
+            setJsonError(networkRequestOkHttp, response, data);
         }
     }
 
     /**
      * リクエストAPI
      *
-     * @param networkRequest
-     *         {@link NetworkRequest}
+     * @param networkRequestOkHttp
+     *         {@link NetworkRequestOkHttp}
      */
-    public final void requestAPI(final NetworkRequest networkRequest) {
-        Preconditions.checkNotNull(networkRequest, "networkRequest should not be null.");
-
-        // 文字列データリクエスト
-        final ApiRequestVolley apiRequestVolley = new ApiRequestVolley(networkRequest, new ApiListener() {
+    public final void requestAPI(final NetworkRequestOkHttp networkRequestOkHttp) {
+        Preconditions.checkNotNull(networkRequestOkHttp, "networkRequest should not be null.");
+        ApiRequestOkHttp.request(networkRequestOkHttp, new ApiRequestOkHttp.OkHttpCallbackListener() {
             @Override
-            public void onResponse(final NetworkResponse networkResponse, final int id, final String response) {
-                onLoadFinished(networkRequest, networkResponse, response);
+            public void onFailure(final Response response, final Throwable throwable) {
+                onLoadFinished(networkRequestOkHttp, response, null);
             }
-        }, new ApiErrorListener() {
+
             @Override
-            public void onErrorResponse(final NetworkResponse networkResponse, final int id) {
-                onLoadFinished(networkRequest, networkResponse, null);
+            public void onSuccess(final Response response, final String content) {
+                onLoadFinished(networkRequestOkHttp, response, content);
             }
         });
-        loadingDisplayProgress(true, networkRequest.mId, networkRequest.mIsDisplayProgress); // ローディング表示をオンにする
-        getRequestQueue().add(apiRequestVolley);
+        loadingDisplayProgress(true, networkRequestOkHttp.getId(), networkRequestOkHttp.isDisplayProgress()); // ローディング表示をオンにする
     }
 
     /**
@@ -414,12 +339,20 @@ public abstract class AbstractConnectionCommon {
      *
      * @return 削除中/Detachの場合は、falseを返す 通常時はtrueを返す
      */
+    @SuppressLint("NewApi")
     public boolean isFinishing() {
         // ---------------------------------------------------------------
         // 通信中にアクティビティが終了するような状況になった場合は、通信イベントの通知を行わない。
         // ---------------------------------------------------------------
-        if (mActivity != null && mActivity.isFinishing()) {
-            return true;
+        if (mActivity != null) {
+            if (mActivity.isFinishing()) {
+                return true;
+            }
+            if (AplUtils.hasJellyBeanMR1()) {
+                if (mActivity.isDestroyed()) {
+                    return true;
+                }
+            }
         }
         if (mFragment != null && (mFragment.getView() == null || mFragment.isRemoving() || mFragment.isDetached())) {
             return true;
@@ -431,9 +364,9 @@ public abstract class AbstractConnectionCommon {
     }
 
     /**
-     * AbstractActivity取得
+     * FragmentActivity取得
      *
-     * @return {@link AbstractActivity}
+     * @return {@link FragmentActivity}
      */
     public FragmentActivity getActivity() {
         return mActivity;
@@ -465,9 +398,6 @@ public abstract class AbstractConnectionCommon {
         mFragment = null;
         mDialogFragment = null;
         mDisplayProgress.clear();
-        mOnGetLoaderFinishListerner = null;
-        mOnPostLoaderFinishListerner = null;
-        mOnPutLoaderFinishListerner = null;
-        mOnDeleteLoaderFinishListerner = null;
+        mOnLoaderFinishListener = null;
     }
 }

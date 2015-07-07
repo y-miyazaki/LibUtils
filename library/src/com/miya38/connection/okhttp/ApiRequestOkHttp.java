@@ -116,6 +116,7 @@ public final class ApiRequestOkHttp {
      * @param isWebViewCookie
      *         true:WebViewのCookieをAPIから自動的に設定する場合は、trueを指定する。
      *         false:WebViewのCookieをAPIから設定しない場合は、falseを指定する。
+     *         <b>デフォルトはfalseである。</b>
      */
     public static void setWebViewCookie(boolean isWebViewCookie) {
         sIsWebViewCookie = isWebViewCookie;
@@ -199,15 +200,21 @@ public final class ApiRequestOkHttp {
                     try {
                         final StringBuffer log = new StringBuffer();
                         StringUtils.appendBufferFormat(log, "----------------------------------------start(error)----------------------------------------\n");
-                        StringUtils.appendBufferFormat(log, "request url          = %s\n", request.urlString());
+                        StringUtils.appendBufferFormat(log, "■request\n");
+                        // URL出力
+                        StringUtils.appendBufferFormat(log, "url                             = %s\n", request.urlString());
+                        // メソッド出力
+                        StringUtils.appendBufferFormat(log, "method                          = %s\n", request.method());
+                        // Body出力
+                        StringUtils.appendBufferFormat(log, "body                            = %s\n", networkRequestOkHttp.getBody());
+                        // リクエストID出力
+                        StringUtils.appendBufferFormat(log, "id                              = %s\n", networkRequestOkHttp.getId());
+
                         // リクエストヘッダー出力
                         final Headers requestHeaders = request.headers();
                         for (final String headerName : requestHeaders.names()) {
-                            StringUtils.appendBufferFormat(log, "request header %-25s = %s\n", headerName, requestHeaders.get(headerName));
+                            StringUtils.appendBufferFormat(log, "header %-24s = %s\n", headerName, requestHeaders.get(headerName));
                         }
-                        StringUtils.appendBufferFormat(log, "request method       = %s\n", request.method());
-                        StringUtils.appendBufferFormat(log, "request body         = %s\n", networkRequestOkHttp.getBody());
-                        StringUtils.appendBufferFormat(log, "request id           = %s\n\n", networkRequestOkHttp.getId());
                         StringUtils.appendBuffer(log, "---------- volley stackTrace(start) ----------\n", e.toString(), "---------- volley stackTrace(end) ----------\n");
                         StringUtils.appendBufferFormat(log, "---------------------------------------- end(error) ----------------------------------------\n");
                         LogUtils.d(TAG, log.toString());
@@ -307,7 +314,7 @@ public final class ApiRequestOkHttp {
                             }
                         }
                         if (okHttpSentMillis != 0 && okHttpReceivedMillis != 0) {
-                            StringUtils.appendBufferFormat(log, "time(msec)                      = %d msec\n", okHttpReceivedMillis - okHttpSentMillis);
+                            StringUtils.appendBufferFormat(log, "time                            = %d msec\n", okHttpReceivedMillis - okHttpSentMillis);
                         }
 
                         // BODY出力

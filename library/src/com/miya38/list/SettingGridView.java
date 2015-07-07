@@ -315,7 +315,7 @@ public class SettingGridView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void destory() {
+    public void destroy() {
         mAdapter.clear();
         mAdapter = null;
         mActivity = null;

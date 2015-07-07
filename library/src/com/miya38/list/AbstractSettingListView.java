@@ -271,5 +271,5 @@ public abstract class AbstractSettingListView<T, U> {
     /**
      * 本クラス内データを全てクリアする。
      */
-    public abstract void destory();
+    public abstract void destroy();
 }

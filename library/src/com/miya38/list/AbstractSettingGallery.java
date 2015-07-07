@@ -1,12 +1,12 @@
 package com.miya38.list;
 
-import java.util.List;
-
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Gallery;
 
 import com.miya38.widget.CustomGallery;
+
+import java.util.List;
 
 /**
  * Gallery抽象化クラス
@@ -167,5 +167,5 @@ public abstract class AbstractSettingGallery<T, U> {
     /**
      * 本クラス内データを全てクリアする。
      */
-    public abstract void destory();
+    public abstract void destroy();
 }

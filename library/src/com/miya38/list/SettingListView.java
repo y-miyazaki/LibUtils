@@ -511,7 +511,7 @@ public class SettingListView<T extends CustomArrayAdapter<U>, U> extends Abstrac
     }
 
     @Override
-    public void destory() {
+    public void destroy() {
         if (mAdapter != null) {
             mAdapter.clear();
         }

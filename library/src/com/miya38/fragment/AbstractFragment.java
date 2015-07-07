@@ -300,7 +300,7 @@ public abstract class AbstractFragment extends Fragment {
     }
 
     /**
-     * キーダウンのコールバックリスナー登録<br>
+     * キーダウンのコールバックリスナー登録
      *
      * @param l
      *         リスナーを登録するとコールバックリスナーが走ります。
@@ -319,7 +319,7 @@ public abstract class AbstractFragment extends Fragment {
     }
 
     /**
-     * ウィンドウフォーカスチェンジのコールバックリスナー登録<br>
+     * ウィンドウフォーカスチェンジのコールバックリスナー登録
      *
      * @param l
      *         リスナーを登録するとコールバックリスナーが走ります。

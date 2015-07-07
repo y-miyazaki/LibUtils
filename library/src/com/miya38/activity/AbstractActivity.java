@@ -9,7 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ViewStub;
 import android.view.WindowManager.LayoutParams;
 
@@ -30,7 +30,7 @@ import com.squareup.leakcanary.RefWatcher;
  *
  * @author y-miyazaki
  */
-public abstract class AbstractActivity extends ActionBarActivity {
+public abstract class AbstractActivity extends AppCompatActivity {
     // ---------------------------------------------------------------
     // define
     // ---------------------------------------------------------------

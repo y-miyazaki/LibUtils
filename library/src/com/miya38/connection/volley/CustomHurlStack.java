@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.miya38.connection;
+package com.miya38.connection.volley;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

@@ -60,9 +60,6 @@ public class CustomWebViewClient extends WebViewClient {
      */
     public CustomWebViewClient(@NonNull final Activity activity) {
         super();
-        if (activity == null) {
-            throw new IllegalArgumentException("must be set activity.");
-        }
         mActivity = activity;
     }
 
@@ -74,9 +71,6 @@ public class CustomWebViewClient extends WebViewClient {
      */
     public CustomWebViewClient(@NonNull final Fragment fragment) {
         super();
-        if (fragment == null) {
-            throw new IllegalArgumentException("must be set activity.");
-        }
         mFragment = fragment;
     }
 
