@@ -376,7 +376,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
      *
      * @return リスナーID
      */
-    public int getListnerId() {
+    public int getListenerId() {
         return mListenerId;
     }
 }

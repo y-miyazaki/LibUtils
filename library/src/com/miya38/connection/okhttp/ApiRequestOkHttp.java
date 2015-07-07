@@ -376,13 +376,18 @@ public final class ApiRequestOkHttp {
      */
     public interface OkHttpCallbackListener {
         /**
+         * エラーレスポンス
+         *
          * @param response
          *         {@link Response}
          * @param throwable
+         *         {@link Throwable}
          */
         void onFailure(Response response, Throwable throwable);
 
         /**
+         * 正常レスポンス
+         *
          * @param response
          *         {@link Response}
          * @param content

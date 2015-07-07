@@ -1,4 +1,4 @@
-package com.miya38.activity;
+package com.miya38.dialog;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.squareup.okhttp.Response;
  * 
  * @author y-miyazaki
  */
-public abstract class AbstractConnectionOkHttpActivity extends AbstractActivity {
+public abstract class AbstractConnectionOkHttpDialogFragment extends AbstractDialogFragment {
     /** AbstractConnectionCommonOkHttp */
     private AbstractConnectionCommonOkHttp mAbstractConnectionCommonOkHttp;
 
@@ -31,7 +31,7 @@ public abstract class AbstractConnectionOkHttpActivity extends AbstractActivity 
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
 //        if (mAbstractConnectionCommonOkHttp != null) {
 //            mAbstractConnectionCommonOkHttp.getRequestQueue().cancelAll(getApplicationContext());
 //            mAbstractConnectionCommonOkHttp.clear();

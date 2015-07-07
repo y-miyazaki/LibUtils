@@ -15,7 +15,7 @@ import com.miya38.connection.volley.NetworkRequest;
  * @author y-miyazaki
  * 
  */
-public abstract class AbstractConnectionDialogFragment extends AbstractDialogFragment {
+public abstract class AbstractConnectionVolleyDialogFragment extends AbstractDialogFragment {
     /** AbstractConnectionCommonVolley */
     private AbstractConnectionCommonVolley mAbstractConnectionCommonVolley;
 
