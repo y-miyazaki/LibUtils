@@ -1,6 +1,8 @@
 package com.miya38.dialog;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.RequiresPermission;
 
 import com.android.volley.NetworkResponse;
 import com.miya38.connection.volley.AbstractConnectionCommonVolley;
@@ -68,6 +70,7 @@ public abstract class AbstractConnectionVolleyDialogFragment extends AbstractDia
      * @param networkRequest
      *            {@link NetworkRequest}
      */
+    @RequiresPermission(Manifest.permission.INTERNET)
     public void requestAPI(final NetworkRequest networkRequest) {
         if (mAbstractConnectionCommonVolley != null) {
             mAbstractConnectionCommonVolley.requestAPI(networkRequest);

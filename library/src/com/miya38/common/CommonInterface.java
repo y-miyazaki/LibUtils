@@ -47,7 +47,7 @@ public class CommonInterface {
 
     /**
      * GetLoaderインタフェース
-     * 
+     *
      * @author y-miyazaki
      */
     public interface OnGetLoaderFinishListerner {

@@ -57,7 +57,7 @@ public abstract class AbstractConnectionCommonOkHttp {
     // connection
     // ----------------------------------------------------------
     /** 画面にプログレスバーを表示するフラグ(ListView等で独自にフッダープログレスを表示する場合はfalseにする。) */
-    private final SparseArray<View> mDisplayProgress;
+    private SparseArray<View> mDisplayProgress;
 
     /**
      * Jsonエラー表示用メソッド
@@ -103,10 +103,7 @@ public abstract class AbstractConnectionCommonOkHttp {
      */
     public AbstractConnectionCommonOkHttp(final FragmentActivity activity) {
         mActivity = activity;
-        if (activity instanceof CommonInterface.OnLoaderFinishListener) {
-            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) activity;
-        }
-        mDisplayProgress = new SparseArray<>();
+        init(activity);
     }
 
     /**
@@ -117,10 +114,7 @@ public abstract class AbstractConnectionCommonOkHttp {
      */
     public AbstractConnectionCommonOkHttp(final Fragment fragment) {
         mFragment = fragment;
-        if (fragment instanceof CommonInterface.OnLoaderFinishListener) {
-            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) fragment;
-        }
-        mDisplayProgress = new SparseArray<>();
+        init(fragment);
     }
 
     /**
@@ -131,10 +125,7 @@ public abstract class AbstractConnectionCommonOkHttp {
      */
     public AbstractConnectionCommonOkHttp(final DialogFragment dialogFragment) {
         mDialogFragment = dialogFragment;
-        if (dialogFragment instanceof CommonInterface.OnLoaderFinishListener) {
-            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) dialogFragment;
-        }
-        mDisplayProgress = new SparseArray<>();
+        init(dialogFragment);
     }
 
     /**
@@ -399,5 +390,18 @@ public abstract class AbstractConnectionCommonOkHttp {
         mDialogFragment = null;
         mDisplayProgress.clear();
         mOnLoaderFinishListener = null;
+    }
+
+    /**
+     * 初期化処理
+     *
+     * @param object
+     *         Activity/Fragment/DialogFragment
+     */
+    private void init(Object object) {
+        if (object instanceof CommonInterface.OnLoaderFinishListener) {
+            mOnLoaderFinishListener = (CommonInterface.OnLoaderFinishListener) object;
+        }
+        mDisplayProgress = new SparseArray<View>();
     }
 }

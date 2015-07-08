@@ -70,7 +70,7 @@ public abstract class AbstractConnectionCommonVolley {
     // connection
     // ----------------------------------------------------------
     /** 画面にプログレスバーを表示するフラグ(ListView等で独自にフッダープログレスを表示する場合はfalseにする。) */
-    private final SparseArray<View> mDisplayProgress;
+    private SparseArray<View> mDisplayProgress;
 
     /**
      * Jsonエラー表示用メソッド
@@ -116,19 +116,7 @@ public abstract class AbstractConnectionCommonVolley {
      */
     public AbstractConnectionCommonVolley(final FragmentActivity activity) {
         mActivity = activity;
-        if (activity instanceof OnGetLoaderFinishListerner) {
-            mOnGetLoaderFinishListener = (OnGetLoaderFinishListerner) activity;
-        }
-        if (activity instanceof CommonInterface.OnPostLoaderFinishListener) {
-            mOnPostLoaderFinishListener = (CommonInterface.OnPostLoaderFinishListener) activity;
-        }
-        if (activity instanceof CommonInterface.OnPutLoaderFinishListener) {
-            mOnPutLoaderFinishListener = (OnPutLoaderFinishListener) activity;
-        }
-        if (activity instanceof OnDeleteLoaderFinishListener) {
-            mOnDeleteLoaderFinishListener = (OnDeleteLoaderFinishListener) activity;
-        }
-        mDisplayProgress = new SparseArray<>();
+        init(activity);
     }
 
     /**
@@ -139,19 +127,7 @@ public abstract class AbstractConnectionCommonVolley {
      */
     public AbstractConnectionCommonVolley(final Fragment fragment) {
         mFragment = fragment;
-        if (fragment instanceof OnGetLoaderFinishListerner) {
-            mOnGetLoaderFinishListener = (OnGetLoaderFinishListerner) fragment;
-        }
-        if (fragment instanceof CommonInterface.OnPostLoaderFinishListener) {
-            mOnPostLoaderFinishListener = (CommonInterface.OnPostLoaderFinishListener) fragment;
-        }
-        if (fragment instanceof OnPutLoaderFinishListener) {
-            mOnPutLoaderFinishListener = (OnPutLoaderFinishListener) fragment;
-        }
-        if (fragment instanceof OnDeleteLoaderFinishListener) {
-            mOnDeleteLoaderFinishListener = (CommonInterface.OnDeleteLoaderFinishListener) fragment;
-        }
-        mDisplayProgress = new SparseArray<>();
+        init(fragment);
     }
 
     /**
@@ -162,19 +138,7 @@ public abstract class AbstractConnectionCommonVolley {
      */
     public AbstractConnectionCommonVolley(final DialogFragment dialogFragment) {
         mDialogFragment = dialogFragment;
-        if (dialogFragment instanceof OnGetLoaderFinishListerner) {
-            mOnGetLoaderFinishListener = (OnGetLoaderFinishListerner) dialogFragment;
-        }
-        if (dialogFragment instanceof OnPostLoaderFinishListener) {
-            mOnPostLoaderFinishListener = (CommonInterface.OnPostLoaderFinishListener) dialogFragment;
-        }
-        if (dialogFragment instanceof CommonInterface.OnPutLoaderFinishListener) {
-            mOnPutLoaderFinishListener = (OnPutLoaderFinishListener) dialogFragment;
-        }
-        if (dialogFragment instanceof CommonInterface.OnDeleteLoaderFinishListener) {
-            mOnDeleteLoaderFinishListener = (OnDeleteLoaderFinishListener) dialogFragment;
-        }
-        mDisplayProgress = new SparseArray<>();
+        init(dialogFragment);
     }
 
     /**
@@ -479,5 +443,27 @@ public abstract class AbstractConnectionCommonVolley {
         mOnPostLoaderFinishListener = null;
         mOnPutLoaderFinishListener = null;
         mOnDeleteLoaderFinishListener = null;
+    }
+
+    /**
+     * 初期化処理
+     *
+     * @param object
+     *         Activity/Fragment/DialogFragment
+     */
+    private void init(Object object) {
+        if (object instanceof OnGetLoaderFinishListerner) {
+            mOnGetLoaderFinishListener = (OnGetLoaderFinishListerner) object;
+        }
+        if (object instanceof OnPostLoaderFinishListener) {
+            mOnPostLoaderFinishListener = (CommonInterface.OnPostLoaderFinishListener) object;
+        }
+        if (object instanceof CommonInterface.OnPutLoaderFinishListener) {
+            mOnPutLoaderFinishListener = (OnPutLoaderFinishListener) object;
+        }
+        if (object instanceof CommonInterface.OnDeleteLoaderFinishListener) {
+            mOnDeleteLoaderFinishListener = (OnDeleteLoaderFinishListener) object;
+        }
+        mDisplayProgress = new SparseArray<View>();
     }
 }
