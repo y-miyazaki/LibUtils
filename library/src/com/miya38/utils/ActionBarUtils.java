@@ -24,7 +24,7 @@ public final class ActionBarUtils {
      * アニメーションなしでActionBarを閉じる
      *
      * @param activity
-     *            {@link Activity}
+     *         {@link Activity}
      */
     public static void hide(Activity activity) {
         View view = getActionBarView(activity);
@@ -37,7 +37,7 @@ public final class ActionBarUtils {
      * アニメーションなしでActionBarを開く
      *
      * @param activity
-     *            {@link Activity}
+     *         {@link Activity}
      */
     public static void show(Activity activity) {
         View view = getActionBarView(activity);
@@ -50,7 +50,7 @@ public final class ActionBarUtils {
      * ActionBarの表示状態
      *
      * @param activity
-     *            {@link Activity}
+     *         {@link Activity}
      * @return true:表示中/false:非表示中
      */
     public static boolean isShowing(Activity activity) {
@@ -65,15 +65,18 @@ public final class ActionBarUtils {
      * ActionBarの表示状態
      *
      * @param activity
-     *            {@link Activity}
+     *         {@link Activity}
      * @return ActionBarのRootView
+     * Activityがnullの場合、ActionBarが存在しない場合はnullを返却する。
      */
     private static View getActionBarView(Activity activity) {
-        View decorView = activity.getWindow().getDecorView();
-        int resId;
-        resId = activity.getResources().getIdentifier("action_bar_container", "id", activity.getPackageName());
-        if (resId != 0) {
-            return decorView.findViewById(resId);
+        if (activity != null) {
+            View decorView = activity.getWindow().getDecorView();
+            int resId;
+            resId = activity.getResources().getIdentifier("action_bar_container", "id", activity.getPackageName());
+            if (resId != 0) {
+                return decorView.findViewById(resId);
+            }
         }
         return null;
     }

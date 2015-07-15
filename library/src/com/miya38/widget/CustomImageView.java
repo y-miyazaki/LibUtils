@@ -16,6 +16,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.miya38.R;
+import com.miya38.utils.AnimationUtils;
 import com.miya38.utils.ImageUtils;
 import com.miya38.utils.LogUtils;
 import com.miya38.utils.ViewHelper;
@@ -271,14 +272,14 @@ public class CustomImageView extends ImageView implements OnTouchListener {
      * 画像を消えるようなアルファアニメーションを行う。<br>
      */
     public void setAnimationAlphaOut() {
-        ViewHelper.setAlphaOutAnimation(this, mAnimationDuration);
+        AnimationUtils.setAlphaOutAnimation(this, mAnimationDuration);
     }
 
     /**
      * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
      */
     public void setAnimationAlphaIn() {
-        ViewHelper.setAlphaInAnimation(this, mAnimationDuration);
+        AnimationUtils.setAlphaInAnimation(this, mAnimationDuration);
     }
 
     /**

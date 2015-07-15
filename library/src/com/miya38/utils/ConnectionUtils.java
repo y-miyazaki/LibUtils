@@ -122,6 +122,8 @@ public final class ConnectionUtils {
             for (final NameValuePair p : parameters) {
                 map.put(p.getName(), p.getValue());
             }
+        } catch (final IllegalArgumentException e) {
+            // 握りつぶす
         } catch (final URISyntaxException e) {
             // 握りつぶす
         }

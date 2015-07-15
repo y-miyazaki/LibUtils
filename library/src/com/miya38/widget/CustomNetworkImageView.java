@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.miya38.R;
+import com.miya38.utils.AnimationUtils;
 import com.miya38.utils.ClassUtils;
 import com.miya38.utils.ImageUtils;
 import com.miya38.utils.LogUtils;
@@ -294,14 +295,14 @@ public class CustomNetworkImageView extends NetworkImageView implements OnTouchL
      * 画像を消えるようなアルファアニメーションを行う。<br>
      */
     public void setAnimationAlphaOut() {
-        ViewHelper.setAlphaOutAnimation(this, mAnimationDuration);
+        AnimationUtils.setAlphaOutAnimation(this, mAnimationDuration);
     }
 
     /**
      * 画像を徐々に見えるようなアルファアニメーションを行う。<br>
      */
     public void setAnimationAlphaIn() {
-        ViewHelper.setAlphaInAnimation(this, mAnimationDuration);
+        AnimationUtils.setAlphaInAnimation(this, mAnimationDuration);
     }
 
     /**
