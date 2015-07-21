@@ -45,21 +45,6 @@ public abstract class AbstractAnimation {
     }
 
     /**
-     * View設定
-     *
-     * @param from
-     *         {@link View}
-     * @param to
-     *         {@link View}
-     * @return {@link AbstractAnimation}
-     */
-    public AbstractAnimation view(View from, View to) {
-        mView01 = from;
-        mView02 = to;
-        return this;
-    }
-
-    /**
      * アニメーションの時間(ms)設定
      *
      * @param duration

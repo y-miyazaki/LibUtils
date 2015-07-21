@@ -8,7 +8,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
 /**
  * フリップ左回転クラス
  */
-public class FlipRotateYLeft extends AbstractAnimation {
+public class FlipRotateHorizontalLeft extends AbstractAnimation {
     @Override
     protected AnimatorSet prepare() {
         AnimatorSet animatorSet = new AnimatorSet();

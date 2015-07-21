@@ -5,13 +5,13 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 /**
- * フリップ右回転クラス
+ * フリップ縦回転クラス
  */
-public class FlipRotateYRight extends AbstractAnimation {
+public class FlipRotateVerticalDown extends AbstractAnimation {
     @Override
-    protected AnimatorSet prepare() {
+    public AnimatorSet prepare() {
         AnimatorSet animatorSet = new AnimatorSet();
-        final ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mView01, "rotationY", 0, -360);
+        final ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mView01, "rotationX", 0, -360);
         setDefaultObjectAnimator(objectAnimator);
         animatorSet.play(objectAnimator);
         return animatorSet;

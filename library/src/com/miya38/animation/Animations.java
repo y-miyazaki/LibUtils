@@ -3,12 +3,18 @@ package com.miya38.animation;
 import com.miya38.animation.blink.Blink;
 import com.miya38.animation.fade.FadeIn;
 import com.miya38.animation.fade.FadeOut;
-import com.miya38.animation.flip.FlipRotateYLeft;
-import com.miya38.animation.flip.FlipRotateYLeftTo;
-import com.miya38.animation.flip.FlipRotateYRight;
-import com.miya38.animation.flip.FlipRotateYRightTo;
-import com.miya38.animation.scale.ScaleIn;
-import com.miya38.animation.scale.ScaleOut;
+import com.miya38.animation.flip.FlipRotateHorizontalLeft;
+import com.miya38.animation.flip.FlipRotateHorizontalLeftTo;
+import com.miya38.animation.flip.FlipRotateHorizontalRight;
+import com.miya38.animation.flip.FlipRotateHorizontalRightTo;
+import com.miya38.animation.flip.FlipRotateVerticalDown;
+import com.miya38.animation.flip.FlipRotateVerticalDownTo;
+import com.miya38.animation.flip.FlipRotateVerticalUp;
+import com.miya38.animation.flip.FlipRotateVerticalUpTo;
+import com.miya38.animation.scale.ScaleDownIn;
+import com.miya38.animation.scale.ScaleDownOut;
+import com.miya38.animation.scale.ScaleUpIn;
+import com.miya38.animation.scale.ScaleUpOut;
 
 /**
  * Animation系のユーティリティクラス
@@ -17,6 +23,13 @@ import com.miya38.animation.scale.ScaleOut;
  */
 public final class Animations {
     private static final String TAG = "Animations";
+
+    /**
+     * ブリンクアニメーションで表示する。
+     */
+    public static Blink blink() {
+        return new Blink();
+    }
 
     /**
      * アルファアニメーションで表示する。
@@ -33,51 +46,86 @@ public final class Animations {
     }
 
     /**
+     * フリップ左回転アニメーションで表示する。
+     */
+    public static FlipRotateHorizontalLeft flipRotateHorizontalLeft() {
+        return new FlipRotateHorizontalLeft();
+    }
+
+    /**
+     * フリップ左回転からView変更アニメーションで表示する。
+     */
+    public static FlipRotateHorizontalLeftTo flipRotateHorizontalLeftTo() {
+        return new FlipRotateHorizontalLeftTo();
+    }
+
+    /**
+     * フリップ右回転アニメーションで表示する。
+     */
+    public static FlipRotateHorizontalRight flipRotateHorizontalRight() {
+        return new FlipRotateHorizontalRight();
+    }
+
+    /**
+     * フリップ右回転からView変更アニメーションで表示する。
+     */
+    public static FlipRotateHorizontalRightTo flipRotateHorizontalRightTo() {
+        return new FlipRotateHorizontalRightTo();
+    }
+
+    /**
+     * フリップ縦回転アニメーションで表示する。
+     */
+    public static FlipRotateVerticalDown flipRotateVerticalDown() {
+        return new FlipRotateVerticalDown();
+    }
+
+    /**
+     * フリップ縦回転からView変更アニメーションで表示する。
+     */
+    public static FlipRotateVerticalDownTo flipRotateVerticalDownTo() {
+        return new FlipRotateVerticalDownTo();
+    }
+
+    /**
+     * フリップ縦回転アニメーションで表示する。
+     */
+    public static FlipRotateVerticalUp flipRotateVerticalUp() {
+        return new FlipRotateVerticalUp();
+    }
+
+    /**
+     * フリップ縦回転からView変更アニメーションで表示する。
+     */
+    public static FlipRotateVerticalUpTo flipRotateVerticalUpTo() {
+        return new FlipRotateVerticalUpTo();
+    }
+
+    /**
      * スケールインアニメーションで表示する。
      */
-    public static ScaleIn scaleIn() {
-        return new ScaleIn();
+    public static ScaleDownIn scaleDownIn() {
+        return new ScaleDownIn();
     }
 
     /**
      * スケールアウトアニメーションで表示する。
      */
-    public static ScaleOut scaleOut() {
-        return new ScaleOut();
+    public static ScaleDownOut scaleDownOut() {
+        return new ScaleDownOut();
     }
 
     /**
-     * ブリンクアニメーションで表示する。
+     * スケールインアニメーションで表示する。
      */
-    public static Blink blink() {
-        return new Blink();
+    public static ScaleUpIn scaleUpIn() {
+        return new ScaleUpIn();
     }
 
     /**
-     * フリップ回転アニメーションで表示する。
+     * スケールアウトアニメーションで表示する。
      */
-    public static FlipRotateYLeft flipRotateLeft() {
-        return new FlipRotateYLeft();
-    }
-
-    /**
-     * フリップ回転アニメーションで表示する。
-     */
-    public static FlipRotateYRight flipRotateYRight() {
-        return new FlipRotateYRight();
-    }
-
-    /**
-     * フリップ回転アニメーションで表示する。
-     */
-    public static FlipRotateYLeftTo flipRotateYLeftTo() {
-        return new FlipRotateYLeftTo();
-    }
-
-    /**
-     * フリップ回転アニメーションで表示する。
-     */
-    public static FlipRotateYRightTo flipRotateYRightTo() {
-        return new FlipRotateYRightTo();
+    public static ScaleUpOut scaleUpOut() {
+        return new ScaleUpOut();
     }
 }
