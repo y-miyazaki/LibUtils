@@ -11,10 +11,18 @@ import com.miya38.animation.flip.FlipRotateVerticalDown;
 import com.miya38.animation.flip.FlipRotateVerticalDownTo;
 import com.miya38.animation.flip.FlipRotateVerticalUp;
 import com.miya38.animation.flip.FlipRotateVerticalUpTo;
-import com.miya38.animation.scale.ScaleDownIn;
-import com.miya38.animation.scale.ScaleDownOut;
-import com.miya38.animation.scale.ScaleUpIn;
-import com.miya38.animation.scale.ScaleUpOut;
+import com.miya38.animation.scale.ScaleInDown;
+import com.miya38.animation.scale.ScaleInUp;
+import com.miya38.animation.scale.ScaleOutDown;
+import com.miya38.animation.scale.ScaleOutUp;
+import com.miya38.animation.slide.SlideInDown;
+import com.miya38.animation.slide.SlideInLeft;
+import com.miya38.animation.slide.SlideInRight;
+import com.miya38.animation.slide.SlideInUp;
+import com.miya38.animation.slide.SlideOutDown;
+import com.miya38.animation.slide.SlideOutLeft;
+import com.miya38.animation.slide.SlideOutRight;
+import com.miya38.animation.slide.SlideOutUp;
 
 /**
  * Animation系のユーティリティクラス
@@ -104,28 +112,85 @@ public final class Animations {
     /**
      * スケールインアニメーションで表示する。
      */
-    public static ScaleDownIn scaleDownIn() {
-        return new ScaleDownIn();
-    }
-
-    /**
-     * スケールアウトアニメーションで表示する。
-     */
-    public static ScaleDownOut scaleDownOut() {
-        return new ScaleDownOut();
+    public static ScaleInDown scaleInDown() {
+        return new ScaleInDown();
     }
 
     /**
      * スケールインアニメーションで表示する。
      */
-    public static ScaleUpIn scaleUpIn() {
-        return new ScaleUpIn();
+    public static ScaleInUp scaleInUp() {
+        return new ScaleInUp();
     }
 
     /**
      * スケールアウトアニメーションで表示する。
      */
-    public static ScaleUpOut scaleUpOut() {
-        return new ScaleUpOut();
+    public static ScaleOutDown scaleOutDown() {
+        return new ScaleOutDown();
+    }
+
+    /**
+     * スケールアウトアニメーションで表示する。
+     */
+    public static ScaleOutUp scaleOutUp() {
+        return new ScaleOutUp();
+    }
+
+    /**
+     * スライドイン(下)アニメーションで表示する。
+     */
+    public static SlideInDown slideInDown() {
+        return new SlideInDown();
+    }
+
+    /**
+     * スライドイン(左)アニメーションで表示する。
+     */
+    public static SlideInLeft slideInLeft() {
+        return new SlideInLeft();
+    }
+
+    /**
+     * スライドイン(右)アニメーションで表示する。
+     */
+    public static SlideInRight slideInRight() {
+        return new SlideInRight();
+    }
+
+    /**
+     * スライドイン(上)アニメーションで表示する。
+     */
+    public static SlideInUp slideInUp() {
+        return new SlideInUp();
+    }
+
+
+    /**
+     * スライドアウト(下)アニメーションで表示する。
+     */
+    public static SlideOutDown slideOutDown() {
+        return new SlideOutDown();
+    }
+
+    /**
+     * スライドアウト(左)アニメーションで表示する。
+     */
+    public static SlideOutLeft slideOutLeft() {
+        return new SlideOutLeft();
+    }
+
+    /**
+     * スライドアウト(右)アニメーションで表示する。
+     */
+    public static SlideOutRight slideOutRight() {
+        return new SlideOutRight();
+    }
+
+    /**
+     * スライドアウト(上)アニメーションで表示する。
+     */
+    public static SlideOutUp slideOutUp() {
+        return new SlideOutUp();
     }
 }

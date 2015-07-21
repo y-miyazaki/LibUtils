@@ -5,11 +5,11 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 /**
- * スケールアウトクラス
+ * スケールインクラス
  */
-public class ScaleDownOut extends AbstractAnimation {
-    private float mScaleFrom = 1f;
-    private float mScaleTo = 0f;
+public class ScaleInDown extends AbstractAnimation {
+    private float mScaleFrom = 2f;
+    private float mScaleTo = 1f;
 
     @Override
     protected AnimatorSet prepare() {

@@ -5,20 +5,22 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 /**
- * スケールインクラス
+ * スケールアウトクラス
  */
-public class ScaleUpIn extends AbstractAnimation {
-    private float mScaleFrom = 0f;
-    private float mScaleTo = 1f;
+public class ScaleOutUp extends AbstractAnimation {
+    private float mScaleFrom = 1f;
+    private float mScaleTo = 2f;
 
     @Override
     protected AnimatorSet prepare() {
         AnimatorSet animatorSet = new AnimatorSet();
         ObjectAnimator objectAnimator01 = ObjectAnimator.ofFloat(mView01, "scaleX", mScaleFrom, mScaleTo);
         ObjectAnimator objectAnimator02 = ObjectAnimator.ofFloat(mView01, "scaleY", mScaleFrom, mScaleTo);
+        ObjectAnimator objectAnimator03 = ObjectAnimator.ofFloat(mView01, "alpha", 1, 0);
         setDefaultObjectAnimator(objectAnimator01);
         setDefaultObjectAnimator(objectAnimator02);
-        animatorSet.playTogether(objectAnimator01, objectAnimator02);
+        setDefaultObjectAnimator(objectAnimator03);
+        animatorSet.playTogether(objectAnimator01, objectAnimator02, objectAnimator03);
         return animatorSet;
     }
 
