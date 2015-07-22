@@ -1,6 +1,10 @@
 package com.miya38.animation;
 
 import com.miya38.animation.blink.Blink;
+import com.miya38.animation.bounce.BounceInDown;
+import com.miya38.animation.bounce.BounceInLeft;
+import com.miya38.animation.bounce.BounceInRight;
+import com.miya38.animation.bounce.BounceInUp;
 import com.miya38.animation.fade.FadeIn;
 import com.miya38.animation.fade.FadeOut;
 import com.miya38.animation.flip.FlipRotateHorizontalLeft;
@@ -37,6 +41,34 @@ public final class Animations {
      */
     public static Blink blink() {
         return new Blink();
+    }
+
+    /**
+     * バウンスアニメーションで表示する。
+     */
+    public static BounceInDown bounceInDown() {
+        return new BounceInDown();
+    }
+
+    /**
+     * バウンスアニメーションで表示する。
+     */
+    public static BounceInLeft bounceInLeft() {
+        return new BounceInLeft();
+    }
+
+    /**
+     * バウンスアニメーションで表示する。
+     */
+    public static BounceInRight bounceInRight() {
+        return new BounceInRight();
+    }
+
+    /**
+     * バウンスアニメーションで表示する。
+     */
+    public static BounceInUp bounceInUp() {
+        return new BounceInUp();
     }
 
     /**
