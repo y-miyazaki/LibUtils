@@ -327,6 +327,8 @@ public class CustomWebViewClient extends WebViewClient {
             if (mFragment.getView() == null || mFragment.isDetached() || mFragment.isRemoving()) {
                 return false;
             }
+        } else {
+            return false;
         }
         if (view == null || view.getContext() == null) {
             return false;

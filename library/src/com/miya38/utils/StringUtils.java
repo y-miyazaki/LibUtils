@@ -436,10 +436,7 @@ public final class StringUtils {
      * @return {@code true} if the specified string is a prefix of this string, {@code false} otherwise
      */
     public static boolean startsWith(final String text, final String prefix) {
-        if (text == null) {
-            return false;
-        }
-        return text.startsWith(prefix);
+        return text != null && text.startsWith(prefix);
     }
 
     /**
@@ -452,10 +449,7 @@ public final class StringUtils {
      * @return true:含まれている/false:含まれていない
      */
     public static boolean contains(final String str, final String containStr) {
-        if (StringUtils.isEmpty(str)) {
-            return false;
-        }
-        return str.contains(containStr);
+        return !StringUtils.isEmpty(str) && str.contains(containStr);
     }
 
     /**
