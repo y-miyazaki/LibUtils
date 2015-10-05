@@ -82,10 +82,13 @@ public class CustomWebViewClient extends WebViewClient {
             // mailtoチェック
             // ------------------------------------------------------------
             if (url.startsWith(PROTOCOL_MAILTO)) {
-                final Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(url));
-                mActivity.startActivity(intent);
-                view.reload();
-                return true;
+                Activity activity = getActivity();
+                if (activity == null) {
+                    final Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(url));
+                    activity.startActivity(intent);
+                    view.reload();
+                    return true;
+                }
             }
             // ------------------------------------------------------------
             // ホワイトホストチェック
@@ -257,45 +260,48 @@ public class CustomWebViewClient extends WebViewClient {
      *         the realm for which authentication is required
      */
     public void showHttpAuthDialog(final WebView webView, final HttpAuthHandler handler, final String host, final String realm) {
-        final LayoutInflater layoutInflator = LayoutInflater.from(mActivity);
-        final View view = layoutInflator.inflate(R.layout.common_dialog_basic, null);
+        Activity activity = getActivity();
+        if (activity != null) {
+            final LayoutInflater layoutInflator = LayoutInflater.from(activity);
+            final View view = layoutInflator.inflate(R.layout.common_dialog_basic, null);
 
-        final AlertDialog.Builder mHttpAuthDialog = new AlertDialog.Builder(mActivity);
-        mHttpAuthDialog.setTitle(mActivity.getString(R.string.common_dialog_basic_message, host, realm)).setView(view).setCancelable(true);
-        mHttpAuthDialog.setPositiveButton(mActivity.getString(R.string.common_dialog_basic_button_login), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(final DialogInterface dialog, final int whichButton) {
-                final EditText etUserName = ViewHelper.findView(view, R.id.CustomEditText01);
-                final String userName = etUserName.getText().toString();
-                final EditText etUserPass = ViewHelper.findView(view, R.id.CustomEditText02);
-                final String userPass = etUserPass.getText().toString();
+            final AlertDialog.Builder mHttpAuthDialog = new AlertDialog.Builder(activity);
+            mHttpAuthDialog.setTitle(activity.getString(R.string.common_dialog_basic_message, host, realm)).setView(view).setCancelable(true);
+            mHttpAuthDialog.setPositiveButton(activity.getString(R.string.common_dialog_basic_button_login), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int whichButton) {
+                    final EditText etUserName = ViewHelper.findView(view, R.id.CustomEditText01);
+                    final String userName = etUserName.getText().toString();
+                    final EditText etUserPass = ViewHelper.findView(view, R.id.CustomEditText02);
+                    final String userPass = etUserPass.getText().toString();
 
-                webView.setHttpAuthUsernamePassword(host, realm, userName, userPass);
-                handler.proceed(userName, userPass);
-                dialog.dismiss();
-            }
-        });
-        mHttpAuthDialog.setNegativeButton(mActivity.getString(R.string.common_dialog_basic_button_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(final DialogInterface dialog, final int whichButton) {
-                handler.cancel();
-                dialog.dismiss();
-            }
-        });
-
-        // backキー
-        mHttpAuthDialog.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(final DialogInterface dialog, final int keyCode, final KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    webView.setHttpAuthUsernamePassword(host, realm, userName, userPass);
+                    handler.proceed(userName, userPass);
+                    dialog.dismiss();
+                }
+            });
+            mHttpAuthDialog.setNegativeButton(activity.getString(R.string.common_dialog_basic_button_cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int whichButton) {
                     handler.cancel();
                     dialog.dismiss();
-                    return true;
                 }
-                return false;
-            }
-        });
-        mHttpAuthDialog.create().show();
+            });
+
+            // backキー
+            mHttpAuthDialog.setOnKeyListener(new OnKeyListener() {
+                @Override
+                public boolean onKey(final DialogInterface dialog, final int keyCode, final KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        handler.cancel();
+                        dialog.dismiss();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            mHttpAuthDialog.create().show();
+        }
     }
 
     @Override
@@ -399,5 +405,19 @@ public class CustomWebViewClient extends WebViewClient {
             }
         }
         return false;
+    }
+
+    /**
+     * Activity取得
+     *
+     * @return Activity
+     */
+    private Activity getActivity() {
+        if (mActivity == null) {
+            if (mFragment != null) {
+                return mFragment.getActivity();
+            }
+        }
+        return mActivity;
     }
 }
